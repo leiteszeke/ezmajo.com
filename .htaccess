@@ -1,0 +1,7 @@
+RewriteEngine on
+
+RewriteCond $1 !^(index\.php|send\.php|img|robots\.txt|css|graphics|facebox|swf|includes|js|disenio|coreCalc|inc\.php|sitemap|iphone\.jpg\.png\.PNG|favicon\.ico|test\.php|frontend|crones|fonts|images|libraries|data|facebook|tsk)
+
+#RewriteRule ^(.*)$ /index.php/$1 [L]
+
+RewriteRule ^(.*)$ index.php?/$1 [L]
