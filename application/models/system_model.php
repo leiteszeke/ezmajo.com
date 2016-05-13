@@ -5,18 +5,26 @@
 	        parent::__construct();
 		}
 
-		function crearSesion($id_usuario, $isAdmin = false){
-			$log = array("sesion" => true, "userId" => $id_usuario, "isAdmin" => $isAdmin);
+		function crearSesion($id_usuario, $rango_usuario){
+			$log = array("sesion" => true, "userId" => $id_usuario, "rango" => $rango_usuario);
 
 			$this->session->set_userdata($log);
 		}
 
 		function chequearSesion(){
-			if($this->session->userdata("sesion") === true){
-				return true;
-			}else{
-				return false;
-			}
+			return ($this->session->userdata("sesion") === true) ? true : false ;
+		}
+
+		function isAdmin(){
+			return ($this->session->userdata("rango") == 2) ? true : false ;
+		}
+
+		function isModerator(){
+			return ($this->session->userdata("rango") == 3) ? true : false ;
+		}
+
+		function isUser(){
+			return ($this->session->userdata("rango") == 4) ? true : false ;
 		}
 	}
 ?>

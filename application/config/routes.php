@@ -49,9 +49,18 @@ $route['default_controller'] = "site";
 
 $route['login'] = "site/login";
 
-$route['admin']           = "admin";
+$route['admin'] = "admin";
+
+$route['admin/rangos/agregar']   = "admin/agregarRango";
+$route['admin/rangos/listar']    = "admin/listarRango";
+$route['admin/usuarios/agregar'] = "admin/agregarUsuario";
+$route['admin/usuarios/listar']  = "admin/listarUsuario";
+$route['admin/categorias/agregar'] = "admin/agregarCategoria";
+$route['admin/categorias/listar']  = "admin/listarCategoria";
+
 $route['admin/login']     = "admin/login";
 $route['admin/recuperar'] = "admin/recuperar";
+$route['admin/salir']     = "admin/salir";
 
 
 /* End of file routes.php */
