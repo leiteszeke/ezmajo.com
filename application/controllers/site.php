@@ -19,9 +19,42 @@ class Site extends CI_Controller {
         $this->data['titulo'] = $this->data['site_name'];
 	}
 
+    function error_404(){
+
+    }
+
 	function index(){	
 		$this->parser->parse('site/home_view', $this->data);
 	}
+
+    function test(){
+        require_once($this->config->item("base_path")."libraries/MercadoPago/mercadopago.php");
+
+        $mp = new MP($this->config->item("MercadoPagoAccessToken"));
+        $mp->sandbox_mode(true);
+
+        $items = array(
+            "items" => array(
+                array(
+                    "title" => "Pelota", 
+                    "quantity" => 1, 
+                    "currency_id" => "USD", 
+                    "unit_price" => 30.4
+                ),
+                array(
+                    "title" => "Botines", 
+                    "quantity" => 3, 
+                    "currency_id" => "USD", 
+                    "unit_price" => 22.4
+                )
+            )
+        );
+
+        $preference = $mp->create_preference($items);
+
+        d($preference);
+        echo '<a href="'.$preference["response"]["sandbox_init_point"].'">Pagar</a>';
+    }
 }
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */

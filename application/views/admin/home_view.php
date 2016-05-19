@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
 		{head}
 	</head>
-	<body>
-		{menu}
-		<a href="{base_url}admin/usuarios/agregar">Agregar Usuarios</a>
-		<a href="{base_url}admin/usuarios/listar">Listar Usuarios</a>
-		<a href="{base_url}admin/rangos/agregar">Agregar Rangos</a>
-		<a href="{base_url}admin/rangos/listar">Listar Rangos</a>
-		<a href="{base_url}admin/salir">Salir</a>
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+			{header}
+			{sidebar}
+		<div class="content-wrapper">
+			<section class="content-header">
+				<h1>Panel Principal<small>Panel de Control</small></h1>
+			</section>
+			<section class="content">
+			</section>
+		</div>
 		{footer}
 	</body>
 </html>

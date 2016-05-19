@@ -51,6 +51,8 @@ $route['login'] = "site/login";
 
 $route['admin'] = "admin";
 
+$route['test'] = "site/test";
+
 $route['admin/rangos/agregar']   = "admin/agregarRango";
 $route['admin/rangos/listar']    = "admin/listarRango";
 $route['admin/usuarios/agregar'] = "admin/agregarUsuario";

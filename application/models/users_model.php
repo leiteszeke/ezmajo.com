@@ -18,6 +18,7 @@
 					$usuario["estado"] = ($usuario["estado_usuario"] == 1) ? "Habilitado" : "Deshabilitado";
 					$usuario["color"]  = ($usuario["estado_usuario"] == 1) ? "warning" : "success";
 					$usuario["icono"]  = ($usuario["estado_usuario"] == 1) ? "remove" : "check";
+					$usuario["desde"]  = date("M", strtotime($usuario["creacion_usuario"]))." ".date("Y", strtotime($usuario["creacion_usuario"]));
 
 					$resp = $usuario;
 				}else{

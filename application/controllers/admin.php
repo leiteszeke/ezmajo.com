@@ -17,9 +17,11 @@ class Admin extends CI_Controller {
         $this->data['site_name'] = $this->config->item('site_name');
 
         // partes de la pagina 
-        $this->data['head']   = $this->parser->parse("admin/common/head_inc", $this->data, true);
-        $this->data['footer'] = $this->parser->parse("admin/common/footer_inc", $this->data, true);
-        $this->data['menu']   = $this->parser->parse("admin/common/menu_inc", $this->data, true);
+        $this->data['head']    = $this->parser->parse("admin/common/head_inc", $this->data, true);
+        $this->data['footer']  = $this->parser->parse("admin/common/footer_inc", $this->data, true);
+        $this->data['menu']    = $this->parser->parse("admin/common/menu_inc", $this->data, true);
+        $this->data['header']  = $this->parser->parse("admin/common/header_inc", $this->data, true);
+        $this->data['sidebar'] = $this->parser->parse("admin/common/sidebar_inc", $this->data, true);
         
         $this->data['titulo'] = $this->data['site_name'];
 
@@ -27,6 +29,17 @@ class Admin extends CI_Controller {
         $this->isAdmin     = $this->system_model->isAdmin();
         $this->isModerator = $this->system_model->isModerator();
         $this->isUser      = $this->system_model->isUser();
+
+        if($this->sesion){
+            $userdata   = $this->users_model->getUsuario($this->session->userdata("userId"));
+            $this->data["log_nombre"]   = $userdata["nombre_usuario"];
+            $this->data["log_apellido"] = $userdata["apellido_usuario"];
+            $this->data["log_rango"]    = $userdata["rango"];
+            $this->data["log_desde"]    = $userdata["desde"];
+            $this->data["log_nick"]     = $userdata["nick_usuario"];
+        }
+
+        $this->data["esAdmin"] = ($this->isAdmin) ? array(array()) : array();
 	}
 
 	function index(){
