@@ -86,24 +86,131 @@
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-		function cambiarEstado(){
+		function crearCategoria(){
 			if($this->input->post()){
-				$id    = $this->input->post("id");
-				$tabla = $this->input->post("tabla");
+				$nombre = $this->input->post("nombre");
 
-				switch ($tabla) {
-					case 'rangos':
-						$estado = $this->ranks_model->cambiarEstado($id);
-						break;
-					case 'usuarios':
-						$estado = $this->users_model->cambiarEstado($id);
-						break;
-					default:
-						$estado = array("error" => true, "message" => "No se ha podido ejectuar la acción.");
-						break;
+				$categoria = $this->categories_model->crearCategoria($nombre);
+			
+				$resp = array("error" => $categoria["error"], "message" => $categoria["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function editarCategoria(){
+			if($this->input->post()){
+				$id_categoria     = $this->input->post("id");
+				$nombre_categoria = $this->input->post("nombre");
+
+				$categoria = $this->categories_model->editarCategoria($id_categoria, $nombre_categoria);
+
+				$resp = array("error" => $categoria["error"], "message" => $categoria["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function borrarCategoria(){
+			if($this->input->post()){
+				$id_categoria = $this->input->post("id");
+
+				$categoria = $this->categories_model->borrarCategoria($id_categoria);
+
+				$resp = array("error" => $categoria["error"], "message" => $categoria["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function getCategoria(){
+			if($this->input->post()){
+				$id_categoria = $this->input->post("id");
+				
+				$categoria = $this->categories_model->getCategoria($id_categoria);
+				$error     = false;
+
+				if(empty($categoria)){
+					$error = true;
 				}
 
-				$resp = array("error" => $estado["error"], "message" => $estado["message"]);
+				$resp = array("error" => $error, "message" => $categoria);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		function crearSubctegoria(){
+			if($this->input->post()){
+				$nombre    = $this->input->post("nombre");
+				$categoria = $this->input->post("categoria");
+
+				$subcategoria = $this->subcategories_model->crearSubcategoria($nombre, $categoria);
+			
+				$resp = array("error" => $subcategoria["error"], "message" => $subcategoria["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function editarSubcategoria(){
+			if($this->input->post()){
+				$id_subcategoria     = $this->input->post("id");
+				$nombre_subcategoria = $this->input->post("nombre");
+				$id_categoria        = $this->input->post("categoria");
+
+				$subcategoria = $this->subcategories_model->editarSubcategoria($id_subcategoria, $nombre_subcategoria, $id_categoria);
+
+				$resp = array("error" => $subcategoria["error"], "message" => $subcategoria["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function borrarSubcategoria(){
+			if($this->input->post()){
+				$id_subcategoria = $this->input->post("id");
+
+				$subcategoria = $this->subcategories_model->borrarSubcategoria($id_subcategoria);
+
+				$resp = array("error" => $subcategoria["error"], "message" => $subcategoria["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function getSubcategoria(){
+			if($this->input->post()){
+				$id_subcategoria = $this->input->post("id");
+				
+				$subcategoria = $this->subcategories_model->getSubcategoria($id_subcategoria);
+				$error     = false;
+
+				if(empty($subcategoria)){
+					$error = true;
+				}
+
+				$resp = array("error" => $error, "message" => $subcategoria);
 			}else{
 				$resp = array("error" => true, "message" => "Acceso Denegado.");
 			}
@@ -184,6 +291,44 @@
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		function cambiarEstado(){
+			if($this->input->post()){
+				$id    = $this->input->post("id");
+				$tabla = $this->input->post("tabla");
+
+				switch ($tabla) {
+					case 'categorias':
+						$estado = $this->categories_model->cambiarEstado($id);
+						break;
+					case 'rangos':
+						$estado = $this->ranks_model->cambiarEstado($id);
+						break;
+					case 'subcategorias':
+						$estado = $this->subcategories_model->cambiarEstado($id);
+						break;
+					case 'usuarios':
+						$estado = $this->users_model->cambiarEstado($id);
+						break;
+					default:
+						$estado = array("error" => true, "message" => "No se ha podido ejectuar la acción.");
+						break;
+				}
+
+				$resp = array("error" => $estado["error"], "message" => $estado["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
 
 		function loginUser(){
 			if($this->input->post()){

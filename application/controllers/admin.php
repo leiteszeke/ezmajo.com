@@ -40,7 +40,7 @@ class Admin extends CI_Controller {
         }
 
         $this->data["esAdmin"] = ($this->isAdmin) ? array(array()) : array();
-	}
+    }
 
 	function index(){
 		if($this->sesion){
@@ -70,6 +70,26 @@ class Admin extends CI_Controller {
     	}
     }
 
+    function agregarCategoria(){
+        if($this->sesion && $this->isAdmin){
+            $this->parser->parse("admin/categorias/agregar_categorias_view", $this->data);
+        }else{
+            redirect($this->data["base_url"]."admin/login");
+        }
+    }
+
+    function agregarSubcategoria(){
+        if($this->sesion && $this->isAdmin){
+            $categorias = $this->categories_model->getCategorias();
+
+            $this->data["categorias"] = $categorias;
+
+            $this->parser->parse("admin/subcategorias/agregar_subcategorias_view", $this->data);
+        }else{
+            redirect($this->data["base_url"]."admin/login");
+        }
+    }
+
     function agregarUsuario(){
     	if($this->sesion && $this->isAdmin){
 	    	$rangos = $this->ranks_model->getRangos(1);
@@ -97,12 +117,26 @@ class Admin extends CI_Controller {
     }
 
     function listarCategoria(){
+        if($this->sesion && ($this->isAdmin || $this->isModerator)){
+            $categorias = $this->categories_model->getCategorias();
+
+            $this->data["categorias"] = $categorias;
+
+            $this->parser->parse("admin/categorias/listar_categorias_view", $this->data);
+        }else{
+            redirect($this->data["base_url"]."admin/login");
+        }
+    }
+
+    function listarSubcategoria(){
     	if($this->sesion && ($this->isAdmin || $this->isModerator)){
-    		$categorias = $this->categories_model->getCategorias();
+            $categorias    = $this->categories_model->getCategorias(1);
+    		$subcategorias = $this->subcategories_model->getSubcategorias();
 
-    		$this->data["categorias"] = $categorias;
+            $this->data["categorias"]    = $categorias;
+    		$this->data["subcategorias"] = $subcategorias;
 
-    		$this->parser->parse("admin/categorias/listar_categorias_view", $this->data);
+    		$this->parser->parse("admin/subcategorias/listar_subcategorias_view", $this->data);
     	}else{
     		redirect($this->data["base_url"]."admin/login");
     	}

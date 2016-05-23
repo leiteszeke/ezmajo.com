@@ -5,7 +5,7 @@ class Site extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();		
-		
+
 		// data basica
         $this->data['base_url']  = $this->config->item('base_url');
         $this->data['protocolo'] = $this->config->item('protocolo');
@@ -20,7 +20,7 @@ class Site extends CI_Controller {
 	}
 
     function error_404(){
-
+        $this->parser->parse('site/error404_view', $this->data);
     }
 
 	function index(){	

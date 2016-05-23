@@ -16,15 +16,15 @@
 		}
 
 		function isAdmin(){
-			return ($this->session->userdata("rango") == 2) ? true : false ;
+			return ($this->session->userdata("rango") == 1) ? true : false ;
 		}
 
 		function isModerator(){
-			return ($this->session->userdata("rango") == 3) ? true : false ;
+			return ($this->session->userdata("rango") == 2) ? true : false ;
 		}
 
 		function isUser(){
-			return ($this->session->userdata("rango") == 4) ? true : false ;
+			return ($this->session->userdata("rango") == 3) ? true : false ;
 		}
 	}
 ?>

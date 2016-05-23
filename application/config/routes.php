@@ -59,6 +59,8 @@ $route['admin/usuarios/agregar'] = "admin/agregarUsuario";
 $route['admin/usuarios/listar']  = "admin/listarUsuario";
 $route['admin/categorias/agregar'] = "admin/agregarCategoria";
 $route['admin/categorias/listar']  = "admin/listarCategoria";
+$route['admin/subcategorias/agregar'] = "admin/agregarSubcategoria";
+$route['admin/subcategorias/listar']  = "admin/listarSubcategoria";
 
 $route['admin/login']     = "admin/login";
 $route['admin/recuperar'] = "admin/recuperar";

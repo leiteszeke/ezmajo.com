@@ -1,29 +1,21 @@
-$('#userForm').submit(function(e){
+$('#categoriaForm').submit(function(e){
 	e.preventDefault();
-	crearUsuario();
+	crearCategoria();
 })
 
-function crearUsuario(){
+function crearCategoria(){
 	if(validarCampos()){
 		$.ajax({
-			url: base_url + "_admajax/crearUsuario",
+			url: base_url + "_admajax/crearCategoria",
 			data: {
-				nombre     : $.trim($('#nombreUsuario').val()),
-				apellido   : $.trim($('#apellidoUsuario').val()),
-				usuario    : $.trim($('#nickUsuario').val()),
-				email      : $.trim($('#emailUsuario').val()),
-				password   : $.trim($('#passwordUsuario').val()),
-				nacimiento : $.trim($('#nacimientoUsuario').val()),
-				rango      : $.trim($('#rangoUsuario').val()),
+				nombre : $.trim($('#nombreCategoria').val())
 			},
 			type: 'POST',
 			success: function(res){
 				res = $.parseJSON(res);
 
-				console.log(res);
-
 				if(!res.error){
-					location.href = base_url + "admin/usuarios/listar";
+					location.href = base_url + "admin/categorias/listar";
 				}else{
 					mostrarAlerta(res.message);
 				}
@@ -34,13 +26,13 @@ function crearUsuario(){
 	}
 }
 
-function cambiarEstado(idUsuario){
-	if(idUsuario > 0){
+function cambiarEstado(idCategoria){
+	if(idCategoria > 0){
 		$.ajax({
 			url: base_url + "_admajax/cambiarEstado",
 			data: {
-				id: idUsuario,
-				tabla: "usuarios"
+				id: idCategoria,
+				tabla: "categorias"
 			},
 			type: 'POST',
 			success: function(res){
@@ -56,25 +48,22 @@ function cambiarEstado(idUsuario){
 	}
 }
 
-function editarUsuario(idUsuario){
-	if(idUsuario > 0){
+function editarCategoria(idCategoria){
+	if(idCategoria > 0){
 		$.ajax({
-			url: base_url + "_admajax/getUsuario",
+			url: base_url + "_admajax/getCategoria",
 			data: {
-				id: idUsuario
+				id: idCategoria
 			},
 			type: 'POST',
 			success: function(res){
 				res = $.parseJSON(res);
 
 				if(!res.error){
-					var usuario = res.message;
+					var categoria = res.message;
 
-					$('#editarIdUsuario').val(usuario.id_usuario);
-					$('#editarNombreUsuario').val(usuario.nombre_usuario);
-					$('#editarApellidoUsuario').val(usuario.apellido_usuario);
-					$('#editarNacimientoUsuario').val(usuario.fecha_usuario);
-					$('#editarRangoUsuario').val(usuario.rango_usuario);
+					$('#editarIdCategoria').val(categoria.id_categoria);
+					$('#editarNombreCategoria').val(categoria.nombre_categoria);
 					$('#editarBtn').click();
 				}else{
 					mostrarAlerta(res.message);
@@ -86,12 +75,12 @@ function editarUsuario(idUsuario){
 	}
 }
 
-function borrarUsuario(idUsuario){
-	if(idUsuario > 0){
+function borrarCategoria(idCategoria){
+	if(idCategoria > 0){
 		$.ajax({
-			url: base_url + "_admajax/borrarUsuario",
+			url: base_url + "_admajax/borrarCategoria",
 			data: {
-				id: idUsuario
+				id: idCategoria
 			},
 			type: 'POST',
 			success: function(res){
@@ -107,18 +96,15 @@ function borrarUsuario(idUsuario){
 	}
 }
 
-$('#editarUsuarioForm').submit(function(e){
+$('#editarCategoriaForm').submit(function(e){
 	e.preventDefault();
 
-	if($('#editarIdUsuario').val() > 0){
+	if($('#editarIdCategoria').val() > 0){
 		$.ajax({
-			url: base_url + "_admajax/editarUsuario",
+			url: base_url + "_admajax/editarCategoria",
 			data: {
-				id       : $('#editarIdUsuario').val(),
-				nombre   : $('#editarNombreUsuario').val(),
-				apellido : $('#editarApellidoUsuario').val(),
-				fecha    : $('#editarNacimientoUsuario').val(),
-				rango    : $('#editarRangoUsuario').val()
+				id       : $('#editarIdCategoria').val(),
+				nombre   : $('#editarNombreCategoria').val()
 			},
 			type: 'POST',
 			success: function(res){
@@ -137,25 +123,10 @@ $('#editarUsuarioForm').submit(function(e){
 })
 
 function validarCampos(){
-	var usuario  = $('#nickUsuario');
-	var email    = $('#emailUsuario');
-	var password = $('#passwordUsuario');
-	var rango    = $('#rangoUsuario');
-	var resp     = true;
+	var nombre = $('#nombreCategoria');
+	var resp   = true;
 
-	if($.trim(usuario.val()) == "" || $.trim(usuario.val()) == null || $.trim(usuario.val()) == undefined){
-		resp = false;
-	}
-
-	if($.trim(email.val()) == "" || $.trim(email.val()) == null || $.trim(email.val()) == undefined){
-		resp = false;
-	}
-
-	if($.trim(password.val()) == "" || $.trim(password.val()) == null || $.trim(password.val()) == undefined){
-		resp = false;
-	}
-
-	if($.trim(rango.val()) <= 0 || $.trim(rango.val()) == null || $.trim(rango.val()) == undefined){
+	if($.trim(nombre.val()) == "" || $.trim(nombre.val()) == null || $.trim(nombre.val()) == undefined){
 		resp = false;
 	}
 
