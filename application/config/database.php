@@ -54,14 +54,14 @@ if(APP_ENV == "prod"){
 	$db['default']['password'] = '';
 	$db['default']['database'] = '';
 }else{
-	$db['default']['hostname'] = 'localhost';
-	$db['default']['username'] = 'root';
-	$db['default']['password'] = '';
-	$db['default']['database'] = 'ezmajo';
-	//$db['default']['hostname'] = 'leiteszeke.com';
-	//$db['default']['username'] = 'leitesze_ezmajo';
-	//$db['default']['password'] = 'P{wPQDxRO)IA';
-	//$db['default']['database'] = 'leitesze_ezmajo';
+	//$db['default']['hostname'] = 'localhost';
+	//$db['default']['username'] = 'root';
+	//$db['default']['password'] = '';
+	//$db['default']['database'] = 'ezmajo';
+	$db['default']['hostname'] = 'leiteszeke.com';
+	$db['default']['username'] = 'leitesze_ezmajo';
+	$db['default']['password'] = 'P{wPQDxRO)IA';
+	$db['default']['database'] = 'leitesze_ezmajo';
 }
 
 $db['default']['dbdriver'] = 'mysql';

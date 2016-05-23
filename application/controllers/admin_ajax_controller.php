@@ -154,7 +154,7 @@
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-		function crearSubctegoria(){
+		function crearSubcategoria(){
 			if($this->input->post()){
 				$nombre    = $this->input->post("nombre");
 				$categoria = $this->input->post("categoria");
