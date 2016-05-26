@@ -28,6 +28,8 @@
 				$id_producto = $this->db->insert_id();
 
 				if($imagen != false && !empty($imagen)){
+					$imagen = $this->files_model->manipularArchivos($imagen);
+
 					foreach ($imagen as $key => $value) {
 						$this->files_model->subirArchivoProducto($id_producto, $imagen[$key]);
 					}

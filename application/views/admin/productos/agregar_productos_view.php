@@ -51,7 +51,7 @@
 						</div>
  						<div class="form-group col-md-6">
  							<label class="control-label" for="imagenProducto">Imagen</label>
- 							<input class="form-control" type="file" multiple name="imagenProducto" id="imagenProducto" />
+ 							<input class="form-control" type="file" multiple name="imagenProducto[]" id="imagenProducto" />
  						</div>
  						<div class="form-group col-md-6">
  							<label class="control-label" for="stockProducto">Stock</label>
