@@ -21,3 +21,5 @@
 <script src="{base_url}dist/js/app.min.js"></script>
 <script src="{base_url}dist/js/pages/dashboard.js"></script>
 <script src="{base_url}dist/js/demo.js"></script>
+
+<script type="text/javascript" src="{base_url}js/admin/functions.js"></script>

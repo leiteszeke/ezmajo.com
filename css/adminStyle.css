@@ -1,0 +1,11 @@
+.noPadding{
+	padding: 0;
+}
+
+.noMargin{
+	margin: 0;
+}
+
+textarea{
+	resize: none;
+}

@@ -32,7 +32,7 @@ if(APP_ENV == "prod"){
 	$config['base_url']	    = $config['protocolo'] . '/'; // host de la app
 	$config['base_path']	= $_SERVER['DOCUMENT_ROOT'] . '/'; // path
 }else{
-	$config['base_url']	    = $config['protocolo'] . 'localhost:8080/ezmajo/'; // host de la app
+	$config['base_url']	    = $config['protocolo'] . 'localhost/ezmajo/'; // host de la app
 	$config['base_path']	= $_SERVER['DOCUMENT_ROOT'] . '/ezmajo/'; // path
 }
 

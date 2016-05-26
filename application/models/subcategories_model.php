@@ -24,11 +24,15 @@
 			return $resp;
 		}
 
-		function getSubcategorias($estado = false){
+		function getSubcategorias($estado = false, $id_categoria = false){
 			$sql_add = "";
 
 			if($estado !== false && ($estado == 0 || $estado == 1)){
-				$sql_add .= " AND publicado = ".$this->db->escape($estado)."";
+				$sql_add .= " AND estado_subcategoria = ".$this->db->escape($estado)."";
+			}
+
+			if($id_categoria != false && $this->categories_model->validarCategoria($id_categoria)){
+				$sql_add .= " AND id_categoria = ".$this->db->escape($id_categoria)."";
 			}
 
 			$sql = "SELECT * FROM subcategorias WHERE 1 ".$sql_add.";";
@@ -59,7 +63,7 @@
 				if(!$this->validarSubcategoriaByNombre($id_categoria, $nombre)){
 					$fechaHoy = $this->date_model->getDate();
 
-					$sql = "INSERT INTO subcategorias(id_categoria, nombre_categoria, creacion_categoria) VALUES(".$this->db->escape($id_categoria).", ".$this->db->escape($nombre).", ".$this->db->escape($fechaHoy).");";
+					$sql = "INSERT INTO subcategorias(id_categoria, nombre_subcategoria, creacion_subcategoria) VALUES(".$this->db->escape($id_categoria).", ".$this->db->escape($nombre).", ".$this->db->escape($fechaHoy).");";
 					$qry = $this->db->query($sql);
 
 					if($this->db->insert_id() > 0){
@@ -123,19 +127,20 @@
 
 		function borrarSubcategoria($id_subcategoria){
 			if($this->validarSubcategoria($id_subcategoria)){
+				$subcategoria = $this->getSubcategoria($id_subcategoria);
+				$id_categoria = $subcategoria["id_categoria"];
+
 				$sql = "DELETE FROM subcategorias WHERE id_subcategoria = ".$this->db->escape($id_subcategoria).";";
 				$qry = $this->db->query($sql);
 
 				if($this->db->affected_rows() > 0){
-					/*
-					$productos = $this->products_model->getProductosBySubcategoria($id_subcategoria);
+					$productos = $this->products_model->getProductosBySubcategoria($id_categoria, $id_subcategoria);
 
 					$deshabilitarProductos = $this->products_model->deshabilitarProductos($productos);
 					foreach ($productos as $key => $value) {
-						$sql = "UPDATE productos SET estado_producto = '0' WHERE id_producto = ".$this->db->escape($productos[$key]["id_producto"].";";
+						$sql = "UPDATE productos SET estado_producto = '0' WHERE id_producto = ".$this->db->escape($productos[$key]["id_producto"]).";";
 						$qry = $this->db->query($sql);
 					}
-					*/
 					$resp = array("error" => false, "message" => "La subcategoria ha sido borrada.");
 				}else{
 					$resp = array("error" => true, "message" => "No se ha podido borrar la subcategoria.");

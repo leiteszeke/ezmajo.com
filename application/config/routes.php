@@ -50,17 +50,18 @@ $route['default_controller'] = "site";
 $route['login'] = "site/login";
 
 $route['admin'] = "admin";
+$route['test']  = "site/test";
 
-$route['test'] = "site/test";
-
-$route['admin/rangos/agregar']   = "admin/agregarRango";
-$route['admin/rangos/listar']    = "admin/listarRango";
-$route['admin/usuarios/agregar'] = "admin/agregarUsuario";
-$route['admin/usuarios/listar']  = "admin/listarUsuario";
-$route['admin/categorias/agregar'] = "admin/agregarCategoria";
-$route['admin/categorias/listar']  = "admin/listarCategoria";
+$route['admin/rangos/agregar']        = "admin/agregarRango";
+$route['admin/rangos/listar']         = "admin/listarRango";
+$route['admin/usuarios/agregar']      = "admin/agregarUsuario";
+$route['admin/usuarios/listar']       = "admin/listarUsuario";
+$route['admin/categorias/agregar']    = "admin/agregarCategoria";
+$route['admin/categorias/listar']     = "admin/listarCategoria";
 $route['admin/subcategorias/agregar'] = "admin/agregarSubcategoria";
 $route['admin/subcategorias/listar']  = "admin/listarSubcategoria";
+$route['admin/productos/agregar']     = "admin/agregarProducto";
+$route['admin/productos/listar']      = "admin/listarProducto";
 
 $route['admin/login']     = "admin/login";
 $route['admin/recuperar'] = "admin/recuperar";

@@ -86,6 +86,86 @@
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+		function crearProducto(){
+			if($this->input->post()){
+				$nombre       = $this->input->post("nombreProducto");
+				$codigo       = $this->input->post("codigoProducto");
+				$moneda       = $this->input->post("monedaProducto");
+				$precio       = $this->input->post("precioProducto");
+				$categoria    = $this->input->post("categoriaProducto");
+				$subcategoria = $this->input->post("subcategoriaProducto");
+				$descripcion  = $this->input->post("descripcionProducto");
+				$stock        = $this->input->post("stockProducto");
+				$imagen       = false;
+
+				if(isset($_FILES["imagenProducto"]) && !empty($_FILES["imagenProducto"])){
+					$imagen = $_FILES["imagenProducto"];
+				}
+
+				$producto = $this->products_model->crearProducto($nombre, $codigo, $moneda, $precio, $categoria, $subcategoria, $descripcion, $stock, $imagen);
+			
+				$resp = array("error" => $producto["error"], "message" => $producto["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function editarProducto(){
+			if($this->input->post()){
+				$id_categoria     = $this->input->post("id");
+				$nombre_categoria = $this->input->post("nombre");
+
+				$categoria = $this->categories_model->editarCategoria($id_categoria, $nombre_categoria);
+
+				$resp = array("error" => $categoria["error"], "message" => $categoria["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function borrarProducto(){
+			if($this->input->post()){
+				$id_categoria = $this->input->post("id");
+
+				$categoria = $this->categories_model->borrarCategoria($id_categoria);
+
+				$resp = array("error" => $categoria["error"], "message" => $categoria["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function getProducto(){
+			if($this->input->post()){
+				$id_categoria = $this->input->post("id");
+				
+				$categoria = $this->categories_model->getCategoria($id_categoria);
+				$error     = false;
+
+				if(empty($categoria)){
+					$error = true;
+				}
+
+				$resp = array("error" => $error, "message" => $categoria);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 		function crearCategoria(){
 			if($this->input->post()){
 				$nombre = $this->input->post("nombre");
@@ -153,6 +233,25 @@
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		function getSubcategorias(){
+			if($this->input->post()){
+				$id_categoria = $this->input->post("id_categoria");
+
+				$subcategorias = $this->subcategories_model->getSubcategorias(1, $id_categoria);
+
+				$error = true;
+				if(!empty($subcategorias)){
+					$error = false;
+				}
+
+				$resp = array("error" => $error, "message" => $subcategorias);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
 
 		function crearSubcategoria(){
 			if($this->input->post()){

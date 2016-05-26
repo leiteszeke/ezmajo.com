@@ -78,8 +78,22 @@ class Admin extends CI_Controller {
         }
     }
 
-    function agregarSubcategoria(){
+    function agregarProducto(){
         if($this->sesion && $this->isAdmin){
+            $categorias = $this->categories_model->getCategorias(1);
+            $monedas    = $this->cash_model->getMonedas(1);
+
+            $this->data["categorias"] = $categorias;
+            $this->data["monedas"]    = $monedas;
+
+            $this->parser->parse("admin/productos/agregar_productos_view", $this->data);
+        }else{
+            redirect($this->data["base_url"]."admin/login");
+        }
+    }
+
+    function agregarSubcategoria(){
+        if($this->sesion && ($this->isAdmin || $this->isModerator)){
             $categorias = $this->categories_model->getCategorias();
 
             $this->data["categorias"] = $categorias;
