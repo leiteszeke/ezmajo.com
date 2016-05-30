@@ -9,3 +9,37 @@
 textarea{
 	resize: none;
 }
+
+.icon-cerrar{
+	font-size: 2rem;
+	position: absolute;
+	right: 2.5%;
+	top: 2.5%;
+}
+
+.icon-cerrar:hover{
+	color: #FFF;
+	text-shadow: 5px #000;
+}
+
+.div-cerrar{
+	background: rgba(0, 0, 0, 0.5);
+	color: #FFF;
+	font-size: 2rem;
+	font-weight: bold;
+	height: 100%;
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 100%;
+}
+
+.div-cerrar:hover{
+	opacity: 1;
+}
+
+.pointer{
+	cursor: pointer;
+}

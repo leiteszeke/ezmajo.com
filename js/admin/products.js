@@ -26,7 +26,33 @@ $('#productoForm').submit(function(e){
 	}
 })
 
-function cambiaCategoria(){
+$('#editarProductoForm').submit(function(e){
+	e.preventDefault();
+
+	if($('#idProducto').val() > 0 && validarCampos()){
+		$.ajax({
+			url: base_url + "_admajax/editarProducto",
+			data: new FormData($('#editarProductoForm')[0]),
+			cache: false,
+		   	contentType: false,
+			processData: false,
+			type: 'POST',
+			success: function(res){
+				res = $.parseJSON(res);
+
+				if(!res.error){
+					location.href = base_url + "admin/productos/listar";
+				}else{
+					mostrarAlerta(res.message);
+				}
+			}
+		});
+	}else{
+		mostrarAlerta("Debes completar los campos obligatorios.");
+	}
+})
+
+function cambiaCategoria(callback = false, param1 = false){
 	var categoria = $('#categoriaProducto').val();
 	var container = $('#subcategoriaProducto');
 
@@ -52,7 +78,11 @@ function cambiaCategoria(){
 							container.append(html);
 						}
 
-						container.removeAttr("disabled");					
+						container.removeAttr("disabled");
+
+						if(callback != false){
+							callback(param1);
+						}					
 					}else{
 						resetearSubcategorias();
 					}
@@ -63,6 +93,53 @@ function cambiaCategoria(){
 		});
 	}else{
 		resetearSubcategorias();
+	}
+}
+
+function seleccionarSubcategoria(valor){
+	$('#subcategoriaProducto').val(valor);
+}
+
+function cambiarEstado(idProducto){
+	if(idProducto > 0){
+		$.ajax({
+			url: base_url + "_admajax/cambiarEstado",
+			data: {
+				id: idProducto,
+				tabla: "productos"
+			},
+			type: 'POST',
+			success: function(res){
+				res = $.parseJSON(res);
+
+				if(!res.error){
+					location.reload();
+				}else{
+					mostrarAlerta(res.message);
+				}
+			}
+		})	
+	}
+}
+
+function borrarProducto(idProducto){
+	if(idProducto > 0){
+		$.ajax({
+			url: base_url + "_admajax/borrarProducto",
+			data: {
+				id: idProducto
+			},
+			type: 'POST',
+			success: function(res){
+				res = $.parseJSON(res);
+
+				if(!res.error){
+					location.reload();
+				}else{
+					mostrarAlerta(res.message);
+				}
+			}
+		})
 	}
 }
 
@@ -108,6 +185,29 @@ function validarCampos(){
 	}
 
 	return resp;
+}
+
+function borrarArchivo(idArchivo){
+	if(idArchivo > 0){
+		$.ajax({
+			url: base_url + "_admajax/borrarArchivo",
+			data: {
+				id: idArchivo
+			},
+			type: 'POST',
+			success: function(res){
+				res = $.parseJSON(res);
+
+				if(!res.error){
+					$('#archivo_' + idArchivo).remove();
+				}else{
+					mostrarAlerta(res.message);
+				}
+			}
+		})
+	}else{
+		mostrarAlerta("No se puede resolver esta acción.");
+	}
 }
 
 $('#monedaProducto').change(function(){

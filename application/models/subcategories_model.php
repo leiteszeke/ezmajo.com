@@ -24,6 +24,21 @@
 			return $resp;
 		}
 
+		function getSubcategoriaPorLink($id_categoria, $link_subcategoria){
+			$sql = "SELECT * FROM subcategorias WHERE id_categoria = ".$this->db->escape($id_categoria)." AND link_subcategoria = ".$this->db->escape($link_subcategoria).";";
+			$qry = $this->db->query($sql);
+
+			if($qry->num_rows() > 0){
+				$subcategoria = $qry->row_array();
+
+				$resp = $subcategoria;
+			}else{
+				$resp = array();
+			}
+
+			return $resp;
+		}
+
 		function getSubcategorias($estado = false, $id_categoria = false){
 			$sql_add = "";
 

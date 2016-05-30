@@ -23,9 +23,68 @@ class Site extends CI_Controller {
         $this->parser->parse('site/error404_view', $this->data);
     }
 
-	function index(){	
+	function index(){
+        $this->data["carousel"] = array();
+        $this->data["categorias"] = array();
+
+        $carousel = $this->carousel_model->getCarousel(1);
+        $categorias = $this->categories_model->getCategorias(1);
+
+        foreach ($categorias as $key => $value) {
+            $categorias[$key]["subcategorias"] = array();
+
+            $subcategorias = $this->subcategories_model->getSubcategorias(1, $categorias[$key]["id_categoria"]);
+
+            if(!empty($subcategorias)){
+                $categorias[$key]["subcategorias"][0]["items"] = $subcategorias;
+            }
+        }
+
+        $this->data["categorias"] = $categorias;
+
+        if(!empty($carousel)){
+            foreach ($carousel as $key => $value) {
+                $carousel[$key]["active"] = ($key == 0) ? "active" : "";
+            }
+
+            $this->data["carousel"][0]["items"] = $carousel;
+            $this->data["carousel"][0]["bullets"] = $carousel;
+        }
+
+        $this->data["carouselHome"] = $this->parser->parse("site/common/carousel_inc", $this->data, true);
 		$this->parser->parse('site/home_view', $this->data);
 	}
+
+    function mostrarSubcategoria($link_categoria, $link_subcategoria){
+        if(!empty($categoria = $this->categories_model->getCategoriaPorLink($link_categoria))){
+            if(!empty($subcategoria = $this->subcategories_model->getSubcategoriaPorLink($categoria["id_categoria"], $link_subcategoria))){
+                $this->data["categorias"] = array();
+                $this->data["productos"]  = array();
+
+                $categorias = $this->categories_model->getCategorias(1);
+                $productos  = $this->products_model->getProductos($categoria["id_categoria"], $subcategoria["id_subcategoria"]);
+
+                foreach ($categorias as $key => $value) {
+                    $categorias[$key]["subcategorias"] = array();
+
+                    $subcategorias = $this->subcategories_model->getSubcategorias(1, $categorias[$key]["id_categoria"]);
+
+                    if(!empty($subcategorias)){
+                        $categorias[$key]["subcategorias"][0]["items"] = $subcategorias;
+                    }
+                }
+
+                $this->data["categorias"] = $categorias;
+                $this->data["productos"]  = $productos;
+
+                $this->parser->parse("site/listado_productos_view", $this->data);
+            }else{
+                redirect($this->data["base_url"]);
+            }
+        }else{
+            redirect($this->data["base_url"]);
+        }
+    }
 
     function test(){
         require_once($this->config->item("base_path")."libraries/MercadoPago/mercadopago.php");

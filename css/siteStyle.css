@@ -1,0 +1,42 @@
+.noPadding{
+	padding: 0;
+}
+
+header{
+	background: #9EC2E6;
+	border-bottom: 1px solid #898989;
+	height: 60px;
+}
+
+#userMenu{
+	margin: 20px;
+}
+
+ul{
+	list-style-type: none;
+}
+
+ul li{
+	display: block;
+	float: left;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+nav{
+	background: #9EC2E6;
+	border-bottom: 1px solid #898989;
+	height: 40px;
+}
+
+#categoriasMenu{
+	margin: 10px;
+}
+
+#formBuscador{
+	margin: 10px;
+}
+
+#botonBuscador{
+	margin-left: -10px;
+}

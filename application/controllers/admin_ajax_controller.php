@@ -114,12 +114,24 @@
 
 		function editarProducto(){
 			if($this->input->post()){
-				$id_categoria     = $this->input->post("id");
-				$nombre_categoria = $this->input->post("nombre");
+				$id           = $this->input->post("idProducto");
+				$nombre       = $this->input->post("nombreProducto");
+				$codigo       = $this->input->post("codigoProducto");
+				$moneda       = $this->input->post("monedaProducto");
+				$precio       = $this->input->post("precioProducto");
+				$categoria    = $this->input->post("categoriaProducto");
+				$subcategoria = $this->input->post("subcategoriaProducto");
+				$descripcion  = $this->input->post("descripcionProducto");
+				$stock        = $this->input->post("stockProducto");
+				$imagen       = false;
 
-				$categoria = $this->categories_model->editarCategoria($id_categoria, $nombre_categoria);
+				if(isset($_FILES["imagenProducto"]) && !empty($_FILES["imagenProducto"])){
+					$imagen = $_FILES["imagenProducto"];
+				}
 
-				$resp = array("error" => $categoria["error"], "message" => $categoria["message"]);
+				$producto = $this->products_model->editarProducto($id, $nombre, $codigo, $moneda, $precio, $categoria, $subcategoria, $descripcion, $stock, $imagen);
+			
+				$resp = array("error" => $producto["error"], "message" => $producto["message"]);
 			}else{
 				$resp = array("error" => true, "message" => "Acceso Denegado.");
 			}
@@ -129,11 +141,25 @@
 
 		function borrarProducto(){
 			if($this->input->post()){
-				$id_categoria = $this->input->post("id");
+				$id_producto = $this->input->post("id");
 
-				$categoria = $this->categories_model->borrarCategoria($id_categoria);
+				$producto = $this->products_model->borrarProducto($id_producto);
 
-				$resp = array("error" => $categoria["error"], "message" => $categoria["message"]);
+				$resp = array("error" => $producto["error"], "message" => $producto["message"]);
+			}else{
+				$resp = array("error" => true, "message" => "Acceso Denegado.");
+			}
+
+			echo json_encode($resp);
+		}
+
+		function borrarArchivo(){
+			if($this->input->post()){
+				$id_producto = $this->input->post("id");
+
+				$archivo = $this->products_model->borrarArchivoProducto($id_producto);
+
+				$resp = array("error" => $archivo["error"], "message" => $archivo["message"]);
 			}else{
 				$resp = array("error" => true, "message" => "Acceso Denegado.");
 			}
@@ -406,6 +432,9 @@
 				switch ($tabla) {
 					case 'categorias':
 						$estado = $this->categories_model->cambiarEstado($id);
+						break;
+					case 'productos':
+						$estado = $this->products_model->cambiarEstado($id);
 						break;
 					case 'rangos':
 						$estado = $this->ranks_model->cambiarEstado($id);

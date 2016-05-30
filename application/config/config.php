@@ -10,6 +10,8 @@ $config["MercadoPagoClientID"] = "4582143797626970";
 $config["MercadoPagoClientSecret"] = "L6wIGHY4OwtWjYtKg76x035XEKhCUnvn";
 $config["MercadoPagoAccessToken"] = "APP_USR-4741929340126686-051016-badf172f7b94ef1d4fe49b36221889bc__LC_LB__-60072485";
 
+$config["limiteProductos"] = 2;
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL

@@ -24,6 +24,21 @@
 			return $resp;
 		}
 
+		function getCategoriaPorLink($link_categoria){
+			$sql = "SELECT * FROM categorias WHERE link_categoria = ".$this->db->escape($link_categoria).";";
+			$qry = $this->db->query($sql);
+
+			if($qry->num_rows() > 0){
+				$categoria = $qry->row_array();
+
+				$resp = $categoria;
+			}else{
+				$resp = array();
+			}
+
+			return $resp;
+		}
+
 		function getCategorias($estado = false){
 			$sql_add = "";
 
@@ -31,7 +46,7 @@
 				$sql_add .= " AND estado_categoria = ".$this->db->escape($estado)."";
 			}
 
-			$sql = "SELECT id_categoria, nombre_categoria, creacion_categoria, modificacion_categoria, estado_categoria FROM categorias WHERE 1 ".$sql_add.";";
+			$sql = "SELECT id_categoria, nombre_categoria, link_categoria, creacion_categoria, modificacion_categoria, estado_categoria FROM categorias WHERE 1 ".$sql_add.";";
 			$qry = $this->db->query($sql);
 
 			if($qry->num_rows() > 0){

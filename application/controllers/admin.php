@@ -142,6 +142,65 @@ class Admin extends CI_Controller {
         }
     }
 
+    function listarProductos($nPagina = 1){
+        if($this->sesion && ($this->isAdmin || $this->isModerator)){
+            $productos      = $this->products_model->getProductos($nPagina);
+            $totalProductos = $this->products_model->contarProductos();
+
+            $totalPaginas = $totalProductos / $this->config->item("limiteProductos");
+            $totalPaginas = (is_double($totalPaginas)) ? floor($totalPaginas) + 1 : $totalPaginas;
+
+            $this->data["productos"] = array();
+            $this->data["paginador"] = array();
+
+            if($totalPaginas > 0){
+                $this->data["productos"] = $productos;
+                $this->data["paginador"] = $this->paginator_model->generarPaginador($nPagina, $totalPaginas);
+            }
+        
+            $this->parser->parse("admin/productos/listar_productos_view", $this->data);
+        }else{
+            redirect($this->data["base_url"]."admin/login");
+        }
+    }
+
+    function editarProducto($idProducto){
+        if($this->sesion && ($this->isAdmin || $this->isModerator)){
+            if($this->products_model->validarProducto($idProducto)){
+                $this->data["producto"] = array();
+                $this->data["ejecutar"] = array();
+                $producto = $this->products_model->getProducto($idProducto);
+
+
+                $categorias = $this->categories_model->getCategorias(1);
+                $monedas    = $this->cash_model->getMonedas(1);
+
+                $this->data["categorias"] = $categorias;
+                $this->data["monedas"]    = $monedas;
+
+                foreach ($this->data["categorias"] as $key => $value) {
+                    $this->data["categorias"][$key]["selected"] = ($this->data["categorias"][$key]["id_categoria"] == $producto["categoria_producto"]) ? 'selected=\"selected\"' : '';
+                }
+
+                foreach ($this->data["monedas"] as $key => $value) {
+                    $this->data["monedas"][$key]["selected"] = ($this->data["monedas"][$key]["id_moneda"] == $producto["moneda_producto"]) ? 'selected=\"selected\"' : '';
+                }
+
+                if(!empty($producto)){
+                    $this->data["subcategoria_producto"] = $producto["subcategoria_producto"];
+                    $this->data["producto"][0] = $producto;
+                    $this->data["ejecutar"] = array(array());
+                }
+
+                $this->parser->parse("admin/productos/editar_producto_view", $this->data);
+            }else{
+                redirect($this->data["base_url"]."admin/productos/listar");
+            }
+        }else{
+            redirect($this->data["base_url"]."admin/login");
+        }
+    }
+
     function listarSubcategoria(){
     	if($this->sesion && ($this->isAdmin || $this->isModerator)){
             $categorias    = $this->categories_model->getCategorias(1);

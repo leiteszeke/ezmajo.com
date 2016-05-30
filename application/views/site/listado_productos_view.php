@@ -5,7 +5,6 @@
 	</head>
 	<body>
 		{menu}
-		{carouselHome}
 		{footer}
 	</body>
 </html>
