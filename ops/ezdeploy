@@ -1,0 +1,17 @@
+#!/bin/sh
+# Deploy origin/wordpress to /var/www/sftp/web. Installed at /usr/local/bin/ezdeploy on the server.
+# Refuses to run if the live files changed outside git (agency edits, WP auto-updates):
+# pull those changes into the repo first.
+set -e
+WEB=/var/www/sftp/web
+if [ -n "$(ezgit status --porcelain)" ]; then
+	echo "Live site has changes not in git — aborting:" >&2
+	ezgit status --short >&2
+	exit 1
+fi
+ezgit fetch -q origin wordpress
+ezgit diff --name-status HEAD origin/wordpress
+ezgit reset -q --hard origin/wordpress
+# Keep new files editable by the agency over SFTP
+find "$WEB" -user www-data -group www-data -not -name wp-config.php -exec chgrp sftpusers {} + -exec chmod g+w {} +
+ezgit log --oneline -1
