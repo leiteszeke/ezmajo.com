@@ -293,13 +293,15 @@ add_filter( 'render_block', function ( $html ) {
 /*
  * Access levels.
  * - Owners (Ezequiel, Verónica): full administrators and the only accounts that can manage users.
- *   Nobody else can edit, demote or delete them.
+ *   Ezequiel is the top account: only he can edit, demote or delete his own account; Verónica's account
+ *   can be changed by her or by Ezequiel.
  * - "agencia" role (Kit Digital maintenance, user kitdigital): everything an administrator can do,
  *   minus the capabilities below. Computed from the administrator role on every request, so plugins
  *   that add admin capabilities later (e.g. WooCommerce) are included automatically.
  * Note: the agency's SFTP access is outside WordPress; `ezgit status` on the server shows file changes.
  */
 const EZMAJO_OWNERS         = array( 2, 3 ); // ezequiel, vero
+const EZMAJO_ACCOUNT_GUARDS = array( 2 => array( 2 ), 3 => array( 2, 3 ) ); // account => who may change it
 const EZMAJO_AGENCY_DENIED = array(
 	'create_users', 'edit_users', 'delete_users', 'promote_users', 'remove_users', 'list_users',
 	'delete_plugins', 'delete_themes',
@@ -332,16 +334,15 @@ add_filter( 'user_has_cap', function ( $allcaps, $caps, $args, $user ) {
 	return $allcaps;
 }, 10, 4 );
 
-// Only owners manage users, and owner accounts can only be changed by themselves.
+// Only owners manage users; owner accounts can only be changed by the users listed in EZMAJO_ACCOUNT_GUARDS.
 add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) {
-	if ( ezmajo_is_owner( $user_id ) ) {
-		return $caps;
-	}
-	if ( in_array( $cap, array( 'create_users', 'edit_users', 'delete_users', 'promote_users', 'remove_users', 'list_users' ), true ) ) {
+	if ( ! ezmajo_is_owner( $user_id ) && in_array( $cap, array( 'create_users', 'edit_users', 'delete_users', 'promote_users', 'remove_users', 'list_users' ), true ) ) {
 		$caps[] = 'do_not_allow';
 	}
 	$target = isset( $args[0] ) ? (int) $args[0] : 0;
-	if ( in_array( $cap, array( 'edit_user', 'delete_user', 'remove_user', 'promote_user' ), true ) && $target && $target !== (int) $user_id && ezmajo_is_owner( $target ) ) {
+	if ( in_array( $cap, array( 'edit_user', 'delete_user', 'remove_user', 'promote_user' ), true )
+		&& isset( EZMAJO_ACCOUNT_GUARDS[ $target ] )
+		&& ! in_array( (int) $user_id, EZMAJO_ACCOUNT_GUARDS[ $target ], true ) ) {
 		$caps[] = 'do_not_allow';
 	}
 	return $caps;
