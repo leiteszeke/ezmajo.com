@@ -195,6 +195,72 @@ add_action( 'wp_head', function () {
 .ezmajo-contacto .ezmajo-horario li{display:inline-block;margin:0 .6em;white-space:nowrap}
 /* Room below the last footer links so the floating button doesn't cover them */
 @media (max-width:600px){.wp-site-blocks{padding-bottom:84px}}
+.ezmajo-mapa{display:flex;align-items:center;justify-content:center;min-height:inherit;height:100%;background:#f3eee8}
+.ezmajo-mapa iframe{width:100%;height:100%;min-height:inherit;border:0;display:block}
+.ezmajo-mapa__aviso{max-width:340px;padding:24px;text-align:center;line-height:1.6}
+.ezmajo-mapa__aviso p{margin:0 0 16px;color:#4d4556}
+.ezmajo-mapa__cargar{display:block;margin:0 auto 12px;padding:12px 26px;border:0;border-radius:999px;background:#100820;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.ezmajo-mapa__cargar:focus-visible{outline:3px solid #f7b6ba;outline-offset:3px}
+.ezmajo-mapa__aviso a{color:#100820}
 </style>
 	<?php
 } );
+
+/*
+ * [ezmajo_mapa]: Google Maps embed that loads only after consent (GDPR/LSSI).
+ * The iframe URL is not in the HTML; it is injected when the visitor clicks "Ver mapa"
+ * or has accepted CookieYes' "functional" category (now or later).
+ */
+add_shortcode( 'ezmajo_mapa', function () {
+	$b     = ezmajo_business();
+	$query = sprintf( '%s, %s, %s %s', $b['name'], $b['street'], $b['postal_code'], $b['city'] );
+	$embed = 'https://www.google.com/maps?q=' . rawurlencode( $query ) . '&output=embed';
+
+	add_action( 'wp_footer', 'ezmajo_map_script', 20 );
+
+	return sprintf(
+		'<div class="ezmajo-mapa" data-src="%1$s" data-title="%2$s">
+			<div class="ezmajo-mapa__aviso">
+				<p>El mapa lo ofrece Google Maps, que usa cookies. Solo se carga si lo pides o si aceptas las cookies funcionales.</p>
+				<button type="button" class="ezmajo-mapa__cargar">Ver mapa</button>
+				<a href="%3$s" target="_blank" rel="noopener">Abrir en Google Maps</a>
+			</div>
+		</div>',
+		esc_url( $embed ),
+		esc_attr( 'Mapa: ' . $query ),
+		esc_url( $b['maps_url'] )
+	);
+} );
+
+function ezmajo_map_script() {
+	?>
+<script id="ezmajo-mapa-js">
+(function () {
+	function load(box) {
+		if (box.dataset.loaded) return;
+		box.dataset.loaded = '1';
+		var f = document.createElement('iframe');
+		f.src = box.dataset.src;
+		f.title = box.dataset.title;
+		f.loading = 'lazy';
+		f.referrerPolicy = 'no-referrer-when-downgrade';
+		f.allowFullscreen = true;
+		box.replaceChildren(f);
+	}
+	function loadAll() { document.querySelectorAll('.ezmajo-mapa').forEach(load); }
+	function functionalAccepted() {
+		try { return !!(window.getCkyConsent && getCkyConsent().categories.functional); } catch (e) { return false; }
+	}
+	document.addEventListener('click', function (e) {
+		var btn = e.target.closest('.ezmajo-mapa__cargar');
+		if (btn) load(btn.closest('.ezmajo-mapa'));
+	});
+	document.addEventListener('cookieyes_consent_update', function (e) {
+		if (e.detail && e.detail.accepted && e.detail.accepted.indexOf('functional') !== -1) loadAll();
+	});
+	document.addEventListener('cookieyes_banner_load', function () { if (functionalAccepted()) loadAll(); });
+	if (functionalAccepted()) loadAll();
+})();
+</script>
+	<?php
+}
