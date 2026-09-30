@@ -31,3 +31,7 @@ ops/staging/import-test/
 wp-content/uploads/2026/09/blusa-japonesa-*
 wp-content/uploads/2026/09/jersey-flores*
 wp-content/uploads/2026/09/vestido-infantil*
+
+# Local tooling (not part of the site)
+.playwright-mcp/
+.vercel/
