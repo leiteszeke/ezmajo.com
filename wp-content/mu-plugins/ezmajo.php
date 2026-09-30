@@ -264,3 +264,28 @@ function ezmajo_map_script() {
 </script>
 	<?php
 }
+
+/*
+ * External links open in a new tab (rel="noopener"), including links added later in the editor.
+ * Links to ezmajo.com and its subdomains, tel:, mailto: and relative URLs are left alone.
+ */
+add_filter( 'render_block', function ( $html ) {
+	if ( false === stripos( $html, '<a ' ) ) {
+		return $html;
+	}
+	$site = wp_parse_url( home_url(), PHP_URL_HOST );
+	$tags = new WP_HTML_Tag_Processor( $html );
+	while ( $tags->next_tag( 'a' ) ) {
+		$href = (string) $tags->get_attribute( 'href' );
+		$host = preg_match( '#^https?://#i', $href ) ? strtolower( (string) wp_parse_url( $href, PHP_URL_HOST ) ) : '';
+		if ( '' === $host || $host === $site || str_ends_with( $host, '.' . $site ) ) {
+			continue;
+		}
+		$tags->set_attribute( 'target', '_blank' );
+		$rel = trim( (string) $tags->get_attribute( 'rel' ) );
+		if ( ! preg_match( '/\bnoopener\b/', $rel ) ) {
+			$tags->set_attribute( 'rel', trim( $rel . ' noopener' ) );
+		}
+	}
+	return $tags->get_updated_html();
+} );
