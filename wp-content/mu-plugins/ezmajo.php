@@ -1,10 +1,55 @@
 <?php
 /**
  * Plugin Name: Ezmajo
- * Description: Site-specific tweaks for ezmajo.com (security, comments). Must-use plugin: always active.
+ * Description: Site-specific tweaks for ezmajo.com (security, comments, business info, WhatsApp button). Must-use plugin: always active.
  */
 
 defined( 'ABSPATH' ) || exit;
+
+/**
+ * Business details: single source for schema, [ezmajo_horario], [ezmajo_contacto] and the WhatsApp button.
+ * Keep in sync with the Google Business Profile.
+ */
+function ezmajo_business() {
+	return array(
+		'name'          => 'Arreglos Ezmajo',
+		'phone'         => '+34604930764',
+		'phone_display' => '604 93 07 64',
+		'whatsapp'      => '34604930764',
+		'whatsapp_text' => 'Hola, quería consultar por un arreglo.',
+		'street'        => 'Carrer del Rosselló, 64',
+		'district'      => 'Eixample',
+		'postal_code'   => '08029',
+		'city'          => 'Barcelona',
+		'country'       => 'ES',
+		'lat'           => 41.3861582,
+		'lng'           => 2.1481135,
+		'maps_url'      => 'https://maps.google.com/?cid=16293754735231472786',
+		'instagram'     => 'https://www.instagram.com/ezmajo',
+		'hours'         => array(
+			array(
+				'label' => 'Lunes a jueves',
+				'days'  => array( 'Monday', 'Tuesday', 'Wednesday', 'Thursday' ),
+				'slots' => array( array( '09:30', '13:30' ), array( '16:00', '19:30' ) ),
+			),
+			array(
+				'label' => 'Viernes',
+				'days'  => array( 'Friday' ),
+				'slots' => array( array( '09:30', '16:00' ) ),
+			),
+			array(
+				'label' => 'Sábado y domingo',
+				'days'  => array( 'Saturday', 'Sunday' ),
+				'slots' => array(),
+			),
+		),
+	);
+}
+
+function ezmajo_whatsapp_url() {
+	$b = ezmajo_business();
+	return 'https://wa.me/' . $b['whatsapp'] . '?text=' . rawurlencode( $b['whatsapp_text'] );
+}
 
 /*
  * Security: don't expose user accounts to anonymous visitors.
@@ -40,3 +85,113 @@ remove_action( 'wp_head', 'wp_generator' );
 add_filter( 'comments_open', '__return_false', 20 );
 add_filter( 'pings_open', '__return_false', 20 );
 add_filter( 'comments_array', '__return_empty_array', 10 );
+
+/*
+ * Local SEO: turn Yoast's Organization node into a LocalBusiness with address, geo and opening hours.
+ * No self-declared ratings: Google ignores/penalises self-serving reviews for LocalBusiness.
+ */
+add_filter( 'wpseo_schema_organization', function ( $data ) {
+	$b = ezmajo_business();
+
+	$data['@type']         = array( 'Organization', 'LocalBusiness' );
+	$data['alternateName'] = $b['name'];
+	$data['telephone']     = $b['phone'];
+	$data['address']       = array(
+		'@type'           => 'PostalAddress',
+		'streetAddress'   => $b['street'],
+		'addressLocality' => $b['city'],
+		'addressRegion'   => $b['city'],
+		'postalCode'      => $b['postal_code'],
+		'addressCountry'  => $b['country'],
+	);
+	$data['geo']           = array(
+		'@type'     => 'GeoCoordinates',
+		'latitude'  => $b['lat'],
+		'longitude' => $b['lng'],
+	);
+	$data['hasMap']        = $b['maps_url'];
+	$data['areaServed']    = $b['city'];
+	$data['sameAs']        = array_values( array_unique( array_merge( (array) ( $data['sameAs'] ?? array() ), array( $b['instagram'], $b['maps_url'] ) ) ) );
+
+	$data['openingHoursSpecification'] = array();
+	foreach ( $b['hours'] as $row ) {
+		foreach ( $row['slots'] as $slot ) {
+			$data['openingHoursSpecification'][] = array(
+				'@type'     => 'OpeningHoursSpecification',
+				'dayOfWeek' => $row['days'],
+				'opens'     => $slot[0],
+				'closes'    => $slot[1],
+			);
+		}
+	}
+
+	return $data;
+} );
+
+/*
+ * [ezmajo_horario]: opening hours list. [ezmajo_contacto]: address, phone, WhatsApp and hours (footer).
+ */
+function ezmajo_hours_html() {
+	$items = '';
+	foreach ( ezmajo_business()['hours'] as $row ) {
+		$slots = $row['slots']
+			? implode( ' y ', array_map( function ( $s ) {
+				return ltrim( $s[0], '0' ) . '–' . ltrim( $s[1], '0' );
+			}, $row['slots'] ) )
+			: 'Cerrado';
+		$items .= sprintf( '<li><span class="ezmajo-horario__dia">%s</span> <span class="ezmajo-horario__horas">%s</span></li>', esc_html( $row['label'] ), esc_html( $slots ) );
+	}
+	return '<ul class="ezmajo-horario">' . $items . '</ul>';
+}
+add_shortcode( 'ezmajo_horario', 'ezmajo_hours_html' );
+
+add_shortcode( 'ezmajo_contacto', function () {
+	$b = ezmajo_business();
+	return sprintf(
+		'<div class="ezmajo-contacto">
+			<p><a href="%1$s" target="_blank" rel="noopener">%2$s · %3$s, %4$s %5$s</a></p>
+			<p><a href="tel:%6$s">%7$s</a> · <a href="%8$s" target="_blank" rel="noopener">WhatsApp</a></p>
+			%9$s
+		</div>',
+		esc_url( $b['maps_url'] ),
+		esc_html( $b['street'] ),
+		esc_html( $b['district'] ),
+		esc_html( $b['postal_code'] ),
+		esc_html( $b['city'] ),
+		esc_attr( $b['phone'] ),
+		esc_html( $b['phone_display'] ),
+		esc_url( ezmajo_whatsapp_url() ),
+		ezmajo_hours_html()
+	);
+} );
+
+/*
+ * Floating WhatsApp button (bottom right; the cookie banner's revisit button sits bottom left).
+ * WhatsApp teal (#128c7e) instead of #25d366: white icon needs >= 3:1 contrast (site has an accessibility statement).
+ */
+add_action( 'wp_footer', function () {
+	printf(
+		'<a class="ezmajo-wa" href="%s" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" title="Escríbenos por WhatsApp">
+			<svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.04 3C8.86 3 3.03 8.8 3.03 15.95c0 2.29.6 4.52 1.75 6.49L3 29l6.73-1.76a13.04 13.04 0 0 0 6.3 1.6h.01c7.17 0 13-5.8 13-12.95C29.04 8.8 23.21 3 16.04 3Zm0 23.66h-.01a10.8 10.8 0 0 1-5.5-1.5l-.39-.23-4 1.04 1.07-3.88-.26-.4a10.7 10.7 0 0 1-1.65-5.74c0-5.94 4.85-10.77 10.8-10.77 5.95 0 10.79 4.83 10.79 10.77 0 5.94-4.85 10.71-10.85 10.71Zm5.92-8.02c-.32-.16-1.93-.95-2.23-1.06-.3-.11-.52-.16-.73.16-.22.32-.84 1.06-1.03 1.27-.19.22-.38.24-.7.08-.32-.16-1.37-.5-2.6-1.6-.96-.85-1.61-1.9-1.8-2.22-.19-.32-.02-.5.14-.65.14-.14.32-.38.49-.57.16-.19.21-.32.32-.54.11-.21.05-.4-.03-.56-.08-.16-.73-1.76-1-2.41-.26-.63-.53-.54-.73-.55h-.62c-.22 0-.57.08-.87.4-.3.32-1.14 1.11-1.14 2.71 0 1.6 1.17 3.14 1.33 3.36.16.21 2.3 3.5 5.56 4.9.78.34 1.39.54 1.86.69.78.25 1.49.21 2.05.13.63-.09 1.93-.79 2.2-1.55.27-.76.27-1.41.19-1.55-.08-.13-.3-.21-.62-.37Z"/></svg>
+		</a>',
+		esc_url( ezmajo_whatsapp_url() )
+	);
+} );
+
+add_action( 'wp_head', function () {
+	?>
+<style id="ezmajo-css">
+.ezmajo-wa{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:9990;display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:#128c7e;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.2);transition:transform .2s ease}
+.ezmajo-wa:hover,.ezmajo-wa:focus-visible{transform:scale(1.08);color:#fff}
+.ezmajo-wa:focus-visible{outline:3px solid #0b0620;outline-offset:3px}
+@media print{.ezmajo-wa{display:none}}
+.ezmajo-horario{list-style:none;margin:0;padding:0}
+.ezmajo-horario li{margin:0 0 .25em}
+.ezmajo-horario__dia{font-weight:600}
+.ezmajo-contacto{text-align:center;font-size:var(--wp--preset--font-size--small,.9rem);line-height:1.6}
+.ezmajo-contacto p{margin:0 0 .35em}
+.ezmajo-contacto a{color:inherit}
+.ezmajo-contacto .ezmajo-horario li{display:inline;margin:0 .6em}
+</style>
+	<?php
+} );
