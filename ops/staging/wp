@@ -1,0 +1,3 @@
+#!/bin/sh
+# WP-CLI against the local staging copy: ops/staging/wp <command>
+exec docker compose --progress quiet -f "$(dirname "$0")/compose.yml" run --rm -T --quiet-pull cli wp "$@"

@@ -1,0 +1,3 @@
+#!/bin/sh
+# MariaDB client against the local staging DB (reads SQL from stdin when piped)
+exec docker compose --progress quiet -f "$(dirname "$0")/compose.yml" exec -T db mariadb -uwp -pwp ezmajo "$@"

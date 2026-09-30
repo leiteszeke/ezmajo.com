@@ -1,0 +1,61 @@
+<?php
+/**
+ * Plugin Name: Ezmajo Tienda
+ * Description: Store tweaks for selling PDF patterns with WooCommerce (checkout consent, pricing). Must-use plugin: always active.
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/*
+ * Same gross price worldwide: prices are entered IVA included and buyers outside the EU pay that same
+ * price (IVA 0 %), instead of WooCommerce deducting the Spanish IVA for them.
+ */
+add_filter( 'woocommerce_adjust_non_base_location_prices', '__return_false' );
+
+/*
+ * Right of withdrawal for digital content (art. 103.m TRLGDCU): the buyer must expressly request immediate
+ * delivery and acknowledge losing the 14-day withdrawal right. Required checkbox, stored on the order as proof.
+ */
+add_action( 'woocommerce_init', function () {
+	if ( ! function_exists( 'woocommerce_register_additional_checkout_field' ) ) {
+		return;
+	}
+	woocommerce_register_additional_checkout_field( array(
+		'id'       => 'ezmajo/desistimiento',
+		'label'    => 'Quiero recibir los patrones ahora y acepto que, al tratarse de contenido digital, pierdo el derecho de desistimiento una vez iniciada la descarga.',
+		'location' => 'order',
+		'type'     => 'checkbox',
+		'required' => true,
+	) );
+} );
+
+/*
+ * Digital-only checkout: ask for email, name and country only. The country sets the IVA rate and is the
+ * buyer-location evidence for EU digital sales; B2C invoices under 400 € (factura simplificada) need no address.
+ */
+function ezmajo_hide_address_fields( $fields ) {
+	foreach ( array( 'company', 'address_1', 'address_2', 'city', 'state', 'postcode', 'phone' ) as $key ) {
+		$fields[ $key ]['required'] = false;
+		$fields[ $key ]['hidden']   = true;
+	}
+	return $fields;
+}
+add_filter( 'woocommerce_get_country_locale_default', 'ezmajo_hide_address_fields' );
+// Every country, not only those with their own address rules: the block checkout falls back to its
+// built-in defaults (address required) for countries missing from this list.
+add_filter( 'woocommerce_get_country_locale', function ( $locales ) {
+	foreach ( array_keys( WC()->countries->get_countries() ) as $code ) {
+		$locales[ $code ] = ezmajo_hide_address_fields( $locales[ $code ] ?? array() );
+	}
+	return $locales;
+} );
+add_filter( 'woocommerce_default_address_fields', 'ezmajo_hide_address_fields' );
+add_filter( 'pre_option_woocommerce_checkout_phone_field', function () {
+	return 'hidden';
+} );
+add_filter( 'pre_option_woocommerce_checkout_company_field', function () {
+	return 'hidden';
+} );
+add_filter( 'pre_option_woocommerce_checkout_address_2_field', function () {
+	return 'hidden';
+} );

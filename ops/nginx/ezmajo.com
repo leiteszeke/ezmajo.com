@@ -15,6 +15,11 @@ server {
     location ~ /\.ht {
         deny all;
     }
+    # WooCommerce paid downloads: only served through PHP (?download_file=...), never directly.
+    # nginx ignores the .htaccess WooCommerce puts in this folder.
+    location ^~ /wp-content/uploads/woocommerce_uploads/ {
+        deny all;
+    }
     location = /favicon.ico { log_not_found off; access_log off; }
     # Let WordPress/Yoast generate robots.txt when no static file exists
     location = /robots.txt  { try_files $uri /index.php?$args; log_not_found off; access_log off; }
