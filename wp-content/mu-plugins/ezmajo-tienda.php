@@ -66,3 +66,8 @@ add_filter( 'pre_option_woocommerce_checkout_address_2_field', function () {
 foreach ( array( 'catalog', 'fields', 'product-page' ) as $ezmajo_part ) {
 	require __DIR__ . "/ezmajo-tienda/$ezmajo_part.php";
 }
+
+// Typo in the Extendable theme's es_ES translation ("Destalles del pedido" on the order confirmation).
+add_filter( 'gettext_with_context_extendable', function ( $translation ) {
+	return 'Destalles del pedido' === $translation ? 'Detalles del pedido' : $translation;
+} );

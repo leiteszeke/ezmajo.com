@@ -34,7 +34,9 @@ Decisions (confirm with the gestor before launch):
 - [ ] nginx: deploy `ops/nginx/ezmajo.com` (denies direct access to `woocommerce_uploads/`), `nginx -t`, reload;
       verify a PDF URL returns 403
 - [ ] Deploy branch, install WooCommerce + `es_ES` translation, run `01-…`, `02-…`, `03-…`, `wp rewrite flush`
-- [ ] Payment gateway(s) live (Stripe / PayPal / Redsys-Bizum), test purchase with a real card, refund it
+- [ ] Payments: SumUp (the shop already uses it in store) via the official plugin `sumup-payment-gateway-for-woocommerce`
+      (block checkout OK; cards, Apple Pay, PayPal depending on the account; no Bizum). Needs online payments enabled
+      and an API key in the SumUp account; test in staging first, then a real purchase + refund in production
 - [ ] Transactional email: sender is contacto@ezmajo.com, but ezmajo.com mail is ImprovMX (forwarding only;
       SPF allows only ImprovMX). Send through ImprovMX SMTP or a provider (e.g. Brevo) via an SMTP plugin, add its
       SPF include + DKIM, add a DMARC record; test with mail-tester.com. Order notifications → ezmajo.es@gmail.com

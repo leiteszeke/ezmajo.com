@@ -16,7 +16,12 @@ update_option( 'woocommerce_permalinks', $permalinks );
 // Global attributes (filterable). Terms keep this order in filters and on the product page.
 $attributes = array(
 	'dificultad' => array( 'Dificultad', array( 'Principiante', 'Intermedio', 'Avanzado' ) ),
-	'talla'      => array( 'Talla', array( 'XS', 'S', 'M', 'L', 'XL', 'XXL', '34', '36', '38', '40', '42', '44', '46', '48', '50', '52' ) ),
+	'talla'      => array( 'Talla', array(
+		'XS', 'S', 'M', 'L', 'XL', 'XXL',                                                   // adult, letters
+		'34', '36', '38', '40', '42', '44', '46', '48', '50', '52',                          // adult, numbers
+		'0-3 meses', '3-6 meses', '6-12 meses', '12-18 meses', '18-24 meses',                // baby
+		'2 años', '3 años', '4 años', '5 años', '6 años', '8 años', '10 años', '12 años', '14 años', // kids
+	) ),
 	'formato'    => array( 'Formato', array( 'A4', 'A0' ) ),
 );
 foreach ( $attributes as $slug => list( $label, $terms ) ) {
@@ -38,6 +43,13 @@ foreach ( $attributes as $slug => list( $label, $terms ) ) {
 		update_term_meta( (int) $term['term_id'], 'order', $order );
 	}
 	WP_CLI::log( sprintf( '%s: %d terms', $taxonomy, count( $terms ) ) );
+}
+
+// Categories that must exist even before they have patterns (others are created by the importer)
+foreach ( array( 'Infantil' ) as $name ) {
+	if ( ! term_exists( $name, 'product_cat' ) ) {
+		wp_insert_term( $name, 'product_cat' );
+	}
 }
 
 // Default category "Uncategorized" -> "Otros"

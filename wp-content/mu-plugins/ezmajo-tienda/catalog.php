@@ -86,3 +86,9 @@ add_filter( 'render_block_woocommerce/product-collection', function ( $html, $bl
 	}
 	return $html;
 }, 20, 2 ); // after WooCommerce injects its notices container into the block's first <div>
+
+// No mini cart on the cart and checkout pages: redundant there, and on checkout it requests the Store API
+// with an undefined base URL (".../finalizar-compra/undefinedwc/store/v1/cart" 404s).
+add_filter( 'render_block_woocommerce/mini-cart', function ( $html ) {
+	return is_cart() || is_checkout() ? '' : $html;
+} );
