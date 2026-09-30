@@ -26,3 +26,7 @@ wp-content/uploads/wc-logs/
 
 # Local import test files
 ops/staging/import-test/
+
+# Staging-only media from importer tests (attachments exist only in the local DB)
+wp-content/uploads/2026/09/blusa-japonesa-*
+wp-content/uploads/2026/09/jersey-flores*
