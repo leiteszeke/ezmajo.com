@@ -21,3 +21,12 @@ wpe rewrite structure '/%postname%/'
 wpe rewrite flush
 
 wpe cache flush
+
+# Page cache (Cache Enabler writes WP_CACHE to wp-config.php and wp-content/advanced-cache.php).
+# --url is required so the plugin creates its per-host settings file.
+wpe --url=https://ezmajo.com plugin install cache-enabler --activate
+
+# Images to WebP (see 2026-09-30-webp.php), then rebuild Yoast's og:image index and clear the cache
+wpe eval-file /tmp/webp.php
+wpe --url=https://ezmajo.com yoast index --reindex --skip-confirmation
+wpe --url=https://ezmajo.com cache-enabler clear
