@@ -289,3 +289,68 @@ add_filter( 'render_block', function ( $html ) {
 	}
 	return $tags->get_updated_html();
 } );
+
+/*
+ * Access levels.
+ * - Owners (Ezequiel, Verónica): full administrators and the only accounts that can manage users.
+ *   Nobody else can edit, demote or delete them.
+ * - "agencia" role (Kit Digital maintenance, user kitdigital): everything an administrator can do,
+ *   minus the capabilities below. Computed from the administrator role on every request, so plugins
+ *   that add admin capabilities later (e.g. WooCommerce) are included automatically.
+ * Note: the agency's SFTP access is outside WordPress; `ezgit status` on the server shows file changes.
+ */
+const EZMAJO_OWNERS         = array( 2, 3 ); // ezequiel, vero
+const EZMAJO_AGENCY_DENIED = array(
+	'create_users', 'edit_users', 'delete_users', 'promote_users', 'remove_users', 'list_users',
+	'delete_plugins', 'delete_themes',
+	'edit_plugins', 'edit_themes', 'edit_files',
+);
+
+function ezmajo_is_owner( $user_id ) {
+	return in_array( (int) $user_id, EZMAJO_OWNERS, true );
+}
+
+// No plugin/theme code editor in the admin for anyone: code changes go through git.
+if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {
+	define( 'DISALLOW_FILE_EDIT', true );
+}
+
+add_action( 'init', function () {
+	if ( ! get_role( 'agencia' ) ) {
+		add_role( 'agencia', 'Agencia (mantenimiento)', array( 'read' => true ) );
+	}
+} );
+
+add_filter( 'user_has_cap', function ( $allcaps, $caps, $args, $user ) {
+	if ( in_array( 'agencia', (array) $user->roles, true ) ) {
+		$admin   = get_role( 'administrator' );
+		$allcaps = array_merge( $allcaps, $admin ? array_filter( $admin->capabilities ) : array() );
+		foreach ( EZMAJO_AGENCY_DENIED as $cap ) {
+			$allcaps[ $cap ] = false;
+		}
+	}
+	return $allcaps;
+}, 10, 4 );
+
+// Only owners manage users, and owner accounts can only be changed by themselves.
+add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) {
+	if ( ezmajo_is_owner( $user_id ) ) {
+		return $caps;
+	}
+	if ( in_array( $cap, array( 'create_users', 'edit_users', 'delete_users', 'promote_users', 'remove_users', 'list_users' ), true ) ) {
+		$caps[] = 'do_not_allow';
+	}
+	$target = isset( $args[0] ) ? (int) $args[0] : 0;
+	if ( in_array( $cap, array( 'edit_user', 'delete_user', 'remove_user', 'promote_user' ), true ) && $target && $target !== (int) $user_id && ezmajo_is_owner( $target ) ) {
+		$caps[] = 'do_not_allow';
+	}
+	return $caps;
+}, 10, 4 );
+
+// Non-owners can never hand out the administrator or agencia roles.
+add_filter( 'editable_roles', function ( $roles ) {
+	if ( ! ezmajo_is_owner( get_current_user_id() ) ) {
+		unset( $roles['administrator'], $roles['agencia'] );
+	}
+	return $roles;
+} );
