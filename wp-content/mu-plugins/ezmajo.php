@@ -136,10 +136,10 @@ function ezmajo_hours_html() {
 	foreach ( ezmajo_business()['hours'] as $row ) {
 		$slots = $row['slots']
 			? implode( ' y ', array_map( function ( $s ) {
-				return ltrim( $s[0], '0' ) . '–' . ltrim( $s[1], '0' );
+				return '<span class="ezmajo-horario__tramo">' . esc_html( ltrim( $s[0], '0' ) . '–' . ltrim( $s[1], '0' ) ) . '</span>';
 			}, $row['slots'] ) )
 			: 'Cerrado';
-		$items .= sprintf( '<li><span class="ezmajo-horario__dia">%s</span> <span class="ezmajo-horario__horas">%s</span></li>', esc_html( $row['label'] ), esc_html( $slots ) );
+		$items .= sprintf( '<li><span class="ezmajo-horario__dia">%s</span> <span class="ezmajo-horario__horas">%s</span></li>', esc_html( $row['label'] ), $slots );
 	}
 	return '<ul class="ezmajo-horario">' . $items . '</ul>';
 }
@@ -188,7 +188,8 @@ add_action( 'wp_head', function () {
 .ezmajo-horario{list-style:none;margin:0;padding:0}
 .ezmajo-horario li{margin:0 0 .25em}
 .ezmajo-horario__dia{font-weight:600}
-.ezmajo-contacto{text-align:center;font-size:var(--wp--preset--font-size--small,.9rem);line-height:1.6}
+.ezmajo-horario__tramo{white-space:nowrap}
+.ezmajo-contacto{margin-bottom:1.25rem;text-align:center;font-size:var(--wp--preset--font-size--small,.9rem);line-height:1.6}
 .ezmajo-contacto p{margin:0 0 .35em}
 .ezmajo-contacto a{color:inherit}
 .ezmajo-contacto .ezmajo-horario li{display:inline;margin:0 .6em}

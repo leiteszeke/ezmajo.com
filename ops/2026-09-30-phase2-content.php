@@ -161,3 +161,6 @@ foreach ( $ids as $id ) {
 		ez_update_content( $id, $new, 'alt texts' );
 	}
 }
+
+// Logo alt ("ezmajo_logo" -> "Ezmajo"); applied separately with:
+// wpe post meta update 48 _wp_attachment_image_alt "Ezmajo" (and 47)
