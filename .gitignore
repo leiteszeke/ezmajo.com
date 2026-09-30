@@ -23,3 +23,6 @@ wp-content/uploads/woocommerce_uploads/
 
 # WooCommerce logs (may contain customer data)
 wp-content/uploads/wc-logs/
+
+# Local import test files
+ops/staging/import-test/

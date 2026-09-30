@@ -1,0 +1,130 @@
+/* Ezmajo tienda: match the site's buttons (dark pill) and style the pattern data. */
+
+:root {
+	--ez-dark: #100820;
+	--ez-pink: #f7b6ba;
+	--ez-pink-soft: #fff1f2;
+	--ez-muted: #6f6678;
+	--ez-border: #eadfe5;
+}
+
+/* Buttons: theme accent (purple) -> site dark pill */
+.single_add_to_cart_button,
+.wc-block-components-product-button__button,
+.wc-block-components-button:not(.is-link),
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button,
+.woocommerce .button,
+.woocommerce a.button {
+	background: var(--ez-dark) !important;
+	color: #fff !important;
+	border: 0 !important;
+	border-radius: 999px !important;
+	font-weight: 700;
+}
+.single_add_to_cart_button:hover,
+.wc-block-components-product-button__button:hover,
+.wc-block-components-button:not(.is-link):hover {
+	opacity: .9;
+}
+.single_add_to_cart_button:focus-visible,
+.wc-block-components-product-button__button:focus-visible,
+.wc-block-components-button:focus-visible {
+	outline: 3px solid var(--ez-pink);
+	outline-offset: 3px;
+}
+
+/* Quick facts under the price */
+.ezmajo-ficha {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	gap: 12px;
+	margin: 1.25rem 0;
+	padding: 16px;
+	border: 1px solid var(--ez-border);
+	border-radius: 16px;
+	background: var(--ez-pink-soft);
+}
+.ezmajo-ficha div { margin: 0; }
+.ezmajo-ficha dt {
+	margin: 0 0 2px;
+	color: var(--ez-muted);
+	font-size: .8rem;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+}
+.ezmajo-ficha dd { margin: 0; font-weight: 600; }
+
+/* "Te lo cosemos" */
+.ezmajo-cosemos {
+	margin: 1rem 0 0;
+	color: var(--ez-muted);
+}
+.ezmajo-cosemos a { color: var(--ez-dark); font-weight: 700; }
+
+/* Tables in tabs */
+.ezmajo-tabla {
+	width: 100%;
+	margin: 1rem 0;
+	border-collapse: collapse;
+	font-size: .95rem;
+}
+.ezmajo-tabla th,
+.ezmajo-tabla td {
+	padding: 8px 12px;
+	border-bottom: 1px solid var(--ez-border);
+	text-align: left;
+}
+.ezmajo-tabla thead th { background: var(--ez-pink-soft); }
+.ezmajo-licencia {
+	margin-top: 1rem;
+	padding: 12px 16px;
+	border-left: 3px solid var(--ez-pink);
+	color: var(--ez-muted);
+	font-size: .95rem;
+}
+
+/* Catalogue filter chips */
+.ezmajo-filtros {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 1.5rem auto 2rem;
+}
+.ezmajo-filtro {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+.ezmajo-filtro__titulo {
+	min-width: 6.5rem;
+	color: var(--ez-muted);
+	font-size: .8rem;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+}
+.ezmajo-chip {
+	padding: 6px 14px;
+	border: 1px solid var(--ez-border);
+	border-radius: 999px;
+	background: #fff;
+	color: var(--ez-dark);
+	font-size: .9rem;
+	text-decoration: none;
+	line-height: 1.4;
+}
+.ezmajo-chip:hover { border-color: var(--ez-dark); }
+.ezmajo-chip.is-active {
+	border-color: var(--ez-dark);
+	background: var(--ez-dark);
+	color: #fff;
+}
+.ezmajo-chip:focus-visible,
+.ezmajo-filtros__quitar:focus-visible { outline: 3px solid var(--ez-pink); outline-offset: 2px; }
+.ezmajo-filtros__quitar { align-self: flex-start; color: var(--ez-dark); font-size: .9rem; }
+@media (max-width: 600px) {
+	.ezmajo-filtro__titulo { width: 100%; }
+}

@@ -1,7 +1,23 @@
 # Tienda (PDF patterns, WooCommerce)
 
-Code: `wp-content/mu-plugins/ezmajo-tienda.php` (checkout consent, digital-only checkout fields, pricing).
-Config: `01-woocommerce-setup.php` (idempotent; run with `--user=<admin>`).
+Code: `wp-content/mu-plugins/ezmajo-tienda.php` (checkout consent, digital-only checkout fields, pricing) and
+`wp-content/mu-plugins/ezmajo-tienda/` (catalogue URLs + filter chips, "Patrón" product fields, product page, CSS).
+
+Config scripts (idempotent; run with `--user=<admin>`, then `wp rewrite flush` in a separate run):
+1. `01-woocommerce-setup.php` — store, currency, IVA, checkout, downloads, emails, pages
+2. `02-catalogo.php` — URLs (/patrones/, /patron/…), attributes (dificultad, talla, formato), SEO titles, order emails
+3. `03-menu.php` — "Patrones" in the menu, mini cart in the header
+
+## Loading patterns
+
+Fill `plantilla-patrones.csv` (Google Sheets → Download → CSV), one row per pattern; `codigo` identifies it.
+Put the photos and PDFs named in the sheet in one folder, then:
+
+    wp --user=<admin> eval-file ops/tienda/importar-patrones.php patrones.csv carpeta/ validar   # check only
+    wp --user=<admin> eval-file ops/tienda/importar-patrones.php patrones.csv carpeta/           # create/update
+
+Tables (metraje, medidas) use one row per line and `|` between columns, first line = header.
+Dificultad/tallas/formatos must be existing values (see `02-catalogo.php`); `publicado` = sí/no.
 
 Decisions (confirm with the gestor before launch):
 - Prices entered IVA included; same gross price worldwide.
@@ -17,9 +33,11 @@ Decisions (confirm with the gestor before launch):
 - [ ] Backup files + DB
 - [ ] nginx: deploy `ops/nginx/ezmajo.com` (denies direct access to `woocommerce_uploads/`), `nginx -t`, reload;
       verify a PDF URL returns 403
-- [ ] Deploy branch, install WooCommerce + `es_ES` translation, run `01-woocommerce-setup.php`
+- [ ] Deploy branch, install WooCommerce + `es_ES` translation, run `01-…`, `02-…`, `03-…`, `wp rewrite flush`
 - [ ] Payment gateway(s) live (Stripe / PayPal / Redsys-Bizum), test purchase with a real card, refund it
-- [ ] Transactional email deliverability (SMTP/provider, SPF/DKIM for ezmajo.com); order notification recipient
+- [ ] Transactional email: sender is contacto@ezmajo.com, but ezmajo.com mail is ImprovMX (forwarding only;
+      SPF allows only ImprovMX). Send through ImprovMX SMTP or a provider (e.g. Brevo) via an SMTP plugin, add its
+      SPF include + DKIM, add a DMARC record; test with mail-tester.com. Order notifications → ezmajo.es@gmail.com
 - [ ] Invoices plugin (Verifactu) agreed with the gestor
 - [ ] Legal pages: Condiciones de venta, licencia de uso, privacy + cookie policy updates; set terms page in WooCommerce
 - [ ] CookieYes: payment provider cookies categorised

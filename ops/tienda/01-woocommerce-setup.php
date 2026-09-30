@@ -58,6 +58,7 @@ $options = array(
 
 	// Emails
 	'woocommerce_email_from_name'                    => 'Ezmajo',
+	'woocommerce_email_from_address'                 => 'contacto@ezmajo.com', // needs an authorised sender for ezmajo.com (see README)
 
 	// No tracking / upsell noise
 	'woocommerce_allow_tracking'                     => 'no',
