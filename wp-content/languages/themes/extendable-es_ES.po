@@ -1,0 +1,1355 @@
+# Translation of Themes - Extendable in Spanish (Spain)
+# This file is distributed under the same license as the Themes - Extendable package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2026-05-14 21:40:52+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: es\n"
+"Project-Id-Version: Themes - Extendable\n"
+
+#. Theme Name of the theme
+#: style.css
+#, gp-priority: high
+msgid "Extendable"
+msgstr "Extendable"
+
+#. Description of the theme
+#: style.css
+#, gp-priority: high
+msgid "Extendable is a distinct, dynamic block theme designed as a canvas for your next online venture. Sporting multiple style variations, Extendable is the most expressive block theme yet. Go fresh, bold, bohemian or minimal — with a single click."
+msgstr "Extendable es un tema de bloques distinto y dinámico diseñado como lienzo para tu próxima aventura en línea. Con múltiples variaciones de estilo, Extendable es el tema de bloques más expresivo hasta la fecha. Fresco, atrevido, bohemio o minimalista, con un solo clic."
+
+#: patterns/hidden-shop-product.php
+msgctxt "Pattern title"
+msgid "Shop product"
+msgstr "Producto de la tienda"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Large"
+msgstr "Grande"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Medium"
+msgstr "Medio"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Small"
+msgstr "Pequeño"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "X-Small"
+msgstr "Extrapequeño"
+
+#: patterns/hidden-order-confirmation.php:71
+msgctxt "Heading for order confirmation page additional information section"
+msgid "Additional information"
+msgstr "Información adicional"
+
+#: patterns/hidden-order-confirmation.php:58
+msgctxt "Heading for order confirmation page billing address section"
+msgid "Billing address"
+msgstr "Dirección de facturación"
+
+#: patterns/hidden-order-confirmation.php:46
+msgctxt "Heading for order confirmation page shipping address section"
+msgid "Shipping address"
+msgstr "Dirección de envío"
+
+#: patterns/hidden-order-confirmation.php:32
+msgctxt "Heading for order confirmation page downloadable products section"
+msgid "Downloads"
+msgstr "Descargas"
+
+#: patterns/hidden-order-confirmation.php:24
+msgctxt "Heading for order confirmation page order details section"
+msgid "Order details"
+msgstr "Destalles del pedido"
+
+#: patterns/hidden-order-confirmation.php
+msgctxt "Pattern title"
+msgid "Order Confirmation"
+msgstr "Confirmación del pedido"
+
+#: styles/block-presets/group/natural-1/template/preset.json
+msgctxt "Style variation name"
+msgid "Template 1"
+msgstr "Plantilla 1"
+
+#: styles/block-presets/group/natural-1/section/preset.json
+msgctxt "Style variation name"
+msgid "Section 1"
+msgstr "Sección 1"
+
+#: styles/block-presets/group/natural-1/header-1/preset.json
+msgctxt "Style variation name"
+msgid "Header 1"
+msgstr "Cabecera 1"
+
+#: styles/block-presets/group/natural-1/footer-1/preset.json
+msgctxt "Style variation name"
+msgid "Footer 1"
+msgstr "Pie de página 1"
+
+#: styles/block-presets/cover/natural-1/cover-overlay-1/preset.json
+msgctxt "Style variation name"
+msgid "Overlay 1"
+msgstr "Superposición 1"
+
+#: styles/block-presets/button/natural-1/button-1/preset.json
+msgctxt "Style variation name"
+msgid "Button 1"
+msgstr "Botón 1"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "XX-Large"
+msgstr "Extra-extragrande"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "X-Large"
+msgstr "Extragrande"
+
+#: theme.json
+msgctxt "Shadow name"
+msgid "Brutalism"
+msgstr "Brutalismo"
+
+#: theme.json
+msgctxt "Shadow name"
+msgid "Brutalism Small"
+msgstr "Brutalismo pequeño"
+
+#: styles/block-presets/button/brutalism-1/button-1/preset.json
+msgctxt "Style variation name"
+msgid "Brutalism 1 Button 1"
+msgstr "Brutalismo 1 botón 1"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Center Logo, Social, and Menu"
+msgstr "Pie de página con logotipo del centro, social y menú"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Menu"
+msgstr "Pie de página con menú"
+
+#: styles/colors/teal.json styles/teal.json
+msgctxt "Style variation name"
+msgid "Teal"
+msgstr "Turquesa"
+
+#: styles/colors/sunset.json styles/sunset.json
+msgctxt "Style variation name"
+msgid "Sunset"
+msgstr "Atardecer"
+
+#: styles/colors/royal.json styles/royal.json
+msgctxt "Style variation name"
+msgid "Royal"
+msgstr "Real"
+
+#: styles/colors/obsidian.json styles/obsidian.json
+msgctxt "Style variation name"
+msgid "Obsidian"
+msgstr "Obsidiana"
+
+#: styles/colors/mulberry.json styles/mulberry.json
+msgctxt "Style variation name"
+msgid "Mulberry"
+msgstr "Morera"
+
+#: styles/colors/merlot.json styles/merlot.json
+msgctxt "Style variation name"
+msgid "Merlot"
+msgstr "Merlot"
+
+#: styles/colors/lime.json styles/lime.json
+msgctxt "Style variation name"
+msgid "Lime"
+msgstr "Lima"
+
+#: styles/colors/indigo.json styles/indigo.json
+msgctxt "Style variation name"
+msgid "Indigo"
+msgstr "Indigo"
+
+#: styles/clay.json styles/colors/clay.json
+msgctxt "Style variation name"
+msgid "Clay"
+msgstr "Arcilla"
+
+#: styles/brick.json styles/colors/brick.json
+msgctxt "Style variation name"
+msgid "Brick"
+msgstr "Ladrillo"
+
+#: styles/13-rosewood.json styles/colors/rosewood.json
+msgctxt "Style variation name"
+msgid "Rosewood"
+msgstr "Rosa palo"
+
+#: styles/12-limepop.json styles/colors/limepop.json
+msgctxt "Style variation name"
+msgid "Limepop"
+msgstr "Lima pop"
+
+#: styles/11-neon.json styles/colors/neon.json
+msgctxt "Style variation name"
+msgid "Neon"
+msgstr "Neón"
+
+#: styles/10-midnight.json styles/colors/midnight.json
+msgctxt "Style variation name"
+msgid "Midnight"
+msgstr "Medianoche"
+
+#: styles/08-moss.json styles/colors/moss.json
+msgctxt "Style variation name"
+msgid "Moss"
+msgstr "Musgo"
+
+#: styles/07-coral.json styles/colors/coral.json
+msgctxt "Style variation name"
+msgid "Coral"
+msgstr "Coral"
+
+#: styles/06-lilac.json styles/colors/lilac.json
+msgctxt "Style variation name"
+msgid "Lilac"
+msgstr "Lila"
+
+#: styles/04-gold.json styles/colors/gold.json
+msgctxt "Style variation name"
+msgid "Gold"
+msgstr "Dorado"
+
+#: styles/03-slate.json styles/colors/slate.json
+msgctxt "Style variation name"
+msgid "Slate"
+msgstr "Pizarra"
+
+#: styles/02-cobalt.json styles/colors/cobalt.json
+msgctxt "Style variation name"
+msgid "Cobalt"
+msgstr "Cobalto"
+
+#: styles/01-evergreen.json styles/colors/evergreen.json
+msgctxt "Style variation name"
+msgid "Evergreen"
+msgstr "Perenne"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Page with Title"
+msgstr "Página con título"
+
+#: patterns/general-cta.php:22
+msgctxt "Button label for Call to action section"
+msgid "Get Started"
+msgstr "Primeros pasos"
+
+#: patterns/general-cta.php:13
+msgctxt "Heading for Call to action section"
+msgid "This is a Large Default Heading Title"
+msgstr "Esto es un encabezado de título grande por defecto"
+
+#: styles/typography/space-mono.json
+msgctxt "Style variation name"
+msgid "Space Mono"
+msgstr "Space Mono"
+
+#: styles/typography/source-serif-pro-roboto-flex.json
+msgctxt "Style variation name"
+msgid "Source Serif Pro & Roboto Flex"
+msgstr "Source Serif Pro y Roboto Flex"
+
+#: styles/typography/source-serif-pro-inter.json
+msgctxt "Style variation name"
+msgid "Source Serif Pro & Inter"
+msgstr "Source Serif Pro e Inter"
+
+#: styles/typography/rubik.json
+msgctxt "Style variation name"
+msgid "Rubik"
+msgstr "Rubik"
+
+#: styles/typography/oswald-inter.json
+msgctxt "Style variation name"
+msgid "Oswald & inter"
+msgstr "Oswald e inter"
+
+#: styles/typography/noto-serif-display-radio-canada.json
+msgctxt "Style variation name"
+msgid "Karla & Inconsolata"
+msgstr "Karla e Inconsolata"
+
+#: styles/typography/montserrat-inter.json
+msgctxt "Style variation name"
+msgid "Montserrat & Inter"
+msgstr "Montserrat e Inter"
+
+#: styles/typography/marcellus-ibm-plex-sans.json
+msgctxt "Style variation name"
+msgid "Marcellus & IBM Plex Sans"
+msgstr "Marcellus e IBM Plex Sans"
+
+#: styles/typography/jost-mulish.json
+msgctxt "Style variation name"
+msgid "Jost & Mulish"
+msgstr "Jost y Mulish"
+
+#: styles/typography/hind.json
+msgctxt "Style variation name"
+msgid "Hind"
+msgstr "Hind"
+
+#: styles/typography/heebo.json
+msgctxt "Style variation name"
+msgid "Heebo"
+msgstr "Heebo"
+
+#: styles/typography/gotu-manrope.json
+msgctxt "Style variation name"
+msgid "Gotu & Manrope"
+msgstr "Gotu y Manrope"
+
+#: styles/typography/geom-roboto-flex.json
+msgctxt "Style variation name"
+msgid "Geom & Roboto Flex"
+msgstr "Geom y Roboto Flex"
+
+#: styles/typography/baloo-tamma-2-mulish.json
+msgctxt "Style variation name"
+msgid "Baloo Tamma 2 & Mulish"
+msgstr "Baloo Tamma 2 y Mulish"
+
+#: styles/typography/arsenal-radio-canada.json
+msgctxt "Style variation name"
+msgid "Arsenal & Radio Canada"
+msgstr "Arsenal y Radio Canada"
+
+#: styles/typography/archivo.json
+msgctxt "Style variation name"
+msgid "Archivo"
+msgstr "Archivo"
+
+#: theme.json styles/01-evergreen.json styles/02-cobalt.json
+#: styles/03-slate.json styles/04-gold.json styles/05-bloom.json
+#: styles/06-lilac.json styles/07-coral.json styles/08-moss.json
+#: styles/09-onyx.json styles/10-midnight.json styles/11-neon.json
+#: styles/12-limepop.json styles/13-rosewood.json styles/brick.json
+#: styles/brisbane.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json
+#: styles/colors/brisbane.json styles/colors/cairo.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gdansk.json styles/colors/glasgow.json styles/colors/gold.json
+#: styles/colors/graphite.json styles/colors/hong-kong.json
+#: styles/colors/indigo.json styles/colors/kampala.json
+#: styles/colors/lagoon.json styles/colors/lilac.json styles/colors/lime.json
+#: styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/piraeus.json
+#: styles/colors/porto.json styles/colors/rio.json styles/colors/rosewood.json
+#: styles/colors/royal.json styles/colors/santa-fe.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/thimphu.json styles/colors/tokyo.json styles/fusion-sky.json
+#: styles/gdansk.json styles/glasgow.json styles/graphite.json
+#: styles/hong-kong.json styles/indigo.json styles/kampala.json
+#: styles/lagoon.json styles/lime.json styles/merlot.json styles/mulberry.json
+#: styles/obsidian.json styles/odesa.json styles/orange.json
+#: styles/piraeus.json styles/porto.json styles/rio.json styles/royal.json
+#: styles/santa-fe.json styles/sunset.json styles/teal.json styles/thimphu.json
+#: styles/tokyo.json
+msgctxt "Duotone name"
+msgid "Background and Background Alt"
+msgstr "Fondo y fondo alternativo"
+
+#: styles/typography/montserrat-heebo.json
+msgctxt "Style variation name"
+msgid "Montserrat & Heebo"
+msgstr "Montserrat & Heebo"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "No Title Sticky Header"
+msgstr "Cabecera fija sin título"
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Huge"
+msgstr "Enorme"
+
+#: patterns/hidden-woo-related-products.php:13
+msgctxt "Heading for a single product page related products section"
+msgid "Related products "
+msgstr "Productos relacionados "
+
+#: patterns/hidden-woo-related-products.php
+msgctxt "Pattern title"
+msgid "Related-Products"
+msgstr "Productos-Relacionados"
+
+#: patterns/hidden-no-products.php:10
+msgctxt "Message explaining that there are no results returned from a query"
+msgid "No products were found matching your selection."
+msgstr "No se han encontrado productos que coincidan con tu selección."
+
+#: patterns/hidden-no-products.php
+msgctxt "Pattern title"
+msgid "No products"
+msgstr "No hay productos"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Oswald"
+msgstr "Oswald"
+
+#: patterns/posts-1-col.php
+msgctxt "Pattern title"
+msgid "List of posts, 1 column"
+msgstr "Lista de entradas, 1 columna"
+
+#: patterns/hidden-search.php
+msgctxt "Pattern title"
+msgid "Search"
+msgstr "Buscar"
+
+#: patterns/hidden-no-results.php
+msgctxt "Pattern title"
+msgid "No results"
+msgstr "No hay resultados"
+
+#: patterns/hidden-search.php:9
+msgctxt "search button text"
+msgid "Search"
+msgstr "Buscar"
+
+#: patterns/hidden-search.php:9
+msgctxt "search form label"
+msgid "Search"
+msgstr "Buscar"
+
+#: patterns/hidden-no-results.php:9
+msgctxt "Message explaining that there are no results returned from a search"
+msgid "No posts were found."
+msgstr "No se han encontrado entradas."
+
+#: patterns/hidden-404.php:17
+msgctxt "Message to convey that a webpage could not be found"
+msgid "The page you are looking for does not exist, or it has been moved. Please try searching using the form below."
+msgstr "La página que buscas no existe o se ha movido. Intenta buscarla utilizando el siguiente formulario."
+
+#: patterns/hidden-404.php:13
+msgctxt "Heading for a webpage that is not found"
+msgid "Page Not Found"
+msgstr "Página no encontrada"
+
+#: patterns/header-title-nav-button.php:32
+msgctxt "Button text of this section"
+msgid "Get Started"
+msgstr "Primeros pasos"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Gotu"
+msgstr "Gotu"
+
+#: styles/colors/thimphu.json styles/thimphu.json
+msgctxt "Duotone name"
+msgid "secondary and Foreground"
+msgstr "secundario y primer plano"
+
+#: styles/colors/thimphu.json styles/thimphu.json
+msgctxt "Duotone name"
+msgid "secondary and background"
+msgstr "secundario y fondo"
+
+#: styles/09-onyx.json styles/colors/onyx.json
+msgctxt "Style variation name"
+msgid "Onyx"
+msgstr "Ónice"
+
+#: styles/colors/lagoon.json styles/lagoon.json
+msgctxt "Style variation name"
+msgid "Lagoon"
+msgstr "Laguna"
+
+#: theme.json styles/01-evergreen.json styles/02-cobalt.json
+#: styles/03-slate.json styles/04-gold.json styles/06-lilac.json
+#: styles/07-coral.json styles/08-moss.json styles/09-onyx.json
+#: styles/10-midnight.json styles/11-neon.json styles/12-limepop.json
+#: styles/13-rosewood.json styles/brick.json styles/brisbane.json
+#: styles/cairo.json styles/clay.json styles/colors/brick.json
+#: styles/colors/brisbane.json styles/colors/cairo.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/gdansk.json
+#: styles/colors/glasgow.json styles/colors/gold.json
+#: styles/colors/graphite.json styles/colors/hong-kong.json
+#: styles/colors/indigo.json styles/colors/kampala.json
+#: styles/colors/lagoon.json styles/colors/lilac.json styles/colors/lime.json
+#: styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/piraeus.json
+#: styles/colors/porto.json styles/colors/rio.json styles/colors/rosewood.json
+#: styles/colors/royal.json styles/colors/santa-fe.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/thimphu.json styles/colors/tokyo.json styles/gdansk.json
+#: styles/glasgow.json styles/graphite.json styles/hong-kong.json
+#: styles/indigo.json styles/kampala.json styles/lagoon.json styles/lime.json
+#: styles/merlot.json styles/mulberry.json styles/obsidian.json
+#: styles/orange.json styles/piraeus.json styles/porto.json styles/rio.json
+#: styles/royal.json styles/santa-fe.json styles/sunset.json styles/teal.json
+#: styles/thimphu.json styles/tokyo.json
+msgctxt "Color name"
+msgid "Foreground Alt"
+msgstr "Alt del primer plano"
+
+#: styles/colors/graphite.json styles/graphite.json
+msgctxt "Style variation name"
+msgid "Graphite"
+msgstr "Grafito"
+
+#: styles/05-bloom.json styles/colors/bloom.json styles/colors/fusion-sky.json
+#: styles/colors/odesa.json styles/fusion-sky.json styles/odesa.json
+msgctxt "Color name"
+msgid "foreground Alt"
+msgstr "Alt del primer plano"
+
+#: styles/05-bloom.json styles/colors/bloom.json
+msgctxt "Style variation name"
+msgid "Bloom"
+msgstr "Florecer"
+
+#: theme.json styles/01-evergreen.json styles/02-cobalt.json
+#: styles/03-slate.json styles/04-gold.json styles/05-bloom.json
+#: styles/06-lilac.json styles/07-coral.json styles/08-moss.json
+#: styles/09-onyx.json styles/10-midnight.json styles/11-neon.json
+#: styles/12-limepop.json styles/13-rosewood.json styles/brick.json
+#: styles/brisbane.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json
+#: styles/colors/brisbane.json styles/colors/cairo.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gdansk.json styles/colors/glasgow.json styles/colors/gold.json
+#: styles/colors/graphite.json styles/colors/hong-kong.json
+#: styles/colors/indigo.json styles/colors/kampala.json
+#: styles/colors/lagoon.json styles/colors/lilac.json styles/colors/lime.json
+#: styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/piraeus.json
+#: styles/colors/porto.json styles/colors/rio.json styles/colors/rosewood.json
+#: styles/colors/royal.json styles/colors/santa-fe.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/thimphu.json styles/colors/tokyo.json styles/fusion-sky.json
+#: styles/gdansk.json styles/glasgow.json styles/graphite.json
+#: styles/hong-kong.json styles/indigo.json styles/kampala.json
+#: styles/lagoon.json styles/lime.json styles/merlot.json styles/mulberry.json
+#: styles/obsidian.json styles/odesa.json styles/orange.json
+#: styles/piraeus.json styles/porto.json styles/rio.json styles/royal.json
+#: styles/santa-fe.json styles/sunset.json styles/teal.json styles/thimphu.json
+#: styles/tokyo.json
+msgctxt "Duotone name"
+msgid "Primary and Foreground"
+msgstr "Principal y primer plano"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Noto Serif Display"
+msgstr "Noto Serif Display"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Mulish"
+msgstr "Mulish"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Montserrat"
+msgstr "Montserrat"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Marcellus"
+msgstr "Marcellus"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Manrope"
+msgstr "Manrope"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "IBM Plex Sans"
+msgstr "IBM Plex Sans"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Baloo Tamma 2"
+msgstr "Baloo Tamma 2"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Archivo"
+msgstr "Archivo"
+
+#: styles/colors/fusion-sky.json styles/fusion-sky.json
+msgctxt "Style variation name"
+msgid "Fusion Sky"
+msgstr "Fusion Sky"
+
+#: styles/colors/orange.json styles/orange.json
+msgctxt "Style variation name"
+msgid "Orange"
+msgstr "Naranja"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Site Description and Menu"
+msgstr "Pie de página con descripción del sitio y menú"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Six Columns of Menus"
+msgstr "Pie de página con seis columnas de menús"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Three Center Columns of Menus"
+msgstr "Pie de página con tres columnas centradas de menús"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header with Center Nav and Social"
+msgstr "Cabecera con navegación centrada y social"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header with Center Logo and Search bar"
+msgstr "Cabecera con logo centrado y barra de búsqueda"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header with Search bar"
+msgstr "Cabecera con barra de búsqueda"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header with Center Logo and Social"
+msgstr "Cabecera con logo centrado y social"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Center Logo and Social Menu"
+msgstr "Pie de página con logotipo central y menú social"
+
+#: patterns/general-cta.php
+msgctxt "Pattern title"
+msgid "Call to action"
+msgstr "Llamada a la acción"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Three Columns of Menus"
+msgstr "Pie de página con tres columnas de menús"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Address, Dark, Three Columns"
+msgstr "Pie de página con dirección, oscuro, tres columnas"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Address, Four Columns"
+msgstr "Pie de página con dirección, tres columnas"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Social Icons"
+msgstr "Pie de página con iconos sociales"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Koulen"
+msgstr "Koulen"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Heebo"
+msgstr "Heebo"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Space Mono"
+msgstr "Space Mono"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Karla"
+msgstr "Karla"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Inconsolata"
+msgstr "Inconsolata"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Geom"
+msgstr "Geom"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Roboto Flex"
+msgstr "Roboto Flex"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Inter"
+msgstr "Inter"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Hind"
+msgstr "Hind"
+
+#: styles/colors/kampala.json styles/kampala.json
+msgctxt "Style variation name"
+msgid "Kampala"
+msgstr "Kampala"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Rubik"
+msgstr "Rubik"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Radio Canada"
+msgstr "Radio Canada"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Arsenal"
+msgstr "Arsenal"
+
+#: styles/colors/piraeus.json styles/piraeus.json
+msgctxt "Duotone name"
+msgid "Tertiary and White"
+msgstr "Terciario y blanco"
+
+#: styles/colors/piraeus.json styles/piraeus.json
+msgctxt "Duotone name"
+msgid "Secondary and Primary"
+msgstr "Secundario y primario"
+
+#: styles/brisbane.json styles/colors/brisbane.json
+msgctxt "Duotone name"
+msgid "Tertiary and Secondary"
+msgstr "Terciario y secundario"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer with Logo and Navigation"
+msgstr "Pie de página con logo y navegación"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header with Social"
+msgstr "Cabecera con sociales"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header with Button"
+msgstr "Cabecera con botón"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "No Title"
+msgstr "Sin título"
+
+#: theme.json styles/colors/glasgow.json styles/glasgow.json
+msgctxt "Duotone name"
+msgid "Foreground and Secondary"
+msgstr "Primer plano y secundario"
+
+#: theme.json styles/brisbane.json styles/colors/brisbane.json
+#: styles/colors/glasgow.json styles/colors/piraeus.json styles/glasgow.json
+#: styles/piraeus.json
+msgctxt "Duotone name"
+msgid "Secondary"
+msgstr "Secundario"
+
+#: theme.json styles/brisbane.json styles/colors/brisbane.json
+#: styles/colors/glasgow.json styles/colors/piraeus.json styles/glasgow.json
+#: styles/piraeus.json
+msgctxt "Duotone name"
+msgid "Grayscale"
+msgstr "Escala de grises"
+
+#: theme.json styles/brisbane.json styles/colors/brisbane.json
+#: styles/colors/gdansk.json styles/colors/glasgow.json
+#: styles/colors/hong-kong.json styles/colors/kampala.json
+#: styles/colors/orange.json styles/colors/piraeus.json styles/gdansk.json
+#: styles/glasgow.json styles/hong-kong.json styles/kampala.json
+#: styles/orange.json styles/piraeus.json
+msgctxt "Color name"
+msgid "Background Alt"
+msgstr "Alt del fondo"
+
+#: theme.json styles/brisbane.json styles/colors/brisbane.json
+#: styles/colors/glasgow.json styles/glasgow.json
+msgctxt "Duotone name"
+msgid "Foreground and Primary"
+msgstr "Primer plano y principal"
+
+#: theme.json styles/brisbane.json styles/colors/brisbane.json
+#: styles/colors/glasgow.json styles/colors/piraeus.json styles/glasgow.json
+#: styles/piraeus.json
+msgctxt "Duotone name"
+msgid "Primary and Secondary"
+msgstr "Principal y secundario"
+
+#: theme.json styles/brisbane.json styles/colors/brisbane.json
+#: styles/colors/glasgow.json styles/colors/piraeus.json styles/glasgow.json
+#: styles/piraeus.json
+msgctxt "Duotone name"
+msgid "Primary"
+msgstr "Principal"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Source Serif Pro"
+msgstr "Source Serif Pro"
+
+#: styles/colors/tokyo.json styles/tokyo.json
+msgctxt "Style variation name"
+msgid "Tokyo"
+msgstr "Tokyo"
+
+#: styles/colors/thimphu.json styles/thimphu.json
+msgctxt "Style variation name"
+msgid "Thimphu"
+msgstr "Thimphu"
+
+#: styles/colors/santa-fe.json styles/santa-fe.json
+msgctxt "Style variation name"
+msgid "Santa Fe"
+msgstr "Santa Fe"
+
+#: styles/colors/rio.json styles/rio.json
+msgctxt "Style variation name"
+msgid "Rio"
+msgstr "Rio"
+
+#: styles/colors/porto.json styles/porto.json
+msgctxt "Style variation name"
+msgid "Porto"
+msgstr "Porto"
+
+#: styles/colors/piraeus.json styles/piraeus.json
+msgctxt "Style variation name"
+msgid "Piraeus"
+msgstr "Piraeus"
+
+#: styles/colors/odesa.json styles/odesa.json
+msgctxt "Style variation name"
+msgid "Odesa"
+msgstr "Odesa"
+
+#: styles/colors/hong-kong.json styles/hong-kong.json
+msgctxt "Style variation name"
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+#: styles/colors/glasgow.json styles/glasgow.json
+msgctxt "Style variation name"
+msgid "Glasgow"
+msgstr "Glasgow"
+
+#: styles/colors/gdansk.json styles/gdansk.json
+msgctxt "Style variation name"
+msgid "Gdansk"
+msgstr "Gdansk"
+
+#: styles/cairo.json styles/colors/cairo.json
+msgctxt "Style variation name"
+msgid "Cairo"
+msgstr "Cairo"
+
+#: styles/brisbane.json styles/colors/brisbane.json
+msgctxt "Style variation name"
+msgid "Brisbane"
+msgstr "Brisbane"
+
+#: styles/01-evergreen.json styles/02-cobalt.json styles/03-slate.json
+#: styles/04-gold.json styles/05-bloom.json styles/06-lilac.json
+#: styles/07-coral.json styles/08-moss.json styles/09-onyx.json
+#: styles/10-midnight.json styles/11-neon.json styles/12-limepop.json
+#: styles/13-rosewood.json styles/brick.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json styles/colors/cairo.json
+#: styles/colors/clay.json styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gold.json styles/colors/graphite.json
+#: styles/colors/indigo.json styles/colors/lagoon.json styles/colors/lilac.json
+#: styles/colors/lime.json styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/porto.json styles/colors/rio.json styles/colors/rosewood.json
+#: styles/colors/royal.json styles/colors/santa-fe.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/thimphu.json styles/colors/tokyo.json styles/fusion-sky.json
+#: styles/graphite.json styles/indigo.json styles/lagoon.json styles/lime.json
+#: styles/merlot.json styles/mulberry.json styles/obsidian.json
+#: styles/odesa.json styles/porto.json styles/rio.json styles/royal.json
+#: styles/santa-fe.json styles/sunset.json styles/teal.json styles/thimphu.json
+#: styles/tokyo.json
+msgctxt "Color name"
+msgid "Tertiary"
+msgstr "Terciario"
+
+#: theme.json styles/01-evergreen.json styles/02-cobalt.json
+#: styles/03-slate.json styles/04-gold.json styles/05-bloom.json
+#: styles/06-lilac.json styles/07-coral.json styles/08-moss.json
+#: styles/09-onyx.json styles/10-midnight.json styles/11-neon.json
+#: styles/12-limepop.json styles/13-rosewood.json styles/brick.json
+#: styles/brisbane.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json
+#: styles/colors/brisbane.json styles/colors/cairo.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gdansk.json styles/colors/glasgow.json styles/colors/gold.json
+#: styles/colors/graphite.json styles/colors/hong-kong.json
+#: styles/colors/indigo.json styles/colors/kampala.json
+#: styles/colors/lagoon.json styles/colors/lilac.json styles/colors/lime.json
+#: styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/piraeus.json
+#: styles/colors/porto.json styles/colors/rio.json styles/colors/rosewood.json
+#: styles/colors/royal.json styles/colors/santa-fe.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/thimphu.json styles/colors/tokyo.json styles/fusion-sky.json
+#: styles/gdansk.json styles/glasgow.json styles/graphite.json
+#: styles/hong-kong.json styles/indigo.json styles/kampala.json
+#: styles/lagoon.json styles/lime.json styles/merlot.json styles/mulberry.json
+#: styles/obsidian.json styles/odesa.json styles/orange.json
+#: styles/piraeus.json styles/porto.json styles/rio.json styles/royal.json
+#: styles/santa-fe.json styles/sunset.json styles/teal.json styles/thimphu.json
+#: styles/tokyo.json
+msgctxt "Color name"
+msgid "Secondary"
+msgstr "Secundario"
+
+#: theme.json styles/01-evergreen.json styles/02-cobalt.json
+#: styles/03-slate.json styles/04-gold.json styles/05-bloom.json
+#: styles/06-lilac.json styles/07-coral.json styles/08-moss.json
+#: styles/09-onyx.json styles/10-midnight.json styles/11-neon.json
+#: styles/12-limepop.json styles/13-rosewood.json styles/brick.json
+#: styles/brisbane.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json
+#: styles/colors/brisbane.json styles/colors/cairo.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gdansk.json styles/colors/glasgow.json styles/colors/gold.json
+#: styles/colors/graphite.json styles/colors/hong-kong.json
+#: styles/colors/indigo.json styles/colors/kampala.json
+#: styles/colors/lagoon.json styles/colors/lilac.json styles/colors/lime.json
+#: styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/piraeus.json
+#: styles/colors/porto.json styles/colors/rio.json styles/colors/rosewood.json
+#: styles/colors/royal.json styles/colors/santa-fe.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/thimphu.json styles/colors/tokyo.json styles/fusion-sky.json
+#: styles/gdansk.json styles/glasgow.json styles/graphite.json
+#: styles/hong-kong.json styles/indigo.json styles/kampala.json
+#: styles/lagoon.json styles/lime.json styles/merlot.json styles/mulberry.json
+#: styles/obsidian.json styles/odesa.json styles/orange.json
+#: styles/piraeus.json styles/porto.json styles/rio.json styles/royal.json
+#: styles/santa-fe.json styles/sunset.json styles/teal.json styles/thimphu.json
+#: styles/tokyo.json
+msgctxt "Color name"
+msgid "Primary"
+msgstr "Primario"
+
+#: patterns/hidden-404.php
+msgctxt "Pattern title"
+msgid "404 error content."
+msgstr "Contenido del error 404."
+
+#: theme.json styles/01-evergreen.json styles/02-cobalt.json
+#: styles/03-slate.json styles/04-gold.json styles/05-bloom.json
+#: styles/06-lilac.json styles/07-coral.json styles/08-moss.json
+#: styles/09-onyx.json styles/10-midnight.json styles/11-neon.json
+#: styles/12-limepop.json styles/13-rosewood.json styles/brick.json
+#: styles/brisbane.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json
+#: styles/colors/brisbane.json styles/colors/cairo.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gdansk.json styles/colors/glasgow.json styles/colors/gold.json
+#: styles/colors/graphite.json styles/colors/hong-kong.json
+#: styles/colors/indigo.json styles/colors/kampala.json
+#: styles/colors/lagoon.json styles/colors/lilac.json styles/colors/lime.json
+#: styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/piraeus.json
+#: styles/colors/porto.json styles/colors/rio.json styles/colors/rosewood.json
+#: styles/colors/royal.json styles/colors/santa-fe.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/thimphu.json styles/colors/tokyo.json styles/fusion-sky.json
+#: styles/gdansk.json styles/glasgow.json styles/graphite.json
+#: styles/hong-kong.json styles/indigo.json styles/kampala.json
+#: styles/lagoon.json styles/lime.json styles/merlot.json styles/mulberry.json
+#: styles/obsidian.json styles/odesa.json styles/orange.json
+#: styles/piraeus.json styles/porto.json styles/rio.json styles/royal.json
+#: styles/santa-fe.json styles/sunset.json styles/teal.json styles/thimphu.json
+#: styles/tokyo.json
+msgctxt "Color name"
+msgid "Background"
+msgstr "Fondo"
+
+#: theme.json styles/01-evergreen.json styles/02-cobalt.json
+#: styles/03-slate.json styles/04-gold.json styles/05-bloom.json
+#: styles/06-lilac.json styles/07-coral.json styles/08-moss.json
+#: styles/09-onyx.json styles/10-midnight.json styles/11-neon.json
+#: styles/12-limepop.json styles/13-rosewood.json styles/brick.json
+#: styles/brisbane.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json
+#: styles/colors/brisbane.json styles/colors/cairo.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gdansk.json styles/colors/glasgow.json styles/colors/gold.json
+#: styles/colors/graphite.json styles/colors/hong-kong.json
+#: styles/colors/indigo.json styles/colors/kampala.json
+#: styles/colors/lagoon.json styles/colors/lilac.json styles/colors/lime.json
+#: styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/piraeus.json
+#: styles/colors/porto.json styles/colors/rio.json styles/colors/rosewood.json
+#: styles/colors/royal.json styles/colors/santa-fe.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/thimphu.json styles/colors/tokyo.json styles/fusion-sky.json
+#: styles/gdansk.json styles/glasgow.json styles/graphite.json
+#: styles/hong-kong.json styles/indigo.json styles/kampala.json
+#: styles/lagoon.json styles/lime.json styles/merlot.json styles/mulberry.json
+#: styles/obsidian.json styles/odesa.json styles/orange.json
+#: styles/piraeus.json styles/porto.json styles/rio.json styles/royal.json
+#: styles/santa-fe.json styles/sunset.json styles/teal.json styles/thimphu.json
+#: styles/tokyo.json
+msgctxt "Color name"
+msgid "Foreground"
+msgstr "Primer plano"
+
+#: styles/colors/hong-kong.json styles/colors/kampala.json
+#: styles/colors/orange.json styles/colors/porto.json
+#: styles/colors/thimphu.json styles/hong-kong.json styles/kampala.json
+#: styles/orange.json styles/porto.json styles/thimphu.json
+msgctxt "Duotone name"
+msgid "Background and foreground"
+msgstr "Fondo y primer plano"
+
+#: styles/colors/gdansk.json styles/gdansk.json
+msgctxt "Duotone name"
+msgid "Background and tertiary"
+msgstr "Fondo y terciario"
+
+#: styles/colors/gdansk.json styles/colors/odesa.json
+#: styles/colors/thimphu.json styles/gdansk.json styles/odesa.json
+#: styles/thimphu.json
+msgctxt "Duotone name"
+msgid "Background and secondary"
+msgstr "Fondo y secundario"
+
+#: styles/colors/gdansk.json styles/colors/odesa.json
+#: styles/colors/santa-fe.json styles/gdansk.json styles/odesa.json
+#: styles/santa-fe.json
+msgctxt "Duotone name"
+msgid "Background and primary"
+msgstr "Fondo y principal"
+
+#: styles/01-evergreen.json styles/02-cobalt.json styles/03-slate.json
+#: styles/04-gold.json styles/05-bloom.json styles/06-lilac.json
+#: styles/07-coral.json styles/08-moss.json styles/09-onyx.json
+#: styles/10-midnight.json styles/11-neon.json styles/12-limepop.json
+#: styles/13-rosewood.json styles/brick.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gold.json styles/colors/graphite.json
+#: styles/colors/indigo.json styles/colors/lagoon.json styles/colors/lilac.json
+#: styles/colors/lime.json styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/onyx.json styles/colors/rio.json
+#: styles/colors/rosewood.json styles/colors/royal.json
+#: styles/colors/santa-fe.json styles/colors/slate.json
+#: styles/colors/sunset.json styles/colors/teal.json styles/colors/tokyo.json
+#: styles/fusion-sky.json styles/graphite.json styles/indigo.json
+#: styles/lagoon.json styles/lime.json styles/merlot.json styles/mulberry.json
+#: styles/obsidian.json styles/rio.json styles/royal.json styles/santa-fe.json
+#: styles/sunset.json styles/teal.json styles/tokyo.json
+msgctxt "Duotone name"
+msgid "Primary and tertiary"
+msgstr "Principal y terciario"
+
+#: styles/01-evergreen.json styles/02-cobalt.json styles/03-slate.json
+#: styles/04-gold.json styles/05-bloom.json styles/06-lilac.json
+#: styles/07-coral.json styles/08-moss.json styles/09-onyx.json
+#: styles/10-midnight.json styles/11-neon.json styles/12-limepop.json
+#: styles/13-rosewood.json styles/brick.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json styles/colors/clay.json
+#: styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gold.json styles/colors/graphite.json
+#: styles/colors/indigo.json styles/colors/lagoon.json styles/colors/lilac.json
+#: styles/colors/lime.json styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/onyx.json
+#: styles/colors/rosewood.json styles/colors/royal.json
+#: styles/colors/slate.json styles/colors/sunset.json styles/colors/teal.json
+#: styles/colors/tokyo.json styles/fusion-sky.json styles/graphite.json
+#: styles/indigo.json styles/lagoon.json styles/lime.json styles/merlot.json
+#: styles/mulberry.json styles/obsidian.json styles/royal.json
+#: styles/sunset.json styles/teal.json styles/tokyo.json
+msgctxt "Duotone name"
+msgid "Secondary and primary"
+msgstr "Secundario y principal"
+
+#: styles/01-evergreen.json styles/02-cobalt.json styles/03-slate.json
+#: styles/04-gold.json styles/05-bloom.json styles/06-lilac.json
+#: styles/07-coral.json styles/08-moss.json styles/09-onyx.json
+#: styles/10-midnight.json styles/11-neon.json styles/12-limepop.json
+#: styles/13-rosewood.json styles/brick.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json styles/colors/cairo.json
+#: styles/colors/clay.json styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gold.json styles/colors/graphite.json
+#: styles/colors/hong-kong.json styles/colors/indigo.json
+#: styles/colors/kampala.json styles/colors/lagoon.json
+#: styles/colors/lilac.json styles/colors/lime.json styles/colors/limepop.json
+#: styles/colors/merlot.json styles/colors/midnight.json
+#: styles/colors/moss.json styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/porto.json styles/colors/rio.json
+#: styles/colors/rosewood.json styles/colors/royal.json
+#: styles/colors/santa-fe.json styles/colors/slate.json
+#: styles/colors/sunset.json styles/colors/teal.json styles/colors/tokyo.json
+#: styles/fusion-sky.json styles/graphite.json styles/hong-kong.json
+#: styles/indigo.json styles/kampala.json styles/lagoon.json styles/lime.json
+#: styles/merlot.json styles/mulberry.json styles/obsidian.json
+#: styles/odesa.json styles/orange.json styles/porto.json styles/rio.json
+#: styles/royal.json styles/santa-fe.json styles/sunset.json styles/teal.json
+#: styles/tokyo.json
+msgctxt "Duotone name"
+msgid "Primary and secondary"
+msgstr "Principal y secundario"
+
+#: styles/cairo.json styles/colors/cairo.json
+msgctxt "Duotone name"
+msgid "Primary and background"
+msgstr "Principal y fondo"
+
+#: styles/cairo.json styles/colors/cairo.json styles/colors/rio.json
+#: styles/rio.json
+msgctxt "Duotone name"
+msgid "Foreground and primary"
+msgstr "Primer plano y principal"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr "Pie de página"
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr "Cabecera"
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Blank"
+msgstr "En blanco"
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal background to tertiary"
+msgstr "Diagonal fondo a terciario"
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal tertiary to background"
+msgstr "Diagonal terciario a fondo"
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal background to secondary"
+msgstr "Diagonal fondo a secundario"
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal secondary to background"
+msgstr "Diagonal secundario a fondo"
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Diagonal primary to foreground"
+msgstr "Diagonal principal a primer plano"
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Vertical tertiary to background"
+msgstr "Vertical terciario a fondo"
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Vertical secondary to background"
+msgstr "Vertical secundario a fondo"
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Vertical secondary to tertiary"
+msgstr "Vertical secundario a terciario"
+
+#: styles/01-evergreen.json styles/02-cobalt.json styles/03-slate.json
+#: styles/04-gold.json styles/05-bloom.json styles/06-lilac.json
+#: styles/07-coral.json styles/08-moss.json styles/09-onyx.json
+#: styles/10-midnight.json styles/11-neon.json styles/12-limepop.json
+#: styles/13-rosewood.json styles/brick.json styles/cairo.json styles/clay.json
+#: styles/colors/bloom.json styles/colors/brick.json styles/colors/cairo.json
+#: styles/colors/clay.json styles/colors/cobalt.json styles/colors/coral.json
+#: styles/colors/evergreen.json styles/colors/fusion-sky.json
+#: styles/colors/gdansk.json styles/colors/gold.json
+#: styles/colors/graphite.json styles/colors/hong-kong.json
+#: styles/colors/indigo.json styles/colors/kampala.json
+#: styles/colors/lagoon.json styles/colors/lilac.json styles/colors/lime.json
+#: styles/colors/limepop.json styles/colors/merlot.json
+#: styles/colors/midnight.json styles/colors/moss.json
+#: styles/colors/mulberry.json styles/colors/neon.json
+#: styles/colors/obsidian.json styles/colors/odesa.json styles/colors/onyx.json
+#: styles/colors/orange.json styles/colors/porto.json styles/colors/rio.json
+#: styles/colors/rosewood.json styles/colors/royal.json
+#: styles/colors/santa-fe.json styles/colors/slate.json
+#: styles/colors/sunset.json styles/colors/teal.json styles/colors/thimphu.json
+#: styles/colors/tokyo.json styles/fusion-sky.json styles/gdansk.json
+#: styles/graphite.json styles/hong-kong.json styles/indigo.json
+#: styles/kampala.json styles/lagoon.json styles/lime.json styles/merlot.json
+#: styles/mulberry.json styles/obsidian.json styles/odesa.json
+#: styles/orange.json styles/porto.json styles/rio.json styles/royal.json
+#: styles/santa-fe.json styles/sunset.json styles/teal.json styles/thimphu.json
+#: styles/tokyo.json
+msgctxt "Duotone name"
+msgid "Foreground and background"
+msgstr "Primer plano y fondo"
+
+#: functions.php:129
+msgid "Footers"
+msgstr "Pies de página"
+
+#: functions.php:128
+msgid "Headers"
+msgstr "Cabeceras"
+
+#: patterns/header-title-social-nav.php
+msgctxt "Pattern title"
+msgid "Header (Site Title, Social, Navigation)"
+msgstr "Cabecera (título del sitio, social, navegación)"
+
+#: patterns/header-title-nav-button.php
+msgctxt "Pattern title"
+msgid "Header (Site Title, Navigation, Button)"
+msgstr "Cabecera (título del sitio, navegación, botón)"
+
+#: patterns/header-default.php
+msgctxt "Pattern title"
+msgid "Header (Logo, Site Title, Navigation)"
+msgstr "Cabecera (logo, título del sitio, navegación)"
+
+#: patterns/footer-offset-heading-buttons.php
+msgctxt "Pattern title"
+msgid "Footer with offset heading and buttons (Primary)"
+msgstr "Pie de página con encabezado desplazado y botones (principal)"
+
+#: patterns/footer-offset-heading-buttons-primary.php
+msgctxt "Pattern title"
+msgid "Footer with offset heading and buttons"
+msgstr "Pie de página con encabezado desplazado y botones"
+
+#: patterns/footer-offset-heading-buttons-dark.php
+msgctxt "Pattern title"
+msgid "Dark Footer with offset heading and buttons"
+msgstr "Pie de página oscuro con encabezado desplazado y botones"
+
+#: patterns/footer-logo-nav.php
+msgctxt "Pattern title"
+msgid "Footer, Logo and Navigation TEST"
+msgstr "Pie de página, logo y navegación TEST"
+
+#: patterns/footer-logo-desc-two-nav.php
+msgctxt "Pattern title"
+msgid "Footer, Call to Action"
+msgstr "Pie de página, llamada a la acción"
+
+#: patterns/footer-default.php
+msgctxt "Pattern title"
+msgid "Footer (Logo, Copyright, Social)"
+msgstr "Pie de página (logo, copyright, social)"
+
+#: patterns/footer-call-to-action.php
+msgctxt "Pattern title"
+msgid "Footer with logo and two column nav"
+msgstr "Pie de página con logo y navegación de dos columnas"
+
+#: patterns/footer-call-to-action-dark.php
+msgctxt "Pattern title"
+msgid "Dark Footer, Call to Action"
+msgstr "Pie de página oscuro, llamada a la acción"
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Jost"
+msgstr "Jost"
+
+#. Author URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://extendify.com"
+msgstr "https://extendify.com"
+
+#. Author of the theme
+#: style.css
+#, gp-priority: low
+msgid "Extendify"
+msgstr "Extendify"
+
+#. Theme URI of the theme
+#: style.css
+#, gp-priority: low
+msgid "https://github.com/extendify/extendable"
+msgstr "https://github.com/extendify/extendable"

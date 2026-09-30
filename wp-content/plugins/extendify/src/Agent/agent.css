@@ -1,0 +1,200 @@
+@import "tailwindcss" source(none) important;
+@import "../tailwind.css" source(none);
+@source ".";
+
+:root {
+	color-scheme: only light;
+}
+
+@layer components {
+	/* Theme variations like hong-kong and tokyo uppercase every heading. */
+	.extendify-agent-markdown :is(h1, h2, h3, h4) {
+		@apply font-sans! normal-case! tracking-normal! text-gray-900!;
+	}
+	.extendify-agent-markdown h1 {
+		@apply mb-2! mt-0! text-2xl! font-bold!;
+	}
+	.extendify-agent-markdown h2 {
+		@apply mb-2! mt-0! text-xl! font-semibold!;
+	}
+	.extendify-agent-markdown h3 {
+		@apply mb-1! mt-0! text-lg! font-semibold!;
+	}
+	.extendify-agent-markdown h4 {
+		@apply mb-0.5! mt-0! text-base! font-semibold!;
+	}
+	.extendify-agent-markdown p {
+		@apply m-0! mb-2! text-sm! leading-relaxed! text-gray-900!;
+	}
+	.extendify-agent-markdown ul {
+		@apply my-2! list-disc! pl-2! text-sm! text-gray-900!;
+	}
+	.extendify-agent-markdown ol {
+		@apply my-2! list-decimal! pl-2! text-sm! text-gray-900!;
+	}
+	.extendify-agent-markdown li {
+		@apply mb-1! text-sm! text-gray-900!;
+	}
+	.extendify-agent-markdown pre {
+		@apply my-2! overflow-x-auto! rounded-sm! bg-gray-100! p-2! text-sm! text-gray-900!;
+		white-space: pre;
+	}
+	.extendify-agent-markdown pre code {
+		@apply bg-transparent! p-0! font-mono! text-xs! text-gray-900!;
+		white-space: pre;
+	}
+	.extendify-agent-markdown blockquote {
+		@apply my-2! border-l-4! border-gray-300! pl-4! text-sm! italic! text-gray-600!;
+	}
+	.extendify-agent-markdown a {
+		@apply text-sm! text-blue-600! underline! transition-colors! hover:text-blue-800!;
+	}
+}
+.extendify-gradient-animation {
+	background-image: linear-gradient(
+		to right,
+		#fff 0%,
+		#fff 20%,
+		#3858e9 40%,
+		#7b90ff 55%,
+		#2145e6 80%,
+		#fff 90%,
+		#fff 100%
+	);
+	background-size: 500% 100%;
+	color: transparent;
+	background-clip: text;
+	-webkit-background-clip: text;
+	animation: extendify-gradient-animation 1.5s linear forwards;
+}
+@keyframes extendify-gradient-animation {
+	0% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* animation-delay only spaces the first pass, so the hold is in the keyframes. */
+.status-animation {
+	/* On a full-width block the band sweeps mostly past the centered text. */
+	display: inline-block;
+	background-image: linear-gradient(
+		to right,
+		var(--color-gray-900) 0% 40%,
+		var(--color-gray-600) 50%,
+		var(--color-gray-900) 60% 100%
+	);
+	background-size: 250% 100%;
+	color: transparent;
+	background-clip: text;
+	-webkit-background-clip: text;
+	animation: extendify-status-animation 2s linear 1s infinite;
+}
+@keyframes extendify-status-animation {
+	0% {
+		background-position: 100% 50%;
+	}
+	50%,
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+body.extendify-agent-mobile-btn-open #site-editor {
+	min-height: calc(
+		100% -
+		var(--extendify-agent-mobile-btn-height, 64px)
+	) !important;
+	height: calc(
+		100vh -
+		var(--extendify-agent-mobile-btn-height, 64px)
+	) !important;
+}
+body.extendify-agent-mobile-btn-open .block-editor-block-inspector {
+	padding-bottom: var(--extendify-agent-mobile-btn-height, 64px);
+}
+body.extendify-agent-mobile-btn-open
+	.edit-site
+	.components-editor-notices__snackbar {
+	bottom: calc(
+		var(--extendify-agent-mobile-btn-height, 64px) +
+		16px
+	) !important;
+}
+/* no-prefix */
+.extendify-agent-highlighter-mode {
+	user-select: none !important;
+}
+/* While the agent is running a workflow against the selected block,
+ * communicate "you can't click anything else right now." Resting cursor
+ * is owned by edit mode's cursor contract (quick-edit.css). */
+/* no-prefix */
+.extendify-agent-highlighter-mode.extendify-agent-busy {
+	cursor: not-allowed !important;
+}
+/* The `*` is load-bearing: crosshair sits on the blocks, not on this root. */
+/* no-prefix */
+.extendify-agent-working,
+.extendify-agent-working * {
+	cursor: wait !important;
+}
+/* Ignore button block if inside buttons and only one button */
+/* no-prefix */
+.extendify-agent-highlighter-mode .wp-block-buttons:has(> .wp-block-button):not(
+		:has(> .wp-block-button:nth-of-type(2))
+	)
+	> .wp-block-button {
+	pointer-events: none !important;
+}
+/* no-prefix */
+.extendify-agent-highlighter-mode .wp-block-spacer {
+	pointer-events: none !important;
+}
+/* WP's lightbox img listens for clicks at the page level; suppress here
+ * because the capture-phase selector handler in hover-bar otherwise has
+ * to compete with the lightbox opening. Anchors / buttons / role=button
+ * keep their default pointer-events so the click rule can route them
+ * (anchors navigate, form controls focus). */
+/* no-prefix */
+.extendify-agent-highlighter-mode .wp-lightbox-container img {
+	pointer-events: none !important;
+}
+/* no-prefix */
+body.extendify-agent-canvas-blurred {
+	--extendify-canvas-blur: 3px;
+}
+/* Blurring the wp-block-* descendants instead would compound at every level. */
+/* no-prefix */
+.extendify-agent-canvas-open .wp-site-blocks > header,
+.extendify-agent-canvas-open .wp-site-blocks > main,
+.extendify-agent-canvas-open .wp-site-blocks > footer,
+/* Leaves only: a filter re-anchors fixed children — the bar, the menu backdrop. */
+.extendify-agent-canvas-open #adminmenuback,
+.extendify-agent-canvas-open #adminmenuwrap,
+.extendify-agent-canvas-open #wpbody,
+.extendify-agent-canvas-open #wpfooter,
+.extendify-agent-canvas-open #wpadminbar,
+.extendify-agent-canvas-open [data-extendify-agent-emptied],
+.extendify-agent-canvas-open #extendify-toolbar {
+	filter: blur(var(--extendify-canvas-blur, 0px));
+	transition: filter 300ms ease-in-out;
+}
+
+/* no-prefix */
+.extendify-agent-canvas-dims-agent [data-extendify-agent-panel] {
+	filter: blur(var(--extendify-canvas-blur, 0px));
+	transition: filter 300ms ease-in-out;
+}
+
+/* Below 783px the sidebar unmounts, and an offset left behind strands the bar. */
+/* 384 and 8 mirror Skeleton::printStyles; drift shows up as a jump on mount. */
+@media (min-width: 783px) {
+	/* no-prefix */
+	html.extendify-agent-docked #wpadminbar {
+		margin: 8px 8px 0 384px;
+		max-width: calc(100% - 392px);
+		border-radius: 8px 8px 0 0;
+	}
+}

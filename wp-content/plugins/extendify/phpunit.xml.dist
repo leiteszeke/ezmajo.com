@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+	bootstrap="tests/bootstrap.php"
+	colors="true"
+	cacheResultFile=".phpunit.cache/test-results"
+>
+	<php>
+		<env name="WP_TESTS_DIR" value="vendor/wp-phpunit/wp-phpunit" />
+		<env name="WP_PHPUNIT__TESTS_CONFIG" value="tests/wp-tests-config.php" />
+	</php>
+	<testsuites>
+		<testsuite name="default">
+			<directory>tests</directory>
+		</testsuite>
+	</testsuites>
+	<coverage>
+		<include>
+			<directory suffix=".php">app</directory>
+		</include>
+	</coverage>
+</phpunit>

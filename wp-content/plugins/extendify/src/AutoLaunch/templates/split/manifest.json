@@ -1,0 +1,67 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-template/split",
+	"title": "Split",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-tpl-split-direction": {
+			"type": "string",
+			"enum": ["row", "row-reverse"],
+			"default": "row",
+			"x-card": "Columns",
+			"x-label": "Text side",
+			"x-control": "select",
+			"x-options": [
+				{
+					"value": "row",
+					"label": "Left"
+				},
+				{
+					"value": "row-reverse",
+					"label": "Right"
+				}
+			]
+		},
+		"--ext-tpl-split-text-width": {
+			"type": "number",
+			"minimum": 220,
+			"maximum": 720,
+			"default": 420,
+			"x-card": "Columns",
+			"x-label": "Text width",
+			"x-control": "length"
+		},
+		"--ext-tpl-split-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 160,
+			"default": 48,
+			"x-card": "Columns",
+			"x-label": "Gap",
+			"x-control": "length"
+		},
+		"--ext-tpl-split-text-align": {
+			"type": "string",
+			"enum": ["flex-start", "center", "flex-end"],
+			"default": "flex-start",
+			"x-card": "Columns",
+			"x-label": "Text position",
+			"x-control": "select",
+			"x-options": [
+				{
+					"value": "flex-start",
+					"label": "Top"
+				},
+				{
+					"value": "center",
+					"label": "Middle"
+				},
+				{
+					"value": "flex-end",
+					"label": "Bottom"
+				}
+			]
+		}
+	}
+}

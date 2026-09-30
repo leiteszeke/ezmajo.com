@@ -1,0 +1,99 @@
+@import "tailwindcss" source(none) important;
+@import "../tailwind.css" source(none);
+@source ".";
+
+:root {
+	color-scheme: only light;
+}
+
+/* no-prefix */
+.extendify-launch {
+	-webkit-font-smoothing: antialiased;
+}
+
+.button-focus {
+	@apply rounded-lg! text-center! text-base! no-underline! outline-hidden! ring-design-main! ring-offset-2! ring-offset-white! focus:shadow-none! focus:ring-wp!;
+}
+
+.input-focus {
+	@apply rounded-lg! text-base! outline-hidden! ring-design-main! ring-offset-2! ring-offset-white! focus:shadow-none! focus:ring-wp!;
+}
+
+.button-card {
+	@apply m-0! block! flex-1! overflow-hidden! border! p-4!;
+}
+
+.block-editor-block-preview__container {
+	overflow: visible !important;
+}
+
+.spin {
+	animation: extendify-loading-spinner 1s linear infinite;
+}
+
+@keyframes extendify-loading-spinner {
+	to {
+		transform: rotate(1turn);
+	}
+}
+@keyframes extendify-loading-skeleton {
+	0% {
+		background-position: 0 0;
+	}
+	25% {
+		background-position: 100% 0;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+	75% {
+		background-position: 0 100%;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+/* Checkbox styles for page selection step. */
+input[type="checkbox"]:not(:checked) {
+	@apply border! border-gray-900!;
+}
+input[type="checkbox"]:focus {
+	@apply outline-hidden! ring-wp! ring-design-main! ring-offset-2! ring-offset-white!;
+}
+input[type="checkbox"]:checked {
+	@apply bg-design-main!;
+}
+input[type="checkbox"]:checked::before {
+	content: "";
+	width: 0 !important;
+	height: 0 !important;
+}
+
+/* Goal checkbox */
+.goal-select .components-base-control__field {
+	@apply mb-0!;
+}
+/* no-prefix */
+.block-editor-block-preview__content {
+	@apply left-0! top-0! m-0! overflow-visible!;
+	transform-origin: top left;
+	text-align: initial;
+	min-height: auto;
+}
+/* no-prefix */
+html[dir="rtl"] .block-editor-block-preview__content {
+	transform-origin: top right;
+}
+/* no-prefix */
+body.site-assistant_page_extendify-launch,
+body.site-launcher_page_extendify-launch {
+	background: white;
+}
+/* no-prefix */
+.site-assistant_page_extendify-launch #adminmenumain,
+.site-launcher_page_extendify-launch #adminmenumain,
+.site-assistant_page_extendify-launch #wpadminbar,
+.site-launcher_page_extendify-launch #wpadminbar {
+	display: none;
+}

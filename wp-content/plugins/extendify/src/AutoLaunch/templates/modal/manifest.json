@@ -1,0 +1,156 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-template/modal",
+	"title": "Modal",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-tpl-modal-surface": {
+			"type": "string",
+			"default": "#f0f0f0",
+			"x-card": "Surface",
+			"x-label": "Fill",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-surface"
+		},
+		"--ext-tpl-modal-text": {
+			"type": "string",
+			"default": "#1e1e1e",
+			"x-card": "Surface",
+			"x-label": "Color",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-ink"
+		},
+		"--ext-tpl-modal-line": {
+			"type": "string",
+			"default": "#dddddd",
+			"x-card": "Surface",
+			"x-label": "Border",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-line"
+		},
+		"--ext-tpl-modal-action": {
+			"type": "string",
+			"default": "#2271b1",
+			"x-card": "Action",
+			"x-label": "Fill",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-action"
+		},
+		"--ext-tpl-modal-action-text": {
+			"type": "string",
+			"default": "#ffffff",
+			"x-card": "Action",
+			"x-label": "Color",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-action-text"
+		},
+		"--ext-tpl-modal-secondary-fill": {
+			"type": "string",
+			"default": "#f0f0f0",
+			"x-card": "Secondary button",
+			"x-label": "Fill",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-secondary-fill"
+		},
+		"--ext-tpl-modal-secondary-line": {
+			"type": "string",
+			"default": "#1e1e1e",
+			"x-card": "Secondary button",
+			"x-label": "Outline",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-secondary-line"
+		},
+		"--ext-tpl-modal-secondary-text": {
+			"type": "string",
+			"default": "#1e1e1e",
+			"x-card": "Secondary button",
+			"x-label": "Color",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-secondary-text"
+		},
+		"--ext-tpl-modal-link": {
+			"type": "string",
+			"default": "#2271b1",
+			"x-card": "Link",
+			"x-label": "Color",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-action"
+		},
+		"--ext-tpl-modal-radius": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 24,
+			"x-card": "Surface",
+			"x-label": "Radius",
+			"x-control": "length",
+			"x-inherits": "--ext-ui-radius-card"
+		},
+		"--ext-tpl-modal-border": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 8,
+			"default": 1,
+			"x-card": "Surface",
+			"x-label": "Border width",
+			"x-control": "length",
+			"x-inherits": "--ext-ui-border-width"
+		},
+		"--ext-tpl-modal-pad": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 24,
+			"x-card": "Surface",
+			"x-label": "Padding",
+			"x-control": "length",
+			"x-inherits": "--ext-ui-surface-padding"
+		},
+		"--ext-tpl-modal-width": {
+			"type": "number",
+			"minimum": 280,
+			"maximum": 960,
+			"default": 448,
+			"x-card": "Box",
+			"x-label": "Box width",
+			"x-control": "length"
+		},
+		"--ext-tpl-modal-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 12,
+			"x-card": "Box",
+			"x-label": "Gap",
+			"x-control": "length"
+		},
+		"--ext-tpl-modal-align": {
+			"type": "string",
+			"enum": ["center", "left"],
+			"default": "center",
+			"x-card": "Box",
+			"x-label": "Text",
+			"x-control": "select",
+			"x-options": [
+				{
+					"value": "center",
+					"label": "Center"
+				},
+				{
+					"value": "left",
+					"label": "Left"
+				}
+			]
+		},
+		"--ext-tpl-modal-actions-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 12,
+			"x-card": "Actions",
+			"x-label": "Gap",
+			"x-control": "length"
+		}
+	}
+}

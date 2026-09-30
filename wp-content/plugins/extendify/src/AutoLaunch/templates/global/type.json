@@ -1,0 +1,351 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-global/type",
+	"title": "Type",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-ui-font": {
+			"type": "string",
+			"enum": [
+				"",
+				"system-ui, sans-serif",
+				"Georgia, serif",
+				"ui-monospace, monospace",
+				"Tahoma, Verdana, sans-serif",
+				"\"Inter\", system-ui, sans-serif",
+				"\"Poppins\", system-ui, sans-serif",
+				"\"Playfair Display\", Georgia, serif",
+				"\"Space Grotesk\", system-ui, sans-serif",
+				"\"DM Sans\", system-ui, sans-serif"
+			],
+			"default": "",
+			"x-card": "Font",
+			"x-label": "Font",
+			"x-control": "font",
+			"x-options": [
+				{
+					"value": "",
+					"label": "Inherit from WordPress"
+				},
+				{
+					"value": "system-ui, sans-serif",
+					"label": "System sans"
+				},
+				{
+					"value": "Georgia, serif",
+					"label": "Georgia"
+				},
+				{
+					"value": "ui-monospace, monospace",
+					"label": "Monospace"
+				},
+				{
+					"value": "Tahoma, Verdana, sans-serif",
+					"label": "Tahoma"
+				},
+				{
+					"value": "\"Inter\", system-ui, sans-serif",
+					"label": "Inter",
+					"google": "Inter:wght@400;500;600;700"
+				},
+				{
+					"value": "\"Poppins\", system-ui, sans-serif",
+					"label": "Poppins",
+					"google": "Poppins:wght@400;500;600;700"
+				},
+				{
+					"value": "\"Playfair Display\", Georgia, serif",
+					"label": "Playfair Display",
+					"google": "Playfair+Display:wght@400;600;700"
+				},
+				{
+					"value": "\"Space Grotesk\", system-ui, sans-serif",
+					"label": "Space Grotesk",
+					"google": "Space+Grotesk:wght@400;500;700"
+				},
+				{
+					"value": "\"DM Sans\", system-ui, sans-serif",
+					"label": "DM Sans",
+					"google": "DM+Sans:wght@400;500;700"
+				}
+			],
+			"x-unlocks": "font"
+		},
+		"--ext-ui-font-heading": {
+			"type": "string",
+			"enum": [
+				"",
+				"system-ui, sans-serif",
+				"Georgia, serif",
+				"ui-monospace, monospace",
+				"Tahoma, Verdana, sans-serif",
+				"\"Inter\", system-ui, sans-serif",
+				"\"Poppins\", system-ui, sans-serif",
+				"\"Playfair Display\", Georgia, serif",
+				"\"Space Grotesk\", system-ui, sans-serif",
+				"\"DM Sans\", system-ui, sans-serif"
+			],
+			"default": "",
+			"x-card": "Font",
+			"x-label": "Heading",
+			"x-control": "font",
+			"x-options": [
+				{
+					"value": "",
+					"label": "Inherit from WordPress"
+				},
+				{
+					"value": "system-ui, sans-serif",
+					"label": "System sans"
+				},
+				{
+					"value": "Georgia, serif",
+					"label": "Georgia"
+				},
+				{
+					"value": "ui-monospace, monospace",
+					"label": "Monospace"
+				},
+				{
+					"value": "Tahoma, Verdana, sans-serif",
+					"label": "Tahoma"
+				},
+				{
+					"value": "\"Inter\", system-ui, sans-serif",
+					"label": "Inter",
+					"google": "Inter:wght@400;500;600;700"
+				},
+				{
+					"value": "\"Poppins\", system-ui, sans-serif",
+					"label": "Poppins",
+					"google": "Poppins:wght@400;500;600;700"
+				},
+				{
+					"value": "\"Playfair Display\", Georgia, serif",
+					"label": "Playfair Display",
+					"google": "Playfair+Display:wght@400;600;700"
+				},
+				{
+					"value": "\"Space Grotesk\", system-ui, sans-serif",
+					"label": "Space Grotesk",
+					"google": "Space+Grotesk:wght@400;500;700"
+				},
+				{
+					"value": "\"DM Sans\", system-ui, sans-serif",
+					"label": "DM Sans",
+					"google": "DM+Sans:wght@400;500;700"
+				}
+			],
+			"x-lockedBy": "font"
+		},
+		"--ext-ui-font-body": {
+			"type": "string",
+			"enum": [
+				"",
+				"system-ui, sans-serif",
+				"Georgia, serif",
+				"ui-monospace, monospace",
+				"Tahoma, Verdana, sans-serif",
+				"\"Inter\", system-ui, sans-serif",
+				"\"Poppins\", system-ui, sans-serif",
+				"\"Playfair Display\", Georgia, serif",
+				"\"Space Grotesk\", system-ui, sans-serif",
+				"\"DM Sans\", system-ui, sans-serif"
+			],
+			"default": "",
+			"x-card": "Font",
+			"x-label": "Body",
+			"x-control": "font",
+			"x-options": [
+				{
+					"value": "",
+					"label": "Inherit from WordPress"
+				},
+				{
+					"value": "system-ui, sans-serif",
+					"label": "System sans"
+				},
+				{
+					"value": "Georgia, serif",
+					"label": "Georgia"
+				},
+				{
+					"value": "ui-monospace, monospace",
+					"label": "Monospace"
+				},
+				{
+					"value": "Tahoma, Verdana, sans-serif",
+					"label": "Tahoma"
+				},
+				{
+					"value": "\"Inter\", system-ui, sans-serif",
+					"label": "Inter",
+					"google": "Inter:wght@400;500;600;700"
+				},
+				{
+					"value": "\"Poppins\", system-ui, sans-serif",
+					"label": "Poppins",
+					"google": "Poppins:wght@400;500;600;700"
+				},
+				{
+					"value": "\"Playfair Display\", Georgia, serif",
+					"label": "Playfair Display",
+					"google": "Playfair+Display:wght@400;600;700"
+				},
+				{
+					"value": "\"Space Grotesk\", system-ui, sans-serif",
+					"label": "Space Grotesk",
+					"google": "Space+Grotesk:wght@400;500;700"
+				},
+				{
+					"value": "\"DM Sans\", system-ui, sans-serif",
+					"label": "DM Sans",
+					"google": "DM+Sans:wght@400;500;700"
+				}
+			],
+			"x-lockedBy": "font"
+		},
+		"--ext-ui-font-input": {
+			"type": "string",
+			"enum": [
+				"",
+				"system-ui, sans-serif",
+				"Georgia, serif",
+				"ui-monospace, monospace",
+				"Tahoma, Verdana, sans-serif",
+				"\"Inter\", system-ui, sans-serif",
+				"\"Poppins\", system-ui, sans-serif",
+				"\"Playfair Display\", Georgia, serif",
+				"\"Space Grotesk\", system-ui, sans-serif",
+				"\"DM Sans\", system-ui, sans-serif"
+			],
+			"default": "",
+			"x-card": "Font",
+			"x-label": "Input",
+			"x-control": "font",
+			"x-options": [
+				{
+					"value": "",
+					"label": "Inherit from WordPress"
+				},
+				{
+					"value": "system-ui, sans-serif",
+					"label": "System sans"
+				},
+				{
+					"value": "Georgia, serif",
+					"label": "Georgia"
+				},
+				{
+					"value": "ui-monospace, monospace",
+					"label": "Monospace"
+				},
+				{
+					"value": "Tahoma, Verdana, sans-serif",
+					"label": "Tahoma"
+				},
+				{
+					"value": "\"Inter\", system-ui, sans-serif",
+					"label": "Inter",
+					"google": "Inter:wght@400;500;600;700"
+				},
+				{
+					"value": "\"Poppins\", system-ui, sans-serif",
+					"label": "Poppins",
+					"google": "Poppins:wght@400;500;600;700"
+				},
+				{
+					"value": "\"Playfair Display\", Georgia, serif",
+					"label": "Playfair Display",
+					"google": "Playfair+Display:wght@400;600;700"
+				},
+				{
+					"value": "\"Space Grotesk\", system-ui, sans-serif",
+					"label": "Space Grotesk",
+					"google": "Space+Grotesk:wght@400;500;700"
+				},
+				{
+					"value": "\"DM Sans\", system-ui, sans-serif",
+					"label": "DM Sans",
+					"google": "DM+Sans:wght@400;500;700"
+				}
+			],
+			"x-lockedBy": "font"
+		},
+		"--ext-ui-heading-size": {
+			"type": "number",
+			"minimum": 14,
+			"maximum": 44,
+			"default": 20,
+			"x-card": "Heading",
+			"x-label": "Heading size",
+			"x-control": "length"
+		},
+		"--ext-ui-heading-weight": {
+			"type": "number",
+			"minimum": 300,
+			"maximum": 900,
+			"multipleOf": 100,
+			"default": 600,
+			"x-card": "Heading",
+			"x-label": "Weight",
+			"x-control": "number"
+		},
+		"--ext-ui-heading-tracking": {
+			"type": "number",
+			"minimum": -0.05,
+			"maximum": 0.15,
+			"multipleOf": 0.005,
+			"default": 0,
+			"x-card": "Heading",
+			"x-label": "Tracking",
+			"x-control": "em"
+		},
+		"--ext-ui-body-size": {
+			"type": "number",
+			"minimum": 12,
+			"maximum": 22,
+			"default": 16,
+			"x-card": "Body",
+			"x-label": "Body size",
+			"x-control": "length"
+		},
+		"--ext-ui-leading": {
+			"type": "number",
+			"minimum": 16,
+			"maximum": 40,
+			"default": 24,
+			"x-card": "Body",
+			"x-label": "Line height",
+			"x-control": "length"
+		},
+		"--ext-ui-button-size": {
+			"type": "number",
+			"minimum": 10,
+			"maximum": 22,
+			"default": 14,
+			"x-card": "Button",
+			"x-label": "Button size",
+			"x-control": "length"
+		},
+		"--ext-ui-button-leading": {
+			"type": "number",
+			"minimum": 12,
+			"maximum": 36,
+			"default": 20,
+			"x-card": "Button",
+			"x-label": "Button line height",
+			"x-control": "length"
+		},
+		"--ext-ui-consent-size": {
+			"type": "number",
+			"minimum": 9,
+			"maximum": 18,
+			"default": 12,
+			"x-card": "Consent",
+			"x-label": "Consent size",
+			"x-control": "length"
+		}
+	}
+}

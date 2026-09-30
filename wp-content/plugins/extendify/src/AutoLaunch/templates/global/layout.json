@@ -1,0 +1,36 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-global/layout",
+	"title": "Layout",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-ui-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 72,
+			"default": 20,
+			"x-card": "Layout",
+			"x-label": "Elements",
+			"x-control": "length"
+		},
+		"--ext-ui-max-width": {
+			"type": "number",
+			"minimum": 380,
+			"maximum": 1100,
+			"default": 672,
+			"x-card": "Layout",
+			"x-label": "Width",
+			"x-control": "length"
+		},
+		"--ext-ui-consent-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 16,
+			"x-card": "Consent",
+			"x-label": "Gap",
+			"x-control": "length"
+		}
+	}
+}

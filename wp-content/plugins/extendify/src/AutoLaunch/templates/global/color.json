@@ -1,0 +1,93 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-global/color",
+	"title": "Color",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-ui-page": {
+			"type": "string",
+			"default": "#2271b1",
+			"x-card": "Page",
+			"x-label": "Page",
+			"x-control": "color"
+		},
+		"--ext-ui-page-text": {
+			"type": "string",
+			"default": "#ffffff",
+			"x-card": "Page",
+			"x-label": "Page text",
+			"x-control": "color"
+		},
+		"--ext-ui-action": {
+			"type": "string",
+			"default": "#2271b1",
+			"x-card": "Action",
+			"x-label": "Action",
+			"x-control": "color"
+		},
+		"--ext-ui-action-text": {
+			"type": "string",
+			"default": "#ffffff",
+			"x-card": "Action",
+			"x-label": "Action text",
+			"x-control": "color"
+		},
+		"--ext-ui-focus": {
+			"type": "string",
+			"default": "#2271b1",
+			"x-card": "Action",
+			"x-label": "Focus",
+			"x-control": "color"
+		},
+		"--ext-ui-surface": {
+			"type": "string",
+			"default": "#f0f0f0",
+			"x-card": "Surface",
+			"x-label": "Surface",
+			"x-control": "color"
+		},
+		"--ext-ui-ink": {
+			"type": "string",
+			"default": "#1e1e1e",
+			"x-card": "Surface",
+			"x-label": "Surface text",
+			"x-control": "color"
+		},
+		"--ext-ui-ink-muted": {
+			"type": "string",
+			"default": "#757575",
+			"x-card": "Surface",
+			"x-label": "Placeholder",
+			"x-control": "color"
+		},
+		"--ext-ui-line": {
+			"type": "string",
+			"default": "#dddddd",
+			"x-card": "Surface",
+			"x-label": "Border",
+			"x-control": "color"
+		},
+		"--ext-ui-secondary-fill": {
+			"type": "string",
+			"default": "#f0f0f0",
+			"x-card": "Secondary button",
+			"x-label": "Fill",
+			"x-control": "color"
+		},
+		"--ext-ui-secondary-line": {
+			"type": "string",
+			"default": "#1e1e1e",
+			"x-card": "Secondary button",
+			"x-label": "Outline",
+			"x-control": "color"
+		},
+		"--ext-ui-secondary-text": {
+			"type": "string",
+			"default": "#1e1e1e",
+			"x-card": "Secondary button",
+			"x-label": "Text",
+			"x-control": "color"
+		}
+	}
+}

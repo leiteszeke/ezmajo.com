@@ -1,0 +1,179 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-global/shape",
+	"title": "Surface",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-ui-radius": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 24,
+			"x-card": "Corners",
+			"x-label": "Radius",
+			"x-control": "length",
+			"x-unlocks": "radius"
+		},
+		"--ext-ui-radius-card": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 24,
+			"x-card": "Corners",
+			"x-label": "Card",
+			"x-control": "length",
+			"x-lockedBy": "radius"
+		},
+		"--ext-ui-radius-input": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 24,
+			"x-card": "Corners",
+			"x-label": "Input",
+			"x-control": "length",
+			"x-lockedBy": "radius"
+		},
+		"--ext-ui-radius-button": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 48,
+			"x-card": "Corners",
+			"x-label": "Button",
+			"x-control": "length",
+			"x-lockedBy": "radius"
+		},
+		"--ext-ui-border-width": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 8,
+			"default": 1,
+			"x-card": "Border",
+			"x-label": "Border",
+			"x-control": "length"
+		},
+		"--ext-ui-button-pad": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 32,
+			"default": 8,
+			"x-card": "Button",
+			"x-label": "Padding",
+			"x-control": "length"
+		},
+		"--ext-ui-button-pad-x": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 12,
+			"x-card": "Button",
+			"x-label": "Padding sides",
+			"x-control": "length"
+		},
+		"--ext-ui-button-label-pad": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 24,
+			"default": 4,
+			"x-card": "Button",
+			"x-label": "Label inset",
+			"x-control": "length"
+		},
+		"--ext-ui-shadow": {
+			"type": "string",
+			"default": "0px 4px 6px -1px rgba(0, 0, 0, 0.1)",
+			"x-card": "Shadow",
+			"x-label": "Shadow",
+			"x-control": "shadow"
+		},
+		"--ext-ui-blur": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 80,
+			"default": 40,
+			"x-card": "Surface",
+			"x-label": "Blur",
+			"x-control": "length"
+		},
+		"--ext-ui-surface-opacity": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 1,
+			"multipleOf": 0.05,
+			"default": 0.8,
+			"x-card": "Surface",
+			"x-label": "Opacity",
+			"x-control": "number"
+		},
+		"--ext-ui-surface-padding": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 24,
+			"x-card": "Surface",
+			"x-label": "Padding",
+			"x-control": "length",
+			"x-unlocks": "padding"
+		},
+		"--ext-ui-padding-top": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 24,
+			"x-card": "Surface",
+			"x-label": "Top",
+			"x-control": "length",
+			"x-lockedBy": "padding"
+		},
+		"--ext-ui-padding-right": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 24,
+			"x-card": "Surface",
+			"x-label": "Right",
+			"x-control": "length",
+			"x-lockedBy": "padding"
+		},
+		"--ext-ui-padding-bottom": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 24,
+			"x-card": "Surface",
+			"x-label": "Bottom",
+			"x-control": "length",
+			"x-lockedBy": "padding"
+		},
+		"--ext-ui-padding-left": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 24,
+			"x-card": "Surface",
+			"x-label": "Left",
+			"x-control": "length",
+			"x-lockedBy": "padding"
+		},
+		"--ext-ui-section-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 16,
+			"x-card": "Layout",
+			"x-label": "Sections",
+			"x-control": "length"
+		},
+		"--ext-ui-label-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 40,
+			"default": 8,
+			"x-card": "Layout",
+			"x-label": "Labels",
+			"x-control": "length"
+		}
+	}
+}

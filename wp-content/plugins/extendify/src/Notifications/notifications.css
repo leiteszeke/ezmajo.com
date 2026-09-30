@@ -1,0 +1,77 @@
+@import "tailwindcss" source(none) important;
+@import "../tailwind.css" source(none);
+@source ".";
+
+:root {
+	color-scheme: only light;
+}
+
+/* The bar is fixed, and the agent reserves its height only while its panel is open. */
+/* no-prefix */
+body {
+	padding-bottom: var(--extendify-notification-bar-height, 0px);
+}
+
+/* Fixed positioning escapes the body padding; --bottom is TranslatePress's own offset. */
+/* no-prefix */
+.trp-floating-switcher.trp-switcher-position-bottom {
+	bottom: calc(
+		var(--bottom, 0px) +
+		var(--extendify-notification-bar-height, 0px)
+	);
+}
+
+/* The legacy switcher; a site setting picks which generation renders. */
+/* no-prefix */
+#trp-floater-ls.trp-bottom-right,
+#trp-floater-ls.trp-bottom-left {
+	bottom: var(--extendify-notification-bar-height, 0px);
+}
+
+/* Without this the wrapper divs stretch the pill to the host bar's full height. */
+/* no-prefix */
+#wpadminbar .extendify-notifications,
+#wpadminbar .extendify-notifications .extendify-shared,
+#extendify-toolbar .extendify-notifications,
+#extendify-toolbar .extendify-notifications .extendify-shared {
+	@apply flex items-center;
+}
+
+/* no-prefix */
+#extendify-toolbar .extendify-notifications {
+	@apply ml-1 mr-2;
+}
+
+/* Core's `.ab-item` chrome would frame the pill. Raw lengths, not the spacing
+   scale: the theme vars are scoped below this element. Core's fixed height
+   would leave the margins overflowing the bar. */
+/* no-prefix */
+#wpadminbar #wp-admin-bar-extendify-notifications > .ab-item {
+	display: flex !important;
+	align-items: center !important;
+	height: auto !important;
+	margin: 4px 8px !important;
+	padding: 0 !important;
+	background: transparent !important;
+}
+
+@media screen and (max-width: 782px) {
+	/* Core hides non-allowlisted items here, and the bottom bar with them — the
+	   pill is the only thing left to act on. */
+	/* no-prefix */
+	#wpadminbar li#wp-admin-bar-extendify-notifications {
+		display: block !important;
+	}
+
+	/* no-prefix */
+	#wpadminbar #wp-admin-bar-extendify-notifications > .ab-item {
+		margin: 8px !important;
+	}
+
+	/* Only this bar: its own items already fill the width, so the label would
+	   push the pill off-screen. Core hides enough that the label still fits. */
+	/* no-prefix */
+	#extendify-toolbar .ext-notification-pill-label {
+		display: none;
+	}
+}

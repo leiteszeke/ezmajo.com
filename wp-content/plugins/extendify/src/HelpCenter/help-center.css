@@ -1,0 +1,38 @@
+@import "tailwindcss" source(none) important;
+@import "../tailwind.css" source(none);
+@source ".";
+
+:root {
+	color-scheme: only light;
+}
+
+/* no-prefix */
+.extendify-chat-button:hover:after {
+	content: "";
+	@apply absolute! left-0! top-0! h-full! w-full! bg-white/20!;
+}
+
+.ask-another-question {
+	box-shadow:
+		0 -20px 25px -5px rgb(0 0 0 / 0.05),
+		0 -8px 10px -6px rgb(0 0 0 / 0.05);
+}
+
+.animate-pulse {
+	animation: extendifyChatPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* no-prefix */
+#wp-admin-bar-help-center-btn.extendify-help-center {
+	@apply mt-2! block! md:mt-0!;
+}
+
+@keyframes extendifyChatPulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}

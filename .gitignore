@@ -1,0 +1,10 @@
+# Secrets (DB credentials) - never commit
+wp-config.php
+
+# WordPress runtime / temp
+wp-content/upgrade/
+wp-content/upgrade-temp-backup/
+wp-content/cache/
+wp-content/backup*/
+*.log
+.DS_Store

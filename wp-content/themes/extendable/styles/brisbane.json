@@ -1,0 +1,125 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"title": "Brisbane",
+	"slug": "brisbane",
+	"settings": {
+		"color": {
+			"duotone": [
+				{
+					"colors": ["#000000", "#ffffff"],
+					"slug": "grayscale",
+					"name": "Grayscale"
+				},
+				{
+					"colors": ["#49697c", "#102e43"],
+					"slug": "primary",
+					"name": "Primary"
+				},
+				{
+					"colors": ["#49697c", "#fcf8f2"],
+					"slug": "secondary",
+					"name": "Secondary"
+				},
+				{
+					"colors": ["#F9F6DE", "#fcf8f2"],
+					"slug": "primary-secondary",
+					"name": "Primary and Secondary"
+				},
+				{
+					"colors": ["#f7fafc", "#F9F6DE"],
+					"slug": "foreground-primary",
+					"name": "Foreground and Primary"
+				},
+				{
+					"colors": ["#2d3f47", "#fcf8f2"],
+					"slug": "tertiary-secondary",
+					"name": "Tertiary and Secondary"
+				},
+				{
+					"colors": ["#F9F6DE", "#f7fafc"],
+					"slug": "primary-foreground",
+					"name": "Primary and Foreground"
+				},
+				{
+					"colors": ["#3f5762", "#2d3f47"],
+					"slug": "background-tertiary",
+					"name": "Background and Background Alt"
+				}
+			],
+			"palette": [
+				{
+					"slug": "foreground",
+					"color": "#f7fafc",
+					"name": "Foreground"
+				},
+				{
+					"slug": "background",
+					"color": "#3f5762",
+					"name": "Background"
+				},
+				{
+					"slug": "primary",
+					"color": "#F9F6DE",
+					"name": "Primary"
+				},
+				{
+					"slug": "secondary",
+					"color": "#fcf8f2",
+					"name": "Secondary"
+				},
+				{
+					"slug": "tertiary",
+					"color": "#2d3f47",
+					"name": "Background Alt"
+				},
+				{
+					"slug": "foreground-alt",
+					"color": "#f7fafc",
+					"name": "Foreground Alt"
+				}
+			]
+		},
+		"custom": {
+			"blocks": {
+				"core/table": {
+					"variantStripes": {
+						"color": {
+							"background": "var(--wp--preset--color--primary)"
+						}
+					}
+				}
+			}
+		}
+	},
+	"styles": {
+		"elements": {
+			"h1": {
+				"typography": {
+					"fontWeight": "500",
+					"letterSpacing": "-0.01em"
+				}
+			},
+			"h2": {
+				"typography": {
+					"fontWeight": "500",
+					"letterSpacing": "0.01em"
+				}
+			},
+			"h3": {
+				"typography": {
+					"fontWeight": "600"
+				}
+			},
+			"heading": {
+				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--arsenal)"
+				}
+			}
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--radio-canada)",
+			"lineHeight": "var(--wp--custom--typography--line-height--medium)"
+		}
+	}
+}

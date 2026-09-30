@@ -1,0 +1,112 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-template/choice",
+	"title": "Choice",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-tpl-choice-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 96,
+			"default": 24,
+			"x-card": "Options",
+			"x-label": "Gap",
+			"x-control": "length"
+		},
+		"--ext-tpl-choice-width": {
+			"type": "number",
+			"minimum": 320,
+			"maximum": 1200,
+			"default": 672,
+			"x-card": "Options",
+			"x-label": "Row width",
+			"x-control": "length"
+		},
+		"--ext-tpl-choice-align": {
+			"type": "string",
+			"enum": ["stretch", "flex-start", "center"],
+			"default": "stretch",
+			"x-card": "Options",
+			"x-label": "Box heights",
+			"x-control": "select",
+			"x-options": [
+				{
+					"value": "stretch",
+					"label": "Match"
+				},
+				{
+					"value": "flex-start",
+					"label": "Top"
+				},
+				{
+					"value": "center",
+					"label": "Middle"
+				}
+			]
+		},
+		"--ext-tpl-choice-icon-pad": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 96,
+			"default": 40,
+			"x-card": "Box",
+			"x-label": "Icon space",
+			"x-control": "length"
+		},
+		"--ext-tpl-choice-copy-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 8,
+			"x-card": "Box",
+			"x-label": "Copy gap",
+			"x-control": "length"
+		},
+		"--ext-tpl-choice-box-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 0,
+			"x-card": "Box",
+			"x-label": "Row gap",
+			"x-control": "length"
+		},
+		"--ext-tpl-choice-highlight-border": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 12,
+			"default": 3,
+			"x-card": "Highlight",
+			"x-label": "Border",
+			"x-control": "length"
+		},
+		"--ext-tpl-choice-badge-height": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 28,
+			"x-card": "Highlight",
+			"x-label": "Badge height",
+			"x-control": "length"
+		},
+		"--ext-tpl-choice-button-pad": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 10,
+			"x-card": "Button",
+			"x-label": "Padding",
+			"x-control": "length"
+		},
+		"--ext-tpl-choice-button-pad-x": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 20,
+			"x-card": "Button",
+			"x-label": "Padding sides",
+			"x-control": "length"
+		}
+	}
+}

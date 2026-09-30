@@ -1,0 +1,54 @@
+@import "tailwindcss" source(none) important;
+@import "../tailwind.css" source(none);
+@source ".";
+@source "../Notifications";
+
+:root {
+	color-scheme: only light;
+}
+
+.hide-checkmark::before {
+	content: none;
+}
+
+/* no-prefix */
+.extendify-assist-upload-logo .components-responsive-wrapper {
+	@apply w-full!;
+}
+/* no-prefix */
+.extendify-assist-upload-logo .components-responsive-wrapper > span {
+	display: block;
+	padding-bottom: 192px !important;
+}
+/* no-prefix */
+body[class*="_page_extendify-assist"] #wpcontent {
+	@apply p-0!;
+}
+/* no-prefix */
+.ext-force-overflow-auto {
+	@apply overflow-auto!;
+}
+*:not(.dashicons) {
+	font-family:
+		-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+		Cantarell, "Helvetica Neue", sans-serif;
+}
+.input-focus {
+	@apply text-sm! outline-hidden! ring-design-main! focus:shadow-none! focus:ring-wp!;
+}
+/* no-prefix */
+.extendify-assist-settings .components-form-toggle
+	.components-form-toggle__track {
+	@apply border! border-solid! border-black!;
+}
+/* no-prefix */
+.extendify-assist-settings .components-form-toggle.is-checked
+	.components-form-toggle__track {
+	@apply bg-design-main!;
+}
+/* no-prefix */
+.extendify-assist-settings .components-form-toggle
+	.components-form-toggle__input:focus
+	+ .components-form-toggle__track {
+	@apply shadow-toggle!;
+}

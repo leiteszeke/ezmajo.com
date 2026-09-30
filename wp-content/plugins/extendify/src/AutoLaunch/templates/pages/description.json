@@ -1,0 +1,8 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-page/description",
+	"title": "Description page",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {}
+}

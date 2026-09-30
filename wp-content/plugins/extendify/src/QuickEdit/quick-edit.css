@@ -1,0 +1,1224 @@
+@import "tailwindcss" source(none) important;
+@import "../tailwind.css" source(none);
+@source ".";
+
+:root {
+	color-scheme: only light;
+}
+
+@theme {
+	/* Body-level bars/menus render outside WP admin's font context, so they
+	   need an explicit system UI stack. */
+	--font-qe:
+		-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+		Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* Once a block is being edited in Quick Edit, the agent's selected-block
+   X-close (rendered as a div[role="button"] inside its portal at the cover's
+   top-center) reads as orphaned — the user moved past the agent's
+   block-selection step and now owns Cancel via the QE toolbar. Suppress it
+   while a QE canvas is mounted.
+
+   Wrapped in @layer utilities so this `!important` rule competes in the same
+   layer as the agent bundle's Tailwind `.extendify-agent .flex {
+   display: flex !important }`. Per the cascade-layer spec, important rules
+   in any declared layer beat important rules outside layers — without this
+   wrapping, the layered .flex !important would always win regardless of
+   selector specificity. */
+@layer utilities {
+	/* no-prefix */
+	html:has(.extendify-quick-edit-canvas) #extendify-agent-dom-mount
+		div[role="button"] {
+		@apply hidden!;
+	}
+}
+
+/* Admin-bar Edit Mode pill. Lives outside our scope wrapper, so
+   each rule carries a `no-prefix` marker. */
+
+/* no-prefix */
+#wpadminbar #wp-admin-bar-extendify-quick-edit-toggle > a.ab-item {
+	@apply inline-flex! items-center! gap-[8px]!;
+}
+
+/* no-prefix */
+#wpadminbar
+	#wp-admin-bar-extendify-quick-edit-toggle
+	.extendify-quick-edit-toggle-pill {
+	@apply inline-block! relative! shrink-0! h-[16px]! w-[28px]! rounded-full! bg-[rgba(255,255,255,0.25)]!;
+	transition: background 0.18s ease !important;
+}
+
+/* no-prefix */
+#wpadminbar
+	#wp-admin-bar-extendify-quick-edit-toggle
+	.extendify-quick-edit-toggle-thumb {
+	/* Literal color, not bg-white — the theme vars don't reach
+	   #wpadminbar, so var-based utilities silently no-op here. */
+	@apply absolute! top-[2px]! left-[2px]! h-[12px]! w-[12px]! rounded-full! bg-[#fff]!;
+	transition: transform 0.18s ease !important;
+}
+
+/* On state — pill turns the AI Agent button's blue (not the partner
+   color), thumb slides right. */
+/* no-prefix */
+html.extendify-quick-edit-on #wpadminbar
+	#wp-admin-bar-extendify-quick-edit-toggle
+	.extendify-quick-edit-toggle-pill {
+	@apply bg-[#3858e9]!;
+}
+
+/* no-prefix */
+html.extendify-quick-edit-on #wpadminbar
+	#wp-admin-bar-extendify-quick-edit-toggle
+	.extendify-quick-edit-toggle-thumb {
+	@apply translate-x-[12px]!;
+}
+
+/* Above WP admin bar (z 100000). */
+#extendify-quick-edit-root {
+	@apply relative z-[100001];
+}
+
+/* The agent's highlighter-mode CSS sets pointer-events: none on
+   page-wide buttons/links so the selector-tool can capture clicks.
+   Re-enable them inside our UI surfaces. `html` prefix is required
+   to win specificity against the agent's `!important` rule.
+
+   The canvas inclusion is what keeps the LinkControl popover (and
+   any other BlockTools-slotted popover) clickable when the agent
+   sidebar is open — `BlockTools` puts its popover Slot inside the
+   canvas, so the popover renders inside `.wp-site-blocks`, in the
+   highlighter-mode scope. */
+/* no-prefix */
+html .extendify-quick-edit-bar,
+html .extendify-quick-edit-bar *,
+html .extendify-quick-edit-floating-bar,
+html .extendify-quick-edit-floating-bar *,
+html .extendify-quick-edit-image-menu,
+html .extendify-quick-edit-image-menu *,
+html .extendify-quick-edit-canvas,
+html .extendify-quick-edit-canvas * {
+	@apply pointer-events-auto!;
+}
+
+/* Restore pointer-events on `.wp-block-button` wrapper divs inside
+   highlighter-mode. The agent ships a secondary rule (in agent.css) that
+   drops pointer-events on `.wp-block-button` whenever the parent
+   `.wp-block-buttons` contains exactly one button:
+       .extendify-agent-highlighter-mode
+       .wp-block-buttons:has(> .wp-block-button):not(:has(>
+       .wp-block-button:nth-of-type(2))) > .wp-block-button
+   That selector's specificity is (0,6,0) once `:has` / `:not` are scored,
+   so a plain `html.extendify-quick-edit-on .extendify-agent-highlighter-mode
+   .wp-block-button` rescue loses the cascade even with !important. Mirror
+   the same `:has` / `:not` chain to outweigh it; the rescue still fires only
+   when the agent's rule fires, which is exactly the bug scope.
+
+   The inner `<a class="wp-block-button__link">` still has pointer-events:none
+   from the broader `.extendify-agent-highlighter-mode a` rule, so link-nav
+   prevention is intact — we only restore the wrapper div so hover/click
+   targeting resolves to the button via QE's findTagged walk-up. */
+/* no-prefix */
+html.extendify-quick-edit-on .extendify-agent-highlighter-mode
+	.wp-block-buttons:has(> .wp-block-button):not(
+		:has(> .wp-block-button:nth-of-type(2))
+	)
+	> .wp-block-button {
+	@apply pointer-events-auto!;
+}
+
+/* Cursor contract for edit mode. Tagged blocks read as selectable
+   (crosshair); anchors and form controls inside them keep their native
+   cursors so the click rule (lib/click-rule.js) telegraphs which
+   branch a click will hit before the user clicks. Scoped to
+   `html.extendify-quick-edit-on` so cursors don't bleed into normal
+   browsing. */
+/* no-prefix */
+html.extendify-quick-edit-on [data-extendify-agent-block-id],
+html.extendify-quick-edit-on [data-extendify-part-block-id],
+html.extendify-quick-edit-on [data-extendify-quick-edit-product-id],
+html.extendify-quick-edit-on [data-extendify-quick-edit-wpform-field-id] {
+	@apply cursor-crosshair;
+}
+/* no-prefix */
+html.extendify-quick-edit-on [data-extendify-agent-block-id] a[href],
+html.extendify-quick-edit-on [data-extendify-part-block-id] a[href],
+html.extendify-quick-edit-on [data-extendify-quick-edit-product-id] a[href],
+html.extendify-quick-edit-on
+	[data-extendify-quick-edit-wpform-field-id]
+	a[href] {
+	@apply cursor-pointer;
+}
+/* `revert` restores the UA-default cursor — text on inputs/textarea,
+   default/pointer on select/button — so form controls inside tagged
+   blocks still feel like form controls. */
+/* no-prefix */
+html.extendify-quick-edit-on [data-extendify-agent-block-id]
+	:is(input, textarea, select, button),
+html.extendify-quick-edit-on
+	[data-extendify-part-block-id]
+	:is(input, textarea, select, button),
+html.extendify-quick-edit-on
+	[data-extendify-quick-edit-product-id]
+	:is(input, textarea, select, button),
+html.extendify-quick-edit-on
+	[data-extendify-quick-edit-wpform-field-id]
+	:is(input, textarea, select, button) {
+	@apply cursor-[revert];
+}
+
+/* keyboard-entry.js adds tabindex="0" to every tagged block so Tab can
+   walk between blocks for accessibility. Side effect: a mouse click on
+   a tagged block focuses it, the browser paints its :focus-visible
+   ring (1px solid blue in Chrome), and the ring lingers on after the
+   QE click-rule / Esc clears the committed selection — because focus
+   stays on the element until something else takes it. The hover bar's
+   showBar (driven by both mouseover AND focusin) already paints the
+   dashed outline as the visual focus indicator, so the browser ring
+   is both redundant and visually conflicting. Suppress it on every
+   tagged-block flavour while edit mode is on. */
+/* no-prefix */
+html.extendify-quick-edit-on [data-extendify-agent-block-id]:focus,
+html.extendify-quick-edit-on [data-extendify-agent-block-id]:focus-visible,
+html.extendify-quick-edit-on [data-extendify-part-block-id]:focus,
+html.extendify-quick-edit-on [data-extendify-part-block-id]:focus-visible,
+html.extendify-quick-edit-on [data-extendify-quick-edit-product-id]:focus,
+html.extendify-quick-edit-on
+	[data-extendify-quick-edit-product-id]:focus-visible,
+html.extendify-quick-edit-on [data-extendify-quick-edit-wpform-field-id]:focus,
+html.extendify-quick-edit-on
+	[data-extendify-quick-edit-wpform-field-id]:focus-visible {
+	@apply outline-none;
+}
+
+/* WP's `<InputControl>` (and `<TextControl>` via it) layers a visual
+   `__backdrop` div over the input element to draw the focus border.
+   By WP design it carries `pointer-events: none` so clicks pass through
+   to the input behind. Our broader `.extendify-quick-edit-canvas *`
+   rule above forces every descendant to `pointer-events: auto`, which
+   re-enables the backdrop and makes it eat real-user clicks on the
+   LinkControl URL input (the "click does nothing" symptom). Pin the backdrop back to none — scoped to the LinkControl
+   shell + the QE canvas's WP popovers so we don't touch input-controls
+   in unrelated UI (the AI Agent's chat input, WP admin forms, etc.). */
+/* no-prefix */
+html.extendify-quick-edit-on .block-editor-link-control
+	.components-input-control__backdrop,
+html.extendify-quick-edit-on
+	.extendify-quick-edit-canvas
+	.components-popover
+	.components-input-control__backdrop {
+	@apply pointer-events-none!;
+}
+
+/* The tagged-descendant cursor rules above scope by `[data-extendify-*]`
+   ancestor. WP's LinkControl popover (Quick Edit canvas → BlockTools →
+   Popover.Slot) can end up portaled inside a tagged element when the
+   live block's parent is itself a tagged container; the form-control
+   override on `:is(input, ...)` matches the `<input>` itself, but
+   WP wraps the input in `.components-input-control` + similar divs
+   that catch hover events around the input edge and read as crosshair.
+   Pin the cursor on the popover root + every interactive descendant
+   so the LinkControl always feels like a form, regardless of which
+   tagged ancestor it lands under. */
+/* no-prefix */
+html.extendify-quick-edit-on .block-editor-link-control,
+html.extendify-quick-edit-on .block-editor-link-control *,
+html.extendify-quick-edit-on .extendify-quick-edit-canvas .components-popover,
+html.extendify-quick-edit-on
+	.extendify-quick-edit-canvas
+	.components-popover
+	* {
+	@apply cursor-[revert];
+}
+html.extendify-quick-edit-on .block-editor-link-control input,
+html.extendify-quick-edit-on .block-editor-link-control textarea,
+html.extendify-quick-edit-on
+	.extendify-quick-edit-canvas
+	.components-popover
+	input,
+html.extendify-quick-edit-on
+	.extendify-quick-edit-canvas
+	.components-popover
+	textarea {
+	@apply cursor-text;
+}
+
+/* The `cursor: revert` block above reverts buttons inside
+   the LinkControl popover (pencil / unlink / copy) to the UA default,
+   which is the arrow cursor — not pointer. WP's `.components-button`
+   normally sets `cursor: pointer` but our blanket revert wins. Pin
+   pointer on the link-control's `<button>` and `<a>` (URL preview)
+   so every interactive element in the popover feels clickable. */
+/* no-prefix */
+html.extendify-quick-edit-on .block-editor-link-control button,
+html.extendify-quick-edit-on .block-editor-link-control a,
+html.extendify-quick-edit-on
+	.extendify-quick-edit-canvas
+	.components-popover
+	button,
+html.extendify-quick-edit-on
+	.extendify-quick-edit-canvas
+	.components-popover
+	a {
+	@apply cursor-pointer;
+}
+
+/* The URL preview (`.block-editor-link-control__preview-title`,
+   an `<a>` rendered by `<ExternalLink>`) renders as white text on the
+   popover's white background when the QE canvas hosts a button block —
+   the canvas inherits Extendable's button-text color (white) and the
+   popover anchor picks it up via `color: inherit` somewhere in the
+   ExternalLink chain. `!important` wins the cascade unambiguously;
+   the rule is already QE-scoped to `html.extendify-quick-edit-on` so
+   it can't bleed into other surfaces. */
+/* no-prefix */
+html.extendify-quick-edit-on .block-editor-link-control__preview-title,
+html.extendify-quick-edit-on .block-editor-link-control__preview-title:hover,
+html.extendify-quick-edit-on .block-editor-link-control__preview-title:focus,
+html.extendify-quick-edit-on .block-editor-link-control__preview-title *,
+html.extendify-quick-edit-on .block-editor-link-control__preview-title:hover *,
+html.extendify-quick-edit-on .block-editor-link-control__preview-title:focus * {
+	/* Literal color — the theme vars don't reach this portaled popover. */
+	@apply text-[#1e1e1e]! opacity-100!;
+}
+
+/* Hide core's developer-facing "Additional CSS class(es)" row (hardcoded, no
+   filter to remove it) — the only Advanced setting rendered in a fieldset. */
+/* no-prefix */
+html.extendify-quick-edit-on .block-editor-link-control__settings
+	.block-editor-link-control__setting:has(> fieldset) {
+	@apply hidden!;
+}
+
+/* Hover bar (plain DOM, see lib/hover-bar.js). Body-scoped so
+   every rule needs `no-prefix`. The ::before bridges the gap between
+   bar and block so the cursor can cross without losing hover. */
+
+/* The bar carries `pointer-events: auto` so its ::before hover bridge
+   catches the cursor when traversing block → pill (with
+   `none`, cursor passed under the bar and would resolve to whatever
+   tagged ancestor was below, sometimes an unsupported one — the bar
+   then cleared mid-gesture). Wheel events on the bar are forwarded to
+   the page scroller via a JS handler in hover-bar.js#renderBar — pills
+   stay clickable AND the page still scrolls when the cursor is over
+   the bar. */
+/* no-prefix */
+.extendify-quick-edit-bar {
+	@apply pointer-events-auto fixed z-high inline-flex max-w-none flex-row flex-nowrap gap-[6px] p-0 whitespace-nowrap;
+	font-family:
+		-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+		Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* Transparent 12px bridge to the block (above or below the bar)
+   so the cursor can cross the gap without losing hover. */
+/* no-prefix */
+.extendify-quick-edit-bar::before {
+	@apply absolute left-0 right-0 h-[12px] bg-transparent;
+	content: "";
+}
+
+/* no-prefix */
+.extendify-quick-edit-bar[data-extendify-quick-edit-placement="above"]::before {
+	@apply -bottom-[12px];
+}
+
+/* no-prefix */
+.extendify-quick-edit-bar[data-extendify-quick-edit-placement="below"]::before {
+	@apply -top-[12px];
+}
+
+/* When the bar is pinned inside a viewport-filling block (e.g. a
+   hero Cover) it already overlaps the block — no bridge needed. */
+/* no-prefix */
+.extendify-quick-edit-bar[data-extendify-quick-edit-placement="inside"]::before {
+	@apply hidden;
+}
+
+/* no-prefix */
+.extendify-quick-edit-pill {
+	@apply inline-flex cursor-pointer items-center gap-[6px] rounded-full border-0 bg-gray-800 px-[12px] py-[6px] text-[12px] font-medium leading-[1.4] text-white;
+	box-shadow:
+		0 4px 12px rgba(15, 23, 42, 0.25),
+		0 0 0 1px rgba(255, 255, 255, 0.15);
+	transition:
+		background 0.15s ease,
+		transform 0.15s ease,
+		box-shadow 0.15s ease;
+}
+
+/* no-prefix */
+.extendify-quick-edit-pill:hover {
+	@apply -translate-y-px bg-gray-900;
+	box-shadow:
+		0 6px 16px rgba(15, 23, 42, 0.35),
+		0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* no-prefix */
+.extendify-quick-edit-pill:focus-visible {
+	@apply outline-offset-[3px];
+	outline: 2px solid var(--color-design-main);
+}
+
+/* no-prefix */
+.extendify-quick-edit-pill-close {
+	@apply px-[9px] text-[13px] leading-none;
+}
+
+/* Hidden rather than removed: the bar would change width on every pin. */
+/* no-prefix */
+.extendify-quick-edit-pill-close:disabled {
+	@apply invisible;
+}
+
+/* no-prefix */
+.extendify-quick-edit-pill-ai {
+	background: #3858e9;
+}
+
+/* no-prefix */
+.extendify-quick-edit-pill-ai:hover {
+	background: #2145e6;
+}
+
+/* Hover outline — drawn as a body-level `position: fixed` overlay,
+   NOT as a class on the block element itself. See
+   `lib/hover-bar.js#ensureOutline` for the why: putting the outline
+   on the block puts it inside whatever ancestor `overflow: hidden`
+   clip region the theme establishes, so it gets cropped on full-
+   width pattern containers (the user's report: "only see it on the
+   top"). Body-level fixed sidesteps that.
+
+   Visual style mirrors the Agent's DOMHighlighter so hover and
+   selection feel like the same UI:
+     - Theme primary color (--wp--preset--color--primary) instead
+       of a hardcoded blue — matches whatever the partner brand is
+       set to in Site Editor → Styles → Colors.
+     - 4px dashed stroke instead of 2px solid — chunkier, reads
+       more clearly as "this is selectable."
+     - mix-blend-mode: hard-light — keeps the stroke visible
+       against any background (light hero / dark cover / patterned).
+     - Spring-like transition via cubic-bezier with a slight
+       overshoot — approximates framer-motion's spring without the
+       runtime cost of importing framer-motion just for this.
+       Coefficients picked to match the agent's
+       (stiffness: 700, damping: 40, mass: 0.25) feel — quick
+       expand, gentle settle. */
+/* no-prefix */
+.extendify-quick-edit-hover-outline {
+	/* z-index 99997: below hover bar (99999) but above page content */
+	@apply pointer-events-none fixed z-[99997] box-border rounded-[4px] opacity-0 outline-offset-0;
+	outline: 4px dashed var(--wp--preset--color--primary, #3b82f6);
+	/* Subtle overshoot — `cubic-bezier(0.34, 1.4, 0.64, 1)` was too
+	   bouncy in practice (peak ~140% of final). Tightened to ~108%
+	   peak — feels alive without obviously springing. */
+	transition:
+		top 0.2s cubic-bezier(0.34, 1.08, 0.64, 1),
+		left 0.2s cubic-bezier(0.34, 1.08, 0.64, 1),
+		width 0.2s cubic-bezier(0.34, 1.08, 0.64, 1),
+		height 0.2s cubic-bezier(0.34, 1.08, 0.64, 1),
+		opacity 0.1s ease-out;
+}
+/* Matches the agent's selected outline (see lib/over-media.js). */
+/* no-prefix */
+.extendify-quick-edit-hover-outline.is-over-media {
+	box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+}
+/* no-prefix */
+.extendify-quick-edit-hover-outline.is-visible {
+	@apply opacity-100;
+}
+
+/* wp.media frame: lock to a single tab + hide filters/details so
+   the modal is just "pick an image". Scoped to the QE-only mode class
+   (added to `frame.modal.$el` in InlineEditor.jsx) rather than `body` so
+   frames opened by the AI Agent / other features aren't affected — the
+   mode class is added by QE alone, so it's the discriminator on its own.
+   It lands on wp.media's outer modal wrapper, which carries no
+   `.media-modal` class of its own; the old `.media-modal.*` prefix
+   therefore matched nothing and the chrome leaked back in. */
+/* no-prefix */
+.extendify-quick-edit-mode-browse .media-frame-router,
+.extendify-quick-edit-mode-upload .media-frame-router {
+	@apply hidden!;
+}
+
+/* no-prefix */
+.extendify-quick-edit-mode-browse .media-frame-content
+	.attachments-browser
+	.media-toolbar,
+.extendify-quick-edit-mode-upload
+	.media-frame-content
+	.attachments-browser
+	.media-toolbar {
+	@apply hidden!;
+}
+/* no-prefix */
+.extendify-quick-edit-mode-browse .media-frame-content .media-sidebar,
+.extendify-quick-edit-mode-upload .media-frame-content .media-sidebar {
+	@apply hidden!;
+}
+/* wp.media still reserves absolute offsets for the chrome hidden above;
+   core's own `hide-router` class is no use — MediaFrame re-toggles it
+   off on every state change. */
+/* no-prefix */
+.extendify-quick-edit-mode-browse .media-frame-content,
+.extendify-quick-edit-mode-upload .media-frame-content {
+	@apply top-[50px]!;
+}
+/* no-prefix */
+.extendify-quick-edit-mode-browse .attachments-browser:not(.has-load-more)
+	.attachments,
+.extendify-quick-edit-mode-browse
+	.attachments-browser.has-load-more
+	.attachments-wrapper,
+.extendify-quick-edit-mode-browse .attachments-browser .uploader-inline,
+.extendify-quick-edit-mode-upload
+	.attachments-browser:not(.has-load-more)
+	.attachments,
+.extendify-quick-edit-mode-upload
+	.attachments-browser.has-load-more
+	.attachments-wrapper,
+.extendify-quick-edit-mode-upload .attachments-browser .uploader-inline {
+	/* Arbitrary [0px], not top-0/right-0 — spacing utilities compile to
+	   calc(var(--spacing)*0) and the var doesn't reach this body-level
+	   modal, so the rule would silently no-op. */
+	@apply top-[0px]! right-[0px]!;
+}
+
+/* While an upload is in flight, cover wp.media's content with our own
+   loading state so the library/gallery view doesn't flash mid-upload.
+   Modal-scoped — without that, this overlay painted a white sheet over
+   the AI Agent's media frame too, which read as "screen goes blank"
+   the instant the agent's media library responded to a click. */
+/* no-prefix */
+.extendify-quick-edit-media-uploading .media-frame-content::after {
+	@apply absolute inset-[0px] z-[5] bg-[#fff];
+	content: "";
+}
+/* no-prefix */
+.extendify-quick-edit-media-uploading .media-frame-content::before {
+	@apply absolute top-1/2 left-1/2 z-[6] mr-[0px] mb-[0px] -mt-[16px] -ml-[16px] h-[32px] w-[32px] rounded-full border-[3px] border-[#ddd] border-t-[color:var(--ext-design-main,#2271b1)];
+	content: "";
+	animation: extendify-quick-edit-media-uploading-spin 0.8s linear infinite;
+}
+/* no-prefix */
+@keyframes extendify-quick-edit-media-uploading-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Offset the wp.media modal past the Agent sidebar (which has
+   `inert` removed while open). */
+/* no-prefix */
+html:has(#extendify-agent-sidebar:not([inert])) .media-modal-backdrop {
+	@apply left-[384px]!;
+}
+/* no-prefix */
+html:has(#extendify-agent-sidebar:not([inert])) .media-modal {
+	@apply left-[calc(384px+30px)]!;
+}
+
+/* BlockEditor-based text editor (BlockTextEditor.jsx). */
+
+/* Hide every Ariakit tooltip portal while a QE canvas is mounted.
+   Many rounds of trying to land both 36px-custom-button
+   tooltips and 48px-BlockToolbar-button tooltips in a clear spot
+   below the bar (pointer-events tricks, top placement, height
+   equalization, Floating-UI-aware transforms) all hit one or the
+   other case. The dev's call: drop the tooltips here and revisit
+   later.
+
+   Scope is `body:has(.extendify-quick-edit-floating-bar)` so this
+   ONLY hides tooltips while a QE canvas is mounted. Outside an
+   active editing session — AI Agent sidebar, WP admin chrome,
+   other plugins' tooltips — is completely untouched. Inside a
+   session, LinkControl + other in-canvas popovers share this
+   portal too and lose their tooltips alongside the bar's, which
+   is fine for the editing-session contract.
+
+   Each trigger keeps its `aria-label` so screen readers still
+   announce. */
+/* no-prefix */
+body:has(.extendify-quick-edit-floating-bar) [id^="portal/tooltip"] {
+	@apply hidden;
+}
+
+/* no-prefix */
+.extendify-quick-edit-floating-bar {
+	@apply pointer-events-auto;
+}
+
+/* The portaled BlockToolbar ships with extra Gutenberg chrome we
+   don't want — block transform menu, block settings 3-dots,
+   parent-selector, and the format-toolbar's "More" overflow chevron
+   (which surfaces Highlight / Inline code / Strikethrough / etc.).
+   With our custom Text-color + Highlight buttons rendered alongside
+   the toolbar, the More overflow is redundant — and it kept slipping
+   in alongside our buttons making the toolbar look cluttered. Hide
+   it. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner .block-editor-block-mover,
+.extendify-quick-edit-floating-bar-inner .block-editor-block-parent-selector,
+.extendify-quick-edit-floating-bar-inner
+	.block-editor-block-toolbar__group-collapsed-toolbar,
+/* Block-level settings 3-dot menu */
+.extendify-quick-edit-floating-bar-inner .block-editor-block-settings-menu,
+/* Block transform / switcher button (the "Heading" icon you can click
+   to convert to another block type — out of scope for Quick Edit) */
+.extendify-quick-edit-floating-bar-inner .block-editor-block-switcher,
+/* The chevron that surfaces overflow toolbar groups. */
+.extendify-quick-edit-floating-bar-inner .block-editor-block-toolbar__group-collapsed-button,
+/* RichText format toolbar's "More" overflow toggle (down arrow). Hide its
+   dropdown wrapper too — left visible, the 0-width wrapper still counts as
+   a flex item and costs one phantom gap after the last format button. */
+.extendify-quick-edit-floating-bar-inner [aria-label="More"],
+.extendify-quick-edit-floating-bar-inner
+	.components-dropdown-menu:has(> [aria-label="More"]) {
+	@apply hidden!;
+}
+
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner
+.block-editor-block-contextual-toolbar::before {
+	@apply absolute left-0 top-1/2 h-[14px] w-px -translate-y-1/2 bg-gray-300;
+	content: "";
+}
+/* BlockToolbar wrapper owns the layout↔format divider on its left, 12px each side. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner
+.block-editor-block-contextual-toolbar {
+	@apply relative mt-0! mr-0! mb-0! ml-[8px]! pt-0! pr-0! pb-0! pl-[12px]!;
+}
+/* core/button has no heading/alignment group, so the toolbar opens the
+   bar and its left divider reads as a stray leading `|`. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner
+.block-editor-block-contextual-toolbar:first-child {
+	@apply ml-0! pl-0!;
+}
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner
+.block-editor-block-contextual-toolbar:first-child::before {
+	@apply hidden;
+}
+
+/* Strip BlockToolbar's own group dividers (border-right on each
+   .components-toolbar-group in Gutenberg). We deliberately don't add
+   our own dividers between BlockToolbar's internal groups: the format
+   toolbar leaves a thin invisible group after B/I/link (wrapping the
+   "More" overflow we hide via display:none on the chevron button) —
+   adding a `:not(:first-of-type)::before` rule for those internal
+   groups draws a stray divider right next to the colors group's own
+   divider. Easier and cleaner to treat the whole BlockToolbar as one
+   visual segment and only divide between BlockToolbar, colors, and
+   actions. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner .components-toolbar-group,
+.extendify-quick-edit-floating-bar-inner .components-toolbar,
+/* The portaled BlockToolbar's contextual-toolbar wrapper carries a core
+   `0 1px 0 0` bottom shadow (a faux border) that draws a line under our
+   pill. We provide our own pill shadow on the inner — strip the core one. */
+.extendify-quick-edit-floating-bar-inner .block-editor-block-contextual-toolbar {
+	@apply border-l-0! border-r-0! shadow-none!;
+}
+/* Zero Gutenberg's per-group `padding: 0 6px` + -1px margin so the bar's own
+   `gap` owns spacing. Not the contextual-toolbar — it owns the divider above. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner .components-toolbar-group,
+.extendify-quick-edit-floating-bar-inner .components-toolbar {
+	@apply p-0! m-0!;
+}
+/* Clamp Gutenberg's 48px toolbar chrome to the button height so the bar
+   hugs its row instead of floating the buttons in dead vertical space. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner .block-editor-block-contextual-toolbar,
+.extendify-quick-edit-floating-bar-inner .block-editor-block-toolbar,
+.extendify-quick-edit-floating-bar-inner .components-accessible-toolbar,
+.extendify-quick-edit-floating-bar-inner .components-toolbar-group,
+.extendify-quick-edit-floating-bar-inner .block-editor-block-toolbar__slot {
+	@apply h-[28px]! min-h-0!;
+}
+/* B/I/link get no gap from Gutenberg (group + inner slot), so they rendered
+   edge-to-edge; gap both to match the bar's rhythm. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner .components-toolbar-group,
+.extendify-quick-edit-floating-bar-inner .block-editor-block-toolbar__slot {
+	@apply gap-[4px]!;
+}
+
+/* One box model for all buttons — custom heading/align/color + native
+   B/I/link — so Gutenberg's square, dark-pressed defaults match the pill. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner .components-button {
+	@apply min-w-[28px]! h-[28px]! px-[4px]! py-0! rounded-[6px]! bg-transparent! text-gray-900! shadow-none!;
+}
+/* Drop Gutenberg's inset ::before hover/pressed bar — it fights our
+   full-button rounded states. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner .components-button::before {
+	@apply hidden!;
+}
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner
+.components-button:hover:not(:disabled) {
+	@apply bg-[rgba(0,0,0,0.05)]!;
+}
+/* Active format (bold/italic/link) — a subtle filled state instead of
+   Gutenberg's near-black pressed background. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner .components-button.is-pressed,
+.extendify-quick-edit-floating-bar-inner
+	.components-button.is-pressed:hover:not(:disabled) {
+	@apply bg-[rgba(15,23,42,0.1)]! text-gray-900!;
+}
+
+/* no-prefix */
+.extendify-quick-edit-text-align-popover .components-popover__content {
+	@apply p-[6px] min-w-[auto];
+}
+
+/* no-prefix */
+.extendify-quick-edit-text-align-popover-inner {
+	@apply flex flex-col gap-[2px];
+}
+
+/* no-prefix */
+.extendify-quick-edit-text-align-popover
+.extendify-quick-edit-text-align-option.components-button {
+	@apply h-[32px] justify-start gap-[8px] px-[10px] py-0 text-[13px] font-medium;
+}
+
+/* Box model + hover inherited from the shared .components-button rule above;
+   the heading button only adds its text label's weight/size + a bit more
+   horizontal padding for the "H2" / "H3" labels. */
+/* no-prefix */
+.extendify-quick-edit-floating-bar-inner
+.extendify-quick-edit-heading-level-button.components-button {
+	@apply px-[6px]! py-0! text-[13px] font-semibold;
+}
+
+/* no-prefix */
+.extendify-quick-edit-heading-level-popover .components-popover__content {
+	@apply p-[6px] min-w-[auto];
+}
+
+/* no-prefix */
+.extendify-quick-edit-heading-level-popover-inner {
+	@apply inline-flex gap-[2px] p-[2px];
+}
+
+/* no-prefix */
+.extendify-quick-edit-heading-level-popover
+.extendify-quick-edit-heading-level-option.components-button {
+	@apply h-[32px] min-w-[36px] px-[8px] py-0 text-[13px] font-semibold;
+}
+
+/* Box model + hover inherited from the shared .components-button rule above. */
+
+/* no-prefix */
+.extendify-quick-edit-color-popover .components-popover__content {
+	@apply p-[12px] min-w-[220px];
+}
+
+/* no-prefix */
+.extendify-quick-edit-color-popover-inner
+.components-circular-option-picker__option-wrapper {
+	@apply m-[4px];
+}
+
+/* Explicit "Clear" button below the swatches — the ColorPalette's
+   built-in clear is easy to miss. */
+/* no-prefix */
+.extendify-quick-edit-color-popover
+.extendify-quick-edit-color-clear.components-button {
+	@apply block w-full mt-[8px] px-[12px]! py-[8px]! border-t! border-t-gray-300! rounded-none! text-left! text-gray-700! font-medium!;
+}
+/* no-prefix */
+.extendify-quick-edit-color-popover
+.extendify-quick-edit-color-clear.components-button:hover {
+	@apply bg-gray-50! text-gray-900!;
+}
+
+/* no-prefix */
+.extendify-quick-edit-host {
+	/* The host overlays the live block 1:1. Its position is set by
+	   BlockTextEditor's align() effect; CSS just zeros margin so theme
+	   blockGap doesn't push us.
+
+	   The blue outline lives HERE (not on the inner canvas). The host
+	   has its width / min-height set synchronously to match the live
+	   block on insert, so its outline paints at full size on the very
+	   first frame. The canvas inside is empty until blocks load —
+	   putting the outline on the canvas previously meant a 0-height
+	   "narrow stripe" between insert and content load.
+
+	   `outline-offset: 0` (flush with edge) is deliberate. With +4px,
+	   the outline extends outside the host by 4px — for full-width
+	   pattern containers at the page edge, those 4px land in
+	   `body`/`html`'s `overflow-x: hidden` clip region, and the
+	   outline disappears on the bottom + sides ("only see it on the
+	   top," as the user reported). Flush with the edge keeps the
+	   outline inside the host's bounds and visible everywhere. */
+	@apply m-0! rounded-[4px] outline-offset-0;
+	outline: 2px solid
+		color-mix(
+			in srgb,
+			var(--wp--preset--color--primary, #3b82f6) 70%,
+			transparent
+		);
+}
+
+/* no-prefix */
+.extendify-quick-edit-canvas {
+	@apply pointer-events-auto;
+}
+
+/* While the rich-text editor is focused, transition the outline to
+   fully opaque so the active edit state is unambiguous. */
+/* no-prefix */
+.extendify-quick-edit-host:focus-within {
+	outline-color: var(--wp--preset--color--primary, #3b82f6);
+}
+
+/* Pin link / button-link color in the canvas to the live element's resting
+   value (snapshot into --qe-link-color in BlockTextEditor.jsx). Without this,
+   the theme's :hover on .wp-block-button__link fires as soon as the user's
+   cursor sits over the text they're editing, flipping the button text to
+   the hover color while the background stays non-hover — broken-looking.
+   Falls back to currentColor when no link is in the live block (e.g. a
+   plain heading or paragraph), making the rule a no-op. */
+/* no-prefix */
+.extendify-quick-edit-host a:hover,
+.extendify-quick-edit-host .wp-block-button__link:hover,
+.extendify-quick-edit-host .wp-block-button:hover .wp-block-button__link {
+	@apply text-[var(--qe-link-color,currentColor)]!;
+}
+
+/* BlockEditor's BlockList adds margin-top: 16px to its child blocks
+   (and 40.2px bottom). When our canvas is positioned exactly over
+   the live block, those margins push the rendered block 16px below
+   where the live one sits — the user sees the heading drift down on
+   click. Zero out the margins for the block immediately inside our
+   canvas so the rendered block top lines up with the live element.
+
+   Also zero PADDING on the block list + block wrappers — the editor
+   stylesheet adds horizontal padding (for the inserter chip / block-
+   selector chrome) that narrows the inner text's effective width, so
+   the same heading wraps at a different word boundary than the live
+   element (line-break parity). With padding zeroed and the
+   host's width matching liveRect.width, the text wraps at the same
+   word as the live element. */
+/* no-prefix */
+.extendify-quick-edit-canvas .block-editor-block-list__layout,
+.extendify-quick-edit-canvas .block-editor-block-list__block {
+	@apply mt-0! mb-0! px-0!;
+}
+
+/* core/text-color wraps its target text in `<mark>`. Browsers AND many
+   themes give `<mark>` a yellow background by default; combined with our
+   text-color format's inline `background-color: transparent` (set when
+   only text color is picked), users sometimes still saw a yellow band
+   around their colored text — "changing one color changed
+   both". Neutralize the background in our canvas. Inline
+   `background-color: <color>` (set when the user also picks a
+   highlight) wins via specificity and renders normally. */
+/* no-prefix */
+.extendify-quick-edit-canvas mark {
+	background: none;
+}
+
+/* Hide Gutenberg's own block-level selection / hover indicators
+ * inside our canvas. BlockList draws a faint gray outline (or a
+ * "::before" rect, depending on Gutenberg version) on the selected
+ * block — when stacked inside our blue canvas outline it reads as a
+ * confusing "double box." We want OUR outline to be the one and only
+ * editing-state cue; the contenteditable's blinking caret is enough
+ * to indicate where the cursor is, no extra block highlight needed. */
+/* no-prefix */
+.extendify-quick-edit-canvas .block-editor-block-list__block,
+.extendify-quick-edit-canvas .block-editor-block-list__block.is-selected,
+.extendify-quick-edit-canvas .block-editor-block-list__block.is-hovered,
+.extendify-quick-edit-canvas .block-editor-block-list__block:focus,
+.extendify-quick-edit-canvas .block-editor-rich-text__editable,
+.extendify-quick-edit-canvas .block-editor-rich-text__editable:focus {
+	@apply outline-none! shadow-none!;
+}
+/* no-prefix */
+.extendify-quick-edit-canvas .block-editor-block-list__block::before,
+.extendify-quick-edit-canvas .block-editor-block-list__block::after {
+	@apply hidden!;
+}
+
+/* The BlockEditor canvas needs writing flow + its standard editor
+   styles to behave naturally (selection, format toolbar tracking).
+   We don't load editor-styles globally — these are minimal restorations
+   so contenteditable inside .block-editor-rich-text__editable works. */
+/* no-prefix */
+.extendify-quick-edit-canvas .block-editor-block-list__layout {
+	@apply cursor-text;
+}
+
+/* Force visibility of blocks with the Extendable `ext-animate--on`
+   class (and any element using its initial opacity:0 animation
+   pattern) INSIDE the canvas. The theme's animation JS only runs
+   on page-load scroll events; a freshly mounted BlockEditor block
+   never gets animated in, so opacity stays 0 and the user sees an
+   empty canvas. We deliberately keep the class on the block (it's
+   part of attrs.className and round-trips through serialize) and
+   override visibility cosmetically here.
+
+   `transform: none !important` is the matching half: the theme's
+   pre-animation rule is `.ext-animate--on:not(.ext-animate--off) {
+   transform: scale(0.8); opacity: 0; }`, and a sibling rule
+   `.ext-animate { transform: none; opacity: 1; }` flips both when
+   the JS adds `ext-animate` on scroll-into-view. Inside the canvas
+   the BlockEditor renders the parsed markup with `ext-animate--on`
+   but NOT `ext-animate` (that class is JS-added, not saved), so
+   without this override headings/paragraphs render at 80% scale
+   while the live element sits at scale 1 — the user reported this
+   as "the text gets a little smaller when I click Quick Edit." */
+/* no-prefix */
+.extendify-quick-edit-canvas .ext-animate--on,
+.extendify-quick-edit-canvas .block-editor-block-list__block.ext-animate--on,
+.extendify-quick-edit-canvas .ext-animate--on * {
+	@apply opacity-100! transform-none!;
+}
+
+/* Modals portal to <body>, so the no-prefix marker keeps these out of the
+   .extendify-quick-edit scope. The agent sidebar uses z-higher (999999),
+   so the modal overlay sits at 1_000_000 to stay on top when both are open. */
+
+/* no-prefix */
+.components-modal__screen-overlay:has(.extendify-quick-edit-modal) {
+	@apply z-[1000000]!;
+}
+
+/* When wp.media's frame opens on top of our modal (e.g. SiteIdentityModal's
+   "Change logo" → MediaUpload), our modal would otherwise sit on top
+   (z-index 1000000) and block clicks on the media library grid. Hide our
+   modal while wp.media is open; it reappears when the user picks an image
+   or closes the frame.
+
+   Trigger on `body.modal-open` — wp.media (legacy Backbone code) adds
+   that class directly on open and removes it on close. Round-3 used
+   `:has(.media-modal)`, which stayed true after wp.media closed (wp.media
+   hides via display:none and leaves the element in the DOM).
+
+   Our own QE modals MUST NOT trip this rule. @wordpress/components Modal
+   also adds `body.modal-open` on mount, so every QE modal hid itself on
+   first open. Each QE modal now passes
+   `bodyOpenClassName={QE_MODAL_BODY_OPEN_CLASS}` — see modal-root.js. */
+/* no-prefix */
+body.modal-open .components-modal__frame:has(.extendify-quick-edit-modal),
+body.modal-open
+	.components-modal__screen-overlay:has(.extendify-quick-edit-modal) {
+	@apply invisible!;
+}
+
+/* ----------------------------------------------------------------
+ * Modal polish — keep visual language aligned with the auto-launch
+ * page + AI Agent so the user-perceived experience feels like one
+ * product. Agent's tokens:
+ *   --ext-design-main   primary brand (banner / primary buttons)
+ *   --ext-design-secondary, --ext-design-tertiary (accents, less used)
+ *
+ * The agent's sidebar uses rounded-2xl + shadow-lg + bg-white; we
+ * mirror that on the modal frame so the modal feels like a natural
+ * extension of the agent's UI rather than a stock WP component.
+ *
+ * Falls back to neutral defaults when the partner data hasn't set
+ * the design vars (single-color sites, themes that don't import the
+ * Extendable design system). Keeps the modal looking polished even
+ * outside the auto-launch flow.
+ * ---------------------------------------------------------------- */
+
+/* no-prefix */
+.components-modal__frame:has(.extendify-quick-edit-modal),
+.extendify-quick-edit-modal-root .components-modal__frame {
+	@apply overflow-hidden rounded-[16px]!;
+	box-shadow:
+		0 10px 15px -3px rgba(0, 0, 0, 0.12),
+		0 4px 6px -4px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* no-prefix */
+.components-modal__frame:has(.extendify-quick-edit-modal)
+.components-modal__header {
+	@apply border-b border-b-gray-300 px-[24px] py-[18px];
+}
+/* no-prefix */
+.components-modal__frame:has(.extendify-quick-edit-modal)
+.components-modal__header-heading {
+	@apply text-[15px] font-semibold tracking-[-0.01em];
+}
+/* no-prefix */
+.components-modal__frame:has(.extendify-quick-edit-modal)
+.components-modal__content {
+	@apply px-[24px] pt-[18px] pb-[22px];
+}
+
+/* Primary save button uses the brand color so the action feels
+   continuous with the agent's "Send" pill / launch CTAs. */
+/* no-prefix */
+.extendify-quick-edit-modal-actions .components-button.is-primary {
+	@apply bg-[var(--ext-design-main,#2c39bd)]! shadow-none! rounded-[8px]! px-[14px]! py-[6px]! font-medium!;
+}
+/* no-prefix */
+.extendify-quick-edit-modal-actions
+.components-button.is-primary:hover:not(:disabled) {
+	@apply bg-[var(--ext-design-main,#2c39bd)]! brightness-[1.08];
+}
+/* no-prefix */
+.extendify-quick-edit-modal-actions
+.components-button.is-primary:focus:not(:disabled) {
+	box-shadow:
+		0 0 0 2px #fff,
+		0 0 0 4px var(--ext-design-main, #2c39bd) !important;
+}
+/* no-prefix */
+.extendify-quick-edit-modal-actions .components-button.is-tertiary {
+	@apply rounded-[8px]! px-[12px]! py-[6px]! font-medium! text-gray-700!;
+}
+/* no-prefix */
+.extendify-quick-edit-modal-actions
+.components-button.is-tertiary:hover:not(:disabled) {
+	@apply bg-gray-100! text-gray-800!;
+}
+
+/* Tighter, consistent control rhythm inside modals — replaces
+   wp-components' default 24px gaps with 14px so the modal feels
+   compact and intentional, matching the agent's chat density. */
+/* no-prefix */
+.extendify-quick-edit-modal .components-base-control {
+	@apply mb-[14px];
+}
+/* no-prefix */
+.extendify-quick-edit-modal .components-base-control__label {
+	/* normal-case: WP defaults to uppercase via inheritance in some themes */
+	@apply mb-[6px] text-[12px] font-semibold normal-case tracking-[0] text-gray-800;
+}
+/* no-prefix */
+.extendify-quick-edit-modal .components-text-control__input,
+.extendify-quick-edit-modal .components-textarea-control__input {
+	@apply rounded-[8px] border border-gray-300;
+	transition:
+		border-color 0.12s ease,
+		box-shadow 0.12s ease;
+}
+/* no-prefix */
+.extendify-quick-edit-modal .components-text-control__input:focus,
+.extendify-quick-edit-modal .components-textarea-control__input:focus {
+	@apply border-[color:var(--ext-design-main,#2c39bd)]! outline-none!;
+	box-shadow: 0 0 0 3px
+		color-mix(in srgb, var(--ext-design-main, #2c39bd) 18%, transparent) !important;
+}
+
+/* no-prefix */
+.extendify-quick-edit-modal-actions {
+	@apply flex justify-end gap-[8px] mt-[18px] pt-[14px] border-t border-t-gray-300;
+}
+
+/* no-prefix */
+.extendify-quick-edit-modal-label {
+	@apply mt-[12px] mr-0 mb-[6px] ml-0 text-[11px] font-medium uppercase text-gray-700;
+}
+
+/* no-prefix */
+.extendify-quick-edit-link-current {
+	@apply mt-[8px] mr-0 mb-[12px] ml-0 rounded-[6px] bg-gray-50 px-[12px] py-[8px] text-[12px] text-gray-700;
+}
+/* no-prefix */
+.extendify-quick-edit-link-current code {
+	@apply text-gray-900;
+}
+
+/* LinkControl + format-toolbar popovers inside the canvas. WP's Popover
+   writes the anchor's viewport rect into style.top/left and renders as
+   `position: absolute`, which interprets those coords relative to the
+   nearest positioned ancestor. In our setup that's
+   `.extendify-quick-edit-host` (position: absolute, sized to track the
+   live block), so the popover drifts by host.top/left and its width is
+   capped by host.width — the user reads this as "edit box too short" +
+   "hard to click where intended." Forcing position: fixed lets the
+   coords land in viewport space and frees the popover from the canvas
+   width. */
+/* no-prefix */
+.extendify-quick-edit-canvas .components-popover {
+	@apply fixed!;
+}
+
+/* Without a positioned offsetParent, floating-ui's coords ignore the admin
+   bar's html margin-top and the popover renders 32px above its anchor. */
+/* no-prefix */
+.extendify-quick-edit-popover-slot {
+	@apply relative;
+}
+
+/* LinkControl in edit mode (forceIsEditingLink) renders its own Apply / Cancel
+   below the URL input. Our modal already has Save / Cancel for that, and
+   the user reads two action rows as broken — hide the inner one. The link
+   value still propagates via the onChange we pass to LinkControl. */
+/* no-prefix */
+.extendify-quick-edit-modal-nav .block-editor-link-control__search-actions,
+.extendify-quick-edit-modal-nav .block-editor-link-control__search-submit,
+.extendify-quick-edit-modal-nav
+	.block-editor-link-control__search-input-actions,
+.extendify-quick-edit-modal-nav
+	.block-editor-link-control
+	.block-editor-link-control__settings {
+	@apply hidden!;
+}
+
+/* no-prefix */
+.extendify-quick-edit-logo-row {
+	@apply flex items-center gap-[16px] mt-[8px];
+}
+
+/* no-prefix */
+.extendify-quick-edit-logo-preview {
+	@apply max-h-[80px] max-w-[120px] rounded-[6px] border border-gray-300 bg-gray-50 object-contain p-[4px];
+}
+
+/* no-prefix */
+.extendify-quick-edit-logo-buttons {
+	@apply flex flex-col gap-[6px];
+}
+
+/* Product price modal: currency-prefixed regular + sale inputs. */
+/* no-prefix */
+.extendify-quick-edit-price-fields {
+	@apply flex flex-col gap-[12px];
+}
+/* no-prefix */
+.extendify-quick-edit-price-row {
+	@apply flex items-end gap-[8px];
+}
+/* The modal-rhythm margin (above) would misalign input and prefix under
+   items-end; the fields' gap handles spacing. */
+/* no-prefix */
+.extendify-quick-edit-price-row .components-base-control {
+	@apply mb-0;
+}
+/* no-prefix */
+.extendify-quick-edit-price-prefix {
+	/* 32px = the WP TextControl input height, so the symbol centers on it. */
+	@apply flex h-[32px] items-center text-[14px] font-medium text-gray-700;
+}
+
+/* AI generation + Unsplash image-picker modals */
+
+/* no-prefix */
+.extendify-quick-edit-ai-form {
+	@apply flex flex-col gap-[16px];
+}
+
+/* no-prefix */
+.extendify-quick-edit-ai-generating {
+	@apply inline-flex items-center gap-[8px] rounded-[6px] bg-gray-50 px-[12px] py-[8px] text-[13px] text-gray-700;
+}
+
+/* no-prefix */
+.extendify-quick-edit-ai-credits {
+	@apply text-[12px] text-gray-600 text-right;
+}
+
+/* no-prefix */
+.extendify-quick-edit-ai-preview {
+	@apply flex max-h-[60vh] items-center justify-center overflow-hidden rounded-[6px] bg-gray-50;
+}
+/* no-prefix */
+.extendify-quick-edit-ai-preview img {
+	@apply max-h-[60vh] max-w-full object-contain;
+}
+
+/* The padding-top:100% trick beats theme/WP button min-height rules
+   that override aspect-ratio. */
+/* no-prefix */
+.extendify-quick-edit-image-grid {
+	@apply grid grid-cols-3 gap-[8px] mt-[12px];
+	/* No inner scroll — the WP Modal body already scrolls. Two
+	   scrollbars (modal + grid) was confusing and trapped the user
+	   on the inner scroller while the outer modal still had room. */
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item-credit {
+	@apply pointer-events-none absolute bottom-0 left-0 right-0 px-[8px] py-[6px] text-[11px] leading-[1.3] text-white opacity-0;
+	background: linear-gradient(
+		to top,
+		rgba(0, 0, 0, 0.65) 0%,
+		rgba(0, 0, 0, 0) 100%
+	);
+	transition: opacity 0.15s ease;
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item:hover
+.extendify-quick-edit-image-grid-item-credit,
+.extendify-quick-edit-image-grid-item:focus-visible
+	.extendify-quick-edit-image-grid-item-credit {
+	@apply opacity-100;
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item-credit a {
+	@apply pointer-events-auto text-inherit underline;
+}
+/* no-prefix */
+.extendify-quick-edit-image-attribution {
+	@apply mt-[12px] pt-[10px] border-t border-t-gray-300 text-[11px] text-gray-600;
+}
+/* no-prefix */
+.extendify-quick-edit-image-attribution a {
+	@apply text-inherit underline;
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item {
+	/* min-h-0: defeat WP button-style min-height rules */
+	@apply relative w-full min-h-0 cursor-pointer overflow-hidden rounded-[6px] border-0 bg-transparent p-0;
+	transition: transform 0.12s ease;
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item::before {
+	@apply block pt-[100%];
+	content: "";
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item:hover:not(:disabled) {
+	@apply scale-[1.02];
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item:disabled {
+	@apply cursor-not-allowed;
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item img {
+	@apply absolute inset-0 block h-full w-full object-cover;
+}
+/* no-prefix */
+.extendify-quick-edit-image-grid-item-overlay {
+	@apply absolute inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.45)];
+}
+
+/* Reduced motion (a11y M7). Stop the infinite upload spinner and drop the
+   hover outline's spring so it tracks instantly. All `!important`: the
+   surrounding environment ships a global `prefers-reduced-motion` reset
+   that forces a tiny non-zero duration (~0.01ms) onto everything, so these
+   must win over it — and over the base rules — for Extendify's own
+   reduced-motion intent to be authoritative rather than theme-dependent.
+   Selectors are page-level (the body-level fixed outline, wp.media's
+   modal), so they carry `no-prefix` like the originals. */
+@media (prefers-reduced-motion: reduce) {
+	/* no-prefix */
+	.extendify-quick-edit-media-uploading .media-frame-content::before {
+		@apply animate-none!;
+	}
+	/* no-prefix */
+	.extendify-quick-edit-hover-outline {
+		/* Shorthand, not transition-none — only the shorthand zeroes the
+		   duration the global reset forces to 0.01ms. */
+		transition: none !important;
+	}
+}

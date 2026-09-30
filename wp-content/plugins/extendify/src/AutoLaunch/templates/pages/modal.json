@@ -1,0 +1,18 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-page/modal",
+	"title": "Modal page",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-ui-wait-blur": {
+			"type": "number",
+			"minimum": 3,
+			"maximum": 24,
+			"default": 6,
+			"x-card": "Overlay",
+			"x-label": "Blur behind",
+			"x-control": "length"
+		}
+	}
+}

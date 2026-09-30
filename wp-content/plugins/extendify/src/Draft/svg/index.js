@@ -1,0 +1,12 @@
+export { default as below } from '@draft/svg/Below';
+export { default as check } from '@draft/svg/Check';
+export { default as longer } from '@draft/svg/Longer';
+export { default as magic } from '@draft/svg/Magic';
+export { default as mic } from '@draft/svg/Mic';
+export { default as pencil } from '@draft/svg/Pencil';
+export { default as replace } from '@draft/svg/Replace';
+export { default as replay } from '@draft/svg/Replay';
+export { default as shorter } from '@draft/svg/Shorter';
+export { default as trash } from '@draft/svg/Trash';
+export { default as twoLines } from '@draft/svg/TwoLines';
+export { default as wand } from '@draft/svg/Wand';

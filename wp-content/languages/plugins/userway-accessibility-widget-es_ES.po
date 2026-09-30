@@ -1,0 +1,45 @@
+# Translation of Plugins - Accessibility by UserWay - Stable (latest release) in Spanish (Spain)
+# This file is distributed under the same license as the Plugins - Accessibility by UserWay - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2024-08-22 09:05:38+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: es\n"
+"Project-Id-Version: Plugins - Accessibility by UserWay - Stable (latest release)\n"
+
+#: includes/notifications.php:43
+msgid "Visit the UserWay Dashboard for detailed insights and remediation options"
+msgstr "Visita el escritorio de UserWay para obtener información detallada y opciones de corrección"
+
+#: includes/notifications.php:6 includes/notifications.php:44
+msgid "Go to Dashboard"
+msgstr "Ir al escritorio"
+
+#: includes/notifications.php:5
+msgid "Upgrade to Pro"
+msgstr "Mejorar a Pro"
+
+#. Author of the plugin
+#: userway.php
+msgid "UserWay.org"
+msgstr "UserWay.org"
+
+#. Description of the plugin
+#: userway.php
+msgid "The UserWay Accessibility Widget is a WordPress plugin that instantly finds and fixes accessibility violations in website code. It works 24/7 to comply with standards like WCAG 2.2, ADA, Section 508, and EAA, automatically improving your site's accessibility and regulatory compliance."
+msgstr "UserWay Accessibility Widget es un plugin de WordPress que encuentra y corrige al instante las infracciones de accesibilidad en el código del sitio web. Trabaja 24/7 para cumplir normas como WCAG 2.2, ADA, Sección 508 y EAA, mejorando automáticamente la accesibilidad y el cumplimiento normativo de tu sitio."
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: userway.php
+msgid "https://userway.org"
+msgstr "https://userway.org"
+
+#. Plugin Name of the plugin
+#: userway.php
+msgid "Accessibility by UserWay"
+msgstr "Accessibility by UserWay"

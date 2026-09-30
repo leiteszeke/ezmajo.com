@@ -1,0 +1,28 @@
+@import "tailwindcss" source(none) important;
+@import "../tailwind.css" source(none);
+@source ".";
+
+:root {
+	color-scheme: only light;
+}
+
+/* no-prefix */
+.extendify-library.extendify-library-modal {
+	@apply fixed! inset-0! z-high! overflow-y-auto!;
+}
+
+.components-toggle-group-control [role="presentation"] {
+	@apply bg-design-main!;
+}
+
+/* Style contentType/pageType control in sidebar */
+/* no-prefix */
+.ext-type-control .components-panel__body-title {
+	@apply -mx-5! my-0! bg-transparent! p-1! px-5!;
+	button {
+		@apply z-10! rounded-sm! border! border-solid! border-gray-300! shadow-none! outline-hidden! ring-design-main! focus:ring!;
+		&[aria-expanded="true"] {
+			@apply rounded-b-none! border-b-0!;
+		}
+	}
+}

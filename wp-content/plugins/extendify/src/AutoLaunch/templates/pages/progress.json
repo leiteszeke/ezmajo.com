@@ -1,0 +1,87 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-page/progress",
+	"title": "Progress page",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-ui-loader-image": {
+			"type": "string",
+			"default": "",
+			"x-card": "Graphic",
+			"x-label": "Graphic",
+			"x-control": "text",
+			"x-placeholder": "https://\u2026/building.gif"
+		},
+		"--ext-ui-loader-color": {
+			"type": "string",
+			"default": "#2271b1",
+			"x-card": "Graphic",
+			"x-label": "Graphic color",
+			"x-control": "color",
+			"x-inherits": "--ext-ui-action"
+		},
+		"--ext-ui-loader-height": {
+			"type": "number",
+			"minimum": 48,
+			"maximum": 320,
+			"default": 118,
+			"x-card": "Graphic",
+			"x-label": "Graphic height",
+			"x-control": "length"
+		},
+		"--ext-ui-loader-radius": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 48,
+			"default": 0,
+			"x-card": "Graphic",
+			"x-label": "Graphic radius",
+			"x-control": "length"
+		},
+		"--ext-ui-status-size": {
+			"type": "number",
+			"minimum": 11,
+			"maximum": 28,
+			"default": 14,
+			"x-card": "Status text",
+			"x-label": "Text size",
+			"x-control": "length"
+		},
+		"--ext-ui-status-weight": {
+			"type": "number",
+			"minimum": 300,
+			"maximum": 900,
+			"multipleOf": 100,
+			"default": 500,
+			"x-card": "Status text",
+			"x-label": "Text weight",
+			"x-control": "number"
+		},
+		"--ext-ui-status-color": {
+			"type": "string",
+			"default": "#1e1e1e",
+			"x-card": "Status text",
+			"x-label": "Text color",
+			"x-control": "color"
+		},
+		"--ext-tpl-progress-height": {
+			"type": "number",
+			"minimum": 200,
+			"maximum": 720,
+			"default": 400,
+			"x-card": "Box",
+			"x-label": "Box height",
+			"x-control": "length"
+		},
+		"--ext-tpl-progress-gap": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 64,
+			"default": 12,
+			"x-card": "Box",
+			"x-label": "Gap",
+			"x-control": "length"
+		}
+	}
+}

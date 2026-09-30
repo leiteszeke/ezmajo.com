@@ -1,0 +1,91 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-global/background",
+	"title": "Background",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"--ext-ui-bg-color-1": {
+			"type": "string",
+			"default": "",
+			"x-card": "Colors",
+			"x-label": "Color 1",
+			"x-control": "color"
+		},
+		"--ext-ui-bg-color-2": {
+			"type": "string",
+			"default": "",
+			"x-card": "Colors",
+			"x-label": "Color 2",
+			"x-control": "color"
+		},
+		"--ext-ui-bg-color-3": {
+			"type": "string",
+			"default": "",
+			"x-card": "Colors",
+			"x-label": "Color 3",
+			"x-control": "color",
+			"x-note": "Some shaders use only one or two of these."
+		},
+		"--ext-ui-bg-speed": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 3,
+			"multipleOf": 0.05,
+			"default": 1,
+			"x-card": "Motion",
+			"x-label": "Speed",
+			"x-control": "number",
+			"x-unit": "\u00d7"
+		},
+		"--ext-ui-bg-scale": {
+			"type": "number",
+			"minimum": 0.2,
+			"maximum": 3,
+			"multipleOf": 0.05,
+			"default": 1,
+			"x-card": "Motion",
+			"x-label": "Scale",
+			"x-control": "number",
+			"x-unit": "\u00d7"
+		},
+		"--ext-ui-bg-intensity": {
+			"type": "number",
+			"minimum": 0,
+			"maximum": 2,
+			"multipleOf": 0.05,
+			"default": 1,
+			"x-card": "Motion",
+			"x-label": "Intensity",
+			"x-control": "number",
+			"x-unit": "\u00d7"
+		},
+		"--ext-ui-bg-offset-x": {
+			"type": "number",
+			"minimum": -1,
+			"maximum": 1,
+			"multipleOf": 0.05,
+			"default": 0,
+			"x-card": "Center",
+			"x-label": "Offset X",
+			"x-control": "number"
+		},
+		"--ext-ui-bg-offset-y": {
+			"type": "number",
+			"minimum": -1,
+			"maximum": 1,
+			"multipleOf": 0.05,
+			"default": 0,
+			"x-card": "Center",
+			"x-label": "Offset Y",
+			"x-control": "number"
+		},
+		"bgSource": {
+			"type": "string",
+			"x-card": "Custom code",
+			"x-label": "Code",
+			"x-control": "code",
+			"x-feeds": "the fragment shader the flow compiles"
+		}
+	}
+}

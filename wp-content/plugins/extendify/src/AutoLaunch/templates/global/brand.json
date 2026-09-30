@@ -1,0 +1,25 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "extendify/launch-global/brand",
+	"title": "Logo",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"logo": {
+			"type": "string",
+			"default": "",
+			"x-label": "Image",
+			"x-control": "image",
+			"x-feeds": "the logo part's image",
+			"x-placeholder": "https://\u2026/logo.svg"
+		},
+		"--ext-ui-logo-height": {
+			"type": "number",
+			"minimum": 16,
+			"maximum": 96,
+			"default": 40,
+			"x-label": "Height",
+			"x-control": "length"
+		}
+	}
+}
