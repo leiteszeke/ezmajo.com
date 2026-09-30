@@ -13,7 +13,7 @@ Operational notes for ezmajo.com (WordPress). Nothing in this folder is deployed
 
 1. Check for outside changes (agency edits, WP auto-updates): `ssh ezmajo ezgit status --short`.
    If anything shows up, pull it into the repo first (rsync server → worktree, commit, push), then on the server:
-   `ezgit fetch origin wordpress && ezgit reset --mixed origin/wordpress && ezgit sparse-checkout reapply`.
-2. Code changes: commit and push to `wordpress`, then `ssh ezmajo ezdeploy` (aborts if the live site has changes not in git).
+   `ezgit fetch origin main && ezgit reset --mixed origin/main && ezgit sparse-checkout reapply`.
+2. Code changes: commit and push to `main`, then `ssh ezmajo ezdeploy` (aborts if the live site has changes not in git).
 3. DB changes: run them with `wpe` and record them in a dated script here.
 4. Before risky changes, back up files (rsync) and the DB (mysqldump from outside; the server has no mysql client). Backups never go in this repo.
