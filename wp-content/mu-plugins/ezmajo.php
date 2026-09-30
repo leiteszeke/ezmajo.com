@@ -189,10 +189,12 @@ add_action( 'wp_head', function () {
 .ezmajo-horario li{margin:0 0 .25em}
 .ezmajo-horario__dia{font-weight:600}
 .ezmajo-horario__tramo{white-space:nowrap}
-.ezmajo-contacto{margin-bottom:1.25rem;text-align:center;font-size:var(--wp--preset--font-size--small,.9rem);line-height:1.6}
+.ezmajo-contacto{margin-bottom:1.25rem;padding:0 16px;text-align:center;font-size:var(--wp--preset--font-size--small,.9rem);line-height:1.6}
 .ezmajo-contacto p{margin:0 0 .35em}
 .ezmajo-contacto a{color:inherit}
-.ezmajo-contacto .ezmajo-horario li{display:inline;margin:0 .6em}
+.ezmajo-contacto .ezmajo-horario li{display:inline-block;margin:0 .6em;white-space:nowrap}
+/* Room below the last footer links so the floating button doesn't cover them */
+@media (max-width:600px){.wp-site-blocks{padding-bottom:84px}}
 </style>
 	<?php
 } );
