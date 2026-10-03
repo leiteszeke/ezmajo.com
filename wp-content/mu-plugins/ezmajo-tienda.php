@@ -6,6 +6,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Everything below needs WooCommerce (mu-plugins load before plugins, so check the active list, not the class).
+if ( ! in_array( 'woocommerce/woocommerce.php', (array) get_option( 'active_plugins', array() ), true ) ) {
+	return;
+}
+
 /*
  * Same gross price worldwide: prices are entered IVA included and buyers outside the EU pay that same
  * price (IVA 0 %), instead of WooCommerce deducting the Spanish IVA for them.
