@@ -11,7 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! defined( 'EZMAJO_SMTP_USER' ) || ! defined( 'EZMAJO_SMTP_PASS' ) ) {
+if ( ! defined( 'EZMAJO_SMTP_USER' ) || ! defined( 'EZMAJO_SMTP_PASS' ) || '' === EZMAJO_SMTP_USER || '' === EZMAJO_SMTP_PASS ) {
 	return;
 }
 
