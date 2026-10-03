@@ -2,12 +2,17 @@ import { useCanvasWorkflow } from '@agent/components/Canvas';
 import { ErrorMessage } from '@agent/components/ErrorMessage';
 import { AgentMessage } from '@agent/components/messages/AgentMessage';
 import { ImageToolMessage } from '@agent/components/messages/ImageToolMessage';
-import { StatusIndicator } from '@agent/components/messages/StatusIndicator';
 import { ToolReceipt } from '@agent/components/messages/ToolReceipt';
+import {
+	highlightToolSteps,
+	ToolStep,
+} from '@agent/components/messages/ToolStep';
 import { UserMessage } from '@agent/components/messages/UserMessage';
 import { WorkflowComponent } from '@agent/components/messages/WorkflowComponent';
 import { WorkflowMessage } from '@agent/components/messages/WorkflowMessage';
+import { SavingState } from '@agent/components/SavingState';
 import { ScrollDownButton } from '@agent/components/ScrollDownButton';
+import { cardMessageIndex } from '@agent/follow-ups/pick-next';
 import { useWhenFinishedToolProps } from '@agent/hooks/useWhenFinishedToolProps';
 import { useChatStore } from '@agent/state/chat';
 import { useGlobalStore } from '@agent/state/global';
@@ -34,12 +39,25 @@ const abilityLabel = (name) =>
 		.flatMap((category) => category.abilities ?? [])
 		.find((ability) => ability.name === name)?.label || name;
 
+// Stored history can predate started labels; those render as plain receipts.
+const isStep = ({ type, details }) =>
+	type === 'tool' &&
+	Boolean(details?.started) &&
+	!details.result?.error &&
+	!hasRunComponent(details.id);
+
 export const ChatMessages = () => {
 	const { open } = useGlobalStore();
 	const { messages } = useChatStore();
-	const { getWorkflow } = useWorkflowStore();
+	const {
+		getWorkflow,
+		whenFinishedToolProps: staged,
+		reloadedToolProps,
+	} = useWorkflowStore();
 	const workflow = getWorkflow();
 	const whenFinishedToolProps = useWhenFinishedToolProps();
+	// Its preview was lost with the page, so Save would write changes nobody saw.
+	const confirmFromReload = Boolean(staged) && staged === reloadedToolProps;
 	const canvasWorkflow = useCanvasWorkflow();
 	const whenFinishedComponent = workflow?.whenFinished?.component;
 	const [canScrollDown, setCanScrollDown] = useState(false);
@@ -58,9 +76,16 @@ export const ChatMessages = () => {
 
 	const lastId = messages.at(-1)?.id;
 	const lastDetails = messages.at(-1)?.details;
+	// A run's receipt follows its tool, so the newest card is never the last message.
+	const lastRunId = messages
+		.toReversed()
+		.find(
+			(message) =>
+				message.type === 'tool' && hasRunComponent(message.details?.id),
+		)?.id;
+	const cardMessageId = messages[cardMessageIndex(messages)]?.id;
 	const pendingTool =
 		messages.at(-1)?.type === 'tool' && !('result' in (lastDetails ?? {}));
-	// Both render their own waiting state, so the shared status line doubles it.
 	const awaitingPicker =
 		pendingTool &&
 		(lastDetails?.id === 'acquire-image' || hasRunComponent(lastDetails?.id));
@@ -154,7 +179,8 @@ export const ChatMessages = () => {
 		const tool = scrollArea?.lastElementChild;
 		if (!c || !scrollArea || !tool) return;
 		const pinWhenOutOfView = () => {
-			if (confirmScrolledFor.current === pinTarget) return;
+			// A confirm removed on Save measures as off-screen.
+			if (!tool.isConnected || confirmScrolledFor.current === pinTarget) return;
 			const cRect = c.getBoundingClientRect();
 			const toolRect = tool.getBoundingClientRect();
 			if (toolRect.top >= cRect.top && toolRect.bottom <= cRect.bottom) return;
@@ -194,7 +220,7 @@ export const ChatMessages = () => {
 		last.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	}, [isUserMessage, messages]);
 
-	// Chasing suggestions from far up the transcript would move the page.
+	// Chasing a follow-up card from far up the transcript would move the page.
 	const lastIsWorkflow = messages.at(-1)?.type === 'workflow';
 	useEffect(() => {
 		if (!lastIsWorkflow) return;
@@ -208,6 +234,11 @@ export const ChatMessages = () => {
 		if (below > c.clientHeight * 2) return;
 		last.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 	}, [lastIsWorkflow, messages]);
+
+	// Painted up front so opening a step never shows plain JSON first.
+	useEffect(() => {
+		highlightToolSteps(containerRef.current);
+	}, [messages]);
 
 	// Handles the scroll down button visibility
 	useLayoutEffect(() => {
@@ -242,7 +273,8 @@ export const ChatMessages = () => {
 	return (
 		<div
 			ref={containerRef}
-			style={{ overscrollBehavior: 'contain' }}
+			// A classic scrollbar appearing would narrow and rewrap the messages.
+			style={{ overscrollBehavior: 'contain', scrollbarGutter: 'stable' }}
 			className="relative grow overflow-y-auto overflow-x-hidden p-1 pb-0 text-sm text-gray-900 md:p-2"
 		>
 			<div
@@ -250,6 +282,9 @@ export const ChatMessages = () => {
 				className={ready ? '' : 'invisible pointer-events-none'}
 			>
 				{messages.map((message) => {
+					if (isStep(message)) {
+						return <ToolStep key={message.id} details={message.details} />;
+					}
 					const freshLoad = isFreshPageLoad.current;
 					if (message.details?.role === 'user') {
 						return <UserMessage key={message.id} message={message} />;
@@ -265,7 +300,13 @@ export const ChatMessages = () => {
 						);
 					}
 					if (message.type === 'workflow') {
-						return <WorkflowMessage key={message.id} message={message} />;
+						return (
+							<WorkflowMessage
+								key={message.id}
+								message={message}
+								latest={message.id === cardMessageId}
+							/>
+						);
 					}
 					if (message.type === 'workflow-component') {
 						return <WorkflowComponent key={message.id} message={message} />;
@@ -316,6 +357,7 @@ export const ChatMessages = () => {
 										id={message.details.id}
 										inputs={message.details.inputs}
 										result={message.details.result}
+										live={message.id === lastRunId}
 									/>
 								) : null}
 								{failure ? (
@@ -346,14 +388,25 @@ export const ChatMessages = () => {
 					}
 					return null;
 				})}
-				{/* The tool-running status reads as stuck while the picker waits on the user. */}
-				{awaitingPicker ? null : <StatusIndicator />}
 				{!workflow?.needsRedirect?.() &&
 				whenFinishedToolProps?.id &&
+				!confirmFromReload &&
 				!canvasWorkflow &&
-				whenFinishedComponent
-					? createElement(whenFinishedComponent, whenFinishedToolProps)
-					: null}
+				whenFinishedComponent ? (
+					whenFinishedToolProps.processing ? (
+						<SavingState
+							label={
+								whenFinishedToolProps.agentResponse?.whenFinishedTool?.labels
+									?.started
+							}
+						/>
+					) : (
+						createElement(whenFinishedComponent, {
+							...whenFinishedToolProps,
+							live: true,
+						})
+					)
+				) : null}
 				{workflow?.needsRedirect?.() ? <workflow.redirectComponent /> : null}
 			</div>
 			<ScrollDownButton

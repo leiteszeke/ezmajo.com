@@ -79,7 +79,8 @@ const shouldDisclose = (metadata) =>
 
 const altText = (metadata) => {
 	if (!shouldDisclose(metadata)) return metadata.alt ?? '';
-	const pattern = window.extSharedData?.aiImageAltPattern ?? 'AI Generated: %s';
+	const pattern =
+		window.extSharedData?.aiImageAltPattern ?? '%s (AI-generated)';
 	return sprintf(pattern, metadata.alt ?? '').trim();
 };
 
@@ -162,10 +163,22 @@ export const downloadImage = async (
 	} else if (aiGenerated && id) {
 		await downloadPing(id, source, { disclose: metadata.disclose });
 	}
+
+	let filename = metadata.filename ?? 'image.jpg';
+	if (aiGenerated && !filename.includes('ai-generated')) {
+		const parts = filename.split('.');
+		if (parts.length > 1) {
+			const ext = parts.pop();
+			filename = `${parts.join('.')}-ai-generated.${ext}`;
+		} else {
+			filename = `${filename}-ai-generated`;
+		}
+	}
+
 	try {
 		image = await importImage(src, {
 			alt: metadata.alt,
-			filename: metadata.filename ?? 'image.jpg',
+			filename,
 			caption: metadata.caption,
 			aiGenerated,
 			disclose: metadata.disclose,

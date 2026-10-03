@@ -18,9 +18,9 @@ export const notificationSuggestion = () => {
 	const source = notification.source;
 
 	return {
-		id: `notification-${slug}`,
-		type: 'external-link',
 		message,
+		content: notification.content,
+		ctaLabel: notification['cta-label'],
 		url: href,
 		viewTelemetry: {
 			key: 'notification_view',

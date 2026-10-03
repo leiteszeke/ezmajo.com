@@ -2,8 +2,7 @@ import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 const Skipped = () => (
-	<div className="flex w-full items-start gap-2.5 px-2.5 py-2">
-		<div className="w-7 shrink-0" />
+	<div className="flex w-full items-start px-2.5 py-2">
 		<div className="flex min-w-0 flex-1 flex-col gap-1">
 			<div className="flex items-center gap-2 border-l-4 border-l-wp-notice-neutral bg-gray-50 p-3 text-gray-900">
 				<div className="text-sm">
@@ -15,8 +14,7 @@ const Skipped = () => (
 );
 
 const Failed = () => (
-	<div className="flex w-full items-start gap-2.5 px-2.5 py-2">
-		<div className="w-7 shrink-0" />
+	<div className="flex w-full items-start px-2.5 py-2">
 		<div className="flex min-w-0 flex-1 flex-col gap-1">
 			<div className="flex items-center gap-2 border-l-4 border-l-wp-alert-red bg-wp-notice-error p-3 text-gray-900">
 				<div className="text-sm">

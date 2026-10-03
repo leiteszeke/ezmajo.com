@@ -1,5 +1,6 @@
 import { generateImage } from '@shared/api/DataApi';
 import { downloadImage } from '@shared/api/wp';
+import { useImageCreditsSync } from '@shared/hooks/useImageCreditsSync';
 import { useStampedPreview } from '@shared/hooks/useStampedPreview';
 import { track } from '@shared/lib/track';
 import { useImageGenerationStore } from '@shared/state/generate-images';
@@ -58,6 +59,8 @@ export const AiImagePickerModal = ({ selected, field, onAfterSave }) => {
 	const abortRef = useRef(null);
 	const previewSrc = useStampedPreview(preview?.src, disclose);
 
+	useImageCreditsSync();
+
 	const noCredits = imageCredits.remaining === 0;
 	const usedCredits = imageCredits.total - imageCredits.remaining;
 
@@ -111,7 +114,6 @@ export const AiImagePickerModal = ({ selected, field, onAfterSave }) => {
 				null,
 				{
 					alt: preview.alt,
-					filename: 'ai-image.jpg',
 					caption: '',
 					disclose,
 				},

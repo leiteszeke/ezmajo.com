@@ -32,29 +32,6 @@ const workflow = {
 				'Below you can select a different design for your website.',
 				'extendify-local',
 			),
-			recommendations: [
-				{
-					id: 'change-theme-colors',
-					icon: 'styles',
-					label: __('Change website colors', 'extendify-local'),
-					workflowId: 'change-theme-variation',
-					available: { context: ['hasThemeVariations'] },
-				},
-				{
-					id: 'change-site-title',
-					icon: 'edit',
-					label: __('Change website title', 'extendify-local'),
-					workflowId: 'edit-wp-setting',
-					available: { abilities: ['canEditSettings'] },
-				},
-				{
-					id: 'change-website-logo',
-					icon: 'siteLogo',
-					label: __('Change website logo', 'extendify-local'),
-					workflowId: 'update-logo',
-					available: { abilities: ['canEditSettings', 'canUploadMedia'] },
-				},
-			],
 			whenFinishedTool: {
 				id: 'change-site-design',
 				labels: {

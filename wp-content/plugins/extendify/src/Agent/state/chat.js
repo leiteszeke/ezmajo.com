@@ -44,7 +44,14 @@ const state = (set, get) => ({
 		for (const { type, details } of get().messages) {
 			const finished = ['completed', 'canceled'].includes(details.status);
 			if (['workflow', 'workflow-component'].includes(type) && finished) {
-				segments.push({ workflowId: details.workflowId, segment });
+				// A canceled run's reply claims a change the next run then skips.
+				const kept =
+					details.status === 'canceled'
+						? segment.filter(
+								(m) => m.role !== 'assistant' || typeof m.content !== 'string',
+							)
+						: segment;
+				segments.push({ workflowId: details.workflowId, segment: kept });
 				segment = [];
 				continue;
 			}

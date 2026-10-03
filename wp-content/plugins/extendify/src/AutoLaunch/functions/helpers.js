@@ -27,11 +27,8 @@ export const failWithFallback = async (fn, fallback, errDetails = {}) => {
 	try {
 		return await fn();
 	} catch (error) {
-		digest({
-			...errDetails,
-			error: errDetails?.error ?? error,
-			source: 'auto-launch',
-		});
+		const { error: reported = error, ...details } = errDetails;
+		digest({ error: reported, details: { source: 'auto-launch', ...details } });
 		return fallback;
 	}
 };

@@ -192,6 +192,31 @@ export const paletteDuotone = (palette) => {
 	return Array.isArray(duotone) ? duotone : duotone?.theme;
 };
 
+// Roles can share a hex; the palette's own order breaks the tie.
+const roleByColor = (colors) => {
+	const roles = {};
+
+	for (const [role, hex] of Object.entries(colors ?? {})) {
+		const key = hex?.toLowerCase();
+		if (key && !(key in roles)) roles[key] = role;
+	}
+
+	return roles;
+};
+
+export const remapPaletteDuotone = (palette, colors) => {
+	const duotone = paletteDuotone(palette);
+	if (!Array.isArray(duotone)) return undefined;
+
+	const roles = roleByColor(palette?.colors);
+	const recolor = (pole) => colors?.[roles[pole?.toLowerCase()]] ?? pole;
+
+	return duotone.map((preset) => ({
+		...preset,
+		colors: preset?.colors?.map(recolor),
+	}));
+};
+
 const cssFromSlots = ({ slots, incoming, themeStyles, themeSettings }) => {
 	const rules = new Map();
 

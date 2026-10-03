@@ -1,6 +1,7 @@
 import { useLaunchDataStore } from '@auto-launch/state/launch-data';
 import { INSIGHTS_HOST } from '@constants';
 import { reqDataBasics } from '@shared/lib/data';
+import { track } from '@shared/lib/track';
 import apiFetch from '@wordpress/api-fetch';
 
 const headers = {
@@ -88,18 +89,5 @@ const probeFailureReason = async () => {
 export const reportRestApiStatus = async () => {
 	const reason = await probeFailureReason();
 	if (!reason) return;
-	const { siteId, partnerId, homeUrl, siteCreatedAt } = reqDataBasics;
-	return fetch(`${INSIGHTS_HOST}/api/v1/event`, {
-		method: 'POST',
-		headers,
-		body: JSON.stringify({
-			insightsId: siteId,
-			key: 'rest_api_unreachable',
-			payload: { reason },
-			partnerId,
-			siteURL: homeUrl,
-			siteCreatedAt,
-		}),
-		keepalive: true,
-	});
+	track('rest_api_unreachable', { reason });
 };

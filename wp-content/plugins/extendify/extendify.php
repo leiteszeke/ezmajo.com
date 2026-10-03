@@ -7,7 +7,7 @@
  * Plugin URI:        https://extendify.com/?utm_source=wp-plugins&utm_campaign=plugin-uri&utm_medium=wp-dash
  * Author:            Extendify
  * Author URI:        https://extendify.com/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
- * Version:           3.2.1
+ * Version:           3.2.2
  * Requires at least: 6.5
  * Requires PHP:      7.0
  * License:           GPL-2.0-or-later
@@ -78,6 +78,26 @@ if (!class_exists('ExtendifySdk') && !class_exists('Extendify')) :
         $extendify = new Extendify();
         $extendify();
     });
+
+    // Autoloaded options load on every request, even while the plugin is inactive.
+    // Before 6.6 there is no 'auto' value, so older sites are left alone.
+    if (function_exists('wp_autoload_values_to_autoload')) {
+        register_deactivation_hook(__FILE__, function () {
+            $names = preg_grep('/^extendify_/', array_keys(wp_load_alloptions()));
+            update_option('extendify_autoload_restore', $names, false);
+            wp_set_option_autoload_values(array_fill_keys($names, false));
+        });
+
+        register_activation_hook(__FILE__, function () {
+            global $wpdb;
+            // Passing true writes 'on', which skips WordPress's 150KB autoload size check.
+            foreach (get_option('extendify_autoload_restore', []) as $name) {
+                $wpdb->update($wpdb->options, ['autoload' => 'auto'], ['option_name' => $name]);
+            }
+            wp_cache_delete('alloptions', 'options');
+            delete_option('extendify_autoload_restore');
+        });
+    }
 
     // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundBeforeLastUsed
     add_action('upgrader_process_complete', function ($upgrader, $options) {

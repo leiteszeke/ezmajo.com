@@ -7,6 +7,7 @@ import {
 } from '@auto-launch/functions/helpers';
 import { launchStrings } from '@auto-launch/strings';
 import { AI_HOST } from '@constants';
+import { digest } from '@shared/api/digest';
 import { reqDataBasics } from '@shared/lib/data';
 
 const fallback = { aiHeaders: [], aiBlogTitles: [], heroDescription: '' };
@@ -22,9 +23,21 @@ export const handleSiteStrings = async ({ siteProfile }) => {
 
 	const response = await retryTwice(() =>
 		fetchWithTimeout(url, { method, headers, body }),
-	);
+	).catch((error) => {
+		return { ok: false, statusText: error.message, status: 0 };
+	});
 
-	if (!response?.ok) return fallback;
+	if (!response?.ok) {
+		digest({
+			error: {
+				message: response.statusText,
+				name: 'FetchError',
+				status: response.status,
+			},
+			details: { source: 'auto-launch', caller: 'handleSiteStrings' },
+		});
+		return fallback;
+	}
 
 	return failWithFallback(
 		async () => getStringsShape.parse(await response.json()),

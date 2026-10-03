@@ -10,6 +10,7 @@ defined('ABSPATH') || die('No direct access.');
 
 use Extendify\Config;
 use Extendify\HelpCenter\Controllers\RouterController;
+use Extendify\Mcp\Profile as McpProfile;
 use Extendify\HelpCenter\Controllers\SupportArticlesController;
 use Extendify\HelpCenter\Controllers\TourController;
 use Extendify\PartnerData;
@@ -37,6 +38,10 @@ class Admin
      */
     public function loadGlobalScripts()
     {
+        if (McpProfile::isOwnScreen()) {
+            return;
+        }
+
         $version = Config::$environment === 'PRODUCTION' ? Config::$version : uniqid();
         $scriptAssetPath = EXTENDIFY_PATH . 'public/build/' . Config::$assetManifest['extendify-help-center.php'];
         $fallback = [

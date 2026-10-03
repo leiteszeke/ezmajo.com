@@ -4,7 +4,7 @@ import { useEffect, useRef } from '@wordpress/element';
 import useSWR from 'swr/immutable';
 
 export const useInstallRequiredPlugins = ({ enabled = true } = {}) => {
-	const { data, error } = useSWR(enabled ? 'required-plugins' : null, () =>
+	const { data } = useSWR(enabled ? 'required-plugins' : null, () =>
 		handleSitePlugins({ requiredOnly: true }),
 	);
 	const started = useRef(false);
@@ -16,10 +16,4 @@ export const useInstallRequiredPlugins = ({ enabled = true } = {}) => {
 			data.sitePlugins.map(({ wordpressSlug }) => wordpressSlug),
 		);
 	}, [data]);
-
-	return {
-		requiredPlugins: data?.selectedPlugins || [],
-		isLoading: !error && !data,
-		isError: error,
-	};
 };

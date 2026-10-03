@@ -3,6 +3,7 @@ import {
 	useUnsplashSearch,
 } from '@agent/hooks/useImageAcquisition';
 import { preloadImage } from '@agent/lib/replace-image';
+import { useImageCreditsSync } from '@shared/hooks/useImageCreditsSync';
 import { useStampedPreview } from '@shared/hooks/useStampedPreview';
 import {
 	addCustomMediaViewsCss,
@@ -59,6 +60,9 @@ export const ImagePicker = ({
 		source: 'agent',
 		onUrlReady: (_key, url) => applyPreview(url),
 	});
+
+	useImageCreditsSync();
+
 	const state = states[source];
 	const ready = state?.status === 'ready';
 	const activeUrl = state?.image?.url ?? state?.url ?? null;

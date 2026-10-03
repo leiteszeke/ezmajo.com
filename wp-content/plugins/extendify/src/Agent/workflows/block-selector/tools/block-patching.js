@@ -1,6 +1,9 @@
 import { fetchBlockCodeById } from '@agent/lib/block-code';
+import { findBlockEl, scopeOf } from '@agent/lib/block-el';
 import { applyBlockPatch } from '@agent/lib/block-patch';
+import { duplicateMarkup } from '@agent/lib/duplicate-block';
 import { buildNewBlock } from '@agent/lib/insertable-blocks';
+import { fetchLinkablePages } from '@agent/lib/linkable-pages';
 import { ensureCoreBlocksRegistered } from '@agent/lib/register-blocks';
 import { swapBlockImage } from '@agent/lib/replace-image';
 import { SETTING_TEXT_BLOCKS } from '@agent/lib/setting-text-blocks';
@@ -22,11 +25,47 @@ const buildEdit = async ({ blockId, patch, clear }, source, postId) => {
 	return { op: 'edit', blockId, block: blockCode };
 };
 
-const buildAdd = ({ anchorId, position, blockType, patch, clear }) => {
+const ANCHOR_ROW_CLASS = { 'core/social-link': 'wp-block-social-link' };
+
+const joinsAnchorRow = (anchorId, blockType, source) => {
+	const className = ANCHOR_ROW_CLASS[blockType];
+	if (!className || anchorId == null) return false;
+	const anchor = findBlockEl(String(anchorId), document, scopeOf({ source }));
+	return Boolean(anchor?.classList?.contains(className));
+};
+
+// Unbound, the editor shows a bare custom URL and WP keeps linking a deleted page.
+const bindPage = async (patch) => {
+	const pages = await fetchLinkablePages();
+	const page = pages.find(({ url, link }) => [url, link].includes(patch?.url));
+	return page
+		? { ...patch, id: page.id, type: 'page', kind: 'post-type' }
+		: patch;
+};
+
+const buildAdd = async (
+	{ anchorId, position, blockType, patch, clear },
+	source,
+) => {
 	const presetSlugs = window.extAgentData?.context?.presetSlugs ?? {};
-	const block = buildNewBlock(blockType, patch, clear ?? [], presetSlugs);
+	const linked =
+		blockType === 'core/navigation-link' ? await bindPage(patch) : patch;
+	const block = buildNewBlock(blockType, linked, clear ?? [], presetSlugs, {
+		joinsRow: joinsAnchorRow(anchorId, blockType, source),
+	});
 	if (!block) return null;
 	return { op: 'add', anchorId, position, block };
+};
+
+const buildDuplicate = async (operation, source, postId) => {
+	const { blockId, targetId, position } = operation;
+	const block = await duplicateMarkup(operation, source, postId);
+	return {
+		op: 'duplicate',
+		blockId,
+		...(targetId && { targetId, position: position ?? 'after' }),
+		...(block && { block }),
+	};
 };
 
 // The backend op has no image — the confirm UI attaches it before the tool runs.
@@ -50,6 +89,7 @@ const BUILDERS = {
 		position,
 	}),
 	wrap: ({ blockId, container }) => ({ op: 'wrap', blockId, container }),
+	duplicate: buildDuplicate,
 	add: buildAdd,
 };
 

@@ -17,6 +17,7 @@ export const usePalettes = () => {
 		palettes: data?.palettes,
 		css: data?.css,
 		preferred: data?.preferred,
+		applied: data?.applied,
 		error,
 		isLoading,
 	};
@@ -32,11 +33,14 @@ const fetcher = async () => {
 
 	if (!palettes.length) return null;
 
+	const bySlug = palettesBySlug(palettes);
+
 	return {
 		palettes: rankPalettes(palettes, preferred),
 		preferred,
+		applied: bySlug[siteStyle?.colorPalette],
 		css: buildPaletteCssMap({
-			payloads: palettesBySlug(palettes),
+			payloads: bySlug,
 			themeStyles: theme?.styles,
 			themeSettings: theme?.settings,
 		}),

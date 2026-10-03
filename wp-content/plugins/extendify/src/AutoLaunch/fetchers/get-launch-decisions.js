@@ -5,6 +5,7 @@ import {
 	retryTwice,
 } from '@auto-launch/functions/helpers';
 import { AI_HOST } from '@constants';
+import { digest } from '@shared/api/digest';
 import { reqDataBasics } from '@shared/lib/data';
 
 const fallback = {
@@ -19,9 +20,21 @@ export const handleLaunchDecisions = async ({ siteProfile }) => {
 
 	const response = await retryTwice(() =>
 		fetchWithTimeout(url, { method, headers, body }),
-	);
+	).catch((error) => {
+		return { ok: false, statusText: error.message, status: 0 };
+	});
 
-	if (!response?.ok) return fallback;
+	if (!response?.ok) {
+		digest({
+			error: {
+				message: response.statusText,
+				name: 'FetchError',
+				status: response.status,
+			},
+			details: { source: 'auto-launch', caller: 'handleLaunchDecisions' },
+		});
+		return fallback;
+	}
 
 	return failWithFallback(
 		async () => ({

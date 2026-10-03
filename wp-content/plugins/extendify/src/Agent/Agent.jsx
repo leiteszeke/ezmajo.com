@@ -13,7 +13,14 @@ import {
 } from '@agent/components/Canvas';
 import { ChatInput } from '@agent/components/ChatInput';
 import { ChatMessages } from '@agent/components/ChatMessages';
+import { StatusIndicator } from '@agent/components/messages/StatusIndicator';
 import { UsageMessage } from '@agent/components/messages/UsageMessage';
+import { useFollowUpHistory } from '@agent/follow-ups/history';
+import {
+	cardMessageIndex,
+	pickNextCard,
+	toolCallsThisRun,
+} from '@agent/follow-ups/pick-next';
 import { useLockPost } from '@agent/hooks/useLockPost';
 import { isAbilityTool, isAbilityWorkflow } from '@agent/lib/abilities';
 import {
@@ -27,7 +34,6 @@ import { useCanvasStore } from '@agent/state/canvas';
 import { useChatStore } from '@agent/state/chat';
 import { useGlobalStore } from '@agent/state/global';
 import { useStatusStore } from '@agent/state/status';
-import { useSuggestionsStore } from '@agent/state/suggestions';
 import { useWorkflowStore } from '@agent/state/workflows';
 import { hasRunComponent } from '@agent/workflows/abilities/components/run';
 import startOnboardingWorkflow from '@agent/workflows/misc/start-onboarding';
@@ -67,6 +73,16 @@ const canceledDuring = async (ms) => {
 	return signal.aborted;
 };
 
+const nextSteps = (workflowId, status, messages) => {
+	if (status === 'completed') {
+		useFollowUpHistory.getState().markDone(workflowId);
+	}
+	const card = pickNextCard({ workflowId, status, messages });
+	return card
+		? { followUp: card.id, followUpData: card.data }
+		: { followUp: null };
+};
+
 export const Agent = () => {
 	const { addMessage, updateMessage, popMessage, messages } = useChatStore();
 	const { pushStatus, clearStatuses, leavingPage } = useStatusStore();
@@ -101,7 +117,6 @@ export const Agent = () => {
 	const canvasAssist = useCanvasAssist();
 	const canvasNoticeShown = useRef(false);
 	const chatAvailable = useMemo(() => isChatAvailable(), [isChatAvailable]);
-	const { addSuggestions, getSuggestions } = useSuggestionsStore();
 	// Options render only while their message is last; a reply dismisses them.
 	const lastMessage = messages.at(-1);
 	const qaSuggestions =
@@ -110,6 +125,16 @@ export const Agent = () => {
 		Array.isArray(lastMessage.details?.qaSuggestions)
 			? lastMessage.details.qaSuggestions
 			: null;
+
+	useEffect(() => {
+		const { messages, updateMessage } = useChatStore.getState();
+		const index = cardMessageIndex(messages);
+		const { id, details } = messages[index] ?? {};
+		if (!id || details.followUp !== undefined || details.followUpClosed) return;
+		const { workflowId, status } = details;
+		const steps = nextSteps(workflowId, status, messages.slice(0, index));
+		if (steps.followUp) updateMessage(id, steps);
+	}, []);
 
 	// Without this the input stays disabled for as long as the canvas is open.
 	useEffect(() => {
@@ -128,7 +153,12 @@ export const Agent = () => {
 		// A class or pin left up freezes Quick Edit hover site-wide.
 		document
 			.querySelector('.wp-site-blocks')
-			?.classList.remove('extendify-agent-working', 'extendify-agent-busy');
+			?.classList.remove(
+				'extendify-agent-working',
+				'extendify-agent-busy',
+				'extendify-agent-waiting',
+				'extendify-agent-task',
+			);
 		setCommittedSelection(null);
 		clearStatuses();
 		window.dispatchEvent(new Event('extendify-agent:remove-block-highlight'));
@@ -274,8 +304,9 @@ export const Agent = () => {
 
 	const handleSubmit = useCallback(
 		async (message, { hidden = false } = {}) => {
-			// Suggestions reach the agent without the textarea; disabling it isn't enough.
+			// chat-submit events skip the textarea; disabling it isn't enough.
 			if (useQuickEditStore.getState().selected) return;
+			if (whenFinishedToolProps?.processing) return;
 			setWaitingOnToolOrUser(false);
 			agentWorking.current = false;
 			addMessage('message', { role: 'user', content: message, hidden });
@@ -293,7 +324,7 @@ export const Agent = () => {
 					agent: workflow.agent,
 					workflowId: workflow.id,
 					answerId,
-					suggestions: getSuggestions(),
+					followUp: null,
 				});
 			}
 
@@ -346,7 +377,6 @@ export const Agent = () => {
 			workflow,
 			workflowData,
 			getAvailableWorkflows,
-			getSuggestions,
 		],
 	);
 
@@ -424,7 +454,7 @@ export const Agent = () => {
 				status: 'canceled',
 				agent: workflow?.agent,
 				workflowId: workflow?.id,
-				suggestions: getSuggestions(),
+				...nextSteps(workflow?.id, 'canceled'),
 			});
 			return;
 		};
@@ -444,7 +474,6 @@ export const Agent = () => {
 		addMessage,
 		workflow,
 		qaSuggestions,
-		getSuggestions,
 		canType,
 	]);
 
@@ -458,20 +487,37 @@ export const Agent = () => {
 		);
 	}, []);
 
+	// ChatMessages hides a confirm restored by a reload; left open, the workflow would sit unfinishable.
+	useEffect(() => {
+		const { getWorkflow, reloadedToolProps } = useWorkflowStore.getState();
+		const { whenFinished, needsRedirect } = getWorkflow() ?? {};
+		if (!reloadedToolProps?.id || !whenFinished?.component) return;
+		if (whenFinished.canvas || needsRedirect?.()) return;
+		window.dispatchEvent(new Event('extendify-agent:cancel-workflow'));
+	}, []);
+
 	// Handle whenFinished component confirm/cancel
 	useEffect(() => {
 		const handleConfirm = async ({ detail }) => {
 			if (toolWorking.current) return;
-			setWhenFinishedToolProps(null);
 			toolWorking.current = true;
 			const { data, whenFinishedToolProps, shouldRefreshPage, redirectUrl } =
 				detail ?? {};
+			// Staged until the tool returns, so the chat shows it saving.
+			setWhenFinishedToolProps(
+				whenFinishedToolProps
+					? { ...whenFinishedToolProps, processing: true }
+					: null,
+			);
 			const { whenFinishedTool, answerId, redirectTo } =
 				whenFinishedToolProps?.agentResponse || {};
 			const { id, labels } = whenFinishedTool || {};
 			// Staged unanswered so its own component can show the run in progress.
 			const runMessageId = id ? addMessage('tool', { id, inputs: data }) : null;
-			if (!hasRunComponent(id)) pushStatus('workflow-tool-processing');
+			// In the chat, the saving state shows this label instead.
+			if (!hasRunComponent(id) && workflow?.whenFinished?.canvas) {
+				pushStatus('workflow-tool-processing', labels?.started);
+			}
 			// Not all workflows have a tool at the end (e.g. tours)
 			const toolResponse = await callTool?.({ tool: id, inputs: data }).catch(
 				(error) => {
@@ -489,6 +535,7 @@ export const Agent = () => {
 				},
 			);
 			toolWorking.current = false;
+			setWhenFinishedToolProps(null);
 			if (runMessageId) updateMessage(runMessageId, { result: toolResponse });
 			if (toolResponse?.refused) {
 				await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -523,14 +570,20 @@ export const Agent = () => {
 				return;
 			}
 
-			addSuggestions(whenFinishedToolProps.agentResponse?.recommendations);
+			const url = getRedirectUrl(redirectTo, whenFinishedToolProps?.inputs);
+			// Reloading here unmounts a run component still watching its ability finish.
+			const refreshForAbility =
+				isAbilityTool(id) && shouldRefreshPage !== false;
+			const willReload =
+				url || redirectUrl || shouldRefreshPage || refreshForAbility;
+			// A card shown now would flash just before the reload.
 			addMessage('workflow', {
 				status: 'completed',
 				label: labels?.confirm,
 				agent: workflow.agent,
 				workflowId: workflow.id,
 				answerId,
-				suggestions: getSuggestions(),
+				...(willReload ? {} : nextSteps(workflow.id, 'completed')),
 			});
 			// A chat message persists, so the next turn's model knows the save was partial.
 			const refusedCount = toolResponse?.refusedOperations?.length;
@@ -552,11 +605,7 @@ export const Agent = () => {
 			setWorkflow(null);
 			useCanvasStore.getState().endSession();
 
-			const url = getRedirectUrl(redirectTo, whenFinishedToolProps?.inputs);
-			const refreshForAbility = isAbilityTool(id);
-			if (url || redirectUrl || shouldRefreshPage || refreshForAbility) {
-				return doReload(url || redirectUrl);
-			}
+			if (willReload) return doReload(url || redirectUrl);
 			cleanup();
 		};
 		const handleCancel = ({ detail }) => {
@@ -571,7 +620,7 @@ export const Agent = () => {
 				agent: workflow.agent,
 				workflowId: workflow.id,
 				answerId,
-				suggestions: getSuggestions(),
+				...nextSteps(workflow.id, 'canceled'),
 			});
 			setWorkflow(null);
 			useCanvasStore.getState().endSession();
@@ -598,16 +647,7 @@ export const Agent = () => {
 			);
 			window.removeEventListener('extendify-agent:workflow-retry', handleRetry);
 		};
-	}, [
-		addMessage,
-		pushStatus,
-		popMessage,
-		cleanup,
-		setWorkflow,
-		workflow,
-		getSuggestions,
-		addSuggestions,
-	]);
+	}, [addMessage, pushStatus, popMessage, cleanup, setWorkflow, workflow]);
 
 	useEffect(() => {
 		const handleClose = () => setOpen(false);
@@ -629,6 +669,23 @@ export const Agent = () => {
 		if (block) setBlock(null);
 	}, [open, block, setBlock]);
 
+	// A pick answers select-block's "which one?"; making the user also type stalls it.
+	const previousBlock = useRef(block);
+	useEffect(() => {
+		const picked = block && !previousBlock.current;
+		previousBlock.current = block;
+		if (!picked || workflow?.id !== 'select-block') return;
+		if (!waitingOnToolOrUser || !canType || whenFinishedToolProps?.id) return;
+		handleSubmit('This is the block I mean.', { hidden: true });
+	}, [
+		block,
+		workflow?.id,
+		waitingOnToolOrUser,
+		canType,
+		whenFinishedToolProps?.id,
+		handleSubmit,
+	]);
+
 	useEffect(() => {
 		if (waitingOnToolOrUser || !open || !workflow?.id) return;
 		// Some workflows require they dont change pages
@@ -642,7 +699,7 @@ export const Agent = () => {
 				status: 'canceled',
 				agent: workflow.agent,
 				workflowId: workflow.id,
-				suggestions: getSuggestions(),
+				...nextSteps(workflow.id, 'canceled'),
 			});
 			setWorkflow(null);
 			cleanup();
@@ -741,14 +798,13 @@ export const Agent = () => {
 						inputs,
 						workflowId: workflow.id,
 					});
-					addSuggestions(agentResponse.recommendations);
 					setWorkflow(null);
 					addMessage('workflow', {
 						status: 'completed',
 						agent: workflow.agent,
 						workflowId: workflow.id,
 						answerId,
-						suggestions: getSuggestions(),
+						...nextSteps(workflow.id, 'completed'),
 					});
 					cleanup();
 				}
@@ -756,17 +812,19 @@ export const Agent = () => {
 			}
 			// If we're done, it means the AI has the answer
 			if (agentResponse.status !== 'in-progress') {
-				const { recommendations, status } = agentResponse;
-				const isCompleted = status === 'completed';
-				if (recommendations) addSuggestions(recommendations);
+				const status =
+					agentResponse.status === 'completed' ? 'completed' : 'canceled';
+				// A reply that changed nothing isn't a finished task to follow up.
+				const didWork =
+					toolCallsThisRun(useChatStore.getState().messages).length > 0;
 				setWorkflow(null);
 				cleanup();
 				addMessage('workflow', {
-					status: isCompleted ? 'completed' : 'canceled',
+					status,
 					agent: workflow.agent,
 					workflowId: workflow.id,
 					answerId,
-					suggestions: getSuggestions(),
+					...(didWork ? nextSteps(workflow.id, status) : { followUp: null }),
 				});
 				return;
 			}
@@ -788,7 +846,8 @@ export const Agent = () => {
 					setCanType(false);
 					return;
 				}
-				pushStatus('tool-started', labels?.started);
+				// A reply sent with the tool clears the status, blanking the line.
+				pushStatus('agent-working');
 				const toolData = await Promise.all([
 					callTool({ tool: id, inputs }),
 					new Promise((resolve) => setTimeout(resolve, 3000)),
@@ -821,6 +880,7 @@ export const Agent = () => {
 					inputs,
 					result: toolData,
 					label: labels?.confirm,
+					started: labels?.started,
 				});
 				setWaitingOnToolOrUser(false);
 				agentWorking.current = false;
@@ -868,8 +928,6 @@ export const Agent = () => {
 		block,
 		setBlock,
 		findAgent,
-		addSuggestions,
-		getSuggestions,
 	]);
 
 	useEffect(() => {
@@ -877,14 +935,25 @@ export const Agent = () => {
 		document.querySelector('#extendify-agent-chat-textarea')?.focus();
 	}, [canType]);
 
-	const busy = !canType || !chatAvailable || workflow?.id;
+	// A task waiting on a reply leaves the page pickable so the user can answer by pointing.
+	const waiting =
+		canType &&
+		chatAvailable &&
+		Boolean(workflow?.id) &&
+		!whenFinishedToolProps?.id;
+	const busy = !canType || !chatAvailable || (workflow?.id && !waiting);
 	// `busy` is true at rest; 429 is blocked, not working.
 	const working = !canType && chatAvailable;
 
 	return (
 		<>
 			<Canvas />
-			<Chat busy={busy} working={working}>
+			<Chat
+				busy={busy}
+				working={working}
+				waiting={waiting}
+				taskActive={Boolean(workflow?.id)}
+			>
 				<div className="relative z-50 flex h-full flex-col justify-between overflow-auto">
 					<ChatMessages
 						redirectComponent={
@@ -901,9 +970,14 @@ export const Agent = () => {
 							/>
 						</div>
 						<div className="p-4 pb-2 pt-0">
+							<StatusIndicator />
 							<ChatInput
 								disabled={
-									!canType || !chatAvailable || !!qaSuggestions || leavingPage
+									!canType ||
+									!chatAvailable ||
+									!!qaSuggestions ||
+									leavingPage ||
+									whenFinishedToolProps?.processing
 								}
 								handleSubmit={handleSubmit}
 							/>

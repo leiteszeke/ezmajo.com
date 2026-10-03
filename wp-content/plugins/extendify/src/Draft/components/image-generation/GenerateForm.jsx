@@ -7,7 +7,6 @@ import {
 	__experimentalToggleGroupControl as ToggleGroupControl,
 	__experimentalToggleGroupControlOptionIcon as ToggleGroupControlOptionIcon,
 } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 export const GenerateForm = ({
@@ -16,23 +15,10 @@ export const GenerateForm = ({
 	disclose,
 	setDisclose,
 }) => {
-	const { imageCredits, resetImageCredits, aiImageOptions, setAiImageOption } =
+	const { imageCredits, aiImageOptions, setAiImageOption } =
 		useImageGenerationStore();
 	const usedCredits = imageCredits.total - imageCredits.remaining;
-	const [refreshCheck, setRefreshCheck] = useState(0);
 	const { size, prompt } = aiImageOptions;
-
-	useEffect(() => {
-		const handle = () => {
-			setRefreshCheck((prev) => prev + 1);
-			if (!imageCredits.refresh) return;
-			if (new Date(Number(imageCredits.refresh)) > new Date()) return;
-			resetImageCredits();
-		};
-		if (refreshCheck === 0) handle(); // First run
-		const id = setTimeout(handle, 1000);
-		return () => clearTimeout(id);
-	}, [imageCredits, resetImageCredits, refreshCheck]);
 
 	return (
 		<>

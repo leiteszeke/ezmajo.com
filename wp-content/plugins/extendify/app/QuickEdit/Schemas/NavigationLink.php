@@ -4,9 +4,7 @@ namespace Extendify\QuickEdit\Schemas;
 
 defined('ABSPATH') || die('No direct access.');
 
-// Nav links inside a core/navigation with a `ref` attribute live in a
-// wp_navigation post, not post_content; not yet supported. Inline
-// core/navigation-link children of an inline core/navigation work normally.
+// A ref nav's links live in a wp_navigation post, saved by WPNavigationController.
 class NavigationLink implements Schema
 {
     public function fields(): array

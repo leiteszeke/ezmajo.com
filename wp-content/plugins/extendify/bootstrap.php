@@ -18,6 +18,14 @@ use Extendify\Launch\Admin as LaunchAdmin;
 use Extendify\AutoLaunch\Admin as AutoLaunchAdmin;
 use Extendify\Library\Admin as LibraryAdmin;
 use Extendify\Library\Frontend as LibraryFrontend;
+use Extendify\Mcp\Server as McpServer;
+use Extendify\Mcp\OAuth\Metadata as McpMetadata;
+use Extendify\Mcp\OAuth\Authorize as McpAuthorize;
+use Extendify\Mcp\OAuth\TokenEndpoint as McpTokenEndpoint;
+use Extendify\Mcp\OAuth\RegistrationEndpoint as McpRegistrationEndpoint;
+use Extendify\Mcp\Profile as McpProfile;
+use Extendify\Mcp\Lifecycle as McpLifecycle;
+use Extendify\Mcp\Jobs as McpJobs;
 use Extendify\Agent\Frontend as AgentFrontend;
 use Extendify\QuickEdit\Frontend as QuickEditFrontend;
 use Extendify\PageCreator\Admin as PageCreatorAdmin;
@@ -127,6 +135,18 @@ if (!defined('EXTENDIFY_IS_THEME_EXTENDABLE')) {
     if (!PartnerData::setting('deactivated')) {
         ResourceData::scheduleCache();
         NotificationData::scheduleCache();
+    }
+
+    // A token request carries no session and would fail the capability check.
+    if (defined('EXTENDIFY_PARTNER_ID') && !PartnerData::setting('deactivated')) {
+        McpServer::register();
+        McpMetadata::register();
+        McpAuthorize::register();
+        McpTokenEndpoint::register();
+        McpRegistrationEndpoint::register();
+        McpProfile::register();
+        McpLifecycle::register();
+        McpJobs::register();
     }
 
     if (!current_user_can(EXTENDIFY_REQUIRED_CAPABILITY)) {

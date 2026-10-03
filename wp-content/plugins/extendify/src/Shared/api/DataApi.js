@@ -22,6 +22,30 @@ const imageErrorMessage = (status) => {
 	return __('Service temporarily unavailable', 'extendify-local');
 };
 
+const creditsFromHeaders = (headers) => {
+	const read = (name) => {
+		const value = headers.get(name);
+		return value === null ? null : Number(value);
+	};
+	return {
+		remaining: read('x-ratelimit-remaining'),
+		total: read('x-ratelimit-limit'),
+	};
+};
+
+export const fetchImageCredits = async () => {
+	const url = new URL(`${AI_HOST}/api/draft/image`);
+	// The limiter keys on the site id, which a GET can only carry in the query.
+	url.searchParams.set('siteId', reqDataBasics.siteId ?? '');
+	const { headers } = await fetch(url, { mode: 'cors' });
+	const credits = creditsFromHeaders(headers);
+
+	if (credits.remaining === null)
+		throw new Error('Response reports no credits');
+
+	return credits;
+};
+
 export const generateImage = async (imageData, signal) => {
 	const response = await fetch(`${AI_HOST}/api/draft/image`, {
 		method: 'POST',
@@ -37,11 +61,7 @@ export const generateImage = async (imageData, signal) => {
 
 	const body = await response.json();
 
-	const imageCredits = {
-		remaining: response.headers.get('x-ratelimit-remaining'),
-		total: response.headers.get('x-ratelimit-limit'),
-		refresh: response.headers.get('x-ratelimit-reset'),
-	};
+	const imageCredits = creditsFromHeaders(response.headers);
 
 	if (!response.ok) {
 		throw { message: imageErrorMessage(body.status), imageCredits };

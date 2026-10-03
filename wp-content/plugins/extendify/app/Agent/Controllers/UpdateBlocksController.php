@@ -109,6 +109,8 @@ class UpdateBlocksController
                     $operation,
                     $trees[$owner]['wrappers']
                 );
+            } elseif ($op === 'duplicate') {
+                $reason = self::applyDuplicate($trees[$owner]['blocks'], $blockId, $operation);
             } elseif (in_array($op, ['edit', 'delete', 'move'], true)) {
                 $reason = self::applyOperation($trees[$owner]['blocks'], $op, $blockId, $operation);
             } else {
@@ -297,8 +299,8 @@ class UpdateBlocksController
     private static function applyAdd(array &$blocks, int $anchorId, array $operation, array &$sharedWrappers)
     {
         $position = (string) ($operation['position'] ?? '');
-        if (!in_array($position, ['before', 'after'], true)) {
-            return "position must be 'before' or 'after'";
+        if (!in_array($position, ['before', 'after', 'inside'], true)) {
+            return "position must be 'before', 'after' or 'inside'";
         }
         $newBlock = self::parseSingleBlock((string) ($operation['block'] ?? ''));
         if (!$newBlock) {
@@ -308,12 +310,42 @@ class UpdateBlocksController
         if ($anchorPath === null) {
             return 'anchor block not found in this post';
         }
+        if ($position === 'inside') {
+            return self::nestInMenuItem($blocks, $anchorPath, $newBlock);
+        }
         // A bare column is only valid as a core/columns child, so its anchor
         // decides the splice here — the code owns the wrapper, never the model.
         if (($newBlock['blockName'] ?? '') === 'core/column') {
             return self::spliceColumn($blocks, $anchorPath, $newBlock, $position, $anchorId, $sharedWrappers);
         }
         $blocks = self::insertAtPath($blocks, $anchorPath, $newBlock, $position);
+        return null;
+    }
+
+    // The editor's "Add submenu": the link becomes a submenu keeping its label and URL.
+    private static function nestInMenuItem(array &$blocks, array $anchorPath, array $newBlock)
+    {
+        $anchor = self::blockAtPath($blocks, $anchorPath);
+        $anchorName = $anchor['blockName'] ?? '';
+        if (!in_array($anchorName, ['core/navigation-link', 'core/navigation-submenu'], true)) {
+            return "position 'inside' needs a menu item as the anchor";
+        }
+        if (($newBlock['blockName'] ?? '') !== 'core/navigation-link') {
+            return 'only a menu link can go inside a menu item';
+        }
+        // A child claiming top level renders as if it sat beside its parent.
+        unset($newBlock['attrs']['isTopLevelLink']);
+        if ($anchorName === 'core/navigation-link') {
+            $anchor['blockName'] = 'core/navigation-submenu';
+            $attrs = [];
+            foreach (($anchor['attrs'] ?? []) as $key => $value) {
+                $attrs[$key === 'isTopLevelLink' ? 'isTopLevelItem' : $key] = $value;
+            }
+            $anchor['attrs'] = $attrs;
+        }
+        $anchor['innerBlocks'][] = $newBlock;
+        $anchor['innerContent'][] = null;
+        $blocks = self::spliceAtPath($blocks, $anchorPath, $anchor);
         return null;
     }
 
@@ -423,6 +455,51 @@ class UpdateBlocksController
         $sharedWrappers[$blockId . ':after'] = $shellRef;
         $sharedWrappers[$blockId . ':before'] = $shellRef;
         return true;
+    }
+
+    // Returns null when the copy spliced in, or the refusal reason.
+    private static function applyDuplicate(array &$blocks, int $blockId, array $operation)
+    {
+        $path = PostBlockFinder::pathByRef($blocks, $blockId);
+        if ($path === null) {
+            return 'block id not found in this post';
+        }
+        $original = self::blockAtPath($blocks, $path);
+        $copy = self::withoutStamps($original);
+        if (isset($operation['block'])) {
+            $copy = self::parseSingleBlock((string) $operation['block']);
+            if (!$copy) {
+                return 'block must parse to exactly one block';
+            }
+            if (($copy['blockName'] ?? '') !== ($original['blockName'] ?? '')) {
+                return 'a copy must keep the original block type';
+            }
+        }
+        $anchorPath = $path;
+        $position = 'after';
+        if (isset($operation['targetId'])) {
+            $anchorPath = PostBlockFinder::pathByRef($blocks, (int) $operation['targetId']);
+            if ($anchorPath === null) {
+                return 'target block not found in this post';
+            }
+            if (array_slice($anchorPath, 0, count($path)) === $path && $anchorPath !== $path) {
+                return 'target is inside the copied block';
+            }
+            $position = (string) ($operation['position'] ?? 'after');
+            if (!in_array($position, ['before', 'after'], true)) {
+                return "position must be 'before' or 'after'";
+            }
+        }
+        $blocks = self::insertAtPath($blocks, $anchorPath, $copy, $position);
+        return null;
+    }
+
+    // A stamped copy would catch later ops aimed at the original's ids.
+    private static function withoutStamps(array $block): array
+    {
+        unset($block[PostBlockFinder::REF_KEY]);
+        $block['innerBlocks'] = array_map([self::class, 'withoutStamps'], $block['innerBlocks'] ?? []);
+        return $block;
     }
 
     private static function blockAtPath(array $blocks, array $path)

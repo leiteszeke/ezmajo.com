@@ -111,6 +111,48 @@ const routeColors = (attributes, patch, colorSlugs, colorValues) => {
 	return out;
 };
 
+// Colours WP stores as a slug attribute beside a custom-value attribute.
+const PAIRED_COLORS = [
+	{
+		named: 'overlayColor',
+		custom: 'customOverlayColor',
+		flag: 'isUserOverlayColor',
+	},
+	// The icon renders from the value alone; the slug only adds a class.
+	{ named: 'iconColor', custom: 'iconColorValue', valueForSlug: true },
+	{
+		named: 'iconBackgroundColor',
+		custom: 'iconBackgroundColorValue',
+		valueForSlug: true,
+	},
+];
+
+const routePairedColors = (attributes, patch, colorSlugs, colorValues) => {
+	const slugs = new Set(colorSlugs ?? []);
+	let out = attributes;
+	for (const { named, custom, flag, valueForSlug } of PAIRED_COLORS) {
+		const value = patch?.[named];
+		if (value == null) continue;
+		const slug = slugs.has(value) ? value : slugForValue(value, colorValues);
+		if (slug) {
+			out = { ...out, [named]: slug };
+			const slugHex = colorValues?.[slug];
+			out =
+				valueForSlug && slugHex
+					? { ...out, [custom]: colord(String(slugHex)).toHex() }
+					: unsetPath(out, custom);
+		} else {
+			const parsed = colord(value);
+			out = unsetPath(
+				{ ...out, [custom]: parsed.isValid() ? parsed.toHex() : value },
+				named,
+			);
+		}
+		if (flag) out = { ...out, [flag]: true };
+	}
+	return out;
+};
+
 // fontSize / fontFamily mirror the color routing: known slug → named attribute
 // (preset class), anything else → the inline style path.
 const NAMED_PRESETS = [
@@ -161,6 +203,7 @@ const ROUTED_PAIRS = [
 	['textColor', 'style.color.text'],
 	['gradient', 'style.color.gradient'],
 	...NAMED_PRESETS.map(({ named, path }) => [named, path]),
+	...PAIRED_COLORS.map(({ named, custom }) => [named, custom]),
 ];
 const CLEAR_ALIASES = Object.fromEntries(
 	ROUTED_PAIRS.flatMap((pair) => pair.map((p) => [p, pair])),
@@ -200,13 +243,42 @@ const emptyLeafPaths = (patch, prefix = '') =>
 		return value === '' ? [path] : [];
 	});
 
+// A block with no style would otherwise save the patch's null and emptied keys.
 const withoutEmptyLeaves = (patch) =>
 	Object.fromEntries(
 		Object.entries(patch ?? {}).flatMap(([key, value]) => {
-			if (isMergeable(value)) return [[key, withoutEmptyLeaves(value)]];
-			return value === '' ? [] : [[key, value]];
+			if (isMergeable(value)) {
+				const kept = withoutEmptyLeaves(value);
+				return Object.keys(kept).length ? [[key, kept]] : [];
+			}
+			return value === '' || value == null ? [] : [[key, value]];
 		}),
 	);
+
+// Patch values arrive as strings; the parser drops "30" on a number attribute.
+const coerceTypes = (block, patch) => {
+	const attributes = getBlockType(block.name)?.attributes ?? {};
+	let out = patch;
+	for (const [key, value] of Object.entries(patch ?? {})) {
+		if (typeof value !== 'string') continue;
+		const type = attributes[key]?.type;
+		if (type === 'boolean' && ['true', 'false'].includes(value)) {
+			out = { ...out, [key]: value === 'true' };
+			continue;
+		}
+		if (type !== 'number') continue;
+		const [, amount, unit] =
+			value.trim().match(/^(-?\d*\.?\d+)\s*([a-z%]*)$/i) ?? [];
+		if (amount == null) continue;
+		out = { ...out, [key]: Number(amount) };
+		// The model writes lengths like "60vh" into the number field.
+		const unitKey = `${key}Unit`;
+		if (unit && attributes[unitKey] && out[unitKey] == null) {
+			out = { ...out, [unitKey]: unit };
+		}
+	}
+	return out;
+};
 
 export const applyBlockPatch = (
 	serializedBlock,
@@ -217,13 +289,15 @@ export const applyBlockPatch = (
 	const blocks = parse(serializedBlock).map((block) => {
 		if (!block.name) return block;
 		const remapped = remapText(block, patch);
-		const filled = withoutEmptyLeaves(remapped);
+		const filled = coerceTypes(block, withoutEmptyLeaves(remapped));
 		const merged = deepMerge(block.attributes, filled);
-		const routed = routeNamedPresets(
+		const colored = routePairedColors(
 			routeColors(merged, filled, presetSlugs.color, presetSlugs.colorValues),
 			filled,
-			presetSlugs,
+			presetSlugs.color,
+			presetSlugs.colorValues,
 		);
+		const routed = routeNamedPresets(colored, filled, presetSlugs);
 		return {
 			...block,
 			attributes: applyClears(routed, [

@@ -223,6 +223,7 @@ class TagBlocks
             // Move cursor to the first start tag in the fragment
             if ($tp->next_tag()) {
                 $tp->set_attribute('data-extendify-agent-block-id', $value);
+                $tp->set_attribute('data-extendify-block-type', $name);
                 $content = $tp->get_updated_html();
             }
         }

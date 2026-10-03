@@ -16,7 +16,6 @@ import { normalizeSiteImages } from '@shared/lib/site-images';
 import apiFetch from '@wordpress/api-fetch';
 import { registerCoreBlocks } from '@wordpress/block-library';
 import { getBlockTypes, parse, serialize } from '@wordpress/blocks';
-import { Spinner } from '@wordpress/components';
 import { useDispatch } from '@wordpress/data';
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -484,11 +483,9 @@ export const SelectSiteDesign = ({ onConfirm, onCancel }) => {
 					disabled={!selectedHeroPattern || isSaving}
 					onClick={handleConfirm}
 				>
-					{isSaving ? (
-						<Spinner className="m-0" />
-					) : (
-						__('Save', 'extendify-local')
-					)}
+					{isSaving
+						? __('Saving...', 'extendify-local')
+						: __('Save', 'extendify-local')}
 				</button>
 			</div>
 		</div>

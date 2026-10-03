@@ -117,6 +117,12 @@ const isSyncedPatternId = (id) => /^block:\d+:\d+$/.test(String(id ?? ''));
 export const isAgentWorking = () =>
 	!!document.querySelector('.wp-site-blocks.extendify-agent-working');
 
+const isAgentWaiting = () =>
+	!!document.querySelector('.wp-site-blocks.extendify-agent-waiting');
+
+const hasAgentTask = () =>
+	!!document.querySelector('.wp-site-blocks.extendify-agent-task');
+
 // Resolve the live DOM node for the currently-staged agent block, so the
 // click + hover gates can carve out "inside the staged block." Returns
 // null when no block is staged or its node has detached from the tree.
@@ -286,8 +292,10 @@ export const pillContextFor = (target) => {
 	const compositeId =
 		target?.el?.getAttribute?.(PART_ATTR) ??
 		target?.el?.getAttribute?.(POST_ATTR);
+	// An open editor blocks sending, so it would stall the agent's task.
 	const quickEditable =
 		quickEditEnabled &&
+		!hasAgentTask() &&
 		hasQuickEditModalFor(target?.blockType) &&
 		!isSyncedPatternId(compositeId);
 	const sourceKind = target?.source?.kind ?? null;
@@ -454,7 +462,11 @@ const renderBar = (el, fromEl = el) => {
 		aiBtn.className = 'extendify-quick-edit-pill extendify-quick-edit-pill-ai';
 		aiBtn.setAttribute('data-extendify-quick-edit-pill', '');
 		aiBtn.innerHTML = '<span aria-hidden="true">✦</span>';
-		aiBtn.append(__('Ask AI', 'extendify-local'));
+		// translators: Button on a page block that hands it to the AI agent, which asked the user to pick one.
+		const shareLabel = __('Share with agent', 'extendify-local');
+		aiBtn.append(
+			isAgentWaiting() ? shareLabel : __('Ask AI', 'extendify-local'),
+		);
 		aiBtn.addEventListener('mousedown', stopMouseDown);
 		aiBtn.addEventListener('click', (ev) => {
 			ev.preventDefault();

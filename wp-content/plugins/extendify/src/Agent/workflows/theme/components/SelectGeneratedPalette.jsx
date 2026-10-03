@@ -1,5 +1,7 @@
+import { usePalettes } from '@agent/hooks/usePalettes';
 import { useVariationOverride } from '@agent/hooks/useVariationOverride';
 import { useChatStore } from '@agent/state/chat';
+import { remapPaletteDuotone } from '@shared/lib/palette-preview';
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -33,35 +35,12 @@ const buildPreviewCss = (colorsMap) => {
 	return css;
 };
 
-const themeDuotonePresets =
-	window.extAgentData?.context?.themePresets?.duotone || [];
-const themeColorPresets =
-	window.extAgentData?.context?.themePresets?.colors || {};
-
-const buildDuotoneTheme = (newColorsMap) => {
-	if (!themeDuotonePresets.length) return null;
-
-	const duotone = [];
-
-	for (const preset of themeDuotonePresets) {
-		const { slug, colors: originalColors } = preset;
-		if (!originalColors || originalColors.length !== 2) continue;
-
-		const newColors = originalColors.map((originalHex) => {
-			const matchingSlug = Object.entries(themeColorPresets).find(
-				([, hex]) => hex.toLowerCase() === originalHex.toLowerCase(),
-			)?.[0];
-
-			if (matchingSlug && newColorsMap[matchingSlug]) {
-				return newColorsMap[matchingSlug];
-			}
-			return originalHex;
-		});
-
-		duotone.push({ slug, colors: newColors });
-	}
-
-	return duotone.length > 0 ? duotone : null;
+const themeReference = () => {
+	const presets = window.extAgentData?.context?.themePresets;
+	return {
+		colors: presets?.colors,
+		settings: { color: { duotone: presets?.duotone } },
+	};
 };
 
 export const SelectGeneratedPalette = ({
@@ -72,8 +51,8 @@ export const SelectGeneratedPalette = ({
 }) => {
 	const [selected, setSelected] = useState(null);
 	const [previewCss, setPreviewCss] = useState('');
-	const [duotoneTheme, setDuotoneTheme] = useState(null);
 	const { addMessage, messages } = useChatStore();
+	const { applied } = usePalettes();
 	const aiPalettes = inputs?.palettes;
 
 	const palettes = useMemo(
@@ -88,6 +67,14 @@ export const SelectGeneratedPalette = ({
 		[aiPalettes],
 	);
 	const noPalettes = !aiPalettes?.length || palettes.length === 0;
+	const selectedPalette = palettes.find(({ name }) => name === selected);
+
+	// foreground-and-background is served-only; the theme never registers it.
+	const duotoneTheme = useMemo(() => {
+		if (!selectedPalette) return null;
+		const reference = applied ?? themeReference();
+		return remapPaletteDuotone(reference, selectedPalette.colors) ?? null;
+	}, [applied, selectedPalette]);
 
 	const { undoChange } = useVariationOverride({
 		css: previewCss,
@@ -120,14 +107,13 @@ export const SelectGeneratedPalette = ({
 	};
 
 	const handleConfirm = () => {
-		if (!selected) return;
+		if (!selectedPalette) return;
 		confirmed.current = true;
-		const palette = palettes.find((p) => p.name === selected);
 		onConfirm({
 			data: {
 				palette: {
-					name: palette.name,
-					colors: palette.colorsArray.map(({ slug, color }) => ({
+					name: selectedPalette.name,
+					colors: selectedPalette.colorsArray.map(({ slug, color }) => ({
 						slug,
 						color,
 						name: slug,
@@ -156,7 +142,6 @@ export const SelectGeneratedPalette = ({
 							onClick={() => {
 								setSelected(name);
 								setPreviewCss(buildPreviewCss(colors));
-								setDuotoneTheme(buildDuotoneTheme(colors));
 							}}
 						>
 							<div className="flex max-w-fit items-center justify-center -space-x-4 rounded-lg rtl:space-x-reverse">
@@ -192,7 +177,7 @@ export const SelectGeneratedPalette = ({
 				<button
 					type="button"
 					className="w-full rounded-sm border border-design-main bg-design-main p-2 text-sm text-white"
-					disabled={!selected}
+					disabled={!selectedPalette}
 					onClick={handleConfirm}
 				>
 					{__('Save', 'extendify-local')}

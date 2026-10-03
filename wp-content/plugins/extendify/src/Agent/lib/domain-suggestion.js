@@ -66,13 +66,9 @@ export const REGISTER_DOMAIN_MESSAGE =
 		? rawSuggestion.message.replace(/\{\{domain\}\}/g, domain)
 		: '';
 
-export const enhanceDomainSuggestion = (suggestion) => {
-	if (suggestion?.id !== REGISTER_DOMAIN_ID) return suggestion;
-	if (!isDomainRegistrationActive) return null;
+export const domainOffer = () => {
+	if (!REGISTER_DOMAIN_MESSAGE) return null;
 	return {
-		...suggestion,
-		// The BE marks this as an external link; fall back in case it hasn't yet.
-		type: suggestion.type ?? 'external-link',
 		message: REGISTER_DOMAIN_MESSAGE,
 		url: createDomainUrlLink(domainSearchUrl, domain),
 		tracking: { domain, position: 'agent-suggestion', type: domainType },

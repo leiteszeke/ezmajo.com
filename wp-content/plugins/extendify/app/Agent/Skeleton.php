@@ -114,6 +114,9 @@ class Skeleton
                 /* useLayoutShift takes body out of flow, so core's admin-bar
                    html margin disappears. */
                 html.extendify-agent-skeleton { margin-top: 0 !important; }
+                /* The mounted Agent drops the page scrollbars; classic ones would shift everything on mount. */
+                html.extendify-agent-skeleton { scrollbar-width: none; }
+                html.extendify-agent-skeleton::-webkit-scrollbar { display: none; }
                 /* tan(atan2()) is the only way to divide two lengths in CSS. */
                 .extendify-agent-skeleton .wp-site-blocks {
                     transform-origin: top left;
@@ -138,7 +141,9 @@ class Skeleton
                     pointer-events: none;
                     z-index: 100000;
                 }
-                .extendify-agent-skeleton #extendify-agent-skeleton {
+                /* Set by doReload (src/Agent/lib/reload.js) before a reload. */
+                .extendify-agent-skeleton #extendify-agent-skeleton,
+                .extendify-agent-reloading #extendify-agent-skeleton {
                     display: block;
                     position: fixed;
                     top: 0;
@@ -237,9 +242,8 @@ class Skeleton
                 . 'if(q&&q.state&&q.state.on){r.classList.add("extendify-quick-edit-on")}'
                 // Left on, it re-offsets the page when the panel closes and clears its styles.
                 . 'var t=Date.now();'
-                . 'var d=function(){r.classList.remove("extendify-agent-skeleton");'
-                . 'var a=document.getElementById("extendify-agent-skeleton");if(a){a.remove()}'
-                . 'var b=document.getElementById("extendify-agent-skeleton-frame");if(b){b.remove()}};'
+                // Only hides the rail; doReload shows it again before a reload.
+                . 'var d=function(){r.classList.remove("extendify-agent-skeleton")};'
                 . 'var i=setInterval(function(){'
                 . 'if(!document.getElementById("extendify-agent-sidebar")){return}'
                 . 'clearInterval(i);setTimeout(d,Math.max(0,%4$d-(Date.now()-t)))},50);'
@@ -279,7 +283,7 @@ class Skeleton
                     </div>
                 </div>
                 <div class="relative z-50 flex h-full flex-col justify-between overflow-auto">
-                    <div class="relative grow overflow-y-auto overflow-x-hidden p-2 flex items-center justify-center">
+                    <div class="relative grow overflow-y-auto overflow-x-hidden p-2 flex items-center justify-center" style="scrollbar-gutter: stable">
                         <div class="ext-skeleton-bars"><span></span><span></span><span></span></div>
                     </div>
                     <div>

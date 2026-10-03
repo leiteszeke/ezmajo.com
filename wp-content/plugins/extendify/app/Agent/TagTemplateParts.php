@@ -290,6 +290,7 @@ class TagTemplateParts
             $tp = new \WP_HTML_Tag_Processor($html);
             if ($tp->next_tag()) {
                 $tp->set_attribute('data-extendify-part-block-id', (string) $info['id']);
+                $tp->set_attribute('data-extendify-block-type', $name);
                 $tp->set_attribute('data-extendify-part', $info['label']);
                 if (!empty($info['slug'])) {
                     $tp->set_attribute('data-extendify-part-slug', $info['slug']);

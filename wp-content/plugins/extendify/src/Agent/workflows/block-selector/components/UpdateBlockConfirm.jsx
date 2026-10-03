@@ -11,6 +11,7 @@ import {
 import { applyBlockPatch } from '@agent/lib/block-patch';
 import { processCustomCss } from '@agent/lib/custom-css';
 import { resolveDeleteTarget } from '@agent/lib/delete-target';
+import { duplicateMarkup } from '@agent/lib/duplicate-block';
 import { buildNewBlock } from '@agent/lib/insertable-blocks';
 import { SETTING_TEXT_BLOCKS } from '@agent/lib/setting-text-blocks';
 import { useQuickEditStore } from '@quick-edit/state/store';
@@ -136,15 +137,20 @@ const previewBlock = async (blockId, newContent, css, scope) => {
 	return el;
 };
 
-// Relocate the live node; a hidden marker holds its old slot so undo can put it back.
+// A hidden element still counts as a sibling and gives the next block the layout's gap.
+const slots = new Map();
+const holdSlot = (blockId, parent, before) => {
+	const slot = document.createComment('');
+	slots.set(blockId, slot);
+	parent.insertBefore(slot, before);
+};
+
+// Relocate the live node; a slot holds its old place so undo can put it back.
 const previewMove = ({ blockId, targetId, position }, scope) => {
 	const el = findBlockEl(blockId, document, scope);
 	const target = findBlockEl(targetId, document, scope);
 	if (!el || !target) return null;
-	const marker = document.createElement('div');
-	marker.style.display = 'none';
-	marker.setAttribute('data-extendify-temp-replacement', blockId);
-	el.parentNode.insertBefore(marker, el);
+	holdSlot(blockId, el.parentNode, el);
 	pinThemeAnimations(el);
 	target.parentNode.insertBefore(
 		el,
@@ -185,6 +191,68 @@ const previewAdd = async ({ anchorId, position, block }, index, scope) => {
 		newEl,
 		position === 'after' ? anchor.nextSibling : anchor,
 	);
+	return true;
+};
+
+const TEMP_CLASSES_ATTR = 'data-extendify-temp-classes';
+const SUBMENU_ITEM_CLASSES = [
+	'has-child',
+	'open-on-hover-click',
+	'wp-block-navigation-submenu',
+];
+const SUBMENU_OPEN_CLASS = 'extendify-preview-submenu-open';
+// WordPress keeps a submenu hidden until hover, which would hide the new link.
+const SUBMENU_OPEN_CSS = `.${SUBMENU_OPEN_CLASS} > .wp-block-navigation__submenu-container { visibility: visible !important; opacity: 1 !important; height: auto !important; width: auto !important; min-width: 200px; overflow: visible !important; }`;
+
+const addTempClasses = (el, classes) => {
+	const added = classes.filter((name) => !el.classList.contains(name));
+	if (!added.length) return;
+	el.classList.add(...added);
+	const earlier = el.getAttribute(TEMP_CLASSES_ATTR);
+	el.setAttribute(
+		TEMP_CLASSES_ATTR,
+		[earlier, ...added].filter(Boolean).join(' '),
+	);
+};
+
+const submenuToggle = (label) => {
+	const button = document.createElement('button');
+	button.className =
+		'wp-block-navigation__submenu-icon wp-block-navigation-submenu__toggle';
+	button.setAttribute('aria-label', `${label} submenu`);
+	button.setAttribute('aria-expanded', 'true');
+	button.innerHTML =
+		'<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false"><path d="M1.50002 4L6.00002 8L10.5 4" stroke-width="1.5"></path></svg>';
+	return button;
+};
+
+// Mirrors nestInMenuItem with the markup WordPress renders for a submenu, shown open.
+const previewNest = async ({ anchorId, block }, index, scope) => {
+	const anchor = findBlockEl(anchorId, document, scope);
+	if (!anchor) return null;
+	const newEl = await renderAddedEl(block, index);
+	if (!newEl) return null;
+	const existing = anchor.querySelector(
+		':scope > .wp-block-navigation__submenu-container',
+	);
+	const list = existing ?? document.createElement('ul');
+	if (!existing) {
+		// A sibling dropdown carries the menu's submenu colours; copy them.
+		list.className =
+			anchor
+				.closest('.wp-block-navigation')
+				?.querySelector('.wp-block-navigation__submenu-container')?.className ??
+			'wp-block-navigation__submenu-container wp-block-navigation-submenu';
+		const toggle = submenuToggle(anchor.textContent.trim());
+		for (const el of [toggle, list]) {
+			el.setAttribute('data-extendify-temp-addition', '');
+		}
+		addTempClasses(anchor, SUBMENU_ITEM_CLASSES);
+		anchor.append(toggle, list);
+	}
+	list.appendChild(newEl);
+	addTempClasses(anchor, [SUBMENU_OPEN_CLASS]);
+	injectPreviewStylesheet(`nest-${index}`, SUBMENU_OPEN_CSS);
 	return true;
 };
 
@@ -230,7 +298,7 @@ const WRAP_SHELLS = {
 };
 
 // The relocated node keeps its block id, so a later add in the batch can
-// still anchor to it; a hidden marker holds its old slot for undo.
+// still anchor to it; a slot holds its old place for undo.
 const previewWrap = async ({ blockId, container }, wrappers, scope) => {
 	const el = findBlockEl(blockId, document, scope);
 	const shellCode = WRAP_SHELLS[container];
@@ -239,10 +307,7 @@ const previewWrap = async ({ blockId, container }, wrappers, scope) => {
 	const sharedShell =
 		container === 'core/column' ? wrappers.get('wrap-shell') : null;
 	if (sharedShell && !el.contains(sharedShell)) {
-		const marker = document.createElement('div');
-		marker.style.display = 'none';
-		marker.setAttribute('data-extendify-temp-replacement', blockId);
-		el.parentNode.insertBefore(marker, el);
+		holdSlot(blockId, el.parentNode, el);
 		const column = document.createElement('div');
 		column.className = 'wp-block-column';
 		pinThemeAnimations(el);
@@ -268,14 +333,53 @@ const previewWrap = async ({ blockId, container }, wrappers, scope) => {
 		wrappers.set(`${blockId}:before`, shell);
 		wrappers.set('wrap-shell', shell);
 	}
-	const marker = document.createElement('div');
-	marker.style.display = 'none';
-	marker.setAttribute('data-extendify-temp-replacement', blockId);
-	el.parentNode.insertBefore(marker, el);
-	el.parentNode.insertBefore(shell, marker);
+	el.parentNode.insertBefore(shell, el);
+	holdSlot(blockId, el.parentNode, el);
 	pinThemeAnimations(el);
 	(shell.querySelector('.wp-block-column') ?? shell).appendChild(el);
 	return el;
+};
+
+// A fresh render numbers style variants the page has no CSS for.
+const renderCopyOf = async (el, markup, index) => {
+	const { content, styles } = await apiFetch({
+		path: '/extendify/v1/agent/get-block-html',
+		method: 'POST',
+		data: { blockCode: markup },
+	});
+	injectPreviewStylesheet(`copy-${index}`, styles);
+	const template = document.createElement('template');
+	template.innerHTML =
+		patchVariantClasses(content ?? '', el.cloneNode(true), dynamicClasses) ||
+		'';
+	return template.content.firstElementChild;
+};
+
+// Id-less, or a later op in the batch could land on the copy.
+const previewDuplicate = async (
+	{ blockId, targetId, position, markup },
+	index,
+	scope,
+) => {
+	const el = findBlockEl(blockId, document, scope);
+	const anchor = targetId ? findBlockEl(targetId, document, scope) : el;
+	if (!el || !anchor) return null;
+	const copy = markup
+		? await renderCopyOf(el, markup, index)
+		: el.cloneNode(true);
+	if (!copy) return null;
+	for (const node of [copy, ...copy.querySelectorAll(BLOCK_ID_SEL)]) {
+		node.removeAttribute(idAttrOf(node));
+	}
+	for (const node of [copy, ...copy.querySelectorAll('.ext-animate--on')]) {
+		node.classList.remove('ext-animate--on');
+	}
+	copy.setAttribute('data-extendify-temp-addition', '');
+	anchor.parentNode.insertBefore(
+		copy,
+		position === 'before' ? anchor : anchor.nextSibling,
+	);
+	return true;
 };
 
 // Re-rendering the markup would preview the old text — the option holds it.
@@ -291,14 +395,11 @@ const previewSettingText = (blockId, text, scope) => {
 	return el;
 };
 
-// Remove the target, leaving a hidden marker so cancel restores it like a swapped preview.
+// Remove the target, leaving a slot so cancel restores it like a swapped preview.
 const previewDelete = (blockId, scope) => {
 	const el = findBlockEl(blockId, document, scope);
 	if (!el) return null;
-	const marker = document.createElement('div');
-	marker.style.display = 'none';
-	marker.setAttribute('data-extendify-temp-replacement', blockId);
-	el.parentNode.insertBefore(marker, el.nextSibling);
+	holdSlot(blockId, el.parentNode, el);
 	el.parentNode.removeChild(el);
 	return el;
 };
@@ -313,6 +414,12 @@ const unscope = (operation, fallback) => {
 		const parsed = parseScopedId(next[field]);
 		if (parsed.partSlug) partSlug = parsed.partSlug;
 		next[field] = parsed.blockId;
+	}
+	if (Array.isArray(next.texts)) {
+		next.texts = next.texts.map((entry) => ({
+			...entry,
+			blockId: parseScopedId(entry.blockId).blockId,
+		}));
 	}
 	return { operation: next, scope: partSlug ? { partSlug } : fallback };
 };
@@ -341,6 +448,9 @@ const buildOperationTarget = async (
 			preview: () => {
 				if (!markup) return null;
 				const withMarkup = { ...operation, block: markup };
+				if (operation.position === 'inside') {
+					return previewNest(withMarkup, index, scope);
+				}
 				return operation.blockType === 'core/column'
 					? previewColumnAdd(withMarkup, index, wrappers, scope)
 					: previewAdd(withMarkup, index, scope);
@@ -356,6 +466,13 @@ const buildOperationTarget = async (
 		return {
 			operation: resolved,
 			preview: () => previewWrap(resolved, wrappers, scope),
+		};
+	}
+	if (operation?.op === 'duplicate') {
+		const markup = await duplicateMarkup(operation, block?.source, postId);
+		return {
+			operation,
+			preview: () => previewDuplicate({ ...operation, markup }, index, scope),
 		};
 	}
 	if (operation?.op === 'move') {
@@ -432,9 +549,12 @@ export const UpdateBlockConfirm = ({
 
 	const undoBlockChange = useCallback(() => {
 		for (const original of detached.current) {
-			const replacement = document.querySelector(
-				`[data-extendify-temp-replacement="${CSS.escape(blockIdOf(original))}"]`,
-			);
+			const id = blockIdOf(original);
+			const replacement =
+				document.querySelector(
+					`[data-extendify-temp-replacement="${CSS.escape(id)}"]`,
+				) ?? slots.get(id);
+			slots.delete(id);
 			pinThemeAnimations(original);
 			replacement?.parentNode?.insertBefore(original, replacement);
 			replacement?.remove();
@@ -443,14 +563,22 @@ export const UpdateBlockConfirm = ({
 			'[data-extendify-temp-addition]',
 		))
 			added.remove();
+		for (const dressed of document.querySelectorAll(`[${TEMP_CLASSES_ATTR}]`)) {
+			dressed.classList.remove(
+				...dressed.getAttribute(TEMP_CLASSES_ATTR).split(' '),
+			);
+			dressed.removeAttribute(TEMP_CLASSES_ATTR);
+		}
 		for (const style of document.querySelectorAll(`style[${PREVIEW_CSS_ATTR}]`))
 			style.remove();
 		detached.current = [];
 	}, []);
 
 	const confirmed = useRef(false);
+	const unmounted = useRef(false);
 	useEffect(() => {
 		return () => {
+			unmounted.current = true;
 			if (!confirmed.current) undoBlockChange();
 		};
 	}, [undoBlockChange]);
@@ -500,12 +628,14 @@ export const UpdateBlockConfirm = ({
 				if (original !== true) originals.push(original);
 			}
 			detached.current = originals;
+			// An unmount mid-preview already ran its undo; skipping this leaves the preview stuck.
+			if (unmounted.current) return undoBlockChange();
 			// Nothing rendered means none of the target blocks are on the page.
 			if (!rendered) return onCancel();
 			setLoading(false);
 		};
 		run();
-	}, [block, inputs, onCancel, operations]);
+	}, [block, inputs, onCancel, operations, undoBlockChange]);
 
 	if (loading)
 		return (
@@ -537,10 +667,15 @@ export const UpdateBlockConfirm = ({
 							'The agent has placed the block in its new container in the browser. Please review and confirm.',
 							'extendify-local',
 						)
-					: __(
-							'The agent has made the changes in the browser. Please review and confirm.',
-							'extendify-local',
-						);
+					: onlyOp('duplicate')
+						? __(
+								'The agent has copied the block in the browser. Please review and confirm.',
+								'extendify-local',
+							)
+						: __(
+								'The agent has made the changes in the browser. Please review and confirm.',
+								'extendify-local',
+							);
 
 	return (
 		<Wrapper>

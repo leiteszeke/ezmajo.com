@@ -29,7 +29,7 @@ export const preloadImage = (src) =>
 export const swapBlockImage = (serializedBlock, image) => {
 	const url = image?.source_url || image?.url;
 	if (!url || !image?.id) return null;
-	// The attachment's alt carries the AI-generated disclosure prefix.
+	// The attachment's alt carries the AI-generated disclosure.
 	const alt = image.alt_text ?? '';
 	const parsed = parse(serializedBlock);
 	if (!parsed.some((block) => IMAGE_ATTRIBUTES[block.name])) return null;

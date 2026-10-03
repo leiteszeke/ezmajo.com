@@ -75,7 +75,7 @@ export const useTasks = () => {
 			return plugin;
 		}
 	});
-	const sitePluginSlugs = sitePlugins?.map((p) => p.slug) || [];
+	const sitePluginSlugs = sitePlugins?.map((p) => p.wordpressSlug) || [];
 	const pluginsToCheck = [
 		...new Set([...activePluginSlugs, ...sitePluginSlugs]),
 	];

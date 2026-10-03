@@ -4,12 +4,7 @@ import { createRoot } from '@wordpress/element';
 
 const ROOT_ID = 'extendify-quick-edit-modal-root';
 
-// Override @wordpress/components Modal's default bodyOpenClassName ("modal-open")
-// so our modals don't trip the wp.media-detection rule in quick-edit.css
-// (`body.modal-open .components-modal__frame:has(.extendify-quick-edit-modal)`).
-// Round-6 keyed that rule off `body.modal-open` thinking it was a wp.media-only
-// signal; @wordpress/components Modal also adds it on mount, so every QE modal
-// was hiding itself on first open.
+// Modal's default "modal-open" trips quick-edit.css's wp.media hide rule.
 export const QE_MODAL_BODY_OPEN_CLASS = 'extendify-quick-edit-modal-open';
 
 let modalRoot = null;

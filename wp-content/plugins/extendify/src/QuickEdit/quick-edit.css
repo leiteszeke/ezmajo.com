@@ -898,25 +898,10 @@ body:has(.extendify-quick-edit-floating-bar) [id^="portal/tooltip"] {
 	@apply z-[1000000]!;
 }
 
-/* When wp.media's frame opens on top of our modal (e.g. SiteIdentityModal's
-   "Change logo" → MediaUpload), our modal would otherwise sit on top
-   (z-index 1000000) and block clicks on the media library grid. Hide our
-   modal while wp.media is open; it reappears when the user picks an image
-   or closes the frame.
-
-   Trigger on `body.modal-open` — wp.media (legacy Backbone code) adds
-   that class directly on open and removes it on close. Round-3 used
-   `:has(.media-modal)`, which stayed true after wp.media closed (wp.media
-   hides via display:none and leaves the element in the DOM).
-
-   Our own QE modals MUST NOT trip this rule. @wordpress/components Modal
-   also adds `body.modal-open` on mount, so every QE modal hid itself on
-   first open. Each QE modal now passes
-   `bodyOpenClassName={QE_MODAL_BODY_OPEN_CLASS}` — see modal-root.js. */
+/* wp.media opened over our modal is unclickable; hide ours meanwhile. */
 /* no-prefix */
-body.modal-open .components-modal__frame:has(.extendify-quick-edit-modal),
 body.modal-open
-	.components-modal__screen-overlay:has(.extendify-quick-edit-modal) {
+.components-modal__screen-overlay:has(.extendify-quick-edit-modal) {
 	@apply invisible!;
 }
 
@@ -938,8 +923,7 @@ body.modal-open
  * ---------------------------------------------------------------- */
 
 /* no-prefix */
-.components-modal__frame:has(.extendify-quick-edit-modal),
-.extendify-quick-edit-modal-root .components-modal__frame {
+.components-modal__frame.extendify-quick-edit-modal {
 	@apply overflow-hidden rounded-[16px]!;
 	box-shadow:
 		0 10px 15px -3px rgba(0, 0, 0, 0.12),
@@ -947,18 +931,19 @@ body.modal-open
 }
 
 /* no-prefix */
-.components-modal__frame:has(.extendify-quick-edit-modal)
-.components-modal__header {
+.components-modal__frame.extendify-quick-edit-modal .components-modal__header {
 	@apply border-b border-b-gray-300 px-[24px] py-[18px];
 }
 /* no-prefix */
-.components-modal__frame:has(.extendify-quick-edit-modal)
+.components-modal__frame.extendify-quick-edit-modal
 .components-modal__header-heading {
 	@apply text-[15px] font-semibold tracking-[-0.01em];
+	font-family:
+		-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
+		Cantarell, "Helvetica Neue", sans-serif;
 }
 /* no-prefix */
-.components-modal__frame:has(.extendify-quick-edit-modal)
-.components-modal__content {
+.components-modal__frame.extendify-quick-edit-modal .components-modal__content {
 	@apply px-[24px] pt-[18px] pb-[22px];
 }
 

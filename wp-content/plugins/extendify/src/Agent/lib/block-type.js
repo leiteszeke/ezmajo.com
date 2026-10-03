@@ -69,6 +69,14 @@ const CORE_BLOCK_SLUGS = new Set([
 	'term-description',
 ]);
 
+// Blocks the class checks refuse; a stamped name must not expose them.
+const HIDDEN_NAMES = /^core\/(post-|template-part$)/;
+
+const stampedType = (el) => {
+	const name = el.getAttribute?.('data-extendify-block-type');
+	return name && !HIDDEN_NAMES.test(name) ? name : null;
+};
+
 export const detectBlockType = (el) => {
 	let firstWpBlockClass = null;
 	for (const cls of el.classList) {
@@ -87,12 +95,12 @@ export const detectBlockType = (el) => {
 	}
 	if (firstWpBlockClass) {
 		const slug = firstWpBlockClass.slice('wp-block-'.length);
-		return CORE_BLOCK_SLUGS.has(slug) ? `core/${slug}` : null;
+		return CORE_BLOCK_SLUGS.has(slug) ? `core/${slug}` : stampedType(el);
 	}
 	// Tag fallback for class-less <p>/<h1-6>/<li>; nav <li>s carry a class and resolve above.
 	const tag = el.tagName.toLowerCase();
 	if (tag === 'p') return 'core/paragraph';
 	if (/^h[1-6]$/.test(tag)) return 'core/heading';
 	if (tag === 'li') return 'core/list-item';
-	return null;
+	return stampedType(el);
 };

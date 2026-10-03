@@ -188,8 +188,8 @@ class Admin
         // translators: Short label stamped onto an image marking it as AI-generated.
         // Give the all-caps form your language uses.
         $aiImageLabel = \_x('AI GENERATED', 'uppercase', 'extendify-local');
-        // translators: %s is the image description. Alt text prefix marking an image as AI-generated.
-        $aiImageAltPattern = \__('AI Generated: %s', 'extendify-local');
+        // translators: %s is the image description. Keep it first; the note after it marks the image as AI-generated.
+        $aiImageAltPattern = \__('%s (AI-generated)', 'extendify-local');
         if ($switchedLocale) {
             \restore_previous_locale();
         }
