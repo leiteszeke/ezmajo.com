@@ -1,0 +1,559 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SumUp Payment Gateway For WooCommerce 2.5.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sumup-plugin-for-"
+"woocommerce\n"
+"POT-Creation-Date: 2024-07-09T02:16:27+00:00\n"
+"PO-Revision-Date: 2024-10-21 16:55-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: sumup-payment-gateway-for-woocommerce\n"
+"X-Generator: Poedit 3.5\n"
+
+#. Plugin Name of the plugin
+msgid "SumUp Payment Gateway For WooCommerce"
+msgstr "SumUp Payment Gateway For WooCommerce"
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/sumup-payment-gateway-for-woocommerce/"
+msgstr "https://wordpress.org/plugins/sumup-payment-gateway-for-woocommerce/"
+
+#. Description of the plugin
+msgid "Take credit card payments on your store using SumUp."
+msgstr "Fogadjon el hitelkártyás fizetéseket áruházában a SumUp segítségével."
+
+#. Author of the plugin
+#: includes/class-wc-sumup-gateway.php:115
+msgid "SumUp"
+msgstr "SumUp"
+
+#. Author URI of the plugin
+msgid "https://sumup.com"
+msgstr "https://sumup.com"
+
+#: includes/api/handlers/class-sumup-create-checkout.php:57
+msgid ""
+"Merchant account settings are incorrectly configured. Check the plugin "
+"settings page."
+msgstr ""
+"A kereskedői fiók beállításai helytelenül vannak konfigurálva. Ellenőrizze a "
+"bővítmény beállítások oldalát."
+
+#: includes/api/handlers/class-sumup-create-checkout.php:67
+msgid ""
+"Sumup is temporarily unavailable. Please contact site admin for more "
+"information."
+msgstr ""
+"A Sumup átmenetileg nem elérhető. További információkért forduljon a webhely "
+"adminisztrátorához."
+
+#: includes/api/handlers/class-sumup-create-checkout.php:107
+#: includes/class-wc-sumup-gateway.php:533
+msgid ""
+"Order ID is not available to make the payment. Try again soon or contact the "
+"website support."
+msgstr ""
+"A rendelési azonosító nem érhető el a fizetéshez. Próbálja újra később, vagy "
+"lépjen kapcsolatba a weboldal támogatásával."
+
+#: includes/class-wc-sumup-block-gateway.php:138
+#: includes/class-wc-sumup-gateway.php:740
+msgid ""
+"Transaction was unsuccessful. Please check the minimum amount or use another "
+"valid card."
+msgstr ""
+"A tranzakció sikertelen volt. Kérjük, ellenőrizze a minimális összeget, vagy "
+"használjon más érvényes kártyát."
+
+#: includes/class-wc-sumup-block-gateway.php:139
+#: includes/class-wc-sumup-gateway.php:741
+msgid "Fill in all required details."
+msgstr "Töltse ki az összes szükséges adatot."
+
+#: includes/api/handlers/class-sumup-create-checkout.php:100
+#: includes/class-wc-sumup-gateway.php:2211
+msgid "Please fill \"Merchant code\" on the plugin settings."
+msgstr ""
+
+#: includes/api/handlers/class-sumup-create-checkout.php:101
+#: includes/class-wc-sumup-gateway.php:2212
+msgid "Sorry, SumUp is not available. Try again soon."
+msgstr ""
+
+#: includes/class-wc-sumup-credentials.php:52
+msgid "Invalid Client ID, Client Secret or API Key."
+msgstr "Érvénytelen ügyfélazonosító, ügyféltitok vagy API kulcs."
+
+#: includes/class-wc-sumup-credentials.php:75
+msgid "Missing scope: payments. Please contact support team."
+msgstr ""
+"Hiányzó terjedelem: fizetések. Kérjük, lépjen kapcsolatba a támogatási "
+"csapattal."
+
+#: includes/class-wc-sumup-credentials.php:77
+msgid "Credentials are not valid. Please check the plugin log and try again."
+msgstr ""
+"A hitelesítő adatok érvénytelenek. Kérjük, ellenőrizze a bővítmény naplóját, "
+"és próbálja újra."
+
+#: includes/class-wc-sumup-credentials.php:92
+msgid "Credentials are not valid. Please check and try again."
+msgstr ""
+"A hitelesítő adatok érvénytelenek. Kérjük, ellenőrizze, és próbálja újra."
+
+#: includes/class-wc-sumup-credentials.php:98
+msgid "Your credentials are valid and you are ready to use the plugin."
+msgstr ""
+"Az Ön hitelesítő adatai érvényesek, és készen áll a bővítmény használatára."
+
+#. translators: %1$s = https://me.sumup.com/, %2$s = https://me.sumup.com/developers
+#: includes/class-wc-sumup-gateway.php:203
+msgid ""
+"Accept credit and debit cards with SumUp, plus eligible payment methods such "
+"as Apple Pay, PayPal, Bancontact, and iDEAL."
+msgstr ""
+"Fogadjon el hitel- és betéti kártyákat a SumUp segítségével, valamint "
+"támogatott fizetési módokat, például Apple Pay, PayPal, Bancontact és iDEAL."
+
+#: includes/class-wc-sumup-gateway.php:222
+msgid "SumUp charge complete. Transaction Code: %s"
+msgstr "A SumUp fizetés befejeződött. Tranzakciós kód: %s"
+
+#: includes/class-wc-sumup-gateway.php:235
+msgid "SumUp payment failed."
+msgstr "A SumUp fizetés sikertelen."
+
+#: includes/class-wc-sumup-gateway.php:314
+msgid "Payment failed, please try again."
+msgstr "A fizetés sikertelen, kérjük próbálja újra."
+
+#: includes/class-wc-sumup-gateway.php:469
+msgid ""
+"Error: Merchant account settings are incorrectly configured. Check the "
+"plugin settings page."
+msgstr ""
+"Hiba: A kereskedői fiók beállításai helytelenül vannak konfigurálva. "
+"Ellenőrizze a bővítmény beállítások oldalát."
+
+#: includes/class-wc-sumup-gateway.php:511
+msgid ""
+"Sum up is temporarily unavailable. Please contact site admin for more "
+"information."
+msgstr ""
+"A SumUp átmenetileg nem elérhető. További információkért forduljon a webhely "
+"adminisztrátorához."
+
+#: includes/class-wc-sumup-gateway.php:825
+msgid "Payment Status: "
+msgstr "Fizetési állapot: "
+
+#: includes/class-wc-sumup-gateway.php:849
+#: includes/class-wc-sumup-gateway.php:865
+#: includes/class-wc-sumup-gateway.php:890
+#: includes/class-wc-sumup-gateway.php:902
+msgid "Payment instructions"
+msgstr "Fizetési utasítások"
+
+#: includes/class-wc-sumup-gateway.php:850
+#: includes/class-wc-sumup-gateway.php:891
+msgid "PIX code: "
+msgstr "PIX code: "
+
+#: includes/class-wc-sumup-gateway.php:867
+#: includes/class-wc-sumup-gateway.php:904
+msgid "Download Boleto"
+msgstr "Boleto letöltése"
+
+#: includes/class-wc-sumup-gateway.php:871
+#: includes/class-wc-sumup-gateway.php:903
+msgid "Code to pay: "
+msgstr "Fizetési kód: "
+
+#: includes/class-wc-sumup-settings.php:15
+msgid "Enable/Disable"
+msgstr "Engedélyezés/Letiltás"
+
+#: includes/class-wc-sumup-settings.php:16
+msgid "Enable SumUp"
+msgstr "SumUp engedélyezése"
+
+#: includes/class-wc-sumup-settings.php:22
+msgid "Title"
+msgstr "Cím"
+
+#: includes/class-wc-sumup-settings.php:24
+msgid "This controls the title the user sees during checkout."
+msgstr "Ez szabályozza a leírást, amit a felhasználó lát a pénztárnál."
+
+#: includes/class-wc-sumup-settings.php:25
+msgid "Credit / Debit Card"
+msgstr "Hitel- / betéti kártya"
+
+#: includes/class-wc-sumup-settings.php:29
+msgid "Description"
+msgstr "Leírás"
+
+#: includes/class-wc-sumup-settings.php:31
+msgid "This controls the description the user sees during checkout."
+msgstr "Ez szabályozza a leírást, amit a felhasználó lát a pénztárnál."
+
+#: includes/class-wc-sumup-settings.php:32
+msgid ""
+"Pay securely with your credit or debit card, or use other available payment "
+"methods."
+msgstr ""
+"Pay securely with your credit or debit card, or use other available payment "
+"methods."
+
+#: includes/class-wc-sumup-settings.php:36
+msgid "Merchant code"
+msgstr "Kereskedői azonosító"
+
+#: includes/class-wc-sumup-settings.php:38
+msgid "Get your Merchant code from your SumUp account:"
+msgstr "Szerezze be kereskedői azonosítóját a SumUp fiókjából:"
+
+#: includes/class-wc-sumup-settings.php:42
+msgid "API Key"
+msgstr "API Key"
+
+#: includes/class-wc-sumup-settings.php:44
+msgid "Create and get your API Key:"
+msgstr "Hozzon létre és szerezze be API kulcsát:"
+
+#: includes/class-wc-sumup-settings.php:44
+#: includes/class-wc-sumup-settings.php:51
+#: includes/class-wc-sumup-settings.php:58
+msgid "developer settings"
+msgstr "fejlesztői beállítások"
+
+#: includes/class-wc-sumup-settings.php:49
+msgid "Client ID"
+msgstr "Ügyfélazonosító"
+
+#: includes/class-wc-sumup-settings.php:51
+msgid "Create and get your Client ID:"
+msgstr "Hozzon létre és szerezze be ügyfélazonosítóját:"
+
+#: includes/class-wc-sumup-settings.php:56
+msgid "Client Secret"
+msgstr "Ügyféltitok"
+
+#: includes/class-wc-sumup-settings.php:58
+msgid "Create and get your Client Secret:"
+msgstr "Hozzon létre és szerezze be ügyféltitkát:"
+
+#: includes/class-wc-sumup-settings.php:63
+msgid "SumUp Profile Email"
+msgstr "SumUp profil e-mail"
+
+#: includes/class-wc-sumup-settings.php:65
+msgid "Get your Email from your SumUp account."
+msgstr "Szerezze be e-mail címét a SumUp fiókjából."
+
+#: includes/class-wc-sumup-settings.php:70
+msgid "Logging"
+msgstr "Naplózás"
+
+#: includes/class-wc-sumup-settings.php:71
+msgid "Log debug messages"
+msgstr "Hibakeresési üzenetek naplózása"
+
+#: includes/class-wc-sumup-settings.php:73
+msgid "Save debug messages to the WooCommerce System Status log."
+msgstr "Hibakeresési üzenetek mentése a WooCommerce rendszerállapot naplóba."
+
+#: includes/class-wc-sumup-settings.php:97
+msgid "Installments"
+msgstr "Részletek"
+
+#: includes/class-wc-sumup-settings.php:98
+msgid "Enable Installments?"
+msgstr "Engedélyezi a részleteket?"
+
+#: includes/class-wc-sumup-settings.php:100
+msgid "Accept installments in your card payment method."
+msgstr "Fogadja el a részleteket a kártyás fizetési módszerében."
+
+#: includes/class-wc-sumup-settings.php:106
+msgid "Number of Installments"
+msgstr "Részletek száma"
+
+#: includes/class-wc-sumup-settings.php:108
+msgid "Define the number of installments you will accept."
+msgstr "Határozza meg az elfogadott részletek számát."
+
+#: includes/class-wc-sumup-settings.php:129
+msgid "Enable PIX?"
+msgstr "Engedélyezi a PIX-et?"
+
+#: includes/class-wc-sumup-settings.php:130
+msgid "Enable"
+msgstr "Engedélyezés"
+
+#: includes/class-wc-sumup-settings.php:132
+msgid "Accept PIX as your payment method."
+msgstr "Fogadja el a PIX-et fizetési módszerként."
+
+#: includes/class-wc-sumup-settings.php:139
+msgid "Open Payment in modal?"
+msgstr "Nyissa meg a fizetést modális ablakban?"
+
+#: includes/class-wc-sumup-settings.php:140
+msgid "Yes"
+msgstr "Igen"
+
+#: includes/class-wc-sumup-settings.php:142
+msgid "Open the Payment options inside a modal (popup)"
+msgstr ""
+"Nyissa meg a fizetési lehetőségeket egy modális ablakban (felugró ablak)"
+
+#: sumup-payment-gateway-for-woocommerce.php:60
+msgid "Docs"
+msgstr "Dokumentumok"
+
+#: sumup-payment-gateway-for-woocommerce.php:77
+msgid ""
+"SumUp requires WooCommerce to be installed and active. You can download %s "
+"here."
+msgstr ""
+"A SumUp megköveteli a WooCommerce telepítését és aktiválását. Letöltheti %s "
+"itt."
+
+#. translators: %s = admin.php?page=wc-settings&tab=checkout&section=sumup
+#: sumup-payment-gateway-for-woocommerce.php:109
+msgid ""
+"SumUp Gateway is almost ready. To get started, <a href=\"%s\">set your SumUp "
+"account keys</a>."
+msgstr ""
+"A SumUp kapu majdnem készen áll. A kezdéshez <a href=\"%s\">állítsa be SumUp "
+"fiókja kulcsait</a>."
+
+#. translators: %s = admin.php?page=wc-settings&tab=checkout&section=sumup
+#: sumup-payment-gateway-for-woocommerce.php:116
+msgid ""
+"SumUp Gateway is not configured properly. You can fix this from <a "
+"href=\"%s\">here</a>."
+msgstr ""
+"A SumUp kapu nincs megfelelően konfigurálva. Javíthatja ezt <a "
+"href=\"%s\">itt</a>."
+
+#: sumup-payment-gateway-for-woocommerce.php:120
+msgid ""
+"SumUp Gateway needs your attention. Currency is different from WooCommerce "
+"currency (WooCommerce->Settings->General->Currency)."
+msgstr ""
+"A SumUp kapu figyelmet igényel. A pénznem eltér a WooCommerce pénznemétől "
+"(WooCommerce->Beállítások->Általános->Pénznem)."
+
+#: sumup-payment-gateway-for-woocommerce.php:126
+#, fuzzy
+msgid ""
+"SumUp Gateway is not configured properly. Please fill the field Merchant "
+"code."
+msgstr ""
+"A SumUp kapu nincs megfelelően konfigurálva. Javíthatja ezt <a "
+"href=\"%s\">itt</a>."
+
+#: sumup-payment-gateway-for-woocommerce.php:145
+msgid "Settings"
+msgstr "Beállítások"
+
+#: sumup-payment-gateway-for-woocommerce.php:187
+msgid "%1$s requires PHP version %2$s or greater."
+msgstr "A %1$s PHP %2$s vagy újabb verziót igényel."
+
+#: sumup-payment-gateway-for-woocommerce.php:205
+msgid "%1$s requires WordPress version %2$s or greater."
+msgstr "A %1$s WordPress %2$s vagy újabb verziót igényel."
+
+#: templates/onboarding-failed-message.php:19
+msgid "SumUp account not connected"
+msgstr "A SumUp fiók nincs csatlakoztatvas"
+
+#: templates/onboarding-failed-message.php:22
+msgid "Credentials are not valid. Please try again."
+msgstr "A hitelesítő adatok érvénytelenek. Kérjük, próbálja újra."
+
+#: templates/onboarding-success-message.php:17
+msgid "SumUp account connected"
+msgstr "A SumUp fiók csatlakoztatva"
+
+#: templates/onboarding-success-message.php:20
+msgid "WooCommerce can now accept payments via SumUp"
+msgstr "A WooCommerce mostantól elfogad fizetéseket a SumUp segítségével"
+
+#: templates/onboarding.php:28
+msgid ""
+"Accept payments through your SumUp account in WooCommerce. Take all payments "
+"in your online store with an easy and quick integration. No coding required."
+msgstr ""
+"Fogadjon el fizetéseket SumUp fiókján keresztül a WooCommerce-ben. Fogadjon "
+"el minden fizetést online áruházában könnyű és gyors integrációval. Nem "
+"szükséges kódolás."
+
+#: templates/onboarding.php:32
+msgid "Connect in 4 steps:"
+msgstr "Csatlakoztassa 4 lépésben:"
+
+#: templates/onboarding.php:37
+msgid "Start by connecting your account. Learn more"
+msgstr "Kezdje a fiók csatlakoztatásával. Tudjon meg többet"
+
+#: templates/onboarding.php:40
+msgid "Log into your SumUp account, if you are not already logged in."
+msgstr "Jelentkezzen be SumUp fiókjába, ha még nem tette meg."
+
+#: templates/onboarding.php:43
+msgid "Select the “Connect” button to begin."
+msgstr "A kezdéshez válassza a „Csatlakozás” gombot."
+
+#: templates/onboarding.php:46
+msgid "Return to WooCommerce by selecting the “View plugin” button."
+msgstr ""
+"Térjen vissza a WooCommerce-hez a „Bővítmény megtekintése” gomb "
+"kiválasztásával."
+
+#: templates/onboarding.php:52
+msgid "Advanced Version"
+msgstr "Haladó verzió"
+
+#: templates/onboarding.php:55 templates/onboarding.php:56
+msgid "Connect Account"
+msgstr "Fiók csatlakoztatása"
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:130
+msgid ""
+"Use a publicly reachable HTTPS domain before connecting SumUp. If you are "
+"testing locally, use a tunnel such as ngrok or Cloudflare Tunnel and update "
+"WordPress Home and Site URL first."
+msgstr ""
+"Használjon nyilvánosan elérhető HTTPS domainnevet a SumUp csatlakoztatása "
+"előtt. Ha helyben tesztel, használjon például ngrokot vagy Cloudflare Tunnel-"
+"t, és először frissítse a WordPress Home és Site URL-t."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:138
+#, php-format
+msgid ""
+"Your store is currently using %1$s, which is not publicly reachable. Use a "
+"public HTTPS domain before connecting SumUp. If you are testing locally, use "
+"a tunnel such as ngrok or Cloudflare Tunnel and update WordPress Home and "
+"Site URL first."
+msgstr ""
+"Az Ön áruháza jelenleg a(z) %1$s címet használja, amely nem érhető el "
+"nyilvánosan. Használjon nyilvános HTTPS domaint a SumUp csatlakoztatása "
+"előtt. Ha helyben tesztel, használjon például ngrokot vagy Cloudflare Tunnel-"
+"t, és először frissítse a WordPress Home és Site URL-t."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:421
+msgid "Please use the “Connect Account” button to start the configuration."
+msgstr ""
+"Kérjük, használja a „Fiók csatlakoztatása” gombot a konfiguráció "
+"megkezdéséhez."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:539
+msgid "Unable to start the SumUp connection."
+msgstr "A SumUp kapcsolat indítása nem sikerült."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:540
+msgid "Unable to validate this website."
+msgstr "A webhely ellenőrzése nem sikerült."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:541
+msgid "Unable to start the SumUp connection. Please try again."
+msgstr "A SumUp kapcsolat indítása nem sikerült. Kérjük, próbálja újra."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:542
+msgid "Unable to disconnect the SumUp account."
+msgstr "A SumUp-fiók leválasztása nem sikerült."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:543
+msgid "Unknown error occurred."
+msgstr "Ismeretlen hiba történt."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/includes/api/class-sumup-disconnect.php:44
+msgid "Account already disconnected"
+msgstr "A fiók már le van választva"
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:21
+msgid "Complete setup to accept payments with SumUp"
+msgstr "Fejezze be a beállítást, hogy SumUp-pal fogadhasson fizetéseket"
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:25
+msgid ""
+"Connect your SumUp account to start accepting credit and debit card payments "
+"in WooCommerce."
+msgstr ""
+"Csatlakoztassa SumUp-fiókját, hogy a WooCommerce-ben elkezdhesse elfogadni a "
+"hitel- és betéti kártyás fizetéseket."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:29
+msgid "Setup takes 4 steps:"
+msgstr "A beállítás 4 lépésből áll:"
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:43
+msgid "After approval, we will return you to WooCommerce automatically."
+msgstr "Az jóváhagyás után automatikusan visszairányítjuk a WooCommerce-be."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:53
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:56
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:63
+msgid "Complete setup"
+msgstr "Beállítás befejezése"
+
+#: includes/api/handlers/class-sumup-validate-redirect.php:37
+msgid "Invalid request payload."
+msgstr "Érvénytelen kérelem payload."
+
+#: includes/api/handlers/class-sumup-validate-redirect.php:42
+msgid "Invalid request nonce."
+msgstr "Érvénytelen kérelem nonce."
+
+#: includes/api/handlers/class-sumup-validate-redirect.php:47
+#: includes/class-wc-sumup-gateway.php:1826
+msgid "Invalid order ID."
+msgstr "Érvénytelen rendelésazonosító."
+
+#: includes/class-wc-sumup-gateway.php:1842
+msgid "Order not found."
+msgstr "A rendelés nem található."
+
+#: includes/class-wc-sumup-gateway.php:1851
+msgid "Payment details are missing for this order."
+msgstr "Hiányoznak a fizetési adatok ehhez a rendeléshez."
+
+#: includes/class-wc-sumup-gateway.php:1862
+msgid "SumUp is temporarily unavailable. Please try again."
+msgstr "A SumUp átmenetileg nem érhető el. Kérjük, próbálja újra."
+
+#: includes/class-wc-sumup-gateway.php:1869
+msgid "Unable to verify payment status. Please try again."
+msgstr "Nem sikerült ellenőrizni a fizetés állapotát. Kérjük, próbálja újra."
+
+#: includes/class-wc-sumup-gateway.php:1880
+msgid "Payment validation failed."
+msgstr "A fizetés ellenőrzése sikertelen."
+
+#: includes/api/handlers/class-sumup-validate-redirect.php:56
+msgid "SumUp gateway is unavailable."
+msgstr "A SumUp fizetési átjáró nem érhető el."
+
+#: includes/class-wc-sumup-block-gateway.php:162
+#: includes/class-wc-sumup-gateway.php:1888
+#: includes/class-wc-sumup-gateway.php:1934
+#: includes/class-wc-sumup-gateway.php:2069
+msgid "We are still waiting for SumUp to confirm this payment. Please wait a moment and refresh the page if the order is not updated automatically."
+msgstr "Még mindig arra várunk, hogy a SumUp megerősítse ezt a fizetést. Várjon egy pillanatot, és frissítse az oldalt, ha a rendelés nem frissül automatikusan."
+
+#: includes/class-wc-sumup-block-gateway.php:163
+msgid "Payment was cancelled."
+msgstr "A fizetés megszakítva."
+
+#: includes/class-wc-sumup-block-gateway.php:164
+msgid "Unable to initialize SumUp checkout."
+msgstr "A SumUp checkout inicializálása sikertelen."

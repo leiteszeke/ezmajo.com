@@ -1,0 +1,559 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SumUp Payment Gateway For WooCommerce 2.5.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sumup-plugin-for-"
+"woocommerce\n"
+"POT-Creation-Date: 2024-07-09T02:16:27+00:00\n"
+"PO-Revision-Date: 2024-12-12 16:59-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ro_RO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: sumup-payment-gateway-for-woocommerce\n"
+"X-Generator: Poedit 3.5\n"
+
+#. Plugin Name of the plugin
+msgid "SumUp Payment Gateway For WooCommerce"
+msgstr "SumUp Payment Gateway For WooCommerce"
+
+#. Plugin URI of the plugin
+msgid "https://wordpress.org/plugins/sumup-payment-gateway-for-woocommerce/"
+msgstr "https://wordpress.org/plugins/sumup-payment-gateway-for-woocommerce/"
+
+#. Description of the plugin
+msgid "Take credit card payments on your store using SumUp."
+msgstr "Aceite pagini com cartayo de crédito na sua loja usando o SumUp."
+
+#. Author of the plugin
+#: includes/class-wc-sumup-gateway.php:115
+msgid "SumUp"
+msgstr "SumUp"
+
+#. Author URI of the plugin
+msgid "https://sumup.com"
+msgstr "https://sumup.com"
+
+#: includes/api/handlers/class-sumup-create-checkout.php:57
+msgid ""
+"Merchant account settings are incorrectly configured. Check the plugin "
+"settings page."
+msgstr ""
+"Setările contului comerciantului sunt configurate incorect. Verificați "
+"pagina de setări a plugin-ului."
+
+#: includes/api/handlers/class-sumup-create-checkout.php:67
+msgid ""
+"Sumup is temporarily unavailable. Please contact site admin for more "
+"information."
+msgstr ""
+"Sumup este temporar indisponibil. Vă rugăm să contactați administratorul "
+"site-ului pentru mai multe informații."
+
+#: includes/api/handlers/class-sumup-create-checkout.php:107
+#: includes/class-wc-sumup-gateway.php:533
+msgid ""
+"Order ID is not available to make the payment. Try again soon or contact the "
+"website support."
+msgstr ""
+"ID-ul comenzii nu este disponibil pentru efectuarea plății. Încercați din "
+"nou în curând sau contactați asistența site-ului."
+
+#: includes/class-wc-sumup-block-gateway.php:138
+#: includes/class-wc-sumup-gateway.php:740
+msgid ""
+"Transaction was unsuccessful. Please check the minimum amount or use another "
+"valid card."
+msgstr ""
+"Tranzacția nu a avut succes. Vă rugăm să verificați suma minimă sau să "
+"utilizați un alt card valabil."
+
+#: includes/class-wc-sumup-block-gateway.php:139
+#: includes/class-wc-sumup-gateway.php:741
+msgid "Fill in all required details."
+msgstr "Completați toate detaliile necesare."
+
+#: includes/api/handlers/class-sumup-create-checkout.php:100
+#: includes/class-wc-sumup-gateway.php:2211
+msgid "Please fill \"Merchant code\" on the plugin settings."
+msgstr ""
+
+#: includes/api/handlers/class-sumup-create-checkout.php:101
+#: includes/class-wc-sumup-gateway.php:2212
+msgid "Sorry, SumUp is not available. Try again soon."
+msgstr ""
+
+#: includes/class-wc-sumup-credentials.php:52
+msgid "Invalid Client ID, Client Secret or API Key."
+msgstr "Invalid Client ID, Client Secret sau Cheie API."
+
+#: includes/class-wc-sumup-credentials.php:75
+msgid "Missing scope: payments. Please contact support team."
+msgstr ""
+"Domeniul de aplicare lipsă: plăți. Vă rugăm să contactați echipa de "
+"asistență."
+
+#: includes/class-wc-sumup-credentials.php:77
+msgid "Credentials are not valid. Please check the plugin log and try again."
+msgstr ""
+"Acreditările nu sunt valabile. Vă rugăm să verificați jurnalul plugin-ului "
+"și să încercați din nou."
+
+#: includes/class-wc-sumup-credentials.php:92
+msgid "Credentials are not valid. Please check and try again."
+msgstr ""
+"Acreditările nu sunt valabile. Vă rugăm să verificați și să încercați din "
+"nou."
+
+#: includes/class-wc-sumup-credentials.php:98
+msgid "Your credentials are valid and you are ready to use the plugin."
+msgstr ""
+"Acreditările dumneavoastră sunt valabile și sunteți gata să utilizați plugin-"
+"ul."
+
+#. translators: %1$s = https://me.sumup.com/, %2$s = https://me.sumup.com/developers
+#: includes/class-wc-sumup-gateway.php:203
+msgid ""
+"Accept credit and debit cards with SumUp, plus eligible payment methods such "
+"as Apple Pay, PayPal, Bancontact, and iDEAL."
+msgstr ""
+"Acceptați carduri de credit și debit cu SumUp, precum și metode de plată "
+"acceptate precum Apple Pay, PayPal, Bancontact și iDEAL."
+
+#: includes/class-wc-sumup-gateway.php:222
+msgid "SumUp charge complete. Transaction Code: %s"
+msgstr "SumUp taxa completă. Codul Tranzacției: %s"
+
+#: includes/class-wc-sumup-gateway.php:235
+msgid "SumUp payment failed."
+msgstr "Plata SumUp a eșuat."
+
+#: includes/class-wc-sumup-gateway.php:314
+msgid "Payment failed, please try again."
+msgstr "Plata a eșuat, vă rugăm să încercați din nou."
+
+#: includes/class-wc-sumup-gateway.php:469
+msgid ""
+"Error: Merchant account settings are incorrectly configured. Check the "
+"plugin settings page."
+msgstr ""
+"Eroare: Setările contului comerciantului sunt configurate incorect. "
+"Verificați pagina de setări a plugin-ului."
+
+#: includes/class-wc-sumup-gateway.php:511
+msgid ""
+"Sum up is temporarily unavailable. Please contact site admin for more "
+"information."
+msgstr ""
+"Suma este temporar indisponibilă. Vă rugăm să contactați administratorul "
+"site-ului pentru mai multe informații."
+
+#: includes/class-wc-sumup-gateway.php:825
+msgid "Payment Status: "
+msgstr "Starea plății: "
+
+#: includes/class-wc-sumup-gateway.php:849
+#: includes/class-wc-sumup-gateway.php:865
+#: includes/class-wc-sumup-gateway.php:890
+#: includes/class-wc-sumup-gateway.php:902
+msgid "Payment instructions"
+msgstr "Instrucțiunile de plată"
+
+#: includes/class-wc-sumup-gateway.php:850
+#: includes/class-wc-sumup-gateway.php:891
+msgid "PIX code: "
+msgstr "Cod PIX: "
+
+#: includes/class-wc-sumup-gateway.php:867
+#: includes/class-wc-sumup-gateway.php:904
+msgid "Download Boleto"
+msgstr "Descarcă Boleto"
+
+#: includes/class-wc-sumup-gateway.php:871
+#: includes/class-wc-sumup-gateway.php:903
+msgid "Code to pay: "
+msgstr "Cod de plată: "
+
+#: includes/class-wc-sumup-settings.php:15
+msgid "Enable/Disable"
+msgstr "Activa/Dezactiva"
+
+#: includes/class-wc-sumup-settings.php:16
+msgid "Enable SumUp"
+msgstr "Activează SumUp"
+
+#: includes/class-wc-sumup-settings.php:22
+msgid "Title"
+msgstr "Titlu"
+
+#: includes/class-wc-sumup-settings.php:24
+msgid "This controls the title the user sees during checkout."
+msgstr ""
+"Aceasta controlează titlul pe care utilizatorul îl vede în timpul checkout-"
+"ului."
+
+#: includes/class-wc-sumup-settings.php:25
+msgid "Credit / Debit Card"
+msgstr "Card de credit / debit"
+
+#: includes/class-wc-sumup-settings.php:29
+msgid "Description"
+msgstr "Descriere"
+
+#: includes/class-wc-sumup-settings.php:31
+msgid "This controls the description the user sees during checkout."
+msgstr ""
+"Aceasta controlează descrierea pe care utilizatorul o vede în timpul plății."
+
+#: includes/class-wc-sumup-settings.php:32
+msgid ""
+"Pay securely with your credit or debit card, or use other available payment "
+"methods."
+msgstr ""
+"Pay securely with your credit or debit card, or use other available payment "
+"methods."
+
+#: includes/class-wc-sumup-settings.php:36
+msgid "Merchant code"
+msgstr "Merchant code"
+
+#: includes/class-wc-sumup-settings.php:38
+msgid "Get your Merchant code from your SumUp account:"
+msgstr "Obțineți Merchant code-ul din contul SumUp:"
+
+#: includes/class-wc-sumup-settings.php:42
+msgid "API Key"
+msgstr "API Key"
+
+#: includes/class-wc-sumup-settings.php:44
+msgid "Create and get your API Key:"
+msgstr "Creați și obțineți API Key:"
+
+#: includes/class-wc-sumup-settings.php:44
+#: includes/class-wc-sumup-settings.php:51
+#: includes/class-wc-sumup-settings.php:58
+msgid "developer settings"
+msgstr "setări dezvoltator"
+
+#: includes/class-wc-sumup-settings.php:49
+msgid "Client ID"
+msgstr "Client ID"
+
+#: includes/class-wc-sumup-settings.php:51
+msgid "Create and get your Client ID:"
+msgstr "Creați și obțineți Client ID-ul:"
+
+#: includes/class-wc-sumup-settings.php:56
+msgid "Client Secret"
+msgstr "Client Secret"
+
+#: includes/class-wc-sumup-settings.php:58
+msgid "Create and get your Client Secret:"
+msgstr "Creați și obțineți Client Secret:"
+
+#: includes/class-wc-sumup-settings.php:63
+msgid "SumUp Profile Email"
+msgstr "SumUp Profil E-mail"
+
+#: includes/class-wc-sumup-settings.php:65
+msgid "Get your Email from your SumUp account."
+msgstr "Obțineți adresa de e-mail din contul SumUp."
+
+#: includes/class-wc-sumup-settings.php:70
+msgid "Logging"
+msgstr "Logare"
+
+#: includes/class-wc-sumup-settings.php:71
+msgid "Log debug messages"
+msgstr "Log mesaje de depanare"
+
+#: includes/class-wc-sumup-settings.php:73
+msgid "Save debug messages to the WooCommerce System Status log."
+msgstr ""
+"Salvați mesajele de depanare în jurnalul de stare al sistemului WooCommerce."
+
+#: includes/class-wc-sumup-settings.php:97
+msgid "Installments"
+msgstr "Rate"
+
+#: includes/class-wc-sumup-settings.php:98
+msgid "Enable Installments?"
+msgstr "Activați Ratele?"
+
+#: includes/class-wc-sumup-settings.php:100
+msgid "Accept installments in your card payment method."
+msgstr "Acceptați rate în metoda de plată cu cardul."
+
+#: includes/class-wc-sumup-settings.php:106
+msgid "Number of Installments"
+msgstr "Numarul de Rate"
+
+#: includes/class-wc-sumup-settings.php:108
+msgid "Define the number of installments you will accept."
+msgstr "Definiți numărul de rate pe care le veți accepta."
+
+#: includes/class-wc-sumup-settings.php:129
+msgid "Enable PIX?"
+msgstr "Activați PIX?"
+
+#: includes/class-wc-sumup-settings.php:130
+msgid "Enable"
+msgstr "Activa"
+
+#: includes/class-wc-sumup-settings.php:132
+msgid "Accept PIX as your payment method."
+msgstr "Acceptați PIX ca metodă de plată."
+
+#: includes/class-wc-sumup-settings.php:139
+msgid "Open Payment in modal?"
+msgstr "Deschideți Plata în modal?"
+
+#: includes/class-wc-sumup-settings.php:140
+msgid "Yes"
+msgstr "Da"
+
+#: includes/class-wc-sumup-settings.php:142
+msgid "Open the Payment options inside a modal (popup)"
+msgstr "Deschideți opțiunile de plată în interiorul unui modal (popup)"
+
+#: sumup-payment-gateway-for-woocommerce.php:60
+msgid "Docs"
+msgstr "Documentație"
+
+#: sumup-payment-gateway-for-woocommerce.php:77
+msgid ""
+"SumUp requires WooCommerce to be installed and active. You can download %s "
+"here."
+msgstr ""
+"SumUp necesită instalarea și activarea WooCommerce. Puteți descărca %s aici."
+
+#. translators: %s = admin.php?page=wc-settings&tab=checkout&section=sumup
+#: sumup-payment-gateway-for-woocommerce.php:109
+msgid ""
+"SumUp Gateway is almost ready. To get started, <a href=\"%s\">set your SumUp "
+"account keys</a>."
+msgstr ""
+"SumUp Gateway este aproape gata. Pentru a începe, <a href=\"%s\">setați "
+"tastele contului SumUp</a>."
+
+#. translators: %s = admin.php?page=wc-settings&tab=checkout&section=sumup
+#: sumup-payment-gateway-for-woocommerce.php:116
+msgid ""
+"SumUp Gateway is not configured properly. You can fix this from <a "
+"href=\"%s\">here</a>."
+msgstr ""
+"SumUp Gateway nu este configurat corect. Puteți rezolva acest lucru de <a "
+"href=\"%s\">aici</a>."
+
+#: sumup-payment-gateway-for-woocommerce.php:120
+msgid ""
+"SumUp Gateway needs your attention. Currency is different from WooCommerce "
+"currency (WooCommerce->Settings->General->Currency)."
+msgstr ""
+"SumUp Gateway are nevoie de atenția dumneavoastră. Moneda este diferită de "
+"moneda WooCommerce (WooCommerce->Setările->General->Monedă)."
+
+#: sumup-payment-gateway-for-woocommerce.php:126
+#, fuzzy
+msgid ""
+"SumUp Gateway is not configured properly. Please fill the field Merchant "
+"code."
+msgstr ""
+"SumUp Gateway nu este configurat corect. Puteți rezolva acest lucru de <a "
+"href=\"%s\">aici</a>."
+
+#: sumup-payment-gateway-for-woocommerce.php:145
+msgid "Settings"
+msgstr "Setările"
+
+#: sumup-payment-gateway-for-woocommerce.php:187
+msgid "%1$s requires PHP version %2$s or greater."
+msgstr "%1$s necesită versiunea PHP %2$s sau mai mare."
+
+#: sumup-payment-gateway-for-woocommerce.php:205
+msgid "%1$s requires WordPress version %2$s or greater."
+msgstr "%1$s necesită versiunea WordPress %2$s sau mai mare."
+
+#: templates/onboarding-failed-message.php:19
+msgid "SumUp account not connected"
+msgstr "Contul SumUp nu este conectat"
+
+#: templates/onboarding-failed-message.php:22
+msgid "Credentials are not valid. Please try again."
+msgstr "Acreditările nu sunt valabile. Vă rugăm să încercați din nou."
+
+#: templates/onboarding-success-message.php:17
+msgid "SumUp account connected"
+msgstr "Cont SumUp conectat"
+
+#: templates/onboarding-success-message.php:20
+msgid "WooCommerce can now accept payments via SumUp"
+msgstr "WooCommerce poate accepta acum plăți prin SumUp"
+
+#: templates/onboarding.php:28
+msgid ""
+"Accept payments through your SumUp account in WooCommerce. Take all payments "
+"in your online store with an easy and quick integration. No coding required."
+msgstr ""
+"Acceptați plăți prin contul SumUp în WooCommerce. Ia toate plățile în "
+"magazinul online, cu o integrare ușoară și rapidă. Nu este necesară codarea."
+
+#: templates/onboarding.php:32
+msgid "Connect in 4 steps:"
+msgstr "Conectați-vă în 4 pași:"
+
+#: templates/onboarding.php:37
+msgid "Start by connecting your account. Learn more"
+msgstr "Începeți prin conectarea contului. Află mai multe"
+
+#: templates/onboarding.php:40
+msgid "Log into your SumUp account, if you are not already logged in."
+msgstr "Conectați-vă la contul SumUp, dacă nu sunteți deja conectat."
+
+#: templates/onboarding.php:43
+msgid "Select the “Connect” button to begin."
+msgstr "Selectați butonul \"Conecta\" pentru a începe."
+
+#: templates/onboarding.php:46
+msgid "Return to WooCommerce by selecting the “View plugin” button."
+msgstr "Reveniți la WooCommerce selectând butonul \"Vizualizați pluginul\"."
+
+#: templates/onboarding.php:52
+msgid "Advanced Version"
+msgstr "Versiune Avansată"
+
+#: templates/onboarding.php:55 templates/onboarding.php:56
+msgid "Connect Account"
+msgstr "Conectați Cont"
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:130
+msgid ""
+"Use a publicly reachable HTTPS domain before connecting SumUp. If you are "
+"testing locally, use a tunnel such as ngrok or Cloudflare Tunnel and update "
+"WordPress Home and Site URL first."
+msgstr ""
+"Folosiți un domeniu HTTPS accesibil public înainte de a conecta SumUp. Dacă "
+"testați local, utilizați un tunel precum ngrok sau Cloudflare Tunnel și "
+"actualizați mai întâi WordPress Home și Site URL."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:138
+#, php-format
+msgid ""
+"Your store is currently using %1$s, which is not publicly reachable. Use a "
+"public HTTPS domain before connecting SumUp. If you are testing locally, use "
+"a tunnel such as ngrok or Cloudflare Tunnel and update WordPress Home and "
+"Site URL first."
+msgstr ""
+"Magazinul dvs. folosește în prezent %1$s, care nu este accesibil public. "
+"Folosiți un domeniu HTTPS public înainte de a conecta SumUp. Dacă testați "
+"local, utilizați un tunel precum ngrok sau Cloudflare Tunnel și actualizați "
+"mai întâi WordPress Home și Site URL."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:421
+msgid "Please use the “Connect Account” button to start the configuration."
+msgstr ""
+"Vă rugăm să folosiți butonul \"Conectați Cont\" pentru a porni configurarea."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:539
+msgid "Unable to start the SumUp connection."
+msgstr "Nu s-a putut porni conexiunea SumUp."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:540
+msgid "Unable to validate this website."
+msgstr "Nu s-a putut valida acest site web."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:541
+msgid "Unable to start the SumUp connection. Please try again."
+msgstr "Nu s-a putut porni conexiunea SumUp. Vă rugăm să încercați din nou."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:542
+msgid "Unable to disconnect the SumUp account."
+msgstr "Nu s-a putut deconecta contul SumUp."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/sumup-payment-gateway-for-woocommerce.php:543
+msgid "Unknown error occurred."
+msgstr "A apărut o eroare necunoscută."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/includes/api/class-sumup-disconnect.php:44
+msgid "Account already disconnected"
+msgstr "Contul este deja deconectat"
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:21
+msgid "Complete setup to accept payments with SumUp"
+msgstr "Finalizați configurarea pentru a accepta plăți cu SumUp"
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:25
+msgid ""
+"Connect your SumUp account to start accepting credit and debit card payments "
+"in WooCommerce."
+msgstr ""
+"Conectați contul dvs. SumUp pentru a începe să acceptați plăți cu cardul de "
+"credit și debit în WooCommerce."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:29
+msgid "Setup takes 4 steps:"
+msgstr "Configurarea are 4 pași:"
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:43
+msgid "After approval, we will return you to WooCommerce automatically."
+msgstr "După aprobare, vă vom readuce automat la WooCommerce."
+
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:53
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:56
+#: /Users/matousdzivjak/code/github.com/sumup/sumup-plugin-woocommerce/templates/onboarding.php:63
+msgid "Complete setup"
+msgstr "Finalizați configurarea"
+
+#: includes/api/handlers/class-sumup-validate-redirect.php:37
+msgid "Invalid request payload."
+msgstr "Payload de solicitare invalid."
+
+#: includes/api/handlers/class-sumup-validate-redirect.php:42
+msgid "Invalid request nonce."
+msgstr "Nonce de solicitare invalid."
+
+#: includes/api/handlers/class-sumup-validate-redirect.php:47
+#: includes/class-wc-sumup-gateway.php:1826
+msgid "Invalid order ID."
+msgstr "ID de comandă invalid."
+
+#: includes/class-wc-sumup-gateway.php:1842
+msgid "Order not found."
+msgstr "Comanda nu a fost găsită."
+
+#: includes/class-wc-sumup-gateway.php:1851
+msgid "Payment details are missing for this order."
+msgstr "Detaliile de plată lipsesc pentru această comandă."
+
+#: includes/class-wc-sumup-gateway.php:1862
+msgid "SumUp is temporarily unavailable. Please try again."
+msgstr "SumUp este temporar indisponibil. Vă rugăm să încercați din nou."
+
+#: includes/class-wc-sumup-gateway.php:1869
+msgid "Unable to verify payment status. Please try again."
+msgstr "Nu s-a putut verifica starea plății. Vă rugăm să încercați din nou."
+
+#: includes/class-wc-sumup-gateway.php:1880
+msgid "Payment validation failed."
+msgstr "Validarea plății a eșuat."
+
+#: includes/api/handlers/class-sumup-validate-redirect.php:56
+msgid "SumUp gateway is unavailable."
+msgstr "Gateway-ul SumUp este indisponibil."
+
+#: includes/class-wc-sumup-block-gateway.php:162
+#: includes/class-wc-sumup-gateway.php:1888
+#: includes/class-wc-sumup-gateway.php:1934
+#: includes/class-wc-sumup-gateway.php:2069
+msgid "We are still waiting for SumUp to confirm this payment. Please wait a moment and refresh the page if the order is not updated automatically."
+msgstr "Încă așteptăm ca SumUp să confirme această plată. Așteptați un moment și reîmprospătați pagina dacă comanda nu se actualizează automat."
+
+#: includes/class-wc-sumup-block-gateway.php:163
+msgid "Payment was cancelled."
+msgstr "Plata a fost anulată."
+
+#: includes/class-wc-sumup-block-gateway.php:164
+msgid "Unable to initialize SumUp checkout."
+msgstr "Nu s-a putut inițializa checkout-ul SumUp."
