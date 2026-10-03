@@ -71,3 +71,15 @@ foreach ( array( 'catalog', 'fields', 'product-page' ) as $ezmajo_part ) {
 add_filter( 'gettext_with_context_extendable', function ( $translation ) {
 	return 'Destalles del pedido' === $translation ? 'Detalles del pedido' : $translation;
 } );
+
+/*
+ * Order screen: show the download permissions box by default (where a customer who used up the downloads gets
+ * more) and hide "Campos personalizados" (internal data only). Users can still change both in Screen Options.
+ */
+add_filter( 'default_hidden_meta_boxes', function ( $hidden, $screen ) {
+	if ( function_exists( 'wc_get_page_screen_id' ) && wc_get_page_screen_id( 'shop-order' ) === $screen->id ) {
+		$hidden   = array_values( array_diff( $hidden, array( 'woocommerce-order-downloads' ) ) );
+		$hidden[] = 'postcustom';
+	}
+	return $hidden;
+}, 20, 2 );

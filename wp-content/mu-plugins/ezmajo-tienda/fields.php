@@ -21,6 +21,36 @@ function ezmajo_pattern_fields() {
 	);
 }
 
+/*
+ * Every product is a downloadable PDF: new products start virtual + downloadable with the same download
+ * limits the importer sets (5 downloads / 30 days), so they don't have to be ticked by hand each time.
+ * The catalogue attributes (filters) come pre-added too: only their values have to be picked.
+ */
+add_action( 'save_post_product', function ( $post_id, $post, $update ) {
+	if ( $update || 'auto-draft' !== $post->post_status ) {
+		return;
+	}
+	update_post_meta( $post_id, '_virtual', 'yes' );
+	update_post_meta( $post_id, '_downloadable', 'yes' );
+	update_post_meta( $post_id, '_download_limit', 5 );
+	update_post_meta( $post_id, '_download_expiry', 30 );
+
+	$attributes = array();
+	foreach ( array( 'pa_dificultad', 'pa_talla', 'pa_formato' ) as $position => $taxonomy ) {
+		if ( taxonomy_exists( $taxonomy ) ) {
+			$attributes[ $taxonomy ] = array(
+				'name'         => $taxonomy,
+				'value'        => '',
+				'position'     => $position,
+				'is_visible'   => 1,
+				'is_variation' => 0,
+				'is_taxonomy'  => 1,
+			);
+		}
+	}
+	update_post_meta( $post_id, '_product_attributes', $attributes );
+}, 10, 3 );
+
 add_filter( 'woocommerce_product_data_tabs', function ( $tabs ) {
 	$tabs['ezmajo_patron'] = array(
 		'label'    => 'Patrón',

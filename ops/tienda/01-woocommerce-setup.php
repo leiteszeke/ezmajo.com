@@ -64,11 +64,22 @@ $options = array(
 	'woocommerce_allow_tracking'                     => 'no',
 	'woocommerce_show_marketplace_suggestions'       => 'no',
 	'woocommerce_merchant_email_notifications'       => 'no',
+
+	// Store is configured by these scripts: the WooCommerce menu opens the store home, not the setup wizard
+	'woocommerce_onboarding_profile'                 => array( 'skipped' => true ),
+	'woocommerce_task_list_hidden'                   => 'yes',
 );
 foreach ( $options as $name => $value ) {
 	update_option( $name, $value );
 }
 WP_CLI::log( count( $options ) . ' options set' );
+
+// "Pedido completado" email: the default es_ES text says the order is "en camino" (shipping wording).
+$completed = (array) get_option( 'woocommerce_customer_completed_order_settings', array() );
+update_option( 'woocommerce_customer_completed_order_settings', array_merge( $completed, array(
+	'subject' => 'Tus patrones de {site_title} ya se pueden descargar',
+	'heading' => '¡Tus patrones están listos!',
+) ) );
 
 /*
  * IVA 21 % for every EU country; no rate (0 %) elsewhere.

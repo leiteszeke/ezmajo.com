@@ -35,8 +35,13 @@ Decisions (confirm with the gestor before launch):
       verify a PDF URL returns 403
 - [ ] Deploy branch, install WooCommerce + `es_ES` translation, run `01-…`, `02-…`, `03-…`, `wp rewrite flush`
 - [ ] Payments: SumUp (the shop already uses it in store) via the official plugin `sumup-payment-gateway-for-woocommerce`
-      (block checkout OK; cards, Apple Pay, PayPal depending on the account; no Bizum). Needs online payments enabled
-      and an API key in the SumUp account; test in staging first, then a real purchase + refund in production
+      (block checkout OK; cards, Apple Pay, PayPal depending on the account; no Bizum). Tested in staging on
+      2026-10-03 with a SumUp sandbox merchant ("Ezmajo Pruebas"; key in ezmajo-backups/sumup-sandbox.txt, set in the
+      plugin settings + `Wc_Sumup_Credentials::validate()`): pay → order completed → downloads + emails OK.
+      In production use **"Conectar cuenta"** in WooCommerce → Ajustes → Pagos → SumUp while logged in to the real
+      SumUp account (it creates the key itself; it refuses non-public hosts, so it can't be done locally). No manual
+      API key needed. Then a real purchase + refund.
+      **Refunds are not automatic**: refund in the SumUp dashboard (Ventas), then a manual refund on the order
 - [ ] Transactional email: sender is contacto@ezmajo.com, but ezmajo.com mail is ImprovMX (forwarding only;
       SPF allows only ImprovMX). Send through ImprovMX SMTP or a provider (e.g. Brevo) via an SMTP plugin, add its
       SPF include + DKIM, add a DMARC record; test with mail-tester.com. Order notifications → ezmajo.es@gmail.com
