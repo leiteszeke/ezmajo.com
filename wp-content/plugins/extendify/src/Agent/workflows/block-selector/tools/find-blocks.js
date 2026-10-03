@@ -75,16 +75,38 @@ const containersFor = (matches, byId) => {
 	return [...found.values()];
 };
 
+const bareAddress = (value) =>
+	(value ?? '')
+		.toLowerCase()
+		.replace(/^https?:\/\//, '')
+		.replace(/^www\./, '')
+		.replace(/\/$/, '');
+
+// A link asked for by address carries only its label as text.
+const matchesAddress = ({ blockId, type }, text) => {
+	if (type !== 'core/navigation-link') return false;
+	const wanted = bareAddress(text);
+	const href = resolveScopedId(blockId)
+		?.querySelector('a')
+		?.getAttribute('href');
+	return Boolean(wanted && href) && bareAddress(href).includes(wanted);
+};
+
 // A search for "footer" arrives as text and would otherwise match nothing.
-const matchesText = ({ text: blockText, part }, text) => {
+const matchesText = (entry, text) => {
 	if (!text) return true;
+	const { text: blockText, part } = entry;
 	const needle = text.toLowerCase();
 	if ((blockText ?? '').toLowerCase().includes(needle)) return true;
+	if (matchesAddress(entry, text)) return true;
 	return Boolean(part) && needle.includes(part.toLowerCase());
 };
 
+// core/navigation never resolves to a type, so a menu search matches its links.
 const matchesType = (type, blockTypes) =>
-	!blockTypes?.length || blockTypes.includes(type);
+	!blockTypes?.length ||
+	blockTypes.includes(type) ||
+	(type === 'core/navigation-link' && blockTypes.includes('core/navigation'));
 
 const matchesPart = (entry, part) =>
 	!part || (entry.part ?? '').toLowerCase() === part.toLowerCase();
@@ -101,11 +123,17 @@ const capPerScope = (found) => {
 	});
 };
 
+// Page blocks carry no part, so an invented name like "post-content" empties the search.
+const knownPart = (entries, part) =>
+	entries.some((entry) => matchesPart(entry, part) && entry.part) ? part : null;
+
 export default ({ blockTypes, text, part } = {}) => {
 	const root = document.querySelector('.wp-site-blocks') ?? document.body;
-	const all = scopeRoots(root)
-		.flatMap(manifestFor)
-		.filter((entry) => addressable(entry.type) && matchesPart(entry, part));
+	const manifest = scopeRoots(root).flatMap(manifestFor);
+	const scope = knownPart(manifest, part);
+	const all = manifest.filter(
+		(entry) => addressable(entry.type) && matchesPart(entry, scope),
+	);
 	const byId = new Map(all.map((entry) => [entry.blockId, entry]));
 	const byType = all.filter(({ type }) => matchesType(type, blockTypes));
 	const matches = byType.filter((entry) => matchesText(entry, text));

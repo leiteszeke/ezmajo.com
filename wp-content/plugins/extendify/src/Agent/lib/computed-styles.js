@@ -18,10 +18,16 @@ const ALLOWLIST = [
 	'boxShadow',
 	'padding',
 	'margin',
+	'minHeight',
 ];
 
-const isEmptyValue = (value) =>
-	!value || value === 'normal' || value === 'none' || value === 'auto';
+// Every block computes a min-height; only a set one is a size to step from.
+const isEmptyValue = (value, prop) =>
+	!value ||
+	value === 'normal' ||
+	value === 'none' ||
+	value === 'auto' ||
+	(prop === 'minHeight' && value === '0px');
 
 export const readComputedStyles = (el) => {
 	if (!el?.ownerDocument?.defaultView) return null;
@@ -29,7 +35,7 @@ export const readComputedStyles = (el) => {
 	const out = {};
 	for (const prop of ALLOWLIST) {
 		const value = cs[prop];
-		if (!isEmptyValue(value)) out[prop] = value;
+		if (!isEmptyValue(value, prop)) out[prop] = value;
 	}
 	return Object.keys(out).length ? out : null;
 };

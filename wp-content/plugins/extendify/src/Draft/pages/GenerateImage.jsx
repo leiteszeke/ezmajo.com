@@ -4,6 +4,7 @@ import { useRouter } from '@draft/hooks/useRouter';
 import { pageState } from '@draft/state/factory';
 import { backArrow } from '@draft/svg/BackArrow';
 import { generateImage } from '@shared/api/DataApi';
+import { useImageCreditsSync } from '@shared/hooks/useImageCreditsSync';
 import { useImageGenerationStore } from '@shared/state/generate-images';
 import {
 	BaseControl,
@@ -35,6 +36,8 @@ export const GenerateImage = () => {
 	const noCredits = curCredits.remaining === 0;
 	const { imageDetails, setImageDetails } = usePageState();
 	const { goBack } = useRouter();
+
+	useImageCreditsSync();
 
 	const clearImageResponse = () => setImageDetails({ src: '', id: undefined });
 	const handleSubmit = async (event) => {

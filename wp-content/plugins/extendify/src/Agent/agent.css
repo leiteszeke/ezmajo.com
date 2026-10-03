@@ -92,6 +92,39 @@
 	-webkit-background-clip: text;
 	animation: extendify-status-animation 2s linear 1s infinite;
 }
+::highlight(key) {
+	color: #953800;
+}
+::highlight(string) {
+	color: #116329;
+}
+::highlight(numeric),
+::highlight(boolean),
+::highlight(constant) {
+	color: #0550ae;
+}
+.status-scribble {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	animation: extendify-status-scribble 2.4s ease-in-out infinite;
+}
+@keyframes extendify-status-scribble {
+	0% {
+		stroke-dashoffset: 1;
+	}
+	50% {
+		stroke-dashoffset: 0;
+	}
+	100% {
+		stroke-dashoffset: -1;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.status-scribble {
+		animation: none;
+		stroke-dashoffset: 0;
+	}
+}
 @keyframes extendify-status-animation {
 	0% {
 		background-position: 100% 50%;

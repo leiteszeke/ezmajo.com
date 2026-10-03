@@ -16,6 +16,8 @@ const state = (set, get) => ({
 	workflow: null,
 	// Data for the tool component that shows up at the end of a workflow
 	whenFinishedToolProps: null,
+	// A staged tool restored from storage; its confirm never renders.
+	reloadedToolProps: null,
 	getWorkflow: () => {
 		const curr = get().workflow;
 		// Workflows may define a "parent" workflow via templateId
@@ -127,7 +129,8 @@ export const useWorkflowStore = create()(
 					workflowData: null,
 				};
 			}
-			return merged;
+			return { ...merged, reloadedToolProps: merged.whenFinishedToolProps };
 		},
+		partialize: ({ reloadedToolProps, ...persisted }) => persisted,
 	}),
 );

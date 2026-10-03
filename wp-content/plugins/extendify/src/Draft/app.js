@@ -3,7 +3,14 @@ import { useEditorReady } from '@shared/hooks/gutenberg';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { createBlock } from '@wordpress/blocks';
 import { Flex, FlexBlock } from '@wordpress/components';
-import { useDispatch, useSelect } from '@wordpress/data';
+import {
+	dispatch,
+	resolveSelect,
+	select,
+	subscribe,
+	useDispatch,
+	useSelect,
+} from '@wordpress/data';
 import { store as editPostStore } from '@wordpress/edit-post';
 import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/editor';
 import { useEffect, useRef } from '@wordpress/element';
@@ -38,8 +45,49 @@ registerPlugin('extendify-draft', {
 	),
 });
 
+const untilRenderingMode = (mode) =>
+	new Promise((resolve) => {
+		const isMode = () => select('core/editor').getRenderingMode() === mode;
+		if (isMode()) return resolve();
+		const unsubscribe = subscribe(() => {
+			if (!isMode()) return;
+			unsubscribe();
+			resolve();
+		}, 'core/editor');
+	});
+
+const nextFrame = () =>
+	new Promise((resolve) => requestAnimationFrame(resolve));
+
+// Template-locked drops root inserts, and every mode switch clears the selection.
+const addImageBlock = async () => {
+	const theme = (await resolveSelect('core').getCurrentTheme())?.stylesheet;
+	const isTemplateShown =
+		select('core/preferences').get('core', 'renderingModes')?.[theme]?.page ===
+		'template-locked';
+	const { setRenderingMode } = dispatch('core/editor');
+
+	if (isTemplateShown) {
+		// The editor applies the saved mode after mount, undoing any earlier switch.
+		await untilRenderingMode('template-locked');
+		setRenderingMode('post-only');
+		await nextFrame();
+	}
+	const { getBlocks } = select(blockEditorStore);
+	const { insertBlocks, selectBlock } = dispatch(blockEditorStore);
+	let imageBlock = getBlocks().find((block) => block.name === 'core/image');
+	if (!imageBlock) {
+		imageBlock = createBlock('core/image');
+		insertBlocks([imageBlock]);
+	}
+	if (isTemplateShown) {
+		setRenderingMode('template-locked');
+		await nextFrame();
+	}
+	selectBlock(imageBlock.clientId);
+};
+
 const ExtendifyDraft = ({ children }) => {
-	const { insertBlocks, selectBlock } = useDispatch(blockEditorStore);
 	const { navigateTo } = useRouter();
 	const { openGeneralSidebar } = useDispatch(editPostStore);
 	const sidebarName = useSelect((select) =>
@@ -47,8 +95,6 @@ const ExtendifyDraft = ({ children }) => {
 	);
 	const ready = useEditorReady();
 	const once = useRef(false);
-
-	const { getBlocks } = useSelect((select) => select(blockEditorStore), []);
 
 	useEffect(() => {
 		const search = new URLSearchParams(window.location.search);
@@ -62,20 +108,13 @@ const ExtendifyDraft = ({ children }) => {
 		);
 
 		navigateTo('ai-image');
-
-		const imageBlock = getBlocks()?.find(
-			(block) => block.name === 'core/image',
+		addImageBlock().then(() =>
+			setTimeout(() => {
+				// Focus the textarea but give time for wp to finish it's autofocus
+				document.getElementById('draft-ai-image-textarea')?.focus();
+			}, 300),
 		);
-		requestAnimationFrame(() =>
-			imageBlock
-				? selectBlock(imageBlock.clientId)
-				: insertBlocks([createBlock('core/image')]),
-		);
-		setTimeout(() => {
-			// Focus the textarea but give time for wp to finish it's autofocus
-			document.getElementById('draft-ai-image-textarea')?.focus();
-		}, 300);
-	}, [selectBlock, insertBlocks, navigateTo, getBlocks]);
+	}, [navigateTo]);
 
 	useEffect(() => {
 		if (!ready || once.current) return;

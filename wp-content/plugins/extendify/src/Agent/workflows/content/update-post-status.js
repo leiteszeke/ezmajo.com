@@ -13,13 +13,6 @@ export default {
 		agentResponse: {
 			// translators: Shown when the user clicks the "Publish this page" suggestion, above a confirm card.
 			reply: __('Ready to publish this page?', 'extendify-local'),
-			recommendations: [
-				{
-					workflowId: 'add-post-to-menu',
-					label: __('Add this to the menu', 'extendify-local'),
-					icon: 'pencil',
-				},
-			],
 			whenFinishedTool: {
 				id: 'update-post-status',
 				inputs: {

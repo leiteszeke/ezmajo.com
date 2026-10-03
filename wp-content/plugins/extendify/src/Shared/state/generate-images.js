@@ -17,35 +17,34 @@ const startingState = {
 	imageCredits: {
 		remaining: 10,
 		total: 10,
-		refresh: undefined,
 	},
 };
-const store = (set) => ({
+const store = (set, get) => ({
 	...startingState,
 	...safeParseJson(window.extSharedData?.globalState)?.state,
-	updateImageCredits({ remaining, total, refresh }) {
-		set((state) => ({
-			imageCredits: {
-				...state.imageCredits,
-				// Only update truthy values
-				...(remaining && { remaining }),
-				...(total && { total }),
-				...(refresh && { refresh }),
-			},
-		}));
+	updateImageCredits({ remaining, total }) {
+		const current = get().imageCredits;
+		const next = {
+			...current,
+			// A reported 0 has to survive the merge.
+			...(remaining != null && { remaining }),
+			...(total != null && { total }),
+		};
+
+		// Every set() costs a WP option write through the persist adapter.
+		if (next.remaining === current.remaining && next.total === current.total) {
+			return;
+		}
+
+		set({ imageCredits: next });
 	},
 	subtractOneCredit() {
 		set((state) => ({
 			imageCredits: {
 				...state.imageCredits,
 				remaining: state.imageCredits.remaining - 1,
-				// set to 24 hours from now (in ms)
-				refresh: new Date(Date.now() + 24 * 60 * 60 * 1000).getTime(),
 			},
 		}));
-	},
-	resetImageCredits() {
-		set({ imageCredits: startingState.imageCredits });
 	},
 	setAiImageOption(option, value) {
 		set((state) => ({

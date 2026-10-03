@@ -31,6 +31,16 @@ const renderedStyles = (el) => {
 	return styles && Object.keys(styles).length ? styles : null;
 };
 
+// "A bit smaller" needs the picture's rendered width; the wrapper's is the row's.
+const PICTURE_TYPES = new Set(['core/image', 'core/site-logo']);
+
+const pictureWidth = (el) => {
+	const img = el.matches?.('img') ? el : el.querySelector?.('img');
+	if (!img) return null;
+	const width = img.ownerDocument.defaultView.getComputedStyle(img).width;
+	return width && width !== 'auto' && width !== '0px' ? width : null;
+};
+
 // style.css lives in a scoped `wp-custom-css-*` rule, invisible in the block code.
 const customCss = (el) => {
 	const cls = [...(el.classList ?? [])].find((c) =>
@@ -68,7 +78,11 @@ const ownSubtree = (el) => {
 };
 
 const ownText = (clone) => {
-	const text = (clone.textContent || '').replace(/\s+/g, ' ').trim();
+	const readable = clone.cloneNode(true);
+	for (const hidden of readable.querySelectorAll('[aria-hidden="true"]')) {
+		hidden.remove();
+	}
+	const text = (readable.textContent || '').replace(/\s+/g, ' ').trim();
 	return text.length > 80 ? `${text.slice(0, 80)}…` : text;
 };
 
@@ -86,6 +100,32 @@ const colorSlugs = (clone) => {
 		}
 	}
 	return out;
+};
+
+// Menu and icon colours live on the container, never the link that was clicked.
+// detectBlockType refuses these types so a click can't select the wrapper.
+const STYLE_OWNERS = [
+	{ selector: '.wp-block-navigation', type: 'core/navigation' },
+	{ selector: '.wp-block-social-links', type: 'core/social-links' },
+];
+
+export const ownerAncestorFor = (root) => {
+	if (!root?.parentElement) return null;
+	const inScope = partScope(root);
+	for (const { selector, type } of STYLE_OWNERS) {
+		const el = root.parentElement.closest(selector);
+		if (!el || !inScope(el)) continue;
+		const blockId = blockIdOf(el);
+		if (!blockId) continue;
+		const styles = renderedStyles(el);
+		return {
+			blockId,
+			type,
+			...colorSlugs(ownSubtree(el)),
+			...(styles && { styles }),
+		};
+	}
+	return null;
 };
 
 // Per-block summary of the selection — enough context for the agent to pick
@@ -113,7 +153,10 @@ export const buildSubtreeManifest = (root) => {
 			!colors.textColor
 		)
 			continue;
-		const styles = renderedStyles(el);
+		const width = PICTURE_TYPES.has(type) ? pictureWidth(el) : null;
+		const styles = width
+			? { ...renderedStyles(el), width }
+			: renderedStyles(el);
 		const css = customCss(el);
 		manifest.push({
 			blockId,

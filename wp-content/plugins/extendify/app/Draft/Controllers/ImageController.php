@@ -45,7 +45,18 @@ class ImageController
             require_once ABSPATH . 'wp-admin/includes/image.php';
         }
 
+        // media_sideload_image() takes no file name; it names the file from the URL.
+        $markAiFilename = function ($file) {
+            $info = pathinfo($file['name']);
+            $file['name'] = "{$info['filename']}-ai-generated.{$info['extension']}";
+            return $file;
+        };
+        if ($request->get_param('ai_generated')) {
+            add_filter('wp_handle_sideload_prefilter', $markAiFilename);
+        }
+
         $imageId = \media_sideload_image($request->get_param('source'), 0, null, 'id');
+        remove_filter('wp_handle_sideload_prefilter', $markAiFilename);
 
         // Without this the caller can't tell a failed upload from a declined one.
         if (\is_wp_error($imageId)) {

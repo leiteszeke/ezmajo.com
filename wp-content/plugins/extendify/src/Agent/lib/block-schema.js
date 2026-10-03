@@ -134,7 +134,21 @@ const SIMPLE_ATTRIBUTES = [
 	'isStackedOnMobile',
 	// media-text's image side is an attribute, not child order.
 	'mediaPosition',
+	// Without a size field the model writes picture size into style.css.
+	'mediaWidth',
+	'minHeight',
+	'minHeightUnit',
+	// One field per colour; the patcher routes a slug or a hex into WP's pair.
+	'overlayColor',
+	'dimRatio',
+	'iconColor',
+	'iconBackgroundColor',
+	// The icon follows the network; a new url alone keeps the old icon.
+	'service',
 ];
+
+// core/navigation paints from colour attributes but declares no supports.color.
+const ATTRIBUTE_COLOR_TYPES = new Set(['core/navigation']);
 
 const simpleAttrSchema = (definition) => {
 	if (!definition) return null;
@@ -148,6 +162,7 @@ export const buildBlockSchema = (blockType) => {
 	if (!blockType) return null;
 	const attributes = blockType.attributes ?? {};
 	const supports = blockType.supports ?? {};
+	const attrColor = ATTRIBUTE_COLOR_TYPES.has(blockType.name);
 	const typography = supports.typography;
 
 	const simple = Object.fromEntries(
@@ -170,11 +185,15 @@ export const buildBlockSchema = (blockType) => {
 				: null,
 		url: attributes.url ? str : null,
 		backgroundColor:
-			attributes.backgroundColor && colorChannel(supports.color, 'background')
+			attributes.backgroundColor &&
+			(attrColor || colorChannel(supports.color, 'background'))
 				? str
 				: null,
 		textColor:
-			attributes.textColor && colorChannel(supports.color, 'text') ? str : null,
+			attributes.textColor &&
+			(attrColor || colorChannel(supports.color, 'text'))
+				? str
+				: null,
 		// Gradients omitted: the theme's preset slugs are too opaque for the model
 		// to pick reliably, so gradients go through style.css instead.
 		fontSize: attributes.fontSize && feat(typography, 'fontSize') ? str : null,

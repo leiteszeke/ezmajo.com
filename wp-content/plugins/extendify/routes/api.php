@@ -128,7 +128,6 @@ use Extendify\Shared\Services\PluginsActivation\Metricool as MetricoolActivation
         ApiRouter::get('/agent/chat-events', [AgentChatController::class, 'get']);
         ApiRouter::post('/agent/chat-events', [AgentChatController::class, 'store']);
         ApiRouter::post('/agent/site-navigation', [AgentSiteNavigationController::class, 'getSiteNavigation']);
-        ApiRouter::post('/agent/render-navigation', [AgentSiteNavigationController::class, 'renderNavigationMenu']);
         ApiRouter::post('/agent/site-design-variations', [AgentWPController::class, 'getSiteDesignVariations']);
         ApiRouter::get('/agent/block-style-variations', [AgentWPController::class, 'getBlockStyleVariations']);
         ApiRouter::post('/agent/options', [AgentWPController::class, 'updateOption']);

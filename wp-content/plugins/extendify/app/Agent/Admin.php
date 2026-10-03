@@ -12,13 +12,13 @@ use Extendify\Agent\Controllers\ChatHistoryController;
 use Extendify\Agent\Controllers\TourController;
 use Extendify\Config;
 use Extendify\Constants;
+use Extendify\Mcp\Profile as McpProfile;
 use Extendify\Shared\Services\Escaper;
 use Extendify\Shared\Services\HttpClient;
 use Extendify\Agent\TagBlocks;
 use Extendify\Agent\TagTemplateParts;
 use Extendify\Agent\WooProductImages;
 use Extendify\Agent\AbilitiesDiscovery;
-use Extendify\Agent\Controllers\SiteNavigationController;
 use Extendify\PartnerData;
 use Extendify\Shared\DataProvider\ProductsData;
 use Extendify\SiteVisibility;
@@ -42,9 +42,6 @@ class Admin
         // Tag blocks so we can identify them later
         TagBlocks::init();
         TagTemplateParts::init();
-
-        // Add the site navigation ids to the navigation blocks
-        SiteNavigationController::init();
 
         Skeleton::init();
 
@@ -76,7 +73,7 @@ class Admin
     {
         // The Customizer preview iframe is a front-end render, so this fires
         // there too — but the Agent only belongs on the live, top-level page.
-        if (is_customize_preview()) {
+        if (is_customize_preview() || McpProfile::isOwnScreen()) {
             return;
         }
 
@@ -120,6 +117,8 @@ class Admin
                 false,
             'isOnEditorOrFSE' => $this->isGutenbergOrFse(),
             'activePlugins' => array_values(\get_option('active_plugins', [])),
+            // The accessor also reads a key set by the IMAGIFY_API_KEY constant.
+            'hasImagifyApiKey' => function_exists('get_imagify_option') && (bool) \get_imagify_option('api_key'),
             'isUsingVibes' => version_compare((string) wp_get_theme('extendable')->get('Version'), '2.0.32', '>='),
             'siteTitle' => \esc_attr(\get_bloginfo('name')),
             'siteDescription' => \esc_attr(\get_bloginfo('description')),
@@ -177,8 +176,7 @@ class Admin
                 'abilities' => $abilities,
                 // Registered WordPress Abilities (6.9+) this user may run.
                 'wpAbilities' => AbilitiesDiscovery::discover(),
-                // List of suggestions the AI can make for this user.
-                // For example, we could check whether they need to set up a specific plugin.
+                // The domain card reads only the register-domain record.
                 'suggestions' => $this->getSuggestions(),
                 'domainsSuggestionSettings' => [
                     'showPrimary' => (bool) PartnerData::setting('showPrimaryDomainRecommendationAgent'),

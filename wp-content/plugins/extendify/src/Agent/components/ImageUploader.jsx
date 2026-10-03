@@ -219,11 +219,9 @@ export const ImageUploader = ({
 								)}
 								disabled={isSaving}
 							>
-								{isSaving ? (
-									<Spinner className="m-0" />
-								) : (
-									__('Save', 'extendify-local')
-								)}
+								{isSaving
+									? __('Saving...', 'extendify-local')
+									: __('Save', 'extendify-local')}
 							</button>
 						)}
 					</div>

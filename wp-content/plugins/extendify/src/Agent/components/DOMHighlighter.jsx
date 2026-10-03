@@ -25,7 +25,12 @@ const MIN_OUTLINE_SIZE = 10;
 // by Quick Edit's Ask AI flow (or future workflows), and this component
 // draws the outline + X-close indicator. Hover-bar owns hover + click
 // selection on the live page; DOMHighlighter no longer listens for either.
-export const DOMHighlighter = ({ busy = false, working = false }) => {
+export const DOMHighlighter = ({
+	busy = false,
+	working = false,
+	waiting = false,
+	taskActive = false,
+}) => {
 	const [rect, setRect] = useState(null);
 	const [ringNeeded, setRingNeeded] = useState(false);
 	const mountNode = usePortal('extendify-agent-dom-mount');
@@ -236,6 +241,22 @@ export const DOMHighlighter = ({ busy = false, working = false }) => {
 		root.classList.add('extendify-agent-busy');
 		return () => root.classList.remove('extendify-agent-busy');
 	}, [busy]);
+
+	useEffect(() => {
+		if (!taskActive) return;
+		const root = document.querySelector('.wp-site-blocks');
+		if (!root) return;
+		root.classList.add('extendify-agent-task');
+		return () => root.classList.remove('extendify-agent-task');
+	}, [taskActive]);
+
+	useEffect(() => {
+		if (!waiting) return;
+		const root = document.querySelector('.wp-site-blocks');
+		if (!root) return;
+		root.classList.add('extendify-agent-waiting');
+		return () => root.classList.remove('extendify-agent-waiting');
+	}, [waiting]);
 
 	useEffect(() => {
 		if (!working) return;

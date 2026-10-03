@@ -65,6 +65,9 @@ class PartnerData
         'showDraft' => false,
         'showChat' => false,
         'showAIPageCreation' => false,
+        'mcpConfig' => [],
+        'mcpWriteList' => [],
+        'mcpReadList' => [],
         'enableImageImports-1-14-6' => false,
         'disableLibraryAutoOpen' => false,
         'enableApexDomain' => false,
@@ -118,6 +121,14 @@ class PartnerData
      */
     public function __construct()
     {
+        self::load();
+    }
+
+    /**
+     * @return void
+     */
+    public static function load()
+    {
         self::$id = defined('EXTENDIFY_PARTNER_ID') ? constant('EXTENDIFY_PARTNER_ID') : null;
         $data = self::getPartnerData();
         self::$config['showDomainBanner'] = ($data['showDomainBanner'] ?? self::$config['showDomainBanner']);
@@ -154,6 +165,9 @@ class PartnerData
             'secondaryColorText' => '#ffffff',
         ];
         self::$config['showAIPageCreation'] = ($data['showAIPageCreation'] ?? self::$config['showAIPageCreation']);
+        self::$config['mcpConfig'] = ($data['mcpConfig'] ?? self::$config['mcpConfig']);
+        self::$config['mcpWriteList'] = ($data['mcpWriteList'] ?? self::$config['mcpWriteList']);
+        self::$config['mcpReadList'] = ($data['mcpReadList'] ?? self::$config['mcpReadList']);
         self::$config['showLaunch'] = ($data['showLaunch'] ?? self::$config['showLaunch']);
         self::$config['showLaunchTitle'] = ($data['showLaunchTitle'] ?? self::$config['showLaunchTitle']);
         self::$config['deactivated'] = ($data['deactivated'] ?? self::$config['deactivated']);
@@ -216,13 +230,10 @@ class PartnerData
         if ($partnerData !== 'empty') {
             // We have data, but if it's been 10 minutes, check for new data.
             $partnerRefresh = \get_transient('extendify_partner_data_cache_check');
-            if (!$partnerRefresh && \is_admin()) {
-                \add_action('init', function () {
-                    if (!\wp_next_scheduled('extendify_fetch_partner_data')) {
-                        \wp_schedule_single_event(time(), 'extendify_fetch_partner_data');
-                        \spawn_cron();
-                    }
-                });
+            if (!$partnerRefresh && \is_user_logged_in()) {
+                \did_action('init')
+                    ? self::scheduleRefresh()
+                    : \add_action('init', [self::class, 'scheduleRefresh']);
             }
 
             return array_merge(self::$config, $partnerData);
@@ -233,6 +244,47 @@ class PartnerData
         // Cache here even if empty [] to prevent multiple requests.
         \update_option('extendify_partner_data_v2', $mergedData);
         return $mergedData;
+    }
+
+    /**
+     * A token request may be the only visitor a site gets, so it fetches a stale config itself.
+     *
+     * @return void
+     */
+    public static function refreshIfStale()
+    {
+        if (\get_transient('extendify_partner_data_cache_check')) {
+            return;
+        }
+
+        // The 45s timeout the plugin gives its hosts is longer than a waiting MCP client allows.
+        $brief = function ($args) {
+            $args['timeout'] = 5;
+            return $args;
+        };
+        \add_filter('http_request_args', $brief, 101);
+        try {
+            $fetched = self::fetchPartnerData();
+        } finally {
+            \remove_filter('http_request_args', $brief, 101);
+        }
+
+        if ($fetched) {
+            self::load();
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public static function scheduleRefresh()
+    {
+        if (\wp_next_scheduled('extendify_fetch_partner_data')) {
+            return;
+        }
+
+        \wp_schedule_single_event(time(), 'extendify_fetch_partner_data');
+        \spawn_cron();
     }
 
     /**

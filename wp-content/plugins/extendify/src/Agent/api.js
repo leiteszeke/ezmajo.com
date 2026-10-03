@@ -8,10 +8,12 @@ import {
 import { getClientTools } from '@agent/lib/client-tools';
 import { isExtendableHeader } from '@agent/lib/extendable-header';
 import { INSERTABLE_BLOCK_TYPES } from '@agent/lib/insertable-blocks';
+import { fetchLinkablePages } from '@agent/lib/linkable-pages';
 import { ensureCoreBlocksRegistered } from '@agent/lib/register-blocks';
 import {
 	buildSubtreeManifest,
 	buildSubtreeTree,
+	ownerAncestorFor,
 } from '@agent/lib/subtree-manifest';
 import { activeCanvasStep } from '@agent/state/canvas';
 import { useChatStore } from '@agent/state/chat';
@@ -24,7 +26,12 @@ import { reqDataBasics } from '@shared/lib/data';
 import { getBlockType } from '@wordpress/blocks';
 
 // page-templates:v1 declares that find-blocks and stage-block reach into parts.
-export const API_FEATURES = ['qa-tool', 'page-templates:v1'];
+// block-duplicate:v1 declares that update-blocks applies the duplicate op.
+export const API_FEATURES = [
+	'qa-tool',
+	'page-templates:v1',
+	'block-duplicate:v1',
+];
 
 const rootFor = (block) =>
 	block?.id && block?.target
@@ -38,12 +45,19 @@ const EAGER_LOAD_MAX = 5;
 export const blockSchemasFor = async (block) => {
 	const root = rootFor(block);
 	const { bucket } = classifyBlockEdit({ block, root });
-	const types =
-		bucket === 'single'
-			? [block.blockType]
-			: IGNORED_BLOCKS.has(block?.blockType)
-				? []
-				: [...new Set(buildSubtreeManifest(root).map(({ type }) => type))];
+	const owner = ownerAncestorFor(root);
+	const types = [
+		...new Set(
+			[
+				...(bucket === 'single'
+					? [block.blockType]
+					: IGNORED_BLOCKS.has(block?.blockType)
+						? []
+						: buildSubtreeManifest(root).map(({ type }) => type)),
+				owner?.type,
+			].filter(Boolean),
+		),
+	];
 	if (!types.length || types.length > EAGER_LOAD_MAX) return [];
 	await ensureCoreBlocksRegistered();
 	return types
@@ -51,9 +65,26 @@ export const blockSchemasFor = async (block) => {
 		.filter(({ schema }) => schema);
 };
 
+// Without the site's addresses the model links a named page to "#".
+const withLinkablePages = async (data) => {
+	if (!data.blockSchemas?.some(({ type }) => type === 'core/navigation-link')) {
+		return data;
+	}
+	const pages = await fetchLinkablePages();
+	return {
+		...data,
+		linkablePages: pages.map(({ title, url }) => ({ title, url })),
+	};
+};
+
 // Only consumed for a multi-block edit; inert for single/combo.
-export const subtreeManifestFor = (block) =>
-	buildSubtreeManifest(rootFor(block));
+export const subtreeManifestFor = (block) => {
+	const root = rootFor(block);
+	const owner = ownerAncestorFor(root);
+	const manifest = buildSubtreeManifest(root);
+	// buildSubtreeManifest treats the first entry as the selection's baseline.
+	return owner ? [...manifest, owner] : manifest;
+};
 
 // Selection hierarchy for the backend's positional edits.
 export const subtreeTreeFor = (block) => buildSubtreeTree(rootFor(block));
@@ -120,10 +151,7 @@ export const pickWorkflow = async ({ workflows, options }) => {
 
 	if (!response.ok) {
 		digest({
-			error: {
-				name: response.statusText,
-				messages: response.statusMessage,
-			},
+			error: response,
 			details: { source: 'agent', caller: 'pick-workflow' },
 		});
 		const error = new Error('Bad response from server');
@@ -144,12 +172,12 @@ export const handleWorkflow = async ({ workflow, workflowData, options }) => {
 	// Schemas: pinned up front when the selection is small enough; otherwise
 	// empty until get-block-schemas fetches them into the same field.
 	const data = isBlockPatching
-		? {
+		? await withLinkablePages({
 				...carried,
 				blockSchemas: workflowData?.blockSchemas?.length
 					? workflowData.blockSchemas
 					: await blockSchemasFor(block),
-			}
+			})
 		: workflowData;
 	const response = await fetch(`${AI_HOST}/api/agent/handle-workflow`, {
 		method: 'POST',

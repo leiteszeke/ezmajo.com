@@ -17,10 +17,20 @@ export const INSERTABLE_BLOCK_TYPES = [
 	'core/column',
 	'core/spacer',
 	'core/separator',
+	'core/social-link',
+	'core/navigation-link',
+	// Says the save can nest a link under a menu item; never added on its own.
+	'core/navigation-submenu',
 ];
 
 // One level of explicit children, on containers only.
 const CHILD_BEARING_TYPES = ['core/group', 'core/column'];
+
+// A lone button or social icon is invalid markup.
+const ROW_ONLY_TYPES = {
+	'core/button': 'core/buttons',
+	'core/social-link': 'core/social-links',
+};
 
 // The model authors `text`; each type stores it under its own attribute.
 const RICH_TEXT_ATTR = {
@@ -31,6 +41,7 @@ const RICH_TEXT_ATTR = {
 	'core/code': 'content',
 	'core/preformatted': 'content',
 	'core/verse': 'content',
+	'core/navigation-link': 'label',
 };
 
 const paragraphChildren = (text) =>
@@ -41,6 +52,9 @@ const childBlocks = (children) =>
 	(children ?? [])
 		.filter(
 			({ blockType }) =>
+				// A composed child only carries text, and neither type is valid on its own.
+				blockType !== 'core/social-link' &&
+				blockType !== 'core/navigation-link' &&
 				blockType !== 'core/column' &&
 				INSERTABLE_BLOCK_TYPES.includes(blockType) &&
 				getBlockType(blockType),
@@ -89,6 +103,7 @@ export const buildNewBlock = (
 	patch = {},
 	clear = [],
 	presetSlugs = {},
+	{ joinsRow = false } = {},
 ) => {
 	if (!INSERTABLE_BLOCK_TYPES.includes(blockType)) return null;
 	if (!getBlockType(blockType)) return null;
@@ -99,7 +114,8 @@ export const buildNewBlock = (
 		clear ?? [],
 		presetSlugs,
 	);
-	if (blockType !== 'core/button') return markup;
-	// A lone button never exists in the editor; ship it inside its wrapper.
-	return serialize([createBlock('core/buttons', {}, parse(markup))]);
+	// Landing beside a sibling puts it in that row already; wrapping would nest one.
+	const row = joinsRow ? null : ROW_ONLY_TYPES[blockType];
+	if (!row) return markup;
+	return serialize([createBlock(row, {}, parse(markup))]);
 };

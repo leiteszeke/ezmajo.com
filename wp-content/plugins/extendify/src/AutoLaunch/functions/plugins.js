@@ -98,19 +98,17 @@ export const activatePlugin = async (slug) => {
 	try {
 		await fn(slug);
 		return true;
-	} catch (_) {
-		try {
-			// try once more but get the slug first
-			const { plugin } = await getPlugin(slug);
-			await fn(plugin);
-			return true;
-		} catch (error) {
+	} catch (error) {
+		const report = (e) => {
 			digest({
-				error,
+				error: e,
 				details: { source: 'auto-launch', caller: 'activatePlugin' },
 			});
 			return false;
-		}
+		};
+		const found = await getPlugin(slug).catch(() => undefined);
+		if (!found?.plugin) return report(error);
+		return fn(found.plugin).then(() => true, report);
 	}
 };
 

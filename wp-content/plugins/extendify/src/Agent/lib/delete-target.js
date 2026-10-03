@@ -10,6 +10,12 @@ const LIST_WRAPPERS = new Set([
 	'core/quote',
 ]);
 
+// core/accordion-item locks these in place (templateLock 'all'), so the op takes the item.
+const LOCKED_PARTS = new Set([
+	'core/accordion-heading',
+	'core/accordion-panel',
+]);
+
 // The wrapper never reaches the model (dropped from the manifest), so "delete this
 // button" can only name the button — walk up to the wrapper when it's the last item.
 export const resolveDeleteTarget = (blockId, scope = null) => {
@@ -17,6 +23,10 @@ export const resolveDeleteTarget = (blockId, scope = null) => {
 	if (!el) return blockId;
 	let targetId = blockId;
 	let parent = el.parentElement?.closest(BLOCK_ID_SEL);
+	if (parent && LOCKED_PARTS.has(detectBlockType(el))) {
+		targetId = blockIdOf(parent);
+		parent = parent.parentElement?.closest(BLOCK_ID_SEL);
+	}
 	while (
 		parent &&
 		LIST_WRAPPERS.has(detectBlockType(parent)) &&
