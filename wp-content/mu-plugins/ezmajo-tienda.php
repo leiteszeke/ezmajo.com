@@ -30,15 +30,25 @@ add_action( 'woocommerce_init', function () {
 		'label'    => 'Quiero recibir los patrones ahora y acepto que, al tratarse de contenido digital, pierdo el derecho de desistimiento una vez iniciada la descarga.',
 		'location' => 'order',
 		'type'     => 'checkbox',
-		'required' => true,
+		// Only for digital content: patterns are the shop's simple products, garments are variable (variations).
+		'required' => array( 'cart' => array( 'properties' => array( 'items_type' => array( 'contains' => array( 'enum' => array( 'simple' ) ) ) ) ) ),
+		'hidden'   => array( 'cart' => array( 'properties' => array( 'items_type' => array( 'not' => array( 'contains' => array( 'enum' => array( 'simple' ) ) ) ) ) ) ),
 	) );
 } );
 
 /*
- * Digital-only checkout: ask for email, name and country only. The country sets the IVA rate and is the
- * buyer-location evidence for EU digital sales; B2C invoices under 400 € (factura simplificada) need no address.
+ * Patterns only: ask for email, name and country only. The country sets the IVA rate and is the buyer-location
+ * evidence for EU digital sales; B2C invoices under 400 € (factura simplificada) need no address.
+ * A cart with garments needs shipping: then WooCommerce's normal address form (and phone) is used.
  */
+function ezmajo_cart_is_digital() {
+	return ! function_exists( 'WC' ) || ! WC()->cart || ! WC()->cart->needs_shipping();
+}
+
 function ezmajo_hide_address_fields( $fields ) {
+	if ( ! ezmajo_cart_is_digital() ) {
+		return $fields;
+	}
 	foreach ( array( 'company', 'address_1', 'address_2', 'city', 'state', 'postcode', 'phone' ) as $key ) {
 		$fields[ $key ]['required'] = false;
 		$fields[ $key ]['hidden']   = true;
@@ -56,7 +66,7 @@ add_filter( 'woocommerce_get_country_locale', function ( $locales ) {
 } );
 add_filter( 'woocommerce_default_address_fields', 'ezmajo_hide_address_fields' );
 add_filter( 'pre_option_woocommerce_checkout_phone_field', function () {
-	return 'hidden';
+	return ezmajo_cart_is_digital() ? 'hidden' : 'required'; // the carrier needs it
 } );
 add_filter( 'pre_option_woocommerce_checkout_company_field', function () {
 	return 'hidden';
@@ -88,3 +98,37 @@ add_filter( 'default_hidden_meta_boxes', function ( $hidden, $screen ) {
 	}
 	return $hidden;
 }, 20, 2 );
+
+/*
+ * "Pedido completado" email: its subject/heading (set in 01-woocommerce-setup.php) talk about downloads. An order
+ * with garments is completed when it is shipped or ready to collect, so say that instead.
+ */
+function ezmajo_completed_order_kind( $order ) {
+	if ( ! $order || ! $order->get_shipping_methods() ) {
+		return 'patrones';
+	}
+	foreach ( $order->get_shipping_methods() as $method ) {
+		if ( in_array( $method->get_method_id(), array( 'pickup_location', 'local_pickup' ), true ) ) {
+			return 'recogida';
+		}
+	}
+	return 'envio';
+}
+add_filter( 'woocommerce_email_subject_customer_completed_order', function ( $subject, $order ) {
+	switch ( ezmajo_completed_order_kind( $order ) ) {
+		case 'recogida':
+			return 'Tu pedido de Ezmajo ya está listo para recoger';
+		case 'envio':
+			return 'Tu pedido de Ezmajo está en camino';
+	}
+	return $subject;
+}, 10, 2 );
+add_filter( 'woocommerce_email_heading_customer_completed_order', function ( $heading, $order ) {
+	switch ( ezmajo_completed_order_kind( $order ) ) {
+		case 'recogida':
+			return '¡Tu pedido te espera en la tienda!';
+		case 'envio':
+			return '¡Tu pedido va en camino!';
+	}
+	return $heading;
+}, 10, 2 );

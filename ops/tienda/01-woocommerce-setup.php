@@ -16,7 +16,8 @@ $options = array(
 	'woocommerce_store_postcode'                     => '08029',
 	'woocommerce_default_country'                    => 'ES:B',
 	'woocommerce_allowed_countries'                  => 'all',
-	'woocommerce_ship_to_countries'                  => 'disabled', // digital only
+	'woocommerce_ship_to_countries'                  => 'specific', // garments: Spain only (zones in 04-prendas.php)
+	'woocommerce_specific_ship_to_countries'         => array( 'ES' ),
 	'woocommerce_default_customer_address'           => 'base',
 
 	// Currency: 12,50 €
@@ -35,8 +36,17 @@ $options = array(
 	'woocommerce_tax_total_display'                  => 'single',
 	'woocommerce_price_display_suffix'               => 'IVA incl.',
 
-	// Products: virtual + downloadable, no stock
-	'woocommerce_manage_stock'                       => 'no',
+	// Stock: garment variations keep stock; patterns don't (unlimited downloads)
+	'woocommerce_manage_stock'                       => 'yes',
+	'woocommerce_hold_stock_minutes'                 => 60,
+	'woocommerce_notify_low_stock'                   => 'yes',
+	'woocommerce_notify_no_stock'                    => 'yes',
+	'woocommerce_notify_low_stock_amount'            => 1,
+	'woocommerce_notify_no_stock_amount'             => 0,
+	'woocommerce_stock_email_recipient'              => 'ezmajo.es@gmail.com',
+	'woocommerce_hide_out_of_stock_items'            => 'no',
+	'woocommerce_weight_unit'                        => 'kg',
+	'woocommerce_dimension_unit'                     => 'cm',
 	'woocommerce_enable_reviews'                     => 'no', // revisit: site-wide comments are disabled in mu-plugins/ezmajo.php
 
 	// Accounts: guest checkout; optional account to re-download later
@@ -88,6 +98,8 @@ $eu = WC()->countries->get_european_union_countries( 'eu_vat' );
 global $wpdb;
 $existing = $wpdb->get_col( "SELECT tax_rate_country FROM {$wpdb->prefix}woocommerce_tax_rates WHERE tax_rate_class = ''" );
 $added    = 0;
+// Shipping (garments, Spain only) carries IVA too.
+$wpdb->query( "UPDATE {$wpdb->prefix}woocommerce_tax_rates SET tax_rate_shipping = 1 WHERE tax_rate_class = '' AND tax_rate_name = 'IVA'" );
 foreach ( $eu as $country ) {
 	if ( in_array( $country, $existing, true ) ) {
 		continue;
@@ -99,7 +111,7 @@ foreach ( $eu as $country ) {
 		'tax_rate_name'     => 'IVA',
 		'tax_rate_priority' => 1,
 		'tax_rate_compound' => 0,
-		'tax_rate_shipping' => 0,
+		'tax_rate_shipping' => 1,
 		'tax_rate_order'    => 0,
 		'tax_rate_class'    => '',
 	) );
@@ -108,10 +120,10 @@ foreach ( $eu as $country ) {
 WP_CLI::log( sprintf( 'IVA 21%%: %d EU countries (%d added)', count( $eu ), $added ) );
 
 /*
- * Store pages in Spanish; the catalogue lives at /patrones/.
+ * Store pages in Spanish; the catalogue lives at /tienda/ (patrones and prendas).
  */
 $pages = array(
-	'woocommerce_shop_page_id'      => array( 'Patrones', 'patrones' ),
+	'woocommerce_shop_page_id'      => array( 'Tienda', 'tienda' ),
 	'woocommerce_cart_page_id'      => array( 'Carrito', 'carrito' ),
 	'woocommerce_checkout_page_id'  => array( 'Finalizar compra', 'finalizar-compra' ),
 	'woocommerce_myaccount_page_id' => array( 'Mi cuenta', 'mi-cuenta' ),

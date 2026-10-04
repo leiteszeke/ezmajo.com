@@ -1,7 +1,7 @@
 <?php
 /**
- * Pattern product page (block theme): quick facts under the price, tabs with the pattern data,
- * "te lo cosemos" call to action under the buy button.
+ * Product page (block theme): quick facts under the price and tabs with the product data, for patterns (PDF) and
+ * garments (variable products); "te lo cosemos" call to action under a pattern's buy button.
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -39,7 +39,38 @@ function ezmajo_line_list( $text ) {
 	return $items ? '<ul><li>' . implode( '</li><li>', array_map( 'esc_html', $items ) ) . '</li></ul>' : '';
 }
 
+/** A pattern is the downloadable product; everything else on the shop is a garment. */
+function ezmajo_is_pattern( $product ) {
+	return $product && $product->is_downloadable();
+}
+
+/** Garment sizes/colours that are still in stock, in the attribute's term order. */
+function ezmajo_available_terms( $product, $taxonomy ) {
+	$slugs = array();
+	foreach ( $product->get_available_variations( 'objects' ) as $variation ) {
+		if ( $variation->is_in_stock() ) {
+			$slugs[] = (string) ( $variation->get_attributes()[ $taxonomy ] ?? '' );
+		}
+	}
+	$names = array();
+	foreach ( wc_get_product_terms( $product->get_id(), $taxonomy ) as $term ) {
+		if ( in_array( $term->slug, $slugs, true ) || in_array( '', $slugs, true ) ) { // '' = "any" value
+			$names[] = $term->name;
+		}
+	}
+	return implode( ', ', $names );
+}
+
 function ezmajo_quick_facts( $product ) {
+	if ( ! ezmajo_is_pattern( $product ) ) {
+		$facts = array_filter( array(
+			'Tallas disponibles' => $product->is_type( 'variable' ) ? ezmajo_available_terms( $product, 'pa_talla' ) : '',
+			'Colores'            => $product->is_type( 'variable' ) ? ezmajo_available_terms( $product, 'pa_color' ) : '',
+			'Composición'        => $product->get_meta( '_ezmajo_composicion' ),
+			'Entrega'            => 'Envío a península o recogida en la tienda',
+		) );
+		return ezmajo_facts_list( $facts );
+	}
 	$a4    = (int) $product->get_meta( '_ezmajo_hojas_a4' );
 	$a0    = (int) $product->get_meta( '_ezmajo_hojas_a0' );
 	$sheet = array_filter( array( $a4 ? "$a4 hojas A4" : '', $a0 ? "$a0 hojas A0" : '' ) );
@@ -49,6 +80,10 @@ function ezmajo_quick_facts( $product ) {
 		'Formato'    => trim( 'PDF ' . ezmajo_attribute_list( $product, 'pa_formato' ) ),
 		'Impresión'  => implode( ' · ', $sheet ),
 	) );
+	return ezmajo_facts_list( $facts );
+}
+
+function ezmajo_facts_list( $facts ) {
 	$html = '';
 	foreach ( $facts as $label => $value ) {
 		$html .= sprintf( '<div><dt>%s</dt><dd>%s</dd></div>', esc_html( $label ), esc_html( $value ) );
@@ -78,7 +113,7 @@ add_filter( 'render_block_woocommerce/product-meta', function ( $html ) {
 
 // The buy form block has no "descendant of single template" attribute; is_product() is enough there.
 add_filter( 'render_block_woocommerce/add-to-cart-form', function ( $html ) {
-	if ( ! is_product() ) {
+	if ( ! is_product() || ! ezmajo_is_pattern( wc_get_product( get_the_ID() ) ) ) {
 		return $html;
 	}
 	return $html . sprintf(
@@ -91,11 +126,20 @@ add_filter( 'woocommerce_product_tabs', function ( $tabs ) {
 	global $product;
 	unset( $tabs['additional_information'], $tabs['reviews'] );
 
-	$sections = array(
-		'ezmajo_materiales' => array( 'Materiales y metraje', ezmajo_line_list( $product->get_meta( '_ezmajo_materiales' ) ) . ezmajo_pipe_table( $product->get_meta( '_ezmajo_metraje' ) ) ),
-		'ezmajo_medidas'    => array( 'Tabla de medidas', ezmajo_pipe_table( $product->get_meta( '_ezmajo_medidas' ) ) ),
-		'ezmajo_incluye'    => array( 'Qué incluye', ezmajo_line_list( $product->get_meta( '_ezmajo_incluye' ) ) . '<p class="ezmajo-licencia">' . esc_html( EZMAJO_LICENSE ) . '</p>' ),
-	);
+	if ( ezmajo_is_pattern( $product ) ) {
+		$sections = array(
+			'ezmajo_materiales' => array( 'Materiales y metraje', ezmajo_line_list( $product->get_meta( '_ezmajo_materiales' ) ) . ezmajo_pipe_table( $product->get_meta( '_ezmajo_metraje' ) ) ),
+			'ezmajo_medidas'    => array( 'Tabla de medidas', ezmajo_pipe_table( $product->get_meta( '_ezmajo_medidas' ) ) ),
+			'ezmajo_incluye'    => array( 'Qué incluye', ezmajo_line_list( $product->get_meta( '_ezmajo_incluye' ) ) . '<p class="ezmajo-licencia">' . esc_html( EZMAJO_LICENSE ) . '</p>' ),
+		);
+	} else {
+		$composition = $product->get_meta( '_ezmajo_composicion' );
+		$sections    = array(
+			'ezmajo_guia'     => array( 'Guía de tallas', ezmajo_pipe_table( $product->get_meta( '_ezmajo_guia_tallas' ) ) ),
+			'ezmajo_cuidados' => array( 'Composición y cuidados', ( $composition ? '<p>' . esc_html( $composition ) . '</p>' : '' ) . ezmajo_line_list( $product->get_meta( '_ezmajo_cuidados' ) ) ),
+			'ezmajo_envio'    => array( 'Envío y devoluciones', '<p>Envío a España peninsular o recogida gratis en nuestra tienda de Barcelona. Tienes 14 días para devolver la prenda desde que la recibes.</p>' ),
+		);
+	}
 	$priority = 20;
 	foreach ( $sections as $key => list( $title, $content ) ) {
 		if ( '' === trim( wp_strip_all_tags( $content ) ) ) {
