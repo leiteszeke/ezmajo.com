@@ -20,6 +20,20 @@ server {
     location ^~ /wp-content/uploads/woocommerce_uploads/ {
         deny all;
     }
+    # Login brute-force protection. XML-RPC is not used by the site. The login lives at /taller (WPS Hide Login,
+    # served by WordPress); wp-login.php answers 404 but still runs PHP, so it is limited too.
+    location = /xmlrpc.php { deny all; }
+    location ^~ /taller {
+        limit_req zone=ezmajo_login burst=10 nodelay;
+        limit_req_status 429;
+        try_files $uri $uri/ /index.php?$args;
+    }
+    location = /wp-login.php {
+        limit_req zone=ezmajo_login burst=10 nodelay;
+        limit_req_status 429;
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+    }
     location = /favicon.ico { log_not_found off; access_log off; }
     # Let WordPress/Yoast generate robots.txt when no static file exists
     location = /robots.txt  { try_files $uri /index.php?$args; log_not_found off; access_log off; }

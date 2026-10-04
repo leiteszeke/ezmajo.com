@@ -9,6 +9,14 @@ Operational notes for ezmajo.com (WordPress). Nothing in this folder is deployed
 - `ezgit …` — git for the web root. The git dir lives outside the web root (`/var/www/ezmajo.git`); sparse-checkout keeps `ops/` and `.gitignore` off the live site.
 - `nginx/` — copies of `/etc/nginx/sites-available/{ezmajo.com,web.ezmajo.com}`. Originals from before our changes: `/root/nginx-backup-2026-09-30/`.
 
+## Login
+
+- Admin login: **https://ezmajo.com/taller** (WPS Hide Login; `/wp-admin` and `/wp-login.php` answer 404 when logged
+  out). Branded screen: `wp-content/mu-plugins/ezmajo-login.php`. nginx blocks `xmlrpc.php` and rate-limits the login
+  (`nginx/conf.d-ezmajo-login.conf` -> `/etc/nginx/conf.d/ezmajo-login.conf`).
+- Locked out (plugin broken, slug forgotten)? `wpe option get whl_page`, or `wpe plugin deactivate wps-hide-login`
+  to get `/wp-login.php` back.
+
 ## Workflow
 
 1. Check for outside changes (agency edits, WP auto-updates): `ssh ezmajo ezgit status --short`.
