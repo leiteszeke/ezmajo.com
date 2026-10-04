@@ -38,6 +38,7 @@ done
 ./wp option update woocommerce_cheque_settings --format=json \
 	'{"enabled":"yes","title":"Pago de prueba (solo staging)","description":"Simula un pago.","instructions":""}'
 
-# Garments: shipping zone with a flat test rate + pickup, and one test garment with stock per size/colour
-./wp --user=ezequiel eval-file /var/www/html/ops/tienda/04-envios.php staging
+# Garments: shipping zone + pickup (as production: pickup only until Correos; add `staging` to 04 for a flat test
+# rate), and one test garment with stock per size/colour
+./wp --user=ezequiel eval-file /var/www/html/ops/tienda/04-envios.php
 ./wp --user=ezequiel eval-file /var/www/html/ops/staging/seed-prenda.php

@@ -36,8 +36,9 @@ Panel: "Productos → Añadir patrón" y "Añadir prenda" abren el editor ya pre
   por peso que se cargan desde la tabla de tarifas del contrato. Aporta: elegir Oficina/CityPaq en el checkout,
   etiquetas desde el pedido, email de seguimiento y etiqueta de devolución (Paq Retorno). Requiere contrato con
   Correos (número de contrato, de cliente, código etiquetador) y usuario/clave del plugin que da el gestor comercial;
-  se descarga desde correos.es (no está en wordpress.org). Mientras no esté, producción solo ofrece recogida; staging
-  usa una tarifa fija de prueba.
+  se descarga desde correos.es (no está en wordpress.org). **2026-10-04: sin contrato todavía y Correos no tiene
+  sandbox público → solo recogida en tienda.** Con la zona sin métodos, el checkout ofrece solo recogida y la ficha
+  de la prenda dice "Recogida en nuestra tienda" (`ezmajo_ships_garments()`); al añadir métodos vuelve a ofrecer envío.
 - La casilla de renuncia al desistimiento (contenido digital) solo aparece si el carrito tiene patrones. Las prendas
   tienen 14 días de desistimiento: va en las condiciones de venta (pendiente: quién paga la devolución).
 - Pedido con prendas: queda en "Procesando" hasta que se envía o está listo para recoger; entonces "Completado". El PDF

@@ -44,6 +44,23 @@ function ezmajo_is_pattern( $product ) {
 	return $product && $product->is_downloadable();
 }
 
+/**
+ * Garments are shipped only once a carrier (Correos) has methods in a shipping zone; until then they are picked up
+ * at the shop. Product texts follow that, so nothing promises a delivery the checkout can't offer.
+ */
+function ezmajo_ships_garments() {
+	static $ships = null;
+	if ( null === $ships ) {
+		$ships = false;
+		foreach ( WC_Shipping_Zones::get_zones() as $zone ) {
+			foreach ( $zone['shipping_methods'] as $method ) {
+				$ships = $ships || 'yes' === $method->enabled;
+			}
+		}
+	}
+	return $ships;
+}
+
 /** Garment sizes/colours that are still in stock, in the attribute's term order. */
 function ezmajo_available_terms( $product, $taxonomy ) {
 	$slugs = array();
@@ -67,7 +84,7 @@ function ezmajo_quick_facts( $product ) {
 			'Tallas disponibles' => $product->is_type( 'variable' ) ? ezmajo_available_terms( $product, 'pa_talla' ) : '',
 			'Colores'            => $product->is_type( 'variable' ) ? ezmajo_available_terms( $product, 'pa_color' ) : '',
 			'Composición'        => $product->get_meta( '_ezmajo_composicion' ),
-			'Entrega'            => 'Envío a península o recogida en la tienda',
+			'Entrega'            => ezmajo_ships_garments() ? 'Envío a península o recogida en la tienda' : 'Recogida en nuestra tienda de Barcelona',
 		) );
 		return ezmajo_facts_list( $facts );
 	}
@@ -137,7 +154,9 @@ add_filter( 'woocommerce_product_tabs', function ( $tabs ) {
 		$sections    = array(
 			'ezmajo_guia'     => array( 'Guía de tallas', ezmajo_pipe_table( $product->get_meta( '_ezmajo_guia_tallas' ) ) ),
 			'ezmajo_cuidados' => array( 'Composición y cuidados', ( $composition ? '<p>' . esc_html( $composition ) . '</p>' : '' ) . ezmajo_line_list( $product->get_meta( '_ezmajo_cuidados' ) ) ),
-			'ezmajo_envio'    => array( 'Envío y devoluciones', '<p>Envío a España peninsular o recogida gratis en nuestra tienda de Barcelona. Tienes 14 días para devolver la prenda desde que la recibes.</p>' ),
+			'ezmajo_envio'    => ezmajo_ships_garments()
+				? array( 'Envío y devoluciones', '<p>Envío a España peninsular o recogida gratis en nuestra tienda de Barcelona. Tienes 14 días para devolver la prenda desde que la recibes.</p>' )
+				: array( 'Recogida y devoluciones', '<p>Recógela gratis en nuestra tienda (' . esc_html( ezmajo_business()['street'] . ', ' . ezmajo_business()['city'] ) . '): te avisamos por email cuando esté lista. Tienes 14 días para devolverla desde que la recoges.</p>' ),
 		);
 	}
 	$priority = 20;

@@ -86,7 +86,7 @@ $seo['product_cat'][ $roots['patrones'] ] = array_merge( $seo['product_cat'][ $r
 ) );
 $seo['product_cat'][ $roots['prendas'] ] = array_merge( $seo['product_cat'][ $roots['prendas'] ] ?? array(), array(
 	'wpseo_title' => 'Prendas hechas en nuestro taller %%sep%% %%sitename%%',
-	'wpseo_desc'  => 'Prendas cosidas en nuestro taller de Barcelona, en varias tallas y colores. Envío a península o recogida en la tienda.',
+	'wpseo_desc'  => 'Prendas cosidas en nuestro taller de Barcelona, en varias tallas y colores.',
 ) );
 update_option( 'wpseo_taxonomy_meta', $seo );
 
