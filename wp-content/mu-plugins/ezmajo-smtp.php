@@ -25,6 +25,10 @@ add_action( 'phpmailer_init', function ( $mailer ) {
 	$mailer->Password   = EZMAJO_SMTP_PASS;
 	// Bounces go to the sending domain (SPF/DKIM aligned), not to the server's hostname.
 	$mailer->Sender     = 'contacto@ezmajo.com';
+	// HTML-only mail scores worse with spam filters: add a plain-text alternative.
+	if ( 'text/html' === $mailer->ContentType && '' === $mailer->AltBody ) {
+		$mailer->AltBody = trim( preg_replace( "/\n{3,}/", "\n\n", wp_strip_all_tags( preg_replace( '#<(style|head)[^>]*>.*?</\1>#si', '', $mailer->Body ) ) ) );
+	}
 } );
 
 // WordPress' own default sender is wordpress@<host>; use the authenticated address instead.
