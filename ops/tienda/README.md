@@ -47,9 +47,11 @@ pages show "Próximamente", rest of the site unchanged). `03-menu.php` not run y
       SumUp account (it creates the key itself; it refuses non-public hosts, so it can't be done locally). No manual
       API key needed. **Connected 2026-10-03** to the real account (MDE44M46). Still to do: a real purchase + refund.
       **Refunds are not automatic**: refund in the SumUp dashboard (Ventas), then a manual refund on the order
-- [ ] Transactional email: sender is contacto@ezmajo.com, but ezmajo.com mail is ImprovMX (forwarding only;
-      SPF allows only ImprovMX). Send through ImprovMX SMTP or a provider (e.g. Brevo) via an SMTP plugin, add its
-      SPF include + DKIM, add a DMARC record; test with mail-tester.com. Order notifications → ezmajo.es@gmail.com
+- [x] Transactional email (2026-10-04): Brevo SMTP via `wp-content/mu-plugins/ezmajo-smtp.php`; credentials only in the
+      server's wp-config.php (`EZMAJO_SMTP_USER` / `EZMAJO_SMTP_PASS`). ezmajo.com authenticated in Brevo; Route 53 has
+      brevo-code TXT, DKIM CNAMEs brevo1/brevo2, `_dmarc` (p=none) and SPF `include:spf.improvmx.com include:spf.brevo.com`.
+      Brevo only accepts SMTP from authorised IPs (Settings → Seguridad): server 66.97.39.108 and 2800:6c0:3::659 added
+      — a new server IP needs adding there. mail-tester.com: 9.3/10, SPF/DKIM/DMARC pass. Later: DMARC to p=quarantine.
 - [ ] Invoices plugin (Verifactu) agreed with the gestor
 - [ ] Legal pages: Condiciones de venta, licencia de uso, privacy + cookie policy updates; set terms page in WooCommerce
 - [ ] CookieYes: payment provider cookies categorised
