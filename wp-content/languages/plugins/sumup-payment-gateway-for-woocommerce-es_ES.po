@@ -1,0 +1,109 @@
+# Translation of Plugins - SumUp Payment Gateway For WooCommerce - Stable (latest release) in Spanish (Spain)
+# This file is distributed under the same license as the Plugins - SumUp Payment Gateway For WooCommerce - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-09-13 06:51:15+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: es\n"
+"Project-Id-Version: Plugins - SumUp Payment Gateway For WooCommerce - Stable (latest release)\n"
+
+#: includes/class-wc-sumup-settings.php:65
+msgid "Save debug messages to the WooCommerce System Status log."
+msgstr "Guarda los mensajes de depuración en el registro del estado del sistema de WooCommerce."
+
+#: includes/class-wc-sumup-settings.php:63
+msgid "Log debug messages"
+msgstr "Registrar los mensajes de depuración"
+
+#: includes/class-wc-sumup-settings.php:62
+msgid "Logging"
+msgstr "Registro"
+
+#: includes/class-wc-sumup-settings.php:44
+msgid "Description"
+msgstr "Descripción"
+
+#: includes/class-wc-sumup-settings.php:39
+msgid "This controls the title the user sees during checkout."
+msgstr "Esto controla el título que el usuario ve durante el proceso de pago."
+
+#: includes/class-wc-sumup-settings.php:46
+msgid "This controls the description the user sees during checkout."
+msgstr "Esto controla la descripción que el usuario ve durante el proceso de pago."
+
+#: includes/class-wc-sumup-settings.php:37
+msgid "Title"
+msgstr "Título"
+
+#: includes/class-wc-sumup-settings.php:30
+msgid "Enable/Disable"
+msgstr "Activar/Desactivar"
+
+#: sumup-payment-gateway-for-woocommerce.php:604
+msgid "Settings"
+msgstr "Ajustes"
+
+#: sumup-payment-gateway-for-woocommerce.php:512
+msgid "Docs"
+msgstr "Documentación"
+
+#. Author URI of the plugin
+#: sumup-payment-gateway-for-woocommerce.php
+msgid "https://sumup.com"
+msgstr "https://sumup.com"
+
+#. Author of the plugin
+#: sumup-payment-gateway-for-woocommerce.php
+#: includes/class-wc-sumup-gateway.php:200
+msgid "SumUp"
+msgstr "SumUp"
+
+#. Description of the plugin
+#: sumup-payment-gateway-for-woocommerce.php
+msgid "Take credit card payments on your store using SumUp."
+msgstr "Obtén los pagos con tarjetas de crédito en tu tienda usando SumUp."
+
+#: includes/class-wc-sumup-settings.php:31
+msgid "Enable SumUp"
+msgstr "Activar SumUp"
+
+#: includes/class-wc-sumup-block-gateway.php:159
+#: includes/class-wc-sumup-gateway.php:2635
+msgid "Fill in all required details."
+msgstr "Rellena todos los datos obligatorios."
+
+#: sumup-payment-gateway-for-woocommerce.php:578
+msgid "SumUp Gateway needs your attention. Currency is different from WooCommerce currency (WooCommerce->Settings->General->Currency)."
+msgstr "La pasarela SumUP necesita tu atención. La moneda es diferente de la de WooCommerce  (WooCommerce->Ajustes->General->Moneda)."
+
+#. translators: %s = admin.php?page=wc-settings&tab=checkout&section=sumup
+#: sumup-payment-gateway-for-woocommerce.php:574
+msgid "SumUp Gateway is not configured properly. You can fix this from <a href=\"%s\">here</a>."
+msgstr "La pasarela SumUp no está configurada correctamente. Puedes corregirlo desde <a href=\"%s\">aquí</a>."
+
+#. translators: %s = admin.php?page=wc-settings&tab=checkout&section=sumup
+#: sumup-payment-gateway-for-woocommerce.php:567
+msgid "SumUp Gateway is almost ready. To get started, <a href=\"%s\">set your SumUp account keys</a>."
+msgstr "La pasarela SumUp está casi lista. Para empezar, <a href=\"%s\">configura las claves de tu cuenta de SumUp</a>."
+
+#: sumup-payment-gateway-for-woocommerce.php:530
+msgid "SumUp requires WooCommerce to be installed and active. You can download %s here."
+msgstr "SumUp necesita que WooCommerce esté instalado y activo. Puedes descargar %s aquí."
+
+#. Plugin URI of the plugin
+#: sumup-payment-gateway-for-woocommerce.php
+msgid "https://wordpress.org/plugins/sumup-payment-gateway-for-woocommerce/"
+msgstr "https://es.wordpress.org/plugins/sumup-payment-gateway-for-woocommerce/"
+
+#. Plugin Name of the plugin
+#: sumup-payment-gateway-for-woocommerce.php
+msgid "SumUp Payment Gateway For WooCommerce"
+msgstr "SumUp Payment Gateway For WooCommerce"
+
+#: includes/class-wc-sumup-gateway.php:1230
+msgid "SumUp charge complete. Transaction Code: %s"
+msgstr "Cargo de SumUp completado. Código de transacción: %s"
