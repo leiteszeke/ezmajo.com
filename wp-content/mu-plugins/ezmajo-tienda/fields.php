@@ -24,6 +24,7 @@ function ezmajo_pattern_fields() {
 
 function ezmajo_garment_fields() {
 	return array(
+		'_ezmajo_precio_base' => array( 'label' => 'Precio (€)', 'type' => 'price', 'desc' => 'IVA incluido. Al guardar se aplica a todas las tallas y colores; después puedes cambiar alguna en Variaciones.' ),
 		'_ezmajo_composicion' => array( 'label' => 'Composición', 'type' => 'text', 'desc' => 'Por ejemplo: 70 % lana, 30 % poliamida.' ),
 		'_ezmajo_cuidados'    => array( 'label' => 'Cuidados', 'type' => 'textarea', 'desc' => 'Una línea por indicación (lavado, planchado...).' ),
 		'_ezmajo_guia_tallas' => array( 'label' => 'Guía de tallas', 'type' => 'textarea', 'desc' => 'Tabla: "Talla | Pecho | Largo", una fila por línea.' ),
@@ -124,6 +125,8 @@ function ezmajo_render_fields( $panel_id, $fields ) {
 		);
 		if ( 'textarea' === $field['type'] ) {
 			woocommerce_wp_textarea_input( $args + array( 'rows' => 5, 'style' => 'height:8em;font-family:monospace' ) );
+		} elseif ( 'price' === $field['type'] ) {
+			woocommerce_wp_text_input( $args + array( 'data_type' => 'price' ) );
 		} elseif ( 'number' === $field['type'] ) {
 			woocommerce_wp_text_input( $args + array( 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'step' => 1 ) ) );
 		} else {
@@ -144,7 +147,12 @@ add_action( 'woocommerce_admin_process_product_object', function ( $product ) {
 			continue;
 		}
 		$raw = wp_unslash( $_POST[ $key ] ); // phpcs:ignore WordPress.Security.NonceVerification
-		if ( 'number' === $field['type'] ) {
+		if ( 'price' === $field['type'] ) {
+			$value = wc_format_decimal( $raw );
+			if ( '' !== $value && $value !== $product->get_meta( $key ) ) {
+				ezmajo_apply_price_to_variations( $product, $value );
+			}
+		} elseif ( 'number' === $field['type'] ) {
 			$value = absint( $raw );
 		} elseif ( 'textarea' === $field['type'] ) {
 			$value = sanitize_textarea_field( $raw );
@@ -153,4 +161,30 @@ add_action( 'woocommerce_admin_process_product_object', function ( $product ) {
 		}
 		$product->update_meta_data( $key, $value ?: '' );
 	}
+} );
+
+/** Garment base price -> every variation (the variations' own prices can still be edited afterwards). */
+function ezmajo_apply_price_to_variations( $product, $price ) {
+	foreach ( $product->get_children() as $variation_id ) {
+		$variation = wc_get_product( $variation_id );
+		if ( $variation ) {
+			$variation->set_regular_price( $price );
+			$variation->save();
+		}
+	}
+}
+
+// Variations created after the base price was set get it too.
+add_action( 'woocommerce_new_product_variation', function ( $variation_id ) {
+	$variation = wc_get_product( $variation_id );
+	$price     = $variation ? get_post_meta( $variation->get_parent_id(), '_ezmajo_precio_base', true ) : '';
+	if ( '' !== $price && '' === $variation->get_regular_price() ) {
+		$variation->set_regular_price( $price );
+		$variation->save();
+	}
+}, 20 );
+
+// Highlight "Añadir prenda" (not "Añadir patrón") in the menu while adding a garment.
+add_filter( 'submenu_file', function ( $submenu_file ) {
+	return 'prenda' === ( $_GET['ezmajo'] ?? '' ) ? 'post-new.php?post_type=product&ezmajo=prenda' : $submenu_file; // phpcs:ignore WordPress.Security.NonceVerification
 } );
