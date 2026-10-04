@@ -106,8 +106,16 @@ function ezmajo_filter_chips() {
 
 	// Attributes of this section (only values that have products)
 	$base = get_term_link( $current );
+	$in_section = get_posts( array(
+		'post_type'   => 'product',
+		'post_status' => 'publish',
+		'numberposts' => -1,
+		'fields'      => 'ids',
+		'tax_query'   => array( array( 'taxonomy' => 'product_cat', 'terms' => $root->term_id ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
+	) );
 	foreach ( EZMAJO_FILTERS[ $root->slug ] ?? array() as $attr => $label ) {
-		$terms = get_terms( array( 'taxonomy' => "pa_$attr", 'hide_empty' => true, 'orderby' => 'meta_value_num', 'meta_key' => 'order' ) );
+		// Only values used by this section's products (patterns and garments share Talla)
+		$terms = $in_section ? wp_get_object_terms( $in_section, "pa_$attr", array( 'orderby' => 'meta_value_num', 'meta_key' => 'order' ) ) : array();
 		if ( ! $terms || is_wp_error( $terms ) ) {
 			continue;
 		}
@@ -133,10 +141,18 @@ function ezmajo_filter_chips() {
 
 add_filter( 'render_block_woocommerce/product-collection', function ( $html, $block ) {
 	if ( ( is_shop() || is_product_taxonomy() ) && ! empty( $block['attrs']['query']['inherit'] ) ) {
-		return ezmajo_filter_chips() . $html;
+		global $wp_query;
+		$empty = 0 === (int) $wp_query->post_count ? '<p class="ezmajo-sin-resultados alignwide">No hay productos con estos filtros.</p>' : '';
+		return ezmajo_filter_chips() . $empty . $html;
 	}
 	return $html;
 }, 20, 2 ); // after WooCommerce injects its notices container into the block's first <div>
+
+// The theme's catalogue template carries core's "no results" block, which runs its own (posts) query and showed
+// "No se han encontrado productos..." under the products. The empty case is handled with the filter chips below.
+add_filter( 'render_block_core/query-no-results', function ( $html ) {
+	return is_shop() || is_product_taxonomy() ? '' : $html;
+} );
 
 // No mini cart on the cart and checkout pages: redundant there, and on checkout it requests the Store API
 // with an undefined base URL (".../finalizar-compra/undefinedwc/store/v1/cart" 404s).

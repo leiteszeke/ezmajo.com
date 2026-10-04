@@ -1,12 +1,22 @@
 # Tienda (PDF patterns, WooCommerce)
 
-Code: `wp-content/mu-plugins/ezmajo-tienda.php` (checkout consent, digital-only checkout fields, pricing) and
-`wp-content/mu-plugins/ezmajo-tienda/` (catalogue URLs + filter chips, "Patrón" product fields, product page, CSS).
+Code: `wp-content/mu-plugins/ezmajo-tienda.php` (checkout consent, address fields only when shipping, pricing, completed
+email wording) and `wp-content/mu-plugins/ezmajo-tienda/` (catalogue URLs + filter chips, Patrón/Prenda product fields
+and presets, product page, CSS).
+
+The shop sells **patrones** (PDF, simple downloadable products) and **prendas** (garments: variable products, Talla x
+Color with stock per variation). Design and decisions: `diseno-prendas.md`.
 
 Config scripts (idempotent; run with `--user=<admin>`, then `wp rewrite flush` in a separate run):
-1. `01-woocommerce-setup.php` — store, currency, IVA, checkout, downloads, emails, pages
-2. `02-catalogo.php` — URLs (/patrones/, /patron/…), attributes (dificultad, talla, formato), SEO titles, order emails
-3. `03-menu.php` — "Patrones" in the menu, mini cart in the header
+1. `01-woocommerce-setup.php` — store, currency, IVA (also on shipping), checkout, downloads, stock, emails, pages
+2. `02-catalogo.php` — URLs (/tienda/, /tienda/patrones/…, /tienda/prendas/…), attributes (dificultad, talla, formato,
+   color), root categories Patrones/Prendas, SEO titles, order emails
+3. `03-menu.php` — "Tienda" (Patrones, Prendas) in the menu, mini cart in the header — only when opening the shop
+4. `04-envios.php` — zone "España península" (by postcode) + free pickup at the shop (`staging` arg: flat test rate)
+
+Panel: Productos → **Añadir patrón** / **Añadir prenda** preset each kind (see `mu-plugins/ezmajo-tienda/fields.php`).
+Garments: create the variations (Variaciones → Generar variaciones), then price and stock per variation (new
+variations start with stock management on and 0 units).
 
 ## Loading patterns
 
@@ -52,7 +62,12 @@ pages show "Próximamente", rest of the site unchanged). `03-menu.php` not run y
       brevo-code TXT, DKIM CNAMEs brevo1/brevo2, `_dmarc` (p=none) and SPF `include:spf.improvmx.com include:spf.brevo.com`.
       Brevo only accepts SMTP from authorised IPs (Settings → Seguridad): server 66.97.39.108 and 2800:6c0:3::659 added
       — a new server IP needs adding there. mail-tester.com: 9.3/10, SPF/DKIM/DMARC pass. Later: DMARC to p=quarantine.
+- [ ] Correos (garment shipping): contract with Correos (contract, client number, labeler code) and the plugin
+      user/password from the Correos sales rep; download the official WooCommerce plugin from correos.es, install it,
+      add its methods to the zone "España península" with the contract's rates (fixed fee + cost rules by weight —
+      it does not quote in real time). Until then garments can only be picked up at the shop.
 - [ ] Invoices plugin (Verifactu) agreed with the gestor
-- [ ] Legal pages: Condiciones de venta, licencia de uso, privacy + cookie policy updates; set terms page in WooCommerce
+- [ ] Legal pages: Condiciones de venta (patrones: renuncia al desistimiento; prendas: 14 días de devolución — who pays
+      the return shipping?), licencia de uso, privacy + cookie policy updates; set terms page in WooCommerce
 - [ ] CookieYes: payment provider cookies categorised
 - [ ] Cache: confirm cart/checkout/account are never cached (`01-…` sets the cookie exclusions)

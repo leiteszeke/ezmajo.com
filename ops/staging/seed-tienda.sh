@@ -1,5 +1,5 @@
 #!/bin/sh
-# Staging only: load the example rows of ops/tienda/plantilla-patrones.csv with placeholder photos/PDFs,
+# Staging only: load the example rows of ops/tienda/plantilla-patrones.csv with placeholder photos/PDFs, a test garment,
 # publish them and enable an offline test payment. Safe to re-run.
 set -e
 cd "$(dirname "$0")"
@@ -37,3 +37,7 @@ for sku in EZ-001 EZ-002 EZ-003; do
 done
 ./wp option update woocommerce_cheque_settings --format=json \
 	'{"enabled":"yes","title":"Pago de prueba (solo staging)","description":"Simula un pago.","instructions":""}'
+
+# Garments: shipping zone with a flat test rate + pickup, and one test garment with stock per size/colour
+./wp --user=ezequiel eval-file /var/www/html/ops/tienda/04-envios.php staging
+./wp --user=ezequiel eval-file /var/www/html/ops/staging/seed-prenda.php

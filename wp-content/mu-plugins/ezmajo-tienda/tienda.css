@@ -128,3 +128,4 @@
 @media (max-width: 600px) {
 	.ezmajo-filtro__titulo { width: 100%; }
 }
+.ezmajo-sin-resultados{margin-block:2rem}

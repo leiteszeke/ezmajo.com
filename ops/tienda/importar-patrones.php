@@ -126,7 +126,9 @@ while ( ( $cells = fgetcsv( $handle ) ) !== false ) {
 	$product->set_short_description( $row['resumen'] );
 	$product->set_description( $row['descripcion'] );
 
-	$cat = term_exists( $row['tipo'], 'product_cat' ) ?: wp_insert_term( $row['tipo'], 'product_cat' );
+	// "tipo" is a subcategory of Patrones (Blusas, Jerséis...); created there if new
+	$patrones = (int) get_term_by( 'slug', 'patrones', 'product_cat' )->term_id;
+	$cat      = term_exists( $row['tipo'], 'product_cat', $patrones ) ?: wp_insert_term( $row['tipo'], 'product_cat', array( 'parent' => $patrones ) );
 	$product->set_category_ids( array( (int) $cat['term_id'] ) );
 	$product->set_attributes( array(
 		ez_attribute( 'pa_dificultad', $dificultad ),
