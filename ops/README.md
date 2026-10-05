@@ -20,7 +20,7 @@ Operational notes for ezmajo.com (WordPress). Nothing in this folder is deployed
   `wpe redis status`. Every DB query goes to db.ezmajo.com (~22 ms), so this took store pages from 3.5 s to 1.2 s.
 - UserWay (accessibility widget, installed by the agency) deactivated: it had no account linked, showed nothing and
   called api.userway.org on every page (+0.63 s). Reactivate only after linking a UserWay account.
-- Store pages now ~0.6 s on the server, ~1.6 s from Spain. Next step if needed: a CDN (Cloudflare) near Spain.
+- Store pages now ~0.6 s on the server, ~1.6 s from Spain. (A CDN was considered and dropped: not needed.)
 
 ## Login
 
