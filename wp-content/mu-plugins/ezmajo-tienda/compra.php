@@ -133,7 +133,7 @@ add_filter( 'render_block_woocommerce/order-confirmation-status', function ( $ht
 
 	return sprintf(
 		'<div class="ezmajo-gracias"><h1>%s</h1><p>%s</p>%s</div>',
-		str_replace( '¡', '<span class="ezmajo-abre">¡</span>', esc_html( $name ? "¡Gracias, $name!" : '¡Gracias por tu compra!' ) ),
+		esc_html( $name ? "¡Gracias, $name!" : '¡Gracias por tu compra!' ),
 		implode( '</p><p>', $lines ),
 		$paid ? ezmajo_download_buttons( $order ) : ''
 	);

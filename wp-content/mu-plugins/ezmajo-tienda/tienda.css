@@ -227,8 +227,6 @@ body.woocommerce-checkout:not(.woocommerce-order-received) main.is-layout-constr
 	line-height: 1.2;
 	letter-spacing: normal;
 }
-/* The theme's Inter file draws "¡" broken (only its dot shows): that glyph comes from the system font. */
-.ezmajo-abre { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; }
 .ezmajo-gracias p { max-width: 46rem; margin: .5rem 0 0; font-size: 1.1rem; }
 .ezmajo-gracias a:not(.ezmajo-boton) { color: var(--ez-dark); font-weight: 700; }
 .ezmajo-descargas {
