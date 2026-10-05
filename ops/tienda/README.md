@@ -57,9 +57,9 @@ Decisions (confirm with the gestor before launch):
 
 ## Launch checklist (production)
 
-Status 2026-10-03: deployed **hidden** (`woocommerce_coming_soon=yes` + `woocommerce_store_pages_only=yes`: store
-pages show "Próximamente", rest of the site unchanged). `03-menu.php` not run yet. To open: run 03, set
-`woocommerce_coming_soon` to `no`, flush Cache Enabler.
+Status 2026-10-05: **open to the public** (`woocommerce_coming_soon=no`, `03-menu.php` run: Tienda menu + mini cart)
+with **no products yet** — the catalogue shows "Muy pronto" (catalog.php) until the first patterns are published.
+Selling for real still needs the legal items below (conditions of sale, gestor OK, invoices).
 
 
 - [x] Backup files + DB (2026-10-03, ezmajo-backups/*-2026-10-03-pre-tienda*)
