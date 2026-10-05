@@ -89,7 +89,10 @@ pages show "Próximamente", rest of the site unchanged). `03-menu.php` not run y
       `/usr/local/sbin/ezmajo-geoip` (run first: the database must exist before nginx loads the conf),
       `conf.d/ezmajo-geoip.conf`, `sites-available/ezmajo.com`, `/etc/cron.d/ezmajo-geoip`. Checked with a temporary
       endpoint: ES from Spain, AR from the server (hosted in Argentina)
-- [ ] Argentina: deploy `argentina.php`, activate `woocommerce-mercadopago`, connect the Argentine account's production
+- [x] Argentina code deployed 2026-10-05 (`woocommerce-mercadopago` installed, inactive); privacy policy section 6 +
+      DB-IP attribution (`ops/2026-10-05-privacidad-geoip.php`). Cookie policy: list `ezmajo_pais` (technical) when
+      it is reviewed
+- [ ] Argentina payments: activate `woocommerce-mercadopago`, connect the Argentine account's production
       credentials, enable Checkout Pro only, webhook OK; a real purchase in pesos + refund. DB-IP Lite (CC BY 4.0)
       needs attribution: "IP Geolocation by DB-IP" (dbip.com) in the privacy policy
 - [ ] Cache: confirm cart/checkout/account are never cached (`01-…` sets the cookie exclusions)
