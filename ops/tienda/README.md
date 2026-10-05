@@ -93,7 +93,13 @@ pages show "Próximamente", rest of the site unchanged). `03-menu.php` not run y
 - [x] Argentina code deployed 2026-10-05 (`woocommerce-mercadopago` installed, inactive); privacy policy section 6 +
       DB-IP attribution (`ops/2026-10-05-privacidad-geoip.php`). Cookie policy updated 2026-10-05
       (`ops/2026-10-05-politica-cookies.php`): own cookies, real consent options, SumUp/Mercado Pago
-- [ ] Argentina payments: activate `woocommerce-mercadopago`, connect the Argentine account's production
-      credentials, enable Checkout Pro only, webhook OK; a real purchase in pesos + refund. DB-IP Lite (CC BY 4.0)
-      needs attribution: "IP Geolocation by DB-IP" (dbip.com) in the privacy policy
+- [x] Argentina payments (2026-10-05): `woocommerce-mercadopago` active on production, linked with "Vincular cuenta"
+      (OAuth) to Verónica's Mercado Pago account (app "Ezmajo Tienda", Checkout Pro); only Checkout Pro enabled
+      (redirect, auto return, up to 12 cuotas, no currency conversion: Argentina mode already shows pesos), statement
+      descriptor EZMAJO, Modo Ventas (production). Sandbox tests don't work with a real account's test credentials
+      (seller can't pay itself; test buyer + real seller is rejected), so it was tested with a real purchase:
+      order #94, ARS 1.500, approved → completed, IPN received, emails + download OK, refunded OK. Refund: from the WooCommerce
+      order ("Reembolso … mediante Mercado Pago") — the plugin refunds through the API.
+      Products created by code need `WC_Product_Download::set_id()` (the importer does it), or the download link is
+      "Enlace de descarga no válido"
 - [ ] Cache: confirm cart/checkout/account are never cached (`01-…` sets the cookie exclusions)
