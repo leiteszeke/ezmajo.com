@@ -20,8 +20,10 @@ wp-content/settings/
 wp-content/mu-plugins/staging-mail.php
 wp-content/debug.log
 
-# Paid pattern PDFs (WooCommerce protected downloads) - NEVER commit: this repo is public
-wp-content/uploads/woocommerce_uploads/
+# Media library: content, not code (backed up with rsync). New uploads (product photos) would otherwise block
+# ezdeploy; the files committed before 2026-10-05 stay tracked - never untrack them (a deploy would delete them).
+# This also covers the paid pattern PDFs in uploads/woocommerce_uploads/ - NEVER commit: this repo is public.
+wp-content/uploads/
 
 # WooCommerce logs (may contain customer data)
 wp-content/uploads/wc-logs/
