@@ -151,7 +151,7 @@ add_filter( 'woocommerce_available_payment_gateways', function ( $gateways ) {
  * Removed at print time, since plugin scripts may depend on them.
  */
 add_filter( 'script_loader_tag', function ( $tag, $handle ) {
-	if ( ezmajo_in_argentina() || ! preg_match( '/mercadopago|melidata|^mp_/', $handle ) ) {
+	if ( is_admin() || ezmajo_in_argentina() || ! preg_match( '/mercadopago|melidata|^mp_/', $handle ) ) { // the plugin's settings need them
 		return $tag;
 	}
 	return '';
