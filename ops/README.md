@@ -9,6 +9,19 @@ Operational notes for ezmajo.com (WordPress). Nothing in this folder is deployed
 - `ezgit …` — git for the web root. The git dir lives outside the web root (`/var/www/ezmajo.git`); sparse-checkout keeps `ops/` and `.gitignore` off the live site.
 - `nginx/` — copies of `/etc/nginx/sites-available/{ezmajo.com,web.ezmajo.com}`. Originals from before our changes: `/root/nginx-backup-2026-09-30/`.
 
+## Performance (2026-10-05)
+
+- Page cache: Cache Enabler serves normal pages (~0.05 s on the server; ~1 s from Spain, the server is in Argentina).
+  It only serves browsers: requests without `Accept: text/html` (plain `curl`) always bypass it — measure with
+  `curl -H "Accept: text/html"`. Store pages, cart and checkout are never page-cached (they vary by country/session).
+- Object cache: Redis (`redis-server`, 64 MB, allkeys-lru, localhost only) + plugin Redis Object Cache;
+  `WP_REDIS_PREFIX` / `WP_REDIS_MAXTTL` in the server's wp-config.php (backup: /root/wp-config-2026-10-05-pre-redis.php).
+  The drop-in `wp-content/object-cache.php` is ignored (.gitignore + /var/www/ezmajo.git/info/exclude). Status:
+  `wpe redis status`. Every DB query goes to db.ezmajo.com (~22 ms), so this took store pages from 3.5 s to 1.2 s.
+- UserWay (accessibility widget, installed by the agency) deactivated: it had no account linked, showed nothing and
+  called api.userway.org on every page (+0.63 s). Reactivate only after linking a UserWay account.
+- Store pages now ~0.6 s on the server, ~1.6 s from Spain. Next step if needed: a CDN (Cloudflare) near Spain.
+
 ## Login
 
 - Admin login: **https://ezmajo.com/taller** (WPS Hide Login; `/wp-admin` and `/wp-login.php` answer 404 when logged
