@@ -89,6 +89,10 @@ while ( ( $cells = fgetcsv( $handle ) ) !== false ) {
 	if ( '' !== $row['precio'] && ! is_numeric( $price ) ) {
 		$errors[] = "precio no válido: {$row['precio']}";
 	}
+	$price_ars = str_replace( array( '.', '$', ' ' ), '', $row['precio_ars'] ?? '' ); // optional column, whole pesos
+	if ( '' !== $price_ars && ! ctype_digit( $price_ars ) ) {
+		$errors[] = "precio_ars no válido: {$row['precio_ars']}";
+	}
 	$dificultad = ez_term_ids( 'pa_dificultad', ez_list( $row['dificultad'] ), $errors );
 	$tallas     = ez_term_ids( 'pa_talla', ez_list( $row['tallas'] ), $errors );
 	$formatos   = ez_term_ids( 'pa_formato', ez_list( $row['formatos'] ?: 'A4' ), $errors );
@@ -136,6 +140,9 @@ while ( ( $cells = fgetcsv( $handle ) ) !== false ) {
 		ez_attribute( 'pa_formato', $formatos ),
 	) );
 
+	if ( isset( $row['precio_ars'] ) ) { // older sheets without the column keep the price set in the panel
+		$product->update_meta_data( '_ezmajo_precio_ars', $price_ars );
+	}
 	$product->update_meta_data( '_ezmajo_hojas_a4', (int) $row['hojas_a4'] ?: '' );
 	$product->update_meta_data( '_ezmajo_hojas_a0', (int) $row['hojas_a0'] ?: '' );
 	foreach ( array( 'materiales', 'metraje', 'medidas', 'incluye' ) as $field ) {

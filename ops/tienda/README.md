@@ -2,7 +2,7 @@
 
 Code: `wp-content/mu-plugins/ezmajo-tienda.php` (checkout consent, address fields only when shipping, pricing, completed
 email wording) and `wp-content/mu-plugins/ezmajo-tienda/` (catalogue URLs + filter chips, Patrón/Prenda product fields
-and presets, product page, CSS).
+and presets, product page, Argentina mode, CSS).
 
 The shop sells **patrones** (PDF, simple downloadable products) and **prendas** (garments: variable products, Talla x
 Color with stock per variation). Design and decisions: `diseno-prendas.md`.
@@ -17,6 +17,21 @@ Config scripts (idempotent; run with `--user=<admin>`, then `wp rewrite flush` i
 Panel: Productos → **Añadir patrón** / **Añadir prenda** preset each kind (see `mu-plugins/ezmajo-tienda/fields.php`).
 Garments: create the variations (Variaciones → Generar variaciones), then price and stock per variation (new
 variations start with stock management on and 0 units).
+
+## Argentina (pesos + Mercado Pago)
+
+Visitors from Argentina buy **patterns only, in pesos**, and pay with **Mercado Pago** (official plugin
+`woocommerce-mercadopago`, Checkout Pro, the family's Argentine account). Pesos sales are declared in Argentina, not in
+the Spanish books. Code: `mu-plugins/ezmajo-tienda/argentina.php`.
+
+- Country: nginx geoip2 (DB-IP Lite) → `EZMAJO_COUNTRY`; the `ezmajo_pais` cookie overrides it. `?pais=AR` / `?pais=ES`
+  switches (link "¿No estás en Argentina?" on shop pages). Staging has no geoip: use `?pais=AR`.
+- Price: field **Precio Argentina ($)** in the Patrón tab (CSV column `precio_ars`, whole pesos). Empty = not sold in
+  Argentina. No offers in pesos. Update them by hand (inflation).
+- Garments: shown without price or buy button, with a notice; removed from the cart when switching to Argentina.
+- Checkout: Argentina mode only allows billing country Argentina and only Mercado Pago; everywhere else Argentina is
+  not in the list and Mercado Pago is hidden. Orders keep their own currency (reports mix EUR and ARS).
+- Store pages are never page-cached (Cache Enabler bypass), since they vary by country.
 
 ## Loading patterns
 
@@ -70,4 +85,11 @@ pages show "Próximamente", rest of the site unchanged). `03-menu.php` not run y
 - [ ] Legal pages: Condiciones de venta (patrones: renuncia al desistimiento; prendas: 14 días de devolución — who pays
       the return shipping?), licencia de uso, privacy + cookie policy updates; set terms page in WooCommerce
 - [ ] CookieYes: payment provider cookies categorised
+- [x] Argentina geoip on the server (2026-10-05; backup in `/root/nginx-backup-2026-10-05-geoip/`):
+      `/usr/local/sbin/ezmajo-geoip` (run first: the database must exist before nginx loads the conf),
+      `conf.d/ezmajo-geoip.conf`, `sites-available/ezmajo.com`, `/etc/cron.d/ezmajo-geoip`. Checked with a temporary
+      endpoint: ES from Spain, AR from the server (hosted in Argentina)
+- [ ] Argentina: deploy `argentina.php`, activate `woocommerce-mercadopago`, connect the Argentine account's production
+      credentials, enable Checkout Pro only, webhook OK; a real purchase in pesos + refund. DB-IP Lite (CC BY 4.0)
+      needs attribution: "IP Geolocation by DB-IP" (dbip.com) in the privacy policy
 - [ ] Cache: confirm cart/checkout/account are never cached (`01-…` sets the cookie exclusions)

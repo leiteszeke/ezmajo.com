@@ -129,3 +129,16 @@
 	.ezmajo-filtro__titulo { width: 100%; }
 }
 .ezmajo-sin-resultados{margin-block:2rem}
+
+/* Argentina (argentina.php): notice instead of the buy form, country switch link */
+.ezmajo-aviso-ar {
+	padding: .75em 1em;
+	border-left: 3px solid var(--ez-pink);
+	background: var(--ez-pink-soft);
+}
+.ezmajo-pais {
+	margin-top: 2rem;
+	color: var(--ez-muted);
+	font-size: .875em;
+	text-align: center;
+}

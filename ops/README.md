@@ -14,6 +14,9 @@ Operational notes for ezmajo.com (WordPress). Nothing in this folder is deployed
 - Admin login: **https://ezmajo.com/taller** (WPS Hide Login; `/wp-admin` and `/wp-login.php` answer 404 when logged
   out). Branded screen: `wp-content/mu-plugins/ezmajo-login.php`. nginx blocks `xmlrpc.php` and rate-limits the login
   (`nginx/conf.d-ezmajo-login.conf` -> `/etc/nginx/conf.d/ezmajo-login.conf`).
+- Visitor country (shop's Argentina mode): nginx geoip2 with DB-IP Lite (`nginx/conf.d-ezmajo-geoip.conf` ->
+  `/etc/nginx/conf.d/ezmajo-geoip.conf`), passed to PHP as `EZMAJO_COUNTRY`; monthly update `nginx/ezmajo-geoip.sh` ->
+  `/usr/local/sbin/ezmajo-geoip` + `/etc/cron.d/ezmajo-geoip`. See `tienda/README.md` → Argentina.
 - Locked out (plugin broken, slug forgotten)? `wpe option get whl_page`, or `wpe plugin deactivate wps-hide-login`
   to get `/wp-login.php` back.
 

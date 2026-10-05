@@ -35,6 +35,7 @@ done
 for sku in EZ-001 EZ-002 EZ-003; do
 	./wp post update "$(./wp wc product list --user=ezequiel --sku=$sku --field=id)" --post_status=publish
 done
+./wp plugin activate woocommerce-mercadopago # Argentina mode: set its test credentials in WooCommerce → Ajustes → Pagos
 ./wp option update woocommerce_cheque_settings --format=json \
 	'{"enabled":"yes","title":"Pago de prueba (solo staging)","description":"Simula un pago.","instructions":""}'
 

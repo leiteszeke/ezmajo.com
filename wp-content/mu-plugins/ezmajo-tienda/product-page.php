@@ -130,7 +130,8 @@ add_filter( 'render_block_woocommerce/product-meta', function ( $html ) {
 
 // The buy form block has no "descendant of single template" attribute; is_product() is enough there.
 add_filter( 'render_block_woocommerce/add-to-cart-form', function ( $html ) {
-	if ( ! is_product() || ! ezmajo_is_pattern( wc_get_product( get_the_ID() ) ) ) {
+	// Not from Argentina (argentina.php): the sewn garment would have to be picked up in Barcelona.
+	if ( ! is_product() || ezmajo_in_argentina() || ! ezmajo_is_pattern( wc_get_product( get_the_ID() ) ) ) {
 		return $html;
 	}
 	return $html . sprintf(

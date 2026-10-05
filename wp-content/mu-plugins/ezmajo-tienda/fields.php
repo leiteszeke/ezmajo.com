@@ -13,6 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 function ezmajo_pattern_fields() {
 	return array(
+		'_ezmajo_precio_ars' => array( 'label' => 'Precio Argentina ($)', 'type' => 'ars', 'desc' => 'En pesos, para quien compra desde Argentina (paga con Mercado Pago). Vacío: no se vende en Argentina.' ),
 		'_ezmajo_hojas_a4'   => array( 'label' => 'Hojas A4', 'type' => 'number', 'desc' => 'Páginas del PDF para imprimir en casa.' ),
 		'_ezmajo_hojas_a0'   => array( 'label' => 'Hojas A0', 'type' => 'number', 'desc' => 'Solo si incluye versión para copistería.' ),
 		'_ezmajo_materiales' => array( 'label' => 'Materiales', 'type' => 'textarea', 'desc' => 'Telas recomendadas y avíos. Una línea por elemento.' ),
@@ -125,7 +126,7 @@ function ezmajo_render_fields( $panel_id, $fields ) {
 		);
 		if ( 'textarea' === $field['type'] ) {
 			woocommerce_wp_textarea_input( $args + array( 'rows' => 5, 'style' => 'height:8em;font-family:monospace' ) );
-		} elseif ( 'price' === $field['type'] ) {
+		} elseif ( in_array( $field['type'], array( 'price', 'ars' ), true ) ) {
 			woocommerce_wp_text_input( $args + array( 'data_type' => 'price' ) );
 		} elseif ( 'number' === $field['type'] ) {
 			woocommerce_wp_text_input( $args + array( 'type' => 'number', 'custom_attributes' => array( 'min' => 0, 'step' => 1 ) ) );
@@ -152,6 +153,8 @@ add_action( 'woocommerce_admin_process_product_object', function ( $product ) {
 			if ( '' !== $value && $value !== $product->get_meta( $key ) ) {
 				ezmajo_apply_price_to_variations( $product, $value );
 			}
+		} elseif ( 'ars' === $field['type'] ) {
+			$value = wc_format_decimal( $raw, 0 );
 		} elseif ( 'number' === $field['type'] ) {
 			$value = absint( $raw );
 		} elseif ( 'textarea' === $field['type'] ) {

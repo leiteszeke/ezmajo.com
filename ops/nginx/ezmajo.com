@@ -9,6 +9,7 @@ server {
 
     location ~ \.php$ {
         include snippets/fastcgi-php.conf;
+        fastcgi_param EZMAJO_COUNTRY $ezmajo_country; # conf.d-ezmajo-geoip.conf
         fastcgi_pass unix:/run/php/php8.1-fpm.sock;
     }
 

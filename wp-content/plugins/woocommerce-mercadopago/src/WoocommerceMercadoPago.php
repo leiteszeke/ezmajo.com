@@ -1,0 +1,616 @@
+<?php
+
+namespace MercadoPago\Woocommerce;
+
+use Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry;
+use MercadoPago\Woocommerce\Admin\Settings;
+use MercadoPago\Woocommerce\Blocks\BasicBlock;
+use MercadoPago\Woocommerce\Blocks\CustomBlock;
+use MercadoPago\Woocommerce\Blocks\CreditsBlock;
+use MercadoPago\Woocommerce\Blocks\PixBlock;
+use MercadoPago\Woocommerce\Blocks\TicketBlock;
+use MercadoPago\Woocommerce\Blocks\PseBlock;
+use MercadoPago\Woocommerce\Blocks\YapeBlock;
+use MercadoPago\Woocommerce\Configs\Metadata;
+use MercadoPago\Woocommerce\Helpers\AutomaticPaymentsClient;
+use MercadoPago\Woocommerce\Helpers\SubscriptionsCredentialsValidator;
+use MercadoPago\Woocommerce\Helpers\SubscriptionsHelper;
+use MercadoPago\Woocommerce\Hooks\Subscriptions as SubscriptionsHook;
+use MercadoPago\Woocommerce\Funnel\Funnel;
+use MercadoPago\Woocommerce\Helpers\Paths;
+use MercadoPago\Woocommerce\Order\OrderBilling;
+use MercadoPago\Woocommerce\Order\OrderMetadata;
+use MercadoPago\Woocommerce\Configs\Seller;
+use MercadoPago\Woocommerce\Configs\Store;
+use MercadoPago\Woocommerce\Libraries\Logs\Logs;
+use MercadoPago\Woocommerce\Order\OrderShipping;
+use MercadoPago\Woocommerce\Order\OrderStatus;
+use MercadoPago\Woocommerce\Translations\AdminTranslations;
+use MercadoPago\Woocommerce\Translations\StoreTranslations;
+use MercadoPago\Woocommerce\Helpers\Country;
+use MercadoPago\Woocommerce\Helpers\Strings;
+use MercadoPago\Woocommerce\HealthMonitor\FileIntegrityChecker;
+use MercadoPago\Woocommerce\SuperToken\SuperTokenPaymentProcessor;
+use WooCommerce;
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+class WoocommerceMercadoPago
+{
+    private const PLUGIN_VERSION = '8.9.5';
+
+    private const PLUGIN_MIN_PHP = '7.4';
+
+    private const PLATFORM_ID = 'bo2hnr2ic4p001kbgpt0';
+
+    private const PRODUCT_ID_DESKTOP = 'BT7OF5FEOO6G01NJK3QG';
+
+    private const PRODUCT_ID_MOBILE  = 'BT7OFH09QS3001K5A0H0';
+
+    private const PLATFORM_NAME = 'woocommerce';
+
+    private const PLUGIN_NAME = 'woocommerce-mercadopago/woocommerce-mercadopago.php';
+
+    private const PLUGIN_SUPER_TOKEN_USE_BUNDLE = true;
+
+    private const PLUGIN_SUPER_TOKEN_VERSION = 'v2.1';
+
+    private const PLUGIN_SDK_ENV = 'prod';
+
+    public WooCommerce $woocommerce;
+
+    public Hooks $hooks;
+
+    public Helpers $helpers;
+
+    public Settings $settings;
+
+    public Metadata $metadataConfig;
+
+    public Seller $sellerConfig;
+
+    public Store $storeConfig;
+
+    public Logs $logs;
+
+    public OrderBilling $orderBilling;
+
+    public OrderMetadata $orderMetadata;
+
+    public OrderShipping $orderShipping;
+
+    public OrderStatus $orderStatus;
+
+    public AdminTranslations $adminTranslations;
+
+    public StoreTranslations $storeTranslations;
+
+    public Funnel $funnel;
+
+    public Country $country;
+
+    public \MercadoPago\Woocommerce\Helpers\SubscriptionsHelper $subscriptionsHelper;
+
+    public SuperTokenPaymentProcessor $superTokenPaymentProcessor;
+
+    public \MercadoPago\Woocommerce\Helpers\AutomaticPaymentsClient $automaticPaymentsClient;
+
+    public SubscriptionsCredentialsValidator $subscriptionsCredentialsValidator;
+
+    public SubscriptionsHook $subscriptionsHook;
+
+    private static bool $booted = false;
+
+    /**
+     * WoocommerceMercadoPago constructor
+     */
+    public function __construct()
+    {
+        $this->defineConstants();
+        $this->registerHooks();
+    }
+
+    /**
+     * Load plugin text domain
+     *
+     * @return void
+     */
+    public function loadPluginTextDomain(): void
+    {
+        $textDomain = $this->pluginMetadata('TextDomain');
+        unload_textdomain($textDomain);
+
+        $location_splitted = explode('_', apply_filters('plugin_locale', get_locale(), $textDomain));
+
+        $locale = $location_splitted[0];
+        $country = $location_splitted[1] ?? '';
+        $locale = in_array($country, ['MX']) ? $locale . '_' . $country : $locale;
+
+        load_textdomain($textDomain, Paths::basePath(Paths::join($this->pluginMetadata('DomainPath'), "woocommerce-mercadopago-$locale.mo")));
+    }
+
+    /**
+     * Register hooks
+     *
+     * @return void
+     */
+    public function registerHooks(): void
+    {
+        add_action('init', [$this, 'loadPluginTextDomain'], 0);
+        add_action('init', [$this, 'runMigrations'], 0);
+        add_action('init', [$this, 'init'], 1);
+        add_filter('query_vars', function ($vars) {
+            $vars[] = 'wallet_button';
+            return $vars;
+        });
+    }
+
+    /**
+     * Register gateways
+     *
+     * @return void
+     */
+    public function registerGateways(): void
+    {
+        foreach ($this->country->getGatewayOrder() as $gateway) {
+            $this->hooks->gateway->registerGateway($gateway);
+        }
+    }
+
+    /**
+     * Register woocommerce blocks support
+     *
+     * @return void
+     */
+    public function registerBlocks(): void
+    {
+        if (class_exists('Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType')) {
+            add_action(
+                'woocommerce_blocks_payment_method_type_registration',
+                function (PaymentMethodRegistry $payment_method_registry) {
+                    $payment_method_registry->register(new BasicBlock());
+                    $payment_method_registry->register(new CustomBlock());
+                    $payment_method_registry->register(new CreditsBlock());
+                    $payment_method_registry->register(new PixBlock());
+                    $payment_method_registry->register(new TicketBlock());
+                    $payment_method_registry->register(new PseBlock());
+                    $payment_method_registry->register(new YapeBlock());
+                }
+            );
+        }
+    }
+
+    /**
+     * Register health monitor components:
+     * - FileIntegrityChecker: detects modified JS/CSS files (admin, rate-limited to 1x/hour)
+     * - ScriptHealthMonitor: detects dequeued scripts (frontend, rate-limited to 1x/hour)
+     *
+     * @return void
+     */
+    public function registerHealthMonitor(): void
+    {
+        if (is_admin()) {
+            add_action('admin_init', function () {
+                (new FileIntegrityChecker())->runWithRateLimit();
+            });
+        }
+
+        $this->hooks->scripts->scriptHealthMonitor->register();
+    }
+
+    /**
+     * Register actions when gateway is not called on page
+     *
+     * @return void
+     */
+    public function registerActionsWhenGatewayIsNotCalled(): void
+    {
+        $this->helpers->actions->registerActionWhenGatewayIsNotCalled(
+            $this->hooks->product,
+            'registerBeforeAddToCartForm',
+            'MercadoPago\Woocommerce\Gateways\CreditsGateway',
+            'renderCreditsBanner'
+        );
+    }
+
+    /**
+     * Register filter to remove pay and cancel actions from My Account orders
+     *
+     * @return void
+     */
+    public function registerMyAccountOrderActionsFilter(): void
+    {
+        add_filter(
+            'woocommerce_my_account_my_orders_actions',
+            function ($actions, $order) {
+                if (!is_wc_endpoint_url('order-received') || !$order instanceof \WC_Order) {
+                    return $actions;
+                }
+
+                if (strpos($order->get_payment_method(), 'woo-mercado-pago') === 0) {
+                    unset($actions['pay'], $actions['cancel']);
+                }
+
+                return $actions;
+            },
+            50,
+            2
+        );
+    }
+
+    /**
+     * Init plugin
+     *
+     * @return void
+     */
+    public function init(): void
+    {
+        if (!class_exists('WC_Payment_Gateway')) {
+            $this->adminNoticeMissWoocoommerce();
+            return;
+        }
+
+        $this->setProperties();
+        $this->setPluginSettingsLink();
+
+        if (version_compare(PHP_VERSION, self::PLUGIN_MIN_PHP, '<')) {
+            $this->verifyPhpVersionNotice();
+            return;
+        }
+
+        if (!in_array('curl', get_loaded_extensions(), true)) {
+            $this->verifyCurlNotice();
+            return;
+        }
+
+        if (!in_array('gd', get_loaded_extensions(), true)) {
+            $this->verifyGdNotice();
+        }
+
+        if (!$this->country->isLanguageSupportedByPlugin() && $this->helpers->notices->shouldShowNotices()) {
+            $this->verifyCountryForTranslationsNotice();
+        }
+
+        $this->registerBlocks();
+        $this->registerGateways();
+        $this->registerHealthMonitor();
+        $this->registerActionsWhenGatewayIsNotCalled();
+        $this->registerMyAccountOrderActionsFilter();
+
+        $this->hooks->plugin->registerEnableCreditsAction([$this->helpers->creditsEnabled, 'enableCreditsAction']);
+        $this->hooks->plugin->executeCreditsAction();
+        $this->hooks->plugin->executePluginLoadedAction();
+        $this->verifyCredentialsForInstructionNotice();
+        $this->hooks->plugin->registerActivatePlugin([$this, 'activatePlugin']);
+        $this->hooks->gateway->registerSaveCheckoutSettings();
+        if ($this->storeConfig->getExecuteActivate()) {
+            $this->hooks->plugin->executeActivatePluginAction();
+        }
+        if ($this->storeConfig->getExecuteAfterPluginUpdate()) {
+            $this->afterPluginUpdate();
+        }
+        static::$booted = true;
+    }
+
+    public function booted(): bool
+    {
+        return static::$booted;
+    }
+
+    /**
+     * Run one-time data migrations keyed by version.
+     * Deletes stale cached options so they are refreshed from the API on next load.
+     *
+     * @return void
+     */
+    public function runMigrations(): void
+    {
+        $installedVersion = get_option('_mp_installed_version', '0.0.0');
+
+        if ($installedVersion === self::PLUGIN_VERSION) {
+            return;
+        }
+
+        if (version_compare($installedVersion, '8.8.0', '<')) {
+            delete_option('_all_payment_methods_ticket');
+        }
+
+        update_option('_mp_installed_version', self::PLUGIN_VERSION);
+    }
+
+    /**
+     * Function hook disabled plugin
+     *
+     * @return void
+     */
+    public function disablePlugin()
+    {
+        $this->funnel->updateStepDisable();
+    }
+
+    /**
+     * Function hook active plugin
+     */
+    public function activatePlugin(): void
+    {
+        $disableActivate = fn() => $this->storeConfig->setExecuteActivate(false);
+
+        if ($this->funnel->created()) {
+            $this->funnel->updateStepActivate($disableActivate);
+            return;
+        }
+
+        // Chained inside create()'s $after, not updateStepCredentials(): the seller
+        // contact step must reach sellers who install the plugin but never add
+        // credentials, and updateStepCredentials() never runs for that audience.
+        $this->funnel->create(function () use ($disableActivate) {
+            $disableActivate();
+            $this->funnel->updateStepSellerContact();
+        });
+    }
+
+    /**
+     * Function hook after plugin update
+     */
+    public function afterPluginUpdate(): void
+    {
+        $this->funnel->updateStepPluginVersion(fn() => $this->storeConfig->setExecuteAfterPluginUpdate(false));
+    }
+
+    /**
+     * Set plugin properties
+     *
+     * @return void
+     */
+    public function setProperties(): void
+    {
+        $dependencies = new Dependencies();
+
+        // Globals
+        $this->woocommerce = $dependencies->woocommerce;
+
+        // Configs
+        $this->storeConfig    = $dependencies->storeConfig;
+        $this->sellerConfig   = $dependencies->sellerConfig;
+        $this->metadataConfig = $dependencies->metadataConfig;
+
+        // Order
+        $this->orderBilling  = $dependencies->orderBilling;
+        $this->orderShipping = $dependencies->orderShipping;
+        $this->orderMetadata = $dependencies->orderMetadata;
+        $this->orderStatus   = $dependencies->orderStatus;
+
+        // Helpers
+        $this->helpers = $dependencies->helpers;
+
+        // Hooks
+        $this->hooks = $dependencies->hooks;
+
+        // General
+        $this->logs = $dependencies->logs;
+
+        $this->subscriptionsHelper     = $dependencies->subscriptionsHelper;
+        $this->automaticPaymentsClient = $dependencies->automaticPaymentsClient;
+
+        // Exclusive
+        $this->settings = $dependencies->settings;
+
+        // Translations
+        $this->adminTranslations = $dependencies->adminTranslations;
+        $this->storeTranslations = $dependencies->storeTranslations;
+
+        // Country
+        $this->country = $dependencies->countryHelper;
+
+        $this->funnel = $dependencies->funnel;
+
+        $this->subscriptionsCredentialsValidator = $dependencies->subscriptionsCredentialsValidator;
+        $this->subscriptionsHook                 = $dependencies->subscriptionsHook;
+
+        // Super Token
+        $this->superTokenPaymentProcessor = $dependencies->superTokenPaymentProcessor;
+    }
+
+    /**
+     * Set plugin configuration links
+     *
+     * @return void
+     */
+    public function setPluginSettingsLink()
+    {
+        $links = $this->helpers->links->getLinks();
+
+        $pluginLinks = [
+            [
+                'text'   => $this->adminTranslations->plugin['set_plugin'],
+                'href'   => $links['admin_settings_page'],
+                'target' => $this->hooks->admin::HREF_TARGET_DEFAULT,
+            ],
+            [
+                'text'   => $this->adminTranslations->plugin['payment_method'],
+                'href'   => $links['admin_gateways_list'],
+                'target' => $this->hooks->admin::HREF_TARGET_DEFAULT,
+            ],
+            [
+                'text'   => $this->adminTranslations->plugin['plugin_manual'],
+                'href'   => $links['docs_integration_introduction'],
+                'target' => $this->hooks->admin::HREF_TARGET_BLANK,
+            ],
+        ];
+
+        $this->hooks->admin->registerPluginActionLinks(self::PLUGIN_NAME, $pluginLinks);
+    }
+
+    /**
+     * Show php version unsupported notice
+     *
+     * @return void
+     */
+    public function verifyPhpVersionNotice(): void
+    {
+        $this->helpers->notices->adminNoticeError($this->adminTranslations->notices['php_wrong_version'], false);
+    }
+
+    /**
+     * Show curl missing notice
+     *
+     * @return void
+     */
+    public function verifyCurlNotice(): void
+    {
+        $this->helpers->notices->adminNoticeError($this->adminTranslations->notices['missing_curl'], false);
+    }
+
+    /**
+     * Show gd missing notice
+     *
+     * @return void
+     */
+    public function verifyGdNotice(): void
+    {
+        $this->helpers->notices->adminNoticeWarning($this->adminTranslations->notices['missing_gd_extensions'], false);
+    }
+
+    /**
+     * Show unsupported country for translations
+     *
+     * @return void
+     */
+    public function verifyCountryForTranslationsNotice(): void
+    {
+        $this->helpers->notices->adminNoticeError($this->adminTranslations->notices['missing_translation']);
+    }
+
+    /**
+     * Show notice when credentials are null
+     *
+     * @return void
+     */
+    public function verifyCredentialsForInstructionNotice(): void
+    {
+        if (isset($this->sellerConfig)) {
+            $publicKeyProd = $this->sellerConfig->getCredentialsPublicKeyProd();
+            if (empty($publicKeyProd) && $this->helpers->notices->shouldShowNoticesForSettingsSection()) {
+                $this->helpers->notices->instructionalNotice();
+            }
+        }
+    }
+
+    /**
+     * Define plugin constants
+     *
+     * @return void
+     */
+    private function defineConstants(): void
+    {
+        $this->define('MP_MIN_PHP', self::PLUGIN_MIN_PHP);
+        $this->define('MP_VERSION', self::PLUGIN_VERSION);
+        $this->define('MP_PLATFORM_ID', self::PLATFORM_ID);
+        $this->define('MP_PLATFORM_NAME', self::PLATFORM_NAME);
+        $this->define('MP_PRODUCT_ID_DESKTOP', self::PRODUCT_ID_DESKTOP);
+        $this->define('MP_PRODUCT_ID_MOBILE', self::PRODUCT_ID_MOBILE);
+        $this->define('MP_SUPER_TOKEN_USE_BUNDLE', self::PLUGIN_SUPER_TOKEN_USE_BUNDLE);
+        $this->define('MP_SUPER_TOKEN_VERSION', self::PLUGIN_SUPER_TOKEN_VERSION);
+        $this->define('MP_SDK_ENV', self::PLUGIN_SDK_ENV);
+    }
+
+    /**
+     * Define constants
+     *
+     * @param $name
+     * @param $value
+     *
+     * @return void
+     */
+    private function define($name, $value): void
+    {
+        if (!defined($name)) {
+            define($name, $value);
+        }
+    }
+
+    /**
+     * Show woocommerce missing notice
+     * This function should use WordPress features only
+     *
+     * @return void
+     */
+    public function adminNoticeMissWoocoommerce(): void
+    {
+        add_action('admin_enqueue_scripts', function () {
+            wp_enqueue_style('woocommerce-mercadopago-admin-notice-css');
+            wp_register_style(
+                'woocommerce-mercadopago-admin-notice-css',
+                sprintf('%s%s', plugin_dir_url(__FILE__), '../assets/css/admin/mp-admin-notices.css'),
+                false,
+                MP_VERSION
+            );
+        });
+
+        add_action(
+            'admin_notices',
+            function () {
+                $strings = new Strings();
+                $allowedHtmlTags = $strings->getAllowedHtmlTags();
+                $isInstalled = false;
+                $currentUserCanInstallPlugins = current_user_can('install_plugins');
+
+                $minilogo     = sprintf('%s%s', plugin_dir_url(__FILE__), '../assets/images/minilogo.png');
+                $translations = [
+                    'activate_woocommerce' => __('Activate WooCommerce', 'woocommerce-mercadopago'),
+                    'install_woocommerce'  => __('Install WooCommerce', 'woocommerce-mercadopago'),
+                    'see_woocommerce'      => __('See WooCommerce', 'woocommerce-mercadopago'),
+                    'miss_woocommerce'     => sprintf(
+                        __('The Mercado Pago module needs an active version of %s in order to work!', 'woocommerce-mercadopago'),
+                        '<a target="_blank" href="https://wordpress.org/extend/plugins/woocommerce/">WooCommerce</a>'
+                    ),
+                ];
+
+                $activateLink = wp_nonce_url(
+                    self_admin_url('plugins.php?action=activate&plugin=woocommerce/woocommerce.php&plugin_status=all'),
+                    'activate-plugin_woocommerce/woocommerce.php'
+                );
+
+                $installLink = wp_nonce_url(
+                    self_admin_url('update.php?action=install-plugin&plugin=woocommerce'),
+                    'install-plugin_woocommerce'
+                );
+
+                if (function_exists('get_plugins')) {
+                    $allPlugins  = get_plugins();
+                    $isInstalled = !empty($allPlugins['woocommerce/woocommerce.php']);
+                }
+
+                if ($isInstalled && $currentUserCanInstallPlugins) {
+                    $missWoocommerceAction = 'active';
+                } else {
+                    if ($currentUserCanInstallPlugins) {
+                        $missWoocommerceAction = 'install';
+                    } else {
+                        $missWoocommerceAction = 'see';
+                    }
+                }
+
+                include dirname(__FILE__) . '/../templates/admin/notices/miss-woocommerce-notice.php';
+            }
+        );
+    }
+
+    /**
+     * Plugin file metadata
+     *
+     * @see get_plugin_data()
+     *
+     * @param string $key metadata desired element key
+     *
+     * @return string|string[] all data or just $key element value
+     */
+    public function pluginMetadata(?string $key = null)
+    {
+        static $data;
+        $data ??= get_plugin_data(MP_PLUGIN_FILE, false, false);
+        return isset($key) ? $data[$key] : $data;
+    }
+}

@@ -76,9 +76,9 @@ add_filter( 'pre_option_woocommerce_checkout_address_2_field', function () {
 } );
 
 /*
- * Pattern catalogue: URLs and listing, product fields, product page, styles.
+ * Pattern catalogue: URLs and listing, product fields, product page, styles; Argentina (pesos + Mercado Pago).
  */
-foreach ( array( 'catalog', 'fields', 'product-page' ) as $ezmajo_part ) {
+foreach ( array( 'catalog', 'fields', 'product-page', 'argentina' ) as $ezmajo_part ) {
 	require __DIR__ . "/ezmajo-tienda/$ezmajo_part.php";
 }
 
