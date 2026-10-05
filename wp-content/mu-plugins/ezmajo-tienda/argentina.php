@@ -145,6 +145,18 @@ add_filter( 'woocommerce_available_payment_gateways', function ( $gateways ) {
 	return $gateways;
 } );
 
+/*
+ * Outside Argentina mode, none of Mercado Pago's scripts: the plugin loads them on every checkout, including
+ * MercadoLibre's tracking (behavior-tracking, melidata), which sets the _wcmpid cookie for a year before any consent.
+ * Removed at print time, since plugin scripts may depend on them.
+ */
+add_filter( 'script_loader_tag', function ( $tag, $handle ) {
+	if ( ezmajo_in_argentina() || ! preg_match( '/mercadopago|melidata|^mp_/', $handle ) ) {
+		return $tag;
+	}
+	return '';
+}, 10, 2 );
+
 // "¿No estás en Argentina?" / "¿Estás en Argentina?" once per shop page: after the catalogue, the buy form, cart or checkout.
 function ezmajo_country_switch( $html ) {
 	static $done = false;
