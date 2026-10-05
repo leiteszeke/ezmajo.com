@@ -74,6 +74,8 @@ $options = array(
 	'woocommerce_allow_tracking'                     => 'no',
 	'woocommerce_show_marketplace_suggestions'       => 'no',
 	'woocommerce_merchant_email_notifications'       => 'no',
+	// Order attribution: its sbjs_* cookies are set before cookie consent and the origin data isn't used
+	'woocommerce_feature_order_attribution_enabled'  => 'no',
 
 	// Store is configured by these scripts: the WooCommerce menu opens the store home, not the setup wizard
 	'woocommerce_onboarding_profile'                 => array( 'skipped' => true ),

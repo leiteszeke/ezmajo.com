@@ -84,8 +84,8 @@ pages show "Próximamente", rest of the site unchanged). `03-menu.php` not run y
 - [ ] Invoices plugin (Verifactu) agreed with the gestor
 - [ ] Legal pages: Condiciones de venta (patrones: renuncia al desistimiento; prendas: 14 días de devolución — who pays
       the return shipping?), licencia de uso, privacy + cookie policy updates; set terms page in WooCommerce
-- [ ] CookieYes: payment provider cookies categorised. WooCommerce order attribution sets `sbjs_*` cookies before
-      consent (not in the cookie policy): disable it or gate it behind consent before opening
+- [ ] CookieYes: payment provider cookies categorised. (WooCommerce order attribution and its `sbjs_*` cookies:
+      disabled 2026-10-05 in `01-…`; the shop then only sets the cookies listed in the cookie policy)
 - [x] Argentina geoip on the server (2026-10-05; backup in `/root/nginx-backup-2026-10-05-geoip/`):
       `/usr/local/sbin/ezmajo-geoip` (run first: the database must exist before nginx loads the conf),
       `conf.d/ezmajo-geoip.conf`, `sites-available/ezmajo.com`, `/etc/cron.d/ezmajo-geoip`. Checked with a temporary
