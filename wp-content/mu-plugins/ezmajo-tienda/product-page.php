@@ -153,7 +153,7 @@ add_filter( 'woocommerce_product_tabs', function ( $tabs ) {
 	} else {
 		$composition = $product->get_meta( '_ezmajo_composicion' );
 		$sections    = array(
-			'ezmajo_guia'     => array( 'Guía de tallas', ezmajo_pipe_table( $product->get_meta( '_ezmajo_guia_tallas' ) ) ),
+			'ezmajo_guia'     => array( ezmajo_attribute_list( $product, 'pa_talla' ) ? 'Guía de tallas' : 'Medidas', ezmajo_pipe_table( $product->get_meta( '_ezmajo_guia_tallas' ) ) ),
 			'ezmajo_cuidados' => array( 'Composición y cuidados', ( $composition ? '<p>' . esc_html( $composition ) . '</p>' : '' ) . ezmajo_line_list( $product->get_meta( '_ezmajo_cuidados' ) ) ),
 			'ezmajo_envio'    => ezmajo_ships_garments()
 				? array( 'Envío y devoluciones', '<p>Envío a España peninsular o recogida gratis en nuestra tienda de Barcelona. Tienes 14 días para devolver la prenda desde que la recibes.</p>' )
@@ -180,6 +180,22 @@ add_filter( 'woocommerce_product_tabs', function ( $tabs ) {
 }, 98 ); // after WooCommerce adds its default tabs (priority 10; mu-plugins load first)
 
 add_filter( 'woocommerce_product_description_heading', '__return_empty_string' );
+
+// A garment in one colour (or without sizes) has nothing to choose there: preselect the only option, so the buy
+// button works straight away instead of asking to pick from a one-item list.
+add_filter( 'woocommerce_dropdown_variation_attribute_options_args', function ( $args ) {
+	if ( empty( $args['selected'] ) && 1 === count( (array) $args['options'] ) ) {
+		$only             = reset( $args['options'] );
+		$args['selected'] = $only instanceof WP_Term ? $only->slug : $only;
+	}
+	return $args;
+} );
+
+// "1 disponibles" (WooCommerce's Spanish) -> "Queda 1" / "Quedan 3".
+add_filter( 'woocommerce_get_availability_text', function ( $text, $product ) {
+	$qty = $product->managing_stock() ? (int) $product->get_stock_quantity() : 0;
+	return $qty > 0 && $product->is_in_stock() ? sprintf( 1 === $qty ? 'Queda %d' : 'Quedan %d', $qty ) : $text;
+}, 10, 2 );
 
 add_action( 'wp_enqueue_scripts', function () {
 	if ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() ) {

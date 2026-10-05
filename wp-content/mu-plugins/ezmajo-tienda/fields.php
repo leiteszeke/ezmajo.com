@@ -28,7 +28,7 @@ function ezmajo_garment_fields() {
 		'_ezmajo_precio_base' => array( 'label' => 'Precio (€)', 'type' => 'price', 'desc' => 'IVA incluido. Al guardar se aplica a todas las tallas y colores; después puedes cambiar alguna en Variaciones.' ),
 		'_ezmajo_composicion' => array( 'label' => 'Composición', 'type' => 'text', 'desc' => 'Por ejemplo: 70 % lana, 30 % poliamida.' ),
 		'_ezmajo_cuidados'    => array( 'label' => 'Cuidados', 'type' => 'textarea', 'desc' => 'Una línea por indicación (lavado, planchado...).' ),
-		'_ezmajo_guia_tallas' => array( 'label' => 'Guía de tallas', 'type' => 'textarea', 'desc' => 'Tabla: "Talla | Pecho | Largo", una fila por línea.' ),
+		'_ezmajo_guia_tallas' => array( 'label' => 'Guía de tallas', 'type' => 'textarea', 'desc' => 'Tabla: "Talla | Pecho | Largo", una fila por línea. Sin tallas (un set, una pieza única): "Pieza | Medidas".' ),
 	);
 }
 
