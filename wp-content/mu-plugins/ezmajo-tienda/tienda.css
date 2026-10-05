@@ -129,6 +129,16 @@
 	.ezmajo-filtro__titulo { width: 100%; }
 }
 .ezmajo-sin-resultados{margin-block:2rem}
+.ezmajo-pronto {
+	box-sizing: border-box;
+	margin-block: 2rem;
+	padding: 28px;
+	border-radius: 20px;
+	background: var(--ez-pink-soft);
+}
+.ezmajo-pronto h2 { margin: 0 0 .5rem; }
+.ezmajo-pronto p { margin: 0; font-size: 1.1rem; }
+.ezmajo-pronto a { color: var(--ez-dark); font-weight: 700; }
 
 /* Argentina (argentina.php): notice instead of the buy form, country switch link */
 .ezmajo-aviso-ar {

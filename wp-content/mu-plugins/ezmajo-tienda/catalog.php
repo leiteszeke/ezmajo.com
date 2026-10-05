@@ -142,8 +142,14 @@ function ezmajo_filter_chips() {
 add_filter( 'render_block_woocommerce/product-collection', function ( $html, $block ) {
 	if ( ( is_shop() || is_product_taxonomy() ) && ! empty( $block['attrs']['query']['inherit'] ) ) {
 		global $wp_query;
-		$empty = 0 === (int) $wp_query->post_count ? '<p class="ezmajo-sin-resultados alignwide">No hay productos con estos filtros.</p>' : '';
-		return ezmajo_filter_chips() . $empty . $html;
+		$empty = '';
+		if ( 0 === (int) $wp_query->post_count ) {
+			$empty = ezmajo_active_filters()
+				? '<p class="ezmajo-sin-resultados alignwide">No hay productos con estos filtros.</p>'
+				: '<div class="ezmajo-pronto alignwide"><h2>Muy pronto</h2><p>Estamos preparando los primeros patrones y prendas. <a href="' . esc_url( ezmajo_business()['instagram'] ) . '">Síguenos en Instagram</a> para enterarte cuando lleguen.</p></div>';
+		}
+		$coming_soon = 0 === (int) $wp_query->post_count && ! ezmajo_active_filters(); // nothing to filter yet
+		return ( $coming_soon ? '' : ezmajo_filter_chips() ) . $empty . $html;
 	}
 	return $html;
 }, 20, 2 ); // after WooCommerce injects its notices container into the block's first <div>
