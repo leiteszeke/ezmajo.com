@@ -2,7 +2,9 @@
 
 Code: `wp-content/mu-plugins/ezmajo-tienda.php` (checkout consent, address fields only when shipping, pricing, completed
 email wording) and `wp-content/mu-plugins/ezmajo-tienda/` (catalogue URLs + filter chips, Patrón/Prenda product fields
-and presets, product page, Argentina mode, CSS).
+and presets, product page, Argentina mode, buying experience — cart/checkout wording, order confirmation,
+branded download errors (`compra.php`) —, Mi cuenta (`cuenta.php`, `cuenta-inicio.php`), order emails with the logo
+and shop colours (`emails.php`; email look settings are forced in code), CSS).
 
 The shop sells **patrones** (PDF, simple downloadable products) and **prendas** (garments: variable products, Talla x
 Color with stock per variation). Design and decisions: `diseno-prendas.md`.

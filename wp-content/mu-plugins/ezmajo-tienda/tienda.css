@@ -142,3 +142,262 @@
 	font-size: .875em;
 	text-align: center;
 }
+
+/* Buying experience (compra.php) ------------------------------------------------------------------------------ */
+
+/* Cart and checkout: wider (two columns, summary on the side), soft cards, no shouting headings.
+   The theme's checkout template constrains <main> to 672px, which stacks the summary twice (top and bottom). */
+body.woocommerce-checkout:not(.woocommerce-order-received) main.is-layout-constrained {
+	max-width: 1100px !important;
+	margin-inline: auto !important;
+}
+.woocommerce-cart main .wp-block-woocommerce-cart,
+.woocommerce-checkout main .wp-block-woocommerce-checkout,
+.woocommerce-cart main .ezmajo-entrega,
+.woocommerce-checkout main .ezmajo-entrega {
+	max-width: 1100px !important;
+	margin-inline: auto !important;
+}
+.wc-block-cart .wc-block-cart-items__header,
+.wc-block-cart .wc-block-cart__totals-title {
+	color: var(--ez-muted);
+	font-size: .85rem !important;
+	font-weight: 700;
+	letter-spacing: .04em;
+}
+@media (min-width: 782px) { /* on phones the summary is a collapsible row at the top */
+	.wc-block-cart__sidebar .wp-block-woocommerce-cart-totals-block,
+	.wc-block-checkout__sidebar .wp-block-woocommerce-checkout-order-summary-block {
+		padding: 20px !important;
+		border: 1px solid var(--ez-border) !important;
+		border-radius: 16px;
+		background: var(--ez-pink-soft);
+	}
+}
+.wc-block-components-checkout-step__title,
+.wc-block-components-title.wc-block-components-title {
+	font-weight: 700;
+}
+.wc-block-components-text-input input,
+.wc-block-components-combobox .components-combobox-control__input,
+.wc-block-components-country-input select,
+.wc-blocks-components-select__select {
+	border-color: var(--ez-border) !important;
+	border-radius: 10px !important;
+}
+.wc-block-components-text-input input:focus,
+.wc-blocks-components-select__select:focus {
+	border-color: var(--ez-dark) !important;
+	box-shadow: 0 0 0 1px var(--ez-dark) !important;
+}
+.wc-block-components-radio-control-accordion-option,
+.wc-block-components-radio-control__option {
+	border-radius: 12px;
+}
+.wc-block-components-checkout-place-order-button,
+.wc-block-cart__submit-button {
+	min-height: 3.25rem;
+	font-size: 1.05rem !important;
+}
+
+/* "Descarga inmediata" / garments pickup note above cart and checkout */
+.ezmajo-entrega {
+	box-sizing: border-box;
+	margin-bottom: 1.5rem !important;
+	padding: 14px 18px;
+	border: 1px solid var(--ez-border);
+	border-radius: 16px;
+	background: var(--ez-pink-soft);
+}
+.ezmajo-entrega p { margin: 0; }
+.ezmajo-entrega p + p { margin-top: 6px; }
+
+/* Order confirmation */
+.ezmajo-gracias {
+	max-width: var(--wp--style--global--wide-size, 1280px) !important;
+	box-sizing: border-box;
+	margin-bottom: 2.5rem;
+	padding: 28px;
+	border-radius: 20px;
+	background: var(--ez-pink-soft);
+}
+.ezmajo-gracias h1 {
+	margin: 0 0 .5rem;
+	font-size: clamp(2rem, 5vw, 2.75rem);
+	line-height: 1.2;
+	letter-spacing: normal;
+}
+/* The theme's Inter file draws "¡" broken (only its dot shows): that glyph comes from the system font. */
+.ezmajo-abre { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; }
+.ezmajo-gracias p { max-width: 46rem; margin: .5rem 0 0; font-size: 1.1rem; }
+.ezmajo-gracias a:not(.ezmajo-boton) { color: var(--ez-dark); font-weight: 700; }
+.ezmajo-descargas {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 1.5rem;
+}
+.ezmajo-boton {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 3rem;
+	padding: 0 24px;
+	border: 2px solid var(--ez-dark);
+	border-radius: 999px;
+	background: var(--ez-dark);
+	color: #fff !important;
+	font-weight: 700;
+	text-decoration: none !important;
+}
+.ezmajo-boton:hover { opacity: .9; }
+.ezmajo-boton:focus-visible { outline: 3px solid var(--ez-pink); outline-offset: 3px; }
+.ezmajo-boton--claro { background: #fff; color: var(--ez-dark) !important; }
+.wc-block-order-confirmation-summary {
+	padding: 20px;
+	border: 1px solid var(--ez-border);
+	border-radius: 16px;
+}
+.wc-block-order-confirmation-totals table,
+.wc-block-order-confirmation-totals .wc-block-order-confirmation-totals__table {
+	border-color: var(--ez-border) !important;
+	border-radius: 16px;
+	overflow: hidden;
+}
+.woocommerce-order-received main { padding-bottom: 6rem !important; } /* room for the floating WhatsApp button */
+
+/* Mi cuenta (cuenta.php): the theme paints the title band purple; menu as a list of pills, content as a card */
+.woocommerce-account .wp-block-group.has-background:has(> .wp-block-post-title),
+.woocommerce-account .wp-block-cover:has(.wp-block-post-title) {
+	background: var(--ez-pink-soft) !important;
+}
+.woocommerce-account .woocommerce-form-login,
+.woocommerce-account .woocommerce-form-register {
+	border: 1px solid var(--ez-border) !important;
+	border-radius: 16px !important;
+}
+.woocommerce-account .woocommerce-form-login .input-text { border-radius: 10px; }
+.woocommerce-account .woocommerce { margin-top: 2rem; }
+.woocommerce-MyAccount-navigation ul {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.woocommerce-MyAccount-navigation li { margin: 0 !important; padding: 0 !important; border: 0 !important; }
+.woocommerce-MyAccount-navigation a {
+	display: block;
+	padding: 10px 16px;
+	border-radius: 999px;
+	color: var(--ez-dark);
+	text-decoration: none !important;
+}
+.woocommerce-MyAccount-navigation a:hover { background: var(--ez-pink-soft); }
+.woocommerce-MyAccount-navigation .is-active a {
+	background: var(--ez-dark);
+	color: #fff;
+	font-weight: 700;
+}
+.woocommerce-MyAccount-navigation-link--customer-logout a { color: var(--ez-muted); }
+.woocommerce-account .woocommerce-MyAccount-content {
+	box-sizing: border-box;
+	padding: 24px 28px !important;
+	border: 1px solid var(--ez-border) !important;
+	border-radius: 16px !important;
+}
+.woocommerce-MyAccount-content h2,
+.woocommerce-MyAccount-content .woocommerce-order-details__title,
+.woocommerce-MyAccount-content .woocommerce-column__title {
+	margin: 1.75rem 0 .75rem;
+	font-size: 1.35rem !important;
+	font-weight: 700;
+	letter-spacing: normal;
+}
+.woocommerce-MyAccount-content > :first-child,
+.woocommerce-MyAccount-content section:first-child > h2:first-child { margin-top: 0; }
+.woocommerce-MyAccount-content table {
+	border-collapse: collapse;
+	border: 0 !important;
+}
+.woocommerce-MyAccount-content table th,
+.woocommerce-MyAccount-content table td {
+	padding: 12px 10px !important;
+	border: 0 !important;
+	border-bottom: 1px solid var(--ez-border) !important;
+	vertical-align: middle;
+}
+.woocommerce-MyAccount-content table thead th {
+	color: var(--ez-muted);
+	font-size: .85rem;
+	font-weight: 700;
+}
+.woocommerce-MyAccount-content a.button,
+.woocommerce-MyAccount-content .woocommerce-MyAccount-downloads-file {
+	display: inline-flex !important;
+	align-items: center;
+	padding: 8px 18px !important;
+	white-space: nowrap;
+	line-height: 1.2;
+	text-decoration: none !important;
+}
+.woocommerce-MyAccount-content .wc-block-components-notice-banner {
+	border-color: var(--ez-border) !important;
+	border-radius: 12px;
+	background: var(--ez-pink-soft) !important;
+}
+
+/* Inicio (cuenta-inicio.php) */
+.ezmajo-cuenta { display: grid; gap: 28px; }
+.ezmajo-cuenta__hola { margin: 0; font-size: 1.35rem; }
+.ezmajo-cuenta__bloque h2 { margin: 0 0 .75rem !important; }
+.ezmajo-cuenta__bloque p { margin: .4rem 0 0; }
+.ezmajo-cuenta__lista {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.ezmajo-cuenta__lista li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px 16px;
+	padding: 12px 16px;
+	border-radius: 14px;
+	background: var(--ez-pink-soft);
+}
+.ezmajo-cuenta__lista small { display: block; color: var(--ez-muted); }
+.ezmajo-cuenta__lista .ezmajo-boton { min-height: 2.5rem; padding: 0 18px; }
+.ezmajo-cuenta a:not(.ezmajo-boton) { color: var(--ez-dark); font-weight: 600; }
+.ezmajo-cuenta__ayuda { padding-top: 20px; border-top: 1px solid var(--ez-border); }
+
+/* Download error page (standalone, see ezmajo_download_error_page) */
+body.ezmajo-error {
+	display: grid;
+	min-height: 100vh;
+	margin: 0;
+	padding: 16px;
+	place-items: center;
+	box-sizing: border-box;
+	background: var(--ez-pink-soft);
+	color: var(--ez-dark);
+	font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.ezmajo-error__caja {
+	width: 100%;
+	max-width: 520px;
+	padding: 32px 28px;
+	box-sizing: border-box;
+	border-radius: 20px;
+	background: #fff;
+	box-shadow: 0 10px 30px rgba(16, 8, 32, .08);
+	text-align: center;
+}
+.ezmajo-error__caja img { height: auto; }
+.ezmajo-error__caja h1 { margin: 1rem 0 .5rem; font-size: 1.6rem; line-height: 1.2; }
+.ezmajo-error__caja a:not(.ezmajo-boton) { color: var(--ez-dark); }
+.ezmajo-error__acciones { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 1.5rem 0; }

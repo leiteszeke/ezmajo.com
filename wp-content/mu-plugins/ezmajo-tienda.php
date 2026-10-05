@@ -27,7 +27,7 @@ add_action( 'woocommerce_init', function () {
 	}
 	woocommerce_register_additional_checkout_field( array(
 		'id'       => 'ezmajo/desistimiento',
-		'label'    => 'Quiero recibir los patrones ahora y acepto que, al tratarse de contenido digital, pierdo el derecho de desistimiento una vez iniciada la descarga.',
+		'label'    => 'Quiero los patrones ahora y acepto que, al ser contenido digital, pierdo el derecho de desistimiento al empezar la descarga.',
 		'location' => 'order',
 		'type'     => 'checkbox',
 		// Only for digital content: patterns are the shop's simple products, garments are variable (variations).
@@ -76,9 +76,10 @@ add_filter( 'pre_option_woocommerce_checkout_address_2_field', function () {
 } );
 
 /*
- * Pattern catalogue: URLs and listing, product fields, product page, styles; Argentina (pesos + Mercado Pago).
+ * Pattern catalogue: URLs and listing, product fields, product page, styles; Argentina (pesos + Mercado Pago);
+ * buying experience (cart/checkout wording, order confirmation, download errors) and order emails.
  */
-foreach ( array( 'catalog', 'fields', 'product-page', 'argentina' ) as $ezmajo_part ) {
+foreach ( array( 'catalog', 'fields', 'product-page', 'argentina', 'compra', 'cuenta', 'emails' ) as $ezmajo_part ) {
 	require __DIR__ . "/ezmajo-tienda/$ezmajo_part.php";
 }
 
