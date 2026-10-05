@@ -84,14 +84,15 @@ pages show "Próximamente", rest of the site unchanged). `03-menu.php` not run y
 - [ ] Invoices plugin (Verifactu) agreed with the gestor
 - [ ] Legal pages: Condiciones de venta (patrones: renuncia al desistimiento; prendas: 14 días de devolución — who pays
       the return shipping?), licencia de uso, privacy + cookie policy updates; set terms page in WooCommerce
-- [ ] CookieYes: payment provider cookies categorised
+- [ ] CookieYes: payment provider cookies categorised. WooCommerce order attribution sets `sbjs_*` cookies before
+      consent (not in the cookie policy): disable it or gate it behind consent before opening
 - [x] Argentina geoip on the server (2026-10-05; backup in `/root/nginx-backup-2026-10-05-geoip/`):
       `/usr/local/sbin/ezmajo-geoip` (run first: the database must exist before nginx loads the conf),
       `conf.d/ezmajo-geoip.conf`, `sites-available/ezmajo.com`, `/etc/cron.d/ezmajo-geoip`. Checked with a temporary
       endpoint: ES from Spain, AR from the server (hosted in Argentina)
 - [x] Argentina code deployed 2026-10-05 (`woocommerce-mercadopago` installed, inactive); privacy policy section 6 +
-      DB-IP attribution (`ops/2026-10-05-privacidad-geoip.php`). Cookie policy: list `ezmajo_pais` (technical) when
-      it is reviewed
+      DB-IP attribution (`ops/2026-10-05-privacidad-geoip.php`). Cookie policy updated 2026-10-05
+      (`ops/2026-10-05-politica-cookies.php`): own cookies, real consent options, SumUp/Mercado Pago
 - [ ] Argentina payments: activate `woocommerce-mercadopago`, connect the Argentine account's production
       credentials, enable Checkout Pro only, webhook OK; a real purchase in pesos + refund. DB-IP Lite (CC BY 4.0)
       needs attribution: "IP Geolocation by DB-IP" (dbip.com) in the privacy policy
