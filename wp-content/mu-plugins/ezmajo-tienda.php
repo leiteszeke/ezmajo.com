@@ -77,9 +77,10 @@ add_filter( 'pre_option_woocommerce_checkout_address_2_field', function () {
 
 /*
  * Pattern catalogue: URLs and listing, product fields, product page, styles; Argentina (pesos + Mercado Pago);
- * buying experience (cart/checkout wording, order confirmation, download errors) and order emails.
+ * buying experience (cart/checkout wording, order confirmation, download errors) and order emails; writing help
+ * (Gemini) in the product editor.
  */
-foreach ( array( 'catalog', 'fields', 'product-page', 'argentina', 'compra', 'cuenta', 'emails' ) as $ezmajo_part ) {
+foreach ( array( 'catalog', 'fields', 'product-page', 'argentina', 'compra', 'cuenta', 'emails', 'ia' ) as $ezmajo_part ) {
 	require __DIR__ . "/ezmajo-tienda/$ezmajo_part.php";
 }
 

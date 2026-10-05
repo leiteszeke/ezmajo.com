@@ -8,6 +8,8 @@ x-wp-env: &wp-env
   WORDPRESS_DB_USER: wp
   WORDPRESS_DB_PASSWORD: wp
   WORDPRESS_DEBUG: 1
+  # Optional, from ops/staging/.env (gitignored): Gemini key for the editor's "Ayuda para escribir"
+  EZMAJO_GEMINI_KEY: ${EZMAJO_GEMINI_KEY:-}
   WORDPRESS_CONFIG_EXTRA: |
     define( 'WP_ENVIRONMENT_TYPE', 'staging' );
     define( 'WP_HOME', 'http://localhost:8080' );

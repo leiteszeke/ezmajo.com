@@ -26,6 +26,9 @@ wp-content/uploads/woocommerce_uploads/
 # WooCommerce logs (may contain customer data)
 wp-content/uploads/wc-logs/
 
+# Local staging secrets (Gemini key)
+ops/staging/.env
+
 # Local import test files
 ops/staging/import-test/
 
