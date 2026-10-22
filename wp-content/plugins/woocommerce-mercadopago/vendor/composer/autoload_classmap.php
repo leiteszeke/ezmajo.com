@@ -209,6 +209,7 @@ return array(
     'MercadoPago\\Woocommerce\\Order\\OrderMetadata' => $baseDir . '/src/Order/OrderMetadata.php',
     'MercadoPago\\Woocommerce\\Order\\OrderShipping' => $baseDir . '/src/Order/OrderShipping.php',
     'MercadoPago\\Woocommerce\\Order\\OrderStatus' => $baseDir . '/src/Order/OrderStatus.php',
+    'MercadoPago\\Woocommerce\\Order\\RefundReconciliationLock' => $baseDir . '/src/Order/RefundReconciliationLock.php',
     'MercadoPago\\Woocommerce\\Refund\\RefundHandler' => $baseDir . '/src/Refund/RefundHandler.php',
     'MercadoPago\\Woocommerce\\Startup' => $baseDir . '/src/Startup.php',
     'MercadoPago\\Woocommerce\\SuperToken\\Adapters\\DefaultSuperTokenTransactionFactory' => $baseDir . '/src/SuperToken/Adapters/DefaultSuperTokenTransactionFactory.php',

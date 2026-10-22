@@ -1013,30 +1013,29 @@ class Cookie_Law_Info_Cookie_Scaner extends Cookie_Law_Info_Cookieyes {
 		$scan_id   = $this->get_last_scan_id();
 		$scan_urls = array();
 
-		if ( $cookie_data ) {
-			if ( $scan_id !== false ) {
+		if ( ! $cookie_data || false === $scan_id ) {
+			return new WP_Error( 'invalid', __( 'Invalid scan token', 'cookie-law-info' ) );
+		}
 
-				$urls = $wpdb->get_results( $wpdb->prepare( "SELECT id_cli_cookie_scan_url,url FROM {$wpdb->prefix}cli_cookie_scan_url WHERE id_cli_cookie_scan = %s ORDER BY id_cli_cookie_scan_url ASC", $scan_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$urls = $wpdb->get_results( $wpdb->prepare( "SELECT id_cli_cookie_scan_url,url FROM {$wpdb->prefix}cli_cookie_scan_url WHERE id_cli_cookie_scan = %s ORDER BY id_cli_cookie_scan_url ASC", $scan_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
-				foreach ( $urls as $url_data ) {
-					$url               = isset( $url_data['url'] ) ? sanitize_text_field( $url_data['url'] ) : '';
-					$scan_urls[ $url ] = isset( $url_data['id_cli_cookie_scan_url'] ) ? absint( $url_data['id_cli_cookie_scan_url'] ) : 1;
-				}
-				$scan_data         = ( isset( $cookie_data['scan_result'] ) ? json_decode( $cookie_data['scan_result'], true ) : array() );
-				$scan_result_token = ( isset( $cookie_data['scan_result_token'] ) ? $cookie_data['scan_result_token'] : array() );
+		foreach ( $urls as $url_data ) {
+			$url               = isset( $url_data['url'] ) ? sanitize_text_field( $url_data['url'] ) : '';
+			$scan_urls[ $url ] = isset( $url_data['id_cli_cookie_scan_url'] ) ? absint( $url_data['id_cli_cookie_scan_url'] ) : 1;
+		}
+		$scan_data         = ( isset( $cookie_data['scan_result'] ) ? json_decode( $cookie_data['scan_result'], true ) : array() );
+		$scan_result_token = ( isset( $cookie_data['scan_result_token'] ) ? $cookie_data['scan_result_token'] : array() );
 
-				if ( $this->validate_scan_instance( $scan_result_token ) === false ) {
-					return new WP_Error( 'invalid', __( 'Invalid scan token', 'cookie-law-info' ) );
-				}
-				$this->insert_categories( $scan_data );
-				foreach ( $scan_data as $key => $data ) {
-					$cookies  = ( isset( $data['cookies'] ) && is_array( $data['cookies'] ) ) ? $data['cookies'] : array();
-					$category = ( isset( $data['category'] ) ? $data['category'] : '' );
+		if ( $this->validate_scan_instance( $scan_result_token ) === false ) {
+			return new WP_Error( 'invalid', __( 'Invalid scan token', 'cookie-law-info' ) );
+		}
+		$this->insert_categories( $scan_data );
+		foreach ( $scan_data as $key => $data ) {
+			$cookies  = ( isset( $data['cookies'] ) && is_array( $data['cookies'] ) ) ? $data['cookies'] : array();
+			$category = ( isset( $data['category'] ) ? $data['category'] : '' );
 
-					if ( ! empty( $cookies ) ) {
-						$this->insert_cookies( $scan_id, $scan_urls, $cookies, $category );
-					}
-				}
+			if ( ! empty( $cookies ) ) {
+				$this->insert_cookies( $scan_id, $scan_urls, $cookies, $category );
 			}
 		}
 		$this->finish_scan( $scan_id );

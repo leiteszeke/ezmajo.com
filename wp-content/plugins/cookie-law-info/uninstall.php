@@ -64,6 +64,13 @@ if ( defined( 'CKY_REMOVE_ALL_DATA' ) && true === CKY_REMOVE_ALL_DATA ) {
 			'cky_cookie_consent_lite_db_version',
 			'cky_missing_tables',
 			'cky_migration_options',
+			// Install reporting, added in 3.5.6. These must be removed here or a
+			// reinstall inherits them: add_option() keeps the first value, so the
+			// activation context of the *previous* install is never overwritten and
+			// a stale install_source is reported to the platform for an install that
+			// never declared one.
+			'cky_activation_context',
+			'cky_install_source',
 		);
 		foreach ( $options as $option_name ) {
 			delete_option( $option_name );

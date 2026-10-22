@@ -229,6 +229,7 @@ class ComposerStaticInit2cbef7d43bc272823d4d80b299eb68ed
         'MercadoPago\\Woocommerce\\Order\\OrderMetadata' => __DIR__ . '/../..' . '/src/Order/OrderMetadata.php',
         'MercadoPago\\Woocommerce\\Order\\OrderShipping' => __DIR__ . '/../..' . '/src/Order/OrderShipping.php',
         'MercadoPago\\Woocommerce\\Order\\OrderStatus' => __DIR__ . '/../..' . '/src/Order/OrderStatus.php',
+        'MercadoPago\\Woocommerce\\Order\\RefundReconciliationLock' => __DIR__ . '/../..' . '/src/Order/RefundReconciliationLock.php',
         'MercadoPago\\Woocommerce\\Refund\\RefundHandler' => __DIR__ . '/../..' . '/src/Refund/RefundHandler.php',
         'MercadoPago\\Woocommerce\\Startup' => __DIR__ . '/../..' . '/src/Startup.php',
         'MercadoPago\\Woocommerce\\SuperToken\\Adapters\\DefaultSuperTokenTransactionFactory' => __DIR__ . '/../..' . '/src/SuperToken/Adapters/DefaultSuperTokenTransactionFactory.php',

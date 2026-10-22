@@ -6,6 +6,8 @@
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://sitekit.withgoogle.com
+ *
+ * phpcs:disable PHPCS.Commenting.RequireDocTagDescription -- Pre-existing violations; tracked for follow-up cleanup.
  */
 
 namespace Google\Site_Kit\Core\Util;
@@ -46,7 +48,7 @@ class BC_Functions {
 			return self::{ $function_name }( ...$arguments );
 		}
 
-		throw new BadMethodCallException( "$function_name does not exist." );
+		throw new BadMethodCallException( sprintf( '%s does not exist.', esc_html( $function_name ) ) );
 	}
 
 	/**

@@ -333,8 +333,10 @@ class Template {
 				}
 			}
 
+			// Stored settings take precedence; the theme preset only fills missing
+			// keys (so a theme.json update never restyles an existing saved banner).
 			if ( ! empty( $colors ) ) {
-				$configs = array_replace_recursive( $configs, $colors );
+				$configs = array_replace_recursive( $colors, $configs );
 			}
 
 			foreach ( $elements as $element ) {

@@ -1,28 +1,32 @@
 Yoast SEO
 =========
-Requires at least: 6.8
-Tested up to: 7.0
+Requires at least: 6.9
+Tested up to: 7.1
 Requires PHP: 7.4
 
 Changelog
 =========
 
-## 27.7
+## 28.3
 
-Release date: 2026-06-02
+Release date: 2026-08-18
+
+#### Enhancements
+
+* Adds a schemamap.xml file at the site root that exposes the aggregated schema map.
+* Adds the failing object's type and ID to the SEO data optimization error report when an indexable cannot be built.
+* Improves performance when running the SEO optimization by warming post and term caches in bulk.
+* Improves the performance of generating XML sitemaps by warming post, term and featured-image caches in bulk.
 
 #### Bugfixes
 
-* Fixes a bug where the block editor was crashing when some AI features were triggering errors.
-* Fixes a bug where a `FocusTrap` warning was thrown and the X button did not receive focus when the replace content confirmation modal from the AI Content Planner was opened. 
-* Fixes a bug where only the first piece was returned when indexables were not available. 
-* Fixes a bug where a warning was triggered in the console when editing a post with the Content Planner feature enabled.
-* Fixes a bug in Schema aggregator where products Schema pieces had  incorrect `@id` values for `mainEntityOfPage` and `image` properties.
-* Fixes a bug where the AI features section was rendered twice on the user profile page.
+* Fixes a bug where the AI Content Planner inserted an empty paragraph block before the template blocks when a post type had a block template registered.
 
 #### Other
 
-* Makes the Academy, Upgrade and Brand insights links visible to more user roles.
+* Sets the _WordPress tested up to_ version to 7.1.
+* Sets the minimum supported WordPress version to 6.9.
+* Adds a first-time guided tour to the bulk editor.
 
 
 ### Earlier versions

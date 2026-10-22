@@ -8,7 +8,7 @@ $cli_feature_cards   = array(
 	array( 'icon' => 'icon-accessibility.svg',  'title' => __( 'Improved accessibility', 'cookie-law-info' ),         'desc' => __( 'Deliver a more inclusive experience with WCAG-compliant banner design.', 'cookie-law-info' ) ),
 	array( 'icon' => 'icon-performance.svg',     'title' => __( 'Faster performance', 'cookie-law-info' ),              'desc' => __( 'Load your banner faster and reduce impact on page speed.', 'cookie-law-info' ) ),
 	array( 'icon' => 'icon-blocking.svg',        'title' => __( 'Automatic cookie blocking', 'cookie-law-info' ),       'desc' => __( 'Handle cookie blocking automatically without manual setup.', 'cookie-law-info' ) ),
-	array( 'icon' => 'icon-compliance.svg',      'title' => __( 'Built-in compliance standards', 'cookie-law-info' ),   'desc' => __( 'Supports Google Consent Mode, IAB TCF v2.3, and Google Additional Consent Mode.', 'cookie-law-info' ) ),
+	array( 'icon' => 'icon-compliance.svg',      'title' => __( 'Built-in compliance standards', 'cookie-law-info' ),   'desc' => __( 'Supports Google Consent Mode, IAB TCF v2.4, and Google Additional Consent Mode.', 'cookie-law-info' ) ),
 	array( 'icon' => 'icon-customisation.svg',   'title' => __( 'More flexible customisation', 'cookie-law-info' ),     'desc' => __( 'Customise styles and layout easily with custom CSS to adjust fonts, button style, and revisit button.', 'cookie-law-info' ) ),
 );
 $cli_accordion_items = array(

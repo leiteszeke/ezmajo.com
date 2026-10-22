@@ -6,6 +6,8 @@
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://sitekit.withgoogle.com
+ *
+ * phpcs:disable PHPCS.Commenting.RequireDocTagDescription -- Pre-existing violations; tracked for follow-up cleanup.
  */
 
 namespace Google\Site_Kit\Core\Modules;
@@ -301,6 +303,13 @@ final class Modules implements Provides_Feature_Metrics {
 			2
 		);
 
+		add_filter(
+			'googlesitekit_connected_modules',
+			function () {
+				return $this->get_connected_modules();
+			}
+		);
+
 		add_filter( 'option_' . Module_Sharing_Settings::OPTION, $this->get_method_proxy( 'populate_default_shared_ownership_module_settings' ) );
 		add_filter( 'default_option_' . Module_Sharing_Settings::OPTION, $this->get_method_proxy( 'populate_default_shared_ownership_module_settings' ), 20 );
 
@@ -399,6 +408,7 @@ final class Modules implements Provides_Feature_Metrics {
 	 * Populates modules data to pass to JS.
 	 *
 	 * @since 1.96.0
+	 * @since 1.181.0 Directly register data from modules with inline data.
 	 *
 	 * @param array $modules_data Inline modules data.
 	 * @return array Inline modules data.
@@ -409,6 +419,19 @@ final class Modules implements Provides_Feature_Metrics {
 		foreach ( $available_modules as $module ) {
 			if ( $module instanceof Module_With_Data_Available_State ) {
 				$modules_data[ 'data_available_' . $module->slug ] = $this->is_module_active( $module->slug ) && $module->is_connected() && $module->is_data_available();
+			}
+		}
+
+		$active_modules = $this->get_active_modules();
+
+		foreach ( $active_modules as $module ) {
+			if ( $module instanceof Module_With_Inline_Data ) {
+				$module_data = $modules_data[ $module->slug ] ?? array();
+				$inline_data = $module->get_inline_data();
+
+				if ( ! empty( $inline_data ) ) {
+					$modules_data[ $module->slug ] = array_merge( $module_data, $inline_data );
+				}
 			}
 		}
 
@@ -490,7 +513,7 @@ final class Modules implements Provides_Feature_Metrics {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Active modules as $slug => $module pairs.
+	 * @return Module[] Active modules as $slug => $module pairs.
 	 */
 	public function get_active_modules() {
 		$modules = $this->get_available_modules();
@@ -553,7 +576,7 @@ final class Modules implements Provides_Feature_Metrics {
 
 		if ( ! isset( $modules[ $slug ] ) ) {
 			/* translators: %s: module slug */
-			throw new Exception( sprintf( __( 'Invalid module slug %s.', 'google-site-kit' ), $slug ) );
+			throw new Exception( sprintf( __( 'Invalid module slug %s.', 'google-site-kit' ), $slug ) ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Returned to the browser as JSON via WP_Error, escaping would show HTML entities to the user.
 		}
 
 		return $modules[ $slug ];
@@ -591,7 +614,7 @@ final class Modules implements Provides_Feature_Metrics {
 
 		if ( ! isset( $modules[ $slug ] ) ) {
 			/* translators: %s: module slug */
-			throw new Exception( sprintf( __( 'Invalid module slug %s.', 'google-site-kit' ), $slug ) );
+			throw new Exception( sprintf( __( 'Invalid module slug %s.', 'google-site-kit' ), $slug ) ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Returned to the browser as JSON via WP_Error, escaping would show HTML entities to the user.
 		}
 
 		return $this->dependencies[ $slug ];
@@ -612,7 +635,7 @@ final class Modules implements Provides_Feature_Metrics {
 
 		if ( ! isset( $modules[ $slug ] ) ) {
 			/* translators: %s: module slug */
-			throw new Exception( sprintf( __( 'Invalid module slug %s.', 'google-site-kit' ), $slug ) );
+			throw new Exception( sprintf( __( 'Invalid module slug %s.', 'google-site-kit' ), $slug ) ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Returned to the browser as JSON via WP_Error, escaping would show HTML entities to the user.
 		}
 
 		return $this->dependants[ $slug ];
@@ -913,7 +936,7 @@ final class Modules implements Provides_Feature_Metrics {
 	 * - No user is identified by its owner ID
 	 * - the owner lacks the capability to authenticate
 	 * - the owner is no longer authenticated
-	 * - no user exists for the owner ID
+	 * - no user exists for the owner ID.
 	 *
 	 * @since 1.69.0
 	 *

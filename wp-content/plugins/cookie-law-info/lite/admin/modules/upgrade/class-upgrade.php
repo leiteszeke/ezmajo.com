@@ -544,7 +544,7 @@ class Upgrade extends Modules {
 			$notice->add(
 				'migration_notice',
 				array( // translators: %s: Migration notice expiry notice.
-					'message' => sprintf( __( 'Not satisfied with the New UI and related changes? You can switch back to the old UI at any time until %s.', 'cookie-law-info' ), esc_html( $date ) ),
+					'message' => sprintf( __( 'Prefer the previous version? Switch back anytime until %s.', 'cookie-law-info' ), esc_html( $date ) ),
 					'type'    => 'info',
 				)
 			);

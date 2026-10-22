@@ -3,53 +3,67 @@ Contributors: webtoffee, cookieyesdev
 Donate link: https://www.cookieyes.com/ 
 Tags: cookie consent, cookie banner, cookie notice, gdpr, ccpa
 Requires at least: 5.0.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 5.6
-Stable tag: 3.5.1
+Stable tag: 3.5.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Cookie banner plugin and CMP for GDPR cookie consent and CCPA cookie compliance. Easily set up cookie consent banner, cookie notice, and policy pages.
+Cookie consent banner for GDPR, CCPA and privacy compliance. Auto cookie blocking, cookie scanner, Consent Mode v2 and consent management.
 
 == Description ==
 
-CookieYes is a Consent Management Platform (CMP) and the leading WordPress cookie plugin for cookie consent and cookie compliance. Add a cookie banner, cookie popup, or cookie notice to your site for GDPR cookie consent and CCPA cookie compliance. Also supports ePrivacy Directive, UK GDPR & PECR, LGPD (Brazil), PIPEDA (Canada), POPIA (South Africa) and other global laws.
+CookieYes is a cookie banner and cookie consent plugin for cookie compliance, with over 1 million active installations on WordPress.org and a 4.8-star rating from 3,200+ reviews.
 
-The plugin offers a customizable cookie banner that blocks non-essential scripts until consent is given and generates a tailored Cookie Policy page.
+Add a customizable cookie banner, popup, or notice in minutes, with automatic cookie blocking, Google Consent Mode v2, consent logging, and auto-generated policy pages to support GDPR and CCPA cookie consent requirements. CookieYes helps you work toward compliance with the ePrivacy Directive, UK GDPR, DSGVO (DE) and PECR, LGPD (Brazil), PIPEDA and Law 25 (Canada/Quebec), POPIA (South Africa), nFADP (Switzerland), and US state laws including CCPA/CPRA, VCDPA, CPA, CTDPA, and UCPA.
+
+https://www.youtube.com/watch?v=qw2iYti4aZ8
+
+== Why site owners choose CookieYes ==
+
+- **Working banner on activation:** a consent banner appears immediately, no configuration needed.
+
+- **Zero database bloat:** scanning, consent logs and processing run in the CookieYes cloud, so nothing weighs down your WordPress database or slows your site.
+
+- **Free plan with core features included:** banner, auto-blocking, scanner, policy generators and consent logging.
 
 == Features == 
 
 **Consent Management**
 
-- **Cookie Consent Banner:** Show a cookie banner with Accept/Reject options for GDPR cookie consent and CCPA cookie compliance.
+- **Cookie Consent Banner:** Show a cookie banner with Accept/Reject options for GDPR cookie consent and CCPA requirements.
 
-- **Automatic Cookie Blocking:** Block non-essential cookies until users give explicit consent for cookie compliance in WordPress.
+- **Automatic Cookie Blocking:** Block non-essential cookies until users give explicit consent.
 
 - **Preference Center:** Let users manage cookie preferences by category (analytics, marketing, etc.).
 
 - **Revisit Consent Button:** Floating button for updating consent choices anytime.
 
-- **CCPA/CPRA Opt-Out:** Add “Do Not Sell or Share My Personal Information” link for California residents to meet CCPA cookie requirements.
+- **CCPA/CPRA Opt-Out:** Add a "Do Not Sell or Share My Personal Information" link for California residents.
 
 - **Consent Logging:** Record and export user consent in CSV for audits.
 
-- **Google Consent Mode v2:** Integrate with Google Consent Mode for ad tracking and compliance.
+- **Google Consent Mode v2 (Advanced and Basic):** Pass consent signals to Google Analytics, Ads and Tag Manager automatically.
 
-- **Microsoft UET Consent Mode:** Activate UET Consent Mode to ensure tag behavior complies with Microsoft’s EU consent requirements in a Microsoft consent plugin setup.
+- **Microsoft UET Consent Mode:** Activate UET Consent Mode so tag behavior follows Microsoft's EU consent requirements.
 
-- **GDPR Compliant Data Storage:** Store data in EU-based, GDPR-compliant data centers per Data Processing Agreement.
+- **EU Data Storage:** Consent data is stored in EU-based data centers under a Data Processing Agreement.
 
 **Banner Customization**
 
-- **Layout Options:** Choose top/bottom bar, box, or cookie popup layouts for your WordPress cookie banner.
+- **Layout Options:** Choose top/bottom bar, or box layouts for your WordPress cookie banner.
 
-- **Reload page on consent action:** Automatically reload the page when users click “Accept All” or “Reject All”.
+- **Reload Page On Consent Action:** Automatically reload the page when users click “Accept All” or “Reject All”.
 
-**Cookie Scanner & Management**
+**Cookie Compliance Tools**
 
-- **Automatic Scanning:** One-click scan to detect and categorize cookies on your site.
+- **Automatic Cookie Scanner:** One-click scan to detect and categorize cookies on your site.
 
-- **Manual Cookie Management:** Add, edit, or delete cookies and define categories/descriptions with the WordPress cookie manager.
+- **WordPress Cookie Manager:** Add, edit, or delete cookies and define categories/descriptions.
+
+**Integrations and Compatibility**
+
+Works with WP Consent API, WooCommerce, Elementor, Divi, Gutenberg, Contact Form 7, WPForms, WPML, Polylang and TranslatePress, alongside Google Tag Manager, Google Analytics 4, Google Ads, Microsoft Advertising (UET), Microsoft Clarity and Meta Pixel. Compatible with major caching plugins and optimized for PHP 8.
 
 **Multilingual & Accessibility**
 
@@ -57,41 +71,43 @@ The plugin offers a customizable cookie banner that blocks non-essential scripts
 
 - **Multilingual Compatibility:** Works with WPML and Polylang for multilingual sites.
 
-- **Accessibility:** The banner is WCAG/ADA compliant for accessibility.
+- **Accessibility:** The banner meets WCAG 2.1 AA accessibility.
 
 **Legal Policy Tools**
 
-- **Policy Generators:** Create WordPress Cookie Policy and Privacy Policy pages tailored to your data practices.
+- **Policy Generators:** Create multilingual and auto-updating WordPress Cookie Policy and Privacy Policy pages tailored to your data practices.
 
 **Web App Integration**
 
 - **Centralized Management:** Connect to the CookieYes Web App for advanced features, remote management, and centralized control of scans, policies, and settings.
 
-Here’s how you can integrate CookieYes WordPress cookie plugin with our web app for enhanced features:
+**AI & Agent-Ready Compliance Tools**
 
-https://www.youtube.com/watch?v=qw2iYti4aZ8
+- **AI Cookie Classification:** Automatically classify unknown cookies found during scans, keeping your cookie records, banner and Cookie Policy page accurate with less manual work.
+
+- **CookieYes MCP Server:** Connect AI assistants to your CookieYes account via the Model Context Protocol (MCP). Works with MCP-compatible clients including Claude, ChatGPT, Codex, Cursor, Claude Code and GitHub Copilot CLI. Check banner status, run cookie scans, review your configuration and update banner settings using natural language.
 
 == Premium Features ==
 
-Access the following features by subscribing to a premium plan (Basic, Pro, or Ultimate) on the CookieYes web app account. [See all features and compare plans](https://www.cookieyes.com/pricing/?utm_source=wordpress&utm_medium=plugin&utm_campaign=wordpress_page&utm_content=l_1&ref=WPCY)
+Access the following features by subscribing to a premium plan on the CookieYes web app account. [See all features and compare plans](https://www.cookieyes.com/pricing/?utm_source=wordpress&utm_medium=plugin&utm_campaign=wordpress_page&utm_content=l_1&ref=WPCY)
 
 **Advanced Consent Management**
 
-&#9989; **Geo-Targeting:** Show region-specific banners (e.g., GDPR banner for EU, CCPA banner for California).
-&#9989; **IAB TCF v2.3 framework:** Full support for the Transparency and Consent Framework for publishers and advertisers.
+&#9989; **Geo-Targeting:** Show region-specific banners (e.g., GDPR banner for EU, CCPA banner for California, and so on).
+&#9989; **IAB TCF v2.4 Framework:** Full support for the Transparency and Consent Framework for publishers and advertisers.
 &#9989; **Google's Additional Consent Mode:** Manage consent for Google’s Ad Tech Providers outside the IAB GVL.
 
 **Enhanced Banner Customization**
 
-&#9989; **Customizable Styles:** Adjust banner colors, fonts, and position to match your website design.
+&#9989; **Customizable Styles & Layouts:** Adjust banner colors, fonts, and position to match your website design, with the option to use the Cookie Popup layout.
 &#9989; **Page-Specific Controls:** Disable the banner on specific pages (e.g., login, checkout).
 &#9989; **Custom CSS:** Custom CSS for advanced design customization.
 &#9989; **Custom Logo:** Add your brand’s logo to the cookie banner.
-&#9989; **Remove Branding:** Remove the “Powered by CookieYes” branding for a fully customized banner.
+&#9989; **Remove Branding:** Remove the “Powered by CookieYes” branding for a white-label experience.
 
 **Extended Cookie Management**
 
-&#9989; **Increased pageviews limit:** Extend pageviews from 5,000 up to unlimited.
+&#9989; **Increased Pageviews Limit:** Extend pageviews from 5,000 up to unlimited.
 &#9989; **Increased Scan Limits:** Scan up to 8,000 pages for a full cookie audit.
 &#9989; **Scheduled Scans:** Automate recurring scans to keep cookie data updated.
 &#9989; **Scan Behind Login:** Detect cookies on protected, login-only pages.
@@ -118,6 +134,10 @@ This plugin connects your site to app.cookieyes.com to enable features such as c
 
 Our [WordPress cookie plugin user guide](https://www.cookieyes.com/documentation/install-cookieyes-wordpress-plugin/?utm_source=wordpress&utm_medium=plugin&utm_campaign=wordpress_page&utm_content=l_1&ref=WPCY "Installation and Setup guide") will help you set up the plugin on your website.
 
+== Set Up Your Cookie Banner With an AI Coding Assistant ==
+
+CookieYes ships an AGENTS.md file, and a CLAUDE.md, in the plugin root. It gives AI coding assistants an agent-readable setup flow, the regulation coverage map, and a post-install verification checklist, so an assistant can install and configure the cookie banner without being walked through each step. Point your assistant at the plugin directory and ask it to set up CookieYes. It works with Claude Code, Cursor, GitHub Copilot, ChatGPT, Gemini CLI, OpenAI Codex and any tool that follows the AGENTS.md convention.
+
 == Useful links ==
 
 [CookieYes support](https://www.cookieyes.com/support/?utm_source=wordpress&utm_medium=plugin&utm_campaign=wordpress_page&utm_content=l_1&ref=WPCY)
@@ -140,76 +160,77 @@ Our [WordPress cookie plugin user guide](https://www.cookieyes.com/documentation
 
 == Frequently Asked Questions ==
 
-= What is GDPR? =
-GDPR (General Data Protection Regulation) is the EU privacy law that protects personal data and regulates how organizations handle it. It is also referred to as DSGVO (DatenSchutz-Grundverordnung) in German.
-
-= What is CCPA? =
-CCPA (California Consumer Privacy Act). It gives residents more control over personal data, requiring transparency, opt-out options, and secure handling.
-
 = What is GDPR cookie consent? =
-Under GDPR, sites must get explicit consent before storing or accessing non-essential cookies (analytics, ads). This is called GDPR cookie consent.
+GDPR (General Data Protection Regulation) is the EU privacy law that protects personal data, known as DSGVO in German and RGPD in French and Spanish. Under GDPR and the ePrivacy Directive, websites must obtain explicit consent before storing or accessing non-essential cookies such as analytics and advertising cookies. A cookie notice, also called a cookie banner or cookie message, tells visitors that your site uses cookies, explains why, and lets them accept cookies, reject them, or manage cookies by category.
 
-= What is CCPA compliance? =
-CCPA compliance means meeting the law’s privacy requirements, including informing users about data collection, offering opt-out mechanisms like “Do Not Sell or Share My Personal Information,” and ensuring secure processing of user data for CCPA cookie compliance.
+= What is CCPA and what does it require? =
+The CCPA (California Consumer Privacy Act, expanded by CPRA) gives California residents control over their personal data. For websites this means informing users about data collection, offering an opt-out such as a "Do Not Sell or Share My Personal Information" link, and handling user data securely. CookieYes also supports other US state privacy laws including VCDPA, CPA, CTDPA and UCPA.
 
-= What is a GDPR plugin and why do I need one for WordPress? =
-A GDPR plugin manages cookie consent, blocks cookies until consent, and generates cookie/privacy policies. CookieYes’s GDPR WordPress plugin automates these tasks for WordPress.
+= What does this cookie plugin do? =
+CookieYes adds a cookie banner to your WordPress site, scans your site to find the cookies it sets, blocks non-essential cookies until visitors consent, logs consent for audits, and generates a Cookie Policy page. You can display your cookie list on any page using a shortcode.
 
-= What does this plugin do? =
-CookieYes adds a cookie banner to your site, informs visitors about your cookie policy, and helps you log and manage consent. It also lets you list cookies on your policy page using a shortcode (or HTML if connected to the Web App).
+= How do I add a cookie banner to WordPress? =
+Install the CookieYes plugin (go to Plugins, then Add New, and search "CookieYes"), then activate it. A cookie consent banner appears on your site immediately. You can then customize the banner design and text, run a cookie scan, and generate a Cookie Policy page. No coding is required.
 
-= Can I use CookieYes for both GDPR and CCPA compliance? =
-Yes. CookieYes supports both GDPR and CCPA/CPRA compliance, including GDPR cookie consent and  CCPA cookie consent features. You can add banners and CCPA opt-out links.
+= Do I need a cookie consent banner on my website? =
+If your website has visitors from the EU or EEA, the UK, Brazil, Canada, or US states such as California, and it sets non-essential cookies (analytics, advertising, embedded video), laws like GDPR, PECR, LGPD and CCPA/CPRA require you to inform visitors and obtain or facilitate consent. Most WordPress sites set such cookies through their theme, plugins or analytics tools. Consult a legal professional about your specific obligations.
 
-= What is a cookie notice? =
-A cookie notice (or cookie banner) tells visitors a site uses cookies, why they’re used, and how they impact privacy. It gives options to accept or manage preferences, ensuring GDPR and CCPA compliance.
+= How do I choose a cookie consent plugin for WordPress? =
+Look for automatic cookie blocking before consent, a cookie scanner that finds what your site actually sets, Google Consent Mode v2 support, low performance impact, consent logging for audit records, multilingual cookie banner support, and regular updates. CookieYes covers all of these in one cookie compliance plugin, with over 1 million active installations and a 4.8-star rating on WordPress.org.
 
-= Can I customize the cookie notice using CookieYes? =
-Yes. Adjust banner text, layout, style, and position. Premium plans allow logo upload and branding removal.
+= Is CookieYes free? What does the free plan include? =
+Yes, there is a free plan. It includes a fully working cookie banner, automatic cookie blocking, the cookie scanner, Cookie Policy and Privacy Policy generators, consent logging, and Google Consent Mode v2. [See all plans and compare features](https://www.cookieyes.com/pricing/?utm_source=wordpress&utm_medium=plugin&utm_campaign=wordpress_page&utm_content=l_1&ref=WPCY)
+
+= Will a cookie banner slow down my website? =
+CookieYes is built so it does not. Cookie scanning, consent logging and processing run in the CookieYes cloud rather than in your WordPress database, so your site is not carrying that work. The front-end cookie banner script is lightweight and adds no database queries on page load, and the plugin is compatible with major caching plugins.
 
 = Does the plugin block cookies before consent? =
-Yes. Non-essential cookies are blocked until explicit consent; essential cookies run by default.
+Yes. Non-essential cookies are blocked until a visitor gives explicit consent. Strictly necessary cookies are allowed by default so your site keeps working. Visitors can accept or reject cookies by category through the preference center.
 
-= Do visitors have to accept or refuse cookies to use a website? =
-No. Only essential cookies load by default. Users may accept or reject other cookie categories.
+= What is Google Consent Mode v2 and does CookieYes support it? =
+Google Consent Mode v2 passes visitor consent signals to Google tags such as Google Analytics 4, Google Ads and Google Tag Manager, so measurement adapts to each visitor's choices. It is required for using Google advertising features with EEA and UK visitors. CookieYes supports Consent Mode v2 out of the box, and also supports Microsoft UET Consent Mode and Global Privacy Control (GPC) signals.
+
+= Does CookieYes work with WooCommerce, Elementor and page builders? =
+Yes. CookieYes works with WooCommerce, Elementor, Divi, Gutenberg, Contact Form 7 and WPForms out of the box, and passes consent signals to Google Tag Manager, Google Analytics 4, Google Ads, Microsoft Advertising (UET), Microsoft Clarity and Meta Pixel. It also supports WPML, Polylang and TranslatePress for multilingual sites, works with major caching plugins, and is optimized for PHP 8.
+
+= How does the cookie scanner work? =
+The scanner crawls your site, finds the cookies it sets, and sorts them into categories such as necessary, analytics, advertising and functional. Unknown cookies are classified automatically using AI, so your cookie records, banner and Cookie Policy page stay accurate without manual research. Premium plans add scheduled scans and scanning behind login.
+
+= Can I manage CookieYes with an AI assistant? =
+Yes, in two ways. The plugin ships AGENTS.md and CLAUDE.md files in its root, so AI coding assistants such as Claude Code, Cursor, GitHub Copilot, ChatGPT, Gemini CLI and OpenAI Codex can read the setup flow and install, configure and verify the plugin. Separately, the CookieYes MCP (Model Context Protocol) server connects AI assistants to your CookieYes account, so you can check banner status, run a cookie scan, review your configuration and update banner settings in natural language.
+
+= What support does CookieYes offer? =
+Free users get support through the WordPress.org support forum, where the CookieYes team actively resolves threads, along with a searchable knowledge base and documentation. Premium plans include priority support.
+
+= Can I customize the cookie banner? =
+Yes. Change the layout (top bar, bottom bar, box or cookie popup), edit every word of the cookie notice including button labels, and set the position. The banner is mobile responsive. Premium plans add custom colors and fonts, a custom logo, custom CSS, and removal of the "Powered by CookieYes" branding.
 
 = Does this plugin stop all cookies from being stored? =
-It blocks cookies based on category consent. However, if another plugin places cookies outside of CookieYes, we cannot control or guarantee those behaviors. Blocking everything forcefully could break your site, so this plugin aims to balance compliance with usability.
+It blocks cookies based on the categories a visitor consents to. If another plugin sets cookies outside of CookieYes, we cannot control or guarantee that behavior. Forcing every cookie to block could break your site, so the plugin balances consent management with usability.
 
-= How does CookieYes help with cookie compliance? =
-It scans and categorizes cookies, provides banners and preference centers, and logs/export consent data for audits.
+= Does CookieYes guarantee that I comply with GDPR? =
+No plugin can guarantee compliance. CookieYes helps you meet the cookie consent requirements of major privacy laws, but you need to assess how your own site uses cookies and configure the plugin correctly. For specialist legal advice, consult a lawyer.
 
-= Is CookieYes a reliable cookie consent tool for GDPR compliance? =
-Yes. Used by 1.5M+ sites, CookieYes supports GDPR cookie compliance, automatic blocking, policy generation, and consent logging.
+= Can I export consent records for audits? =
+Yes. The consent log records visitor consent and cookie preferences, and you can export it in CSV format for audits and compliance records.
 
-= Can I export or log user consent as per GDPR requirements? =
-Yes. You can export logs of user consent and cookie preferences in CSV format. This helps with audits and fulfilling compliance obligations.
-
-= Can the plugin help me generate a GDPR-compliant cookie policy? =
-Yes. Built-in generator creates Cookie Policy and Privacy Policy pages from scan results.
+= Can the plugin generate a cookie policy? =
+Yes. A built-in generator creates Cookie Policy and Privacy Policy pages from your own scan results, so the policy reflects the cookies your site actually sets. The pages update automatically as your cookies change.
 
 = Does CookieYes support multilingual websites? =
-Yes. CookieYes automatically translates the banner into over 30 languages based on the visitor’s browser. It also supports WPML and Polylang for multilingual WordPress setups.
+Yes. The cookie banner translates automatically into 40+ languages based on the visitor's browser. CookieYes also works with WPML, Polylang and TranslatePress for multilingual WordPress sites.
 
-= Do I still need a privacy policy if I use CookieYes? =
-Yes. A privacy policy is legally required. CookieYes helps you generate one, but you must ensure that it accurately reflects your site’s data practices.
-
-= Is CookieYes suitable for large websites or agencies? =
-Yes. CookieYes includes features like subdomain consent sharing, multi-user management, and scheduled cookie scans. It also supports login-protected page scanning, which makes it a good fit for large and enterprise-level sites.
+= Is CookieYes suitable for large websites, multisite or agencies? =
+Yes. CookieYes includes subdomain consent sharing, multi-user roles and permissions, scheduled scans and scanning behind login, which suit large and enterprise sites. Agencies can also join the CookieYes partner program.
 
 = Does CookieYes integrate with WP Consent API? =
-Yes, CookieYes integrates with [WP Consent API](https://wordpress.org/plugins/wp-consent-api), allowing it to share user consent states with compatible plugins and improve compliance consistency.
+Yes. CookieYes integrates with the [WP Consent API](https://wordpress.org/plugins/wp-consent-api), sharing consent states with other compatible plugins so consent is handled consistently across your site.
 
 = What is a CMP? =
-A CMP (Consent Management Platform) is a tool that helps websites collect, manage, and store user consent for cookies and tracking. CookieYes is a CMP that simplifies GDPR cookie consent and CCPA cookie compliance for WordPress sites.
+A CMP (Consent Management Platform) collects, manages and stores visitor consent for cookies and tracking. CookieYes is a CMP built for WordPress, covering the cookie banner, cookie scanning, consent records and policy pages in one plugin.
 
-= The cookie notice header does not work on my browser. What should I do? =
-Please report the issue on the support forum. Include:
-* Your website URL
-* WordPress version (bottom right corner of your dashboard)
-* The browser where the issue occurs (e.g., Chrome, Firefox)
-* A brief description of the problem
-The more details you share, the faster we can help.
+= The cookie banner does not appear on my site. What should I do? =
+Please report the issue on the support forum and include your website URL, your WordPress version (bottom right corner of the dashboard), the browser where the issue happens, and a description of the problem. The more detail you share, the faster we can help.
 
 == Installation ==
 
@@ -247,17 +268,44 @@ Every time we update the plugin, you will see a notification on the installed pl
 
 == Screenshots ==
 
-1. Cookie consent banner on the user-end
-2. Cookie preference center on the user-end
-3. CookieYes GDPR cookie consent WordPress plugin - Admin panel
-4. Cookie banner settings for cookie compliance
-5. Manage cookies for cookie compliance
+1. Cookie banner on the user end
+2. Cookie preference center
+3. CookieYes admin panel
+4. Cookie banner settings
+5. Manage cookies
 6. Add new cookie
-7. Languages for cookie banner auto-translation
-8. Edit cookie banner content in multiple languages
-9. Privacy policy generator and cookie policy generator
+7. Banner language settings
+8. Google Consent Mode v2 settings
+9. Policy generators
 
 == Changelog ==
+
+= 3.5.7 =
+
+[Compatibility] - Updated to IAB TCF v2.4.
+[Enhancement] - Readme update.
+
+= 3.5.6 =
+
+[Enhancement] - Added setup documentation for AI coding assistants.
+
+= 3.5.5 =
+
+[Compatibility] - Tested OK with WordPress version 7.1
+[Fix] - Translation issue in the plugin.
+
+= 3.5.4 =
+
+[Enhancement] - Updated button colors in the banner themes.
+[Fix] - Minor bugs and security fixes.
+
+= 3.5.3 =
+
+[Fix] - Restricted promotional banner visibility to admin users.
+
+= 3.5.2 =
+
+[Fix] - Mixed content warning on standalone banner after migrating site to HTTPS.
 
 = 3.5.1 =
 
@@ -286,7 +334,7 @@ For the changelog of earlier versions, please refer to the [changelog.txt](https
 
 == Upgrade Notice ==
 
-= 3.5.1 =
+= 3.5.7 =
 
-[Add] - Agency Program banner for standalone WordPress plugin users with GDPR Anniversary offer.
-[Fix] - Alignment issue with the 'Connect to CookieYes web app' button on the plugins page.
+[Compatibility] - Updated to IAB TCF v2.4.
+[Enhancement] - Readme update.

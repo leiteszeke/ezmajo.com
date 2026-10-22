@@ -187,7 +187,7 @@ class RequestHelpers {
 				$invalid_metrics[0]
 			);
 
-			throw new Invalid_Report_Metrics_Exception( $message );
+			throw new Invalid_Report_Metrics_Exception( $message ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Returned to the browser as JSON via WP_Error, escaping would show HTML entities to the user.
 		}
 	}
 
@@ -256,7 +256,7 @@ class RequestHelpers {
 				$invalid_metrics[0]
 			);
 
-			throw new Invalid_Report_Metrics_Exception( $message );
+			throw new Invalid_Report_Metrics_Exception( $message ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Returned to the browser as JSON via WP_Error, escaping would show HTML entities to the user.
 		}
 	}
 
@@ -285,6 +285,8 @@ class RequestHelpers {
 				'pageTitle',
 				'sessionDefaultChannelGroup',
 				'sessionDefaultChannelGrouping',
+				'customEvent:googlesitekit_event_provider',
+				'customEvent:googlesitekit_form_id',
 				'customEvent:googlesitekit_post_author',
 				'customEvent:googlesitekit_post_categories',
 				'customEvent:googlesitekit_post_date',
@@ -323,7 +325,7 @@ class RequestHelpers {
 				$invalid_dimensions[0]
 			);
 
-			throw new Invalid_Report_Dimensions_Exception( $message );
+			throw new Invalid_Report_Dimensions_Exception( $message ); // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- Returned to the browser as JSON via WP_Error, escaping would show HTML entities to the user.
 		}
 	}
 

@@ -126,9 +126,11 @@ class Controller extends Cloud {
 		$banner   = new \CookieYes\Lite\Admin\Modules\Banners\Includes\Banner( $item );
 		/** General Settings */
 		$data['settings']   = array(
-			'plan'       => $settings->get_plan(),
-			'domain'     => home_url(),
-			'consentLog' => array(
+			'plan'              => $settings->get_plan(),
+			'domain'            => home_url(),
+			'installSource'     => cky_get_install_source(),
+			'activationContext' => cky_get_activation_context(),
+			'consentLog'        => array(
 				'status' => true,
 			),
 		);

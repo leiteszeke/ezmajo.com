@@ -32,17 +32,14 @@
 			<?php if ( ! empty( $footer['copy'] ) ) : ?>
 				<p class="text-secondary" style="font-size:12px; line-height:16px; font-weight:500; color:#6C726E; margin-bottom: 30px; text-align: left;">
 					<?php
-					if ( ! empty( $footer['unsubscribe_url'] ) ) {
-						$unsubscribe_link = sprintf(
-							'<a class="link" href="%s" style="text-decoration:none;">%s</a>',
-							esc_url( $footer['unsubscribe_url'] ),
-							esc_html__( 'here', 'google-site-kit' )
-						);
-						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Link is escaped above.
-						printf( '%s %s.', esc_html( $footer['copy'] ), $unsubscribe_link );
-					} else {
-						echo esc_html( $footer['copy'] );
-					}
+					$allowed_html = array(
+						'a' => array(
+							'class' => array(),
+							'href'  => array(),
+							'style' => array(),
+						),
+					);
+					echo wp_kses( $footer['copy'], $allowed_html );
 					?>
 				</p>
 			<?php endif; ?>
@@ -61,7 +58,7 @@
 			);
 			$footer_links[] = array(
 				'label' => __( 'Help Center', 'google-site-kit' ),
-				'url'   => add_query_arg( 'doc', 'get-support', 'https://sitekit.withgoogle.com/support/' ),
+				'url'   => 'https://sitekit.withgoogle.com/support/?doc=get-support',
 			);
 
 			$footer_links_count = count( $footer_links );

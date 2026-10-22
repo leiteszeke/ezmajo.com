@@ -134,7 +134,7 @@ var __async = (__this, __arguments, generator) => {
   __name(requireJsxRuntime, "requireJsxRuntime");
   var jsxRuntimeExports = requireJsxRuntime();
   var PATTERN$1 = /%(((\d+)\$)|(\(([$_a-zA-Z][$_a-zA-Z0-9]*)\)))?[ +0#-]*\d*(\.(\d+|\*))?(ll|[lhqL])?([cduxXefgsp%])/g;
-  function sprintf$4(string2, ...args) {
+  function sprintf$3(string2, ...args) {
     var i2 = 0;
     if (Array.isArray(args[0])) {
       args = /** @type {import('../types').SprintfArgs<T>[]} */
@@ -178,11 +178,11 @@ var __async = (__this, __arguments, generator) => {
       return value !== void 0 && value !== null ? value : "";
     });
   }
-  __name(sprintf$4, "sprintf$4");
-  function sprintf$3(format2, ...args) {
-    return sprintf$4(format2, ...args);
-  }
   __name(sprintf$3, "sprintf$3");
+  function sprintf$2(format2, ...args) {
+    return sprintf$3(format2, ...args);
+  }
+  __name(sprintf$2, "sprintf$2");
   var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
   PRECEDENCE = {
     "(": 9,
@@ -415,7 +415,7 @@ var __async = (__this, __arguments, generator) => {
       listeners.add(callback);
       return () => listeners.delete(callback);
     }, "subscribe");
-    const getLocaleData2 = /* @__PURE__ */ __name((domain = "default") => tannin.data[domain], "getLocaleData");
+    const getLocaleData = /* @__PURE__ */ __name((domain = "default") => tannin.data[domain], "getLocaleData");
     const doSetLocaleData = /* @__PURE__ */ __name((data, domain = "default") => {
       var _a2;
       tannin.data[domain] = __spreadValues(__spreadValues({}, tannin.data[domain]), data);
@@ -436,7 +436,7 @@ var __async = (__this, __arguments, generator) => {
       delete tannin.pluralForms[domain];
       notifyListeners();
     }, "addLocaleData");
-    const resetLocaleData2 = /* @__PURE__ */ __name((data, domain) => {
+    const resetLocaleData = /* @__PURE__ */ __name((data, domain) => {
       tannin.data = {};
       tannin.pluralForms = {};
       setLocaleData2(data, domain);
@@ -466,7 +466,7 @@ var __async = (__this, __arguments, generator) => {
         domain
       );
     }, "__");
-    const _x2 = /* @__PURE__ */ __name((text, context, domain) => {
+    const _x = /* @__PURE__ */ __name((text, context, domain) => {
       let translation = dcnpgettext(domain, context, text);
       if (!hooks) {
         return translation;
@@ -514,7 +514,7 @@ var __async = (__this, __arguments, generator) => {
         domain
       );
     }, "_n");
-    const _nx2 = /* @__PURE__ */ __name((single, plural, number2, context, domain) => {
+    const _nx = /* @__PURE__ */ __name((single, plural, number2, context, domain) => {
       let translation = dcnpgettext(
         domain,
         context,
@@ -545,9 +545,9 @@ var __async = (__this, __arguments, generator) => {
       );
     }, "_nx");
     const isRTL2 = /* @__PURE__ */ __name(() => {
-      return "rtl" === _x2("ltr", "text direction");
+      return "rtl" === _x("ltr", "text direction");
     }, "isRTL");
-    const hasTranslation2 = /* @__PURE__ */ __name((single, context, domain) => {
+    const hasTranslation = /* @__PURE__ */ __name((single, context, domain) => {
       var _a2, _b2;
       const key = context ? context + "" + single : single;
       let result = !!((_b2 = (_a2 = tannin.data) == null ? void 0 : _a2[domain != null ? domain : "default"]) == null ? void 0 : _b2[key]);
@@ -569,9 +569,6 @@ var __async = (__this, __arguments, generator) => {
       }
       return result;
     }, "hasTranslation");
-    if (initialData) {
-      setLocaleData2(initialData, initialDomain);
-    }
     if (hooks) {
       const onHookAddedOrRemoved = /* @__PURE__ */ __name((hookName) => {
         if (I18N_HOOK_REGEXP.test(hookName)) {
@@ -582,17 +579,17 @@ var __async = (__this, __arguments, generator) => {
       hooks.addAction("hookRemoved", "core/i18n", onHookAddedOrRemoved);
     }
     return {
-      getLocaleData: getLocaleData2,
+      getLocaleData,
       setLocaleData: setLocaleData2,
       addLocaleData,
-      resetLocaleData: resetLocaleData2,
+      resetLocaleData,
       subscribe: subscribe2,
       __: __2,
-      _x: _x2,
+      _x,
       _n: _n2,
-      _nx: _nx2,
+      _nx,
       isRTL: isRTL2,
-      hasTranslation: hasTranslation2
+      hasTranslation
     };
   }, "createI18n");
   function validateNamespace(namespace) {
@@ -909,34 +906,17 @@ var __async = (__this, __arguments, generator) => {
     actions,
     filters
   } = defaultHooks;
-  var i18n$1 = createI18n(void 0, void 0, defaultHooks);
-  var default_i18n_default = i18n$1;
-  var getLocaleData = i18n$1.getLocaleData.bind(i18n$1);
-  var setLocaleData = i18n$1.setLocaleData.bind(i18n$1);
-  var resetLocaleData = i18n$1.resetLocaleData.bind(i18n$1);
-  var subscribe$1 = i18n$1.subscribe.bind(i18n$1);
-  var __$3 = i18n$1.__.bind(i18n$1);
-  var _x = i18n$1._x.bind(i18n$1);
-  var _n$1 = i18n$1._n.bind(i18n$1);
-  var _nx = i18n$1._nx.bind(i18n$1);
-  var isRTL$1 = i18n$1.isRTL.bind(i18n$1);
-  var hasTranslation = i18n$1.hasTranslation.bind(i18n$1);
-  const i18n = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-    __proto__: null,
-    __: __$3,
-    _n: _n$1,
-    _nx,
-    _x,
-    createI18n,
-    defaultI18n: default_i18n_default,
-    getLocaleData,
-    hasTranslation,
-    isRTL: isRTL$1,
-    resetLocaleData,
-    setLocaleData,
-    sprintf: sprintf$3,
-    subscribe: subscribe$1
-  }, Symbol.toStringTag, { value: "Module" }));
+  var i18n = createI18n(void 0, void 0, defaultHooks);
+  i18n.getLocaleData.bind(i18n);
+  var setLocaleData = i18n.setLocaleData.bind(i18n);
+  i18n.resetLocaleData.bind(i18n);
+  i18n.subscribe.bind(i18n);
+  var __ = i18n.__.bind(i18n);
+  i18n._x.bind(i18n);
+  var _n = i18n._n.bind(i18n);
+  i18n._nx.bind(i18n);
+  i18n.isRTL.bind(i18n);
+  i18n.hasTranslation.bind(i18n);
   const TEXT_DOMAIN = "cookie-law-info";
   if (typeof window !== "undefined" && ((_b = window.ckyTranslations) == null ? void 0 : _b.translations)) {
     setLocaleData(
@@ -944,7 +924,6 @@ var __async = (__this, __arguments, generator) => {
       TEXT_DOMAIN
     );
   }
-  const { __: __$2, sprintf: sprintf$2, _n } = i18n;
   const popupLayoutSvg = "" + new URL("../assets/popup-layout.svg", document.currentScript && document.currentScript.tagName.toUpperCase() === "SCRIPT" && document.currentScript.src || document.baseURI).href;
   const layoutBoxSvg = "data:image/svg+xml,%3csvg%20width='79'%20height='50'%20viewBox='0%200%2079%2050'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3crect%20x='0.5'%20width='77.7778'%20height='50'%20rx='4'%20fill='%23EAF1FE'/%3e%3crect%20x='9.75925'%20y='25.9258'%20width='24.0741'%20height='14.8148'%20rx='2'%20fill='%23154FD9'/%3e%3c/svg%3e";
   const layoutClassicBottomSvg = "data:image/svg+xml,%3csvg%20width='79'%20height='50'%20viewBox='0%200%2079%2050'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3crect%20x='0.5'%20width='77.7778'%20height='50'%20rx='4'%20fill='%23EAF1FE'/%3e%3crect%20x='11.6111'%20y='32.4072'%20width='55.5556'%20height='5.55556'%20rx='1'%20fill='%23154FD9'/%3e%3c/svg%3e";
@@ -995,16 +974,6 @@ var __async = (__this, __arguments, generator) => {
   const partnerAgencySvg = "data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M13.7869%2015.7256H13.9999C13.9999%2015.7256%2017.4529%2015.7326%2017.4999%2015.7256L19.6799%2015.3256C19.9101%2015.2834%2020.1183%2015.1619%2020.2681%2014.9821C20.418%2014.8023%2020.5%2014.5756%2020.4999%2014.3416V8.90757C20.4999%208.70654%2020.4393%208.51018%2020.326%208.3441C20.2128%208.17802%2020.0521%208.04994%2019.8649%207.97657L14.8199%205.99957C14.5712%205.90229%2014.3011%205.87316%2014.0374%205.91517C13.7737%205.95719%2013.526%206.06883%2013.3199%206.23857L9.6549%209.25357C9.51588%209.36738%209.4211%209.52629%209.38702%209.70269C9.35293%209.8791%209.38168%2010.0619%209.46829%2010.2193C9.5549%2010.3767%209.69389%2010.4988%209.86115%2010.5645C10.0284%2010.6301%2010.2134%2010.6351%2010.3839%2010.5786L14.4999%209.22557'%20stroke='%231578F7'%20stroke-linecap='round'%20stroke-linejoin='round'%20/%3e%3cpath%20d='M3.5%2013.7264L6.1%2014.2264L9.685%2017.8114C9.79816%2017.9247%209.93688%2018.0092%2010.0895%2018.0577C10.2421%2018.1063%2010.4042%2018.1175%2010.562%2018.0904L11.062%2018.0034C11.2657%2017.9683%2011.4535%2017.8711%2011.5996%2017.7249C11.7457%2017.5788%2011.843%2017.391%2011.878%2017.1874L12.052%2016.1744L13.761%2015.8794L14.056%2014.1714L15.765%2013.8764L16.059%2012.1674L13.459%209.56737M11.57%207.67837L10.091%206.20037C9.95118%206.06007%209.77285%205.96445%209.57862%205.92564C9.38438%205.88682%209.183%205.90657%209%205.98237L6%207.22637L3.5%207.72637M0.5%206.22637H2.5C2.76522%206.22637%203.01957%206.33172%203.20711%206.51926C3.39464%206.7068%203.5%206.96115%203.5%207.22637V14.2264C3.5%2014.4916%203.39464%2014.7459%203.20711%2014.9335C3.01957%2015.121%202.76522%2015.2264%202.5%2015.2264H0.5V6.22637ZM21.5%207.22637H23.5V16.2264H21.5C21.2348%2016.2264%2020.9804%2016.121%2020.7929%2015.9335C20.6054%2015.7459%2020.5%2015.4916%2020.5%2015.2264V8.22637C20.5%207.96115%2020.6054%207.7068%2020.7929%207.51926C20.9804%207.33172%2021.2348%207.22637%2021.5%207.22637Z'%20stroke='%231578F7'%20stroke-linecap='round'%20stroke-linejoin='round'%20/%3e%3c/svg%3e";
   const partnerAffiliateSvg = "" + new URL("../assets/partner-affiliate.svg", document.currentScript && document.currentScript.tagName.toUpperCase() === "SCRIPT" && document.currentScript.src || document.baseURI).href;
   const rocketSvg = "data:image/svg+xml,%3csvg%20width='32'%20height='33'%20viewBox='0%200%2032%2033'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20clip-path='url(%23clip0_900_87)'%3e%3cpath%20d='M10.5202%2020.8299L15.139%2023.4966L21.9161%2017.2542C22.8685%2016.3774%2023.5938%2015.2825%2024.0299%2014.0637C24.466%2012.8448%2024.5997%2011.5384%2024.4198%2010.2565L23.6391%204.70196C23.6222%204.58153%2023.5781%204.46653%2023.5102%204.3657C23.4422%204.26487%2023.3521%204.18086%2023.2468%204.12006C23.1415%204.05926%2023.0237%204.02327%2022.9024%204.01482C22.7811%204.00637%2022.6595%204.02568%2022.5467%204.07129L17.3461%206.17246C16.1459%206.65755%2015.0813%207.42664%2014.2438%208.41371C13.4063%209.40078%2012.8208%2010.5764%2012.5377%2011.8395L10.5202%2020.8299ZM10.5202%2020.8299L5.72274%2021.1393C5.72274%2021.1393%206.08%2015.1872%2011.7881%2014.6338M8.52017%2024.294C7.18684%2026.6034%208.82957%2029.0914%208.82957%2029.0914C8.82957%2029.0914%2011.8056%2029.2701%2013.139%2026.9607M20.3687%2019.5878C22.7435%2024.8078%2017.7674%2028.0933%2017.7674%2028.0933L15.6366%2023.7839'%20stroke='%23136FE8'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M16.8297%2015.235C16.2173%2014.8814%2015.7703%2014.299%2015.5873%2013.6158C15.4042%2012.9327%2015.5001%2012.2048%2015.8537%2011.5923C16.2073%2010.9798%2016.7898%2010.5329%2017.4729%2010.3498C18.156%2010.1668%2018.8839%2010.2626%2019.4964%2010.6162C20.1089%2010.9699%2020.5558%2011.5523%2020.7389%2012.2354C20.9219%2012.9186%2020.8261%2013.6465%2020.4725%2014.259C20.1189%2014.8715%2019.5364%2015.3184%2018.8533%2015.5014C18.1701%2015.6845%2017.4422%2015.5887%2016.8297%2015.235Z'%20stroke='%23136FE8'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3cdefs%3e%3cclipPath%20id='clip0_900_87'%3e%3crect%20width='32'%20height='32'%20fill='white'%20transform='translate(0%200.5)'/%3e%3c/clipPath%3e%3c/defs%3e%3c/svg%3e";
-  const gdprAnniversaryLogoSvg = "" + new URL("../assets/gdpr-anniversary-logo.svg", document.currentScript && document.currentScript.tagName.toUpperCase() === "SCRIPT" && document.currentScript.src || document.baseURI).href;
-  const gdprAnniversaryCloseSvg = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2018.7547%2018.7547'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='tabler:x'%3e%3cpath%20id='Vector'%20d='M14.066%204.68868L4.68868%2014.066M4.68868%204.68868L14.066%2014.066'%20stroke='var(--stroke-0,%20white)'%20stroke-width='1.25'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e";
-  const gdprAnniversaryBgOverlaySvg = "" + new URL("../assets/gdpr-anniversary-bg-overlay.svg", document.currentScript && document.currentScript.tagName.toUpperCase() === "SCRIPT" && document.currentScript.src || document.baseURI).href;
-  const gdprAnniversarySparkLgSvg = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2010.9425%2013.8365'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='g3550'%3e%3cpath%20id='path3552'%20d='M5.47125%200.5C2.52872%201.44582%200.5%204.49813%200.5%207.94097V11.7119L5.47125%2013.3365L10.4425%2011.7119V7.94097C10.4425%204.49813%208.4138%201.44582%205.47125%200.5Z'%20stroke='var(--stroke-0,%20white)'%20stroke-miterlimit='10'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e";
-  const gdprAnniversarySparkSmSvg = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%205.40741%204.09896'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='g3558'%3e%3cpath%20id='path3560'%20d='M0.500001%202.04948L1.96914%200.5L4.90741%203.59896'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-miterlimit='10'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e";
-  const gdprAnniversaryDotASvg = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2010.7199%209.41146'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%20opacity='0.2'%3e%3cpath%20id='Vector'%20d='M0.5%208.07031C0.5%208.29311%200.578568%208.5068%200.718463%208.6645C0.858358%208.8222%201.04815%208.91101%201.24619%208.91146H9.47372C9.67176%208.91101%209.86155%208.8222%2010.0014%208.6645C10.1413%208.5068%2010.2199%208.29311%2010.2199%208.07031V6.35942C9.89708%206.26094%209.61204%206.04563%209.40882%205.74675C9.20559%205.44787%209.09548%205.08203%209.09548%204.70573C9.09548%204.32943%209.20559%203.96359%209.40882%203.66471C9.61204%203.36583%209.89708%203.15052%2010.2199%203.05204V1.34115C10.2199%201.11835%2010.1413%200.904658%2010.0014%200.746961C9.86155%200.589264%209.67176%200.500447%209.47372%200.500001H1.24619C1.04815%200.500447%200.858358%200.589264%200.718463%200.746961C0.578568%200.904658%200.5%201.11835%200.5%201.34115V3.04867C0.825407%203.14496%201.11331%203.35976%201.31876%203.65954C1.52421%203.95932%201.63563%204.3272%201.63563%204.70573C1.63563%205.08426%201.52421%205.45214%201.31876%205.75192C1.11331%206.0517%200.825407%206.2665%200.5%206.36279V8.07031Z'%20stroke='var(--stroke-0,%20white)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_2'%20d='M3.50694%206.80727L7.24537%202.60154'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_3'%20d='M3.88079%203.44269C3.97993%203.44269%204.07502%203.39838%204.14513%203.31951C4.21524%203.24063%204.25463%203.13366%204.25463%203.02212C4.25463%202.91057%204.21524%202.8036%204.14513%202.72473C4.07502%202.64586%203.97993%202.60154%203.88079%202.60154C3.78164%202.60154%203.68655%202.64586%203.61644%202.72473C3.54633%202.8036%203.50694%202.91057%203.50694%203.02212C3.50694%203.13366%203.54633%203.24063%203.61644%203.31951C3.68655%203.39838%203.78164%203.44269%203.88079%203.44269ZM6.87153%206.80727C6.97068%206.80727%207.06576%206.76296%207.13587%206.68409C7.20598%206.60522%207.24537%206.49824%207.24537%206.3867C7.24537%206.27516%207.20598%206.16818%207.13587%206.08931C7.06576%206.01044%206.97068%205.96613%206.87153%205.96613C6.77238%205.96613%206.67729%206.01044%206.60718%206.08931C6.53707%206.16818%206.49768%206.27516%206.49768%206.3867C6.49768%206.49824%206.53707%206.60522%206.60718%206.68409C6.67729%206.76296%206.77238%206.80727%206.87153%206.80727Z'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e";
-  const gdprAnniversaryDotBSvg = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2011.2839%2015.8733'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%20opacity='0.2'%3e%3cpath%20id='Vector'%20d='M2.70139%207.11111V3.80556C2.70139%202.92887%203.01095%202.08809%203.56199%201.46817C4.11302%200.848263%204.86038%200.5%205.63966%200.5C6.41894%200.5%207.1663%200.848263%207.71733%201.46817C8.26836%202.08809%208.57793%202.92887%208.57793%203.80556V7.11111M4.90509%2011.2431C4.90509%2011.4622%204.98248%2011.6724%205.12024%2011.8274C5.258%2011.9824%205.44484%2012.0694%205.63966%2012.0694C5.83448%2012.0694%206.02132%2011.9824%206.15907%2011.8274C6.29683%2011.6724%206.37422%2011.4622%206.37422%2011.2431C6.37422%2011.0239%206.29683%2010.8137%206.15907%2010.6587C6.02132%2010.5037%205.83448%2010.4167%205.63966%2010.4167C5.44484%2010.4167%205.258%2010.5037%205.12024%2010.6587C4.98248%2010.8137%204.90509%2011.0239%204.90509%2011.2431Z'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_2'%20d='M0.5%208.76215C0.5%208.32381%200.654783%207.90342%200.9303%207.59346C1.20582%207.28351%201.5795%207.10937%201.96914%207.10938H9.31481C9.70445%207.10938%2010.0781%207.28351%2010.3536%207.59346C10.6292%207.90342%2010.7839%208.32381%2010.7839%208.76215V13.7205C10.7839%2014.1588%2010.6292%2014.5792%2010.3536%2014.8892C10.0781%2015.1991%209.70445%2015.3733%209.31481%2015.3733H1.96914C1.5795%2015.3733%201.20582%2015.1991%200.9303%2014.8892C0.654783%2014.5792%200.5%2014.1588%200.5%2013.7205V8.76215Z'%20stroke='var(--stroke-0,%20white)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e";
-  const gdprAnniversaryDotCSvg = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2011.2839%2015.8733'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%20opacity='0.2'%3e%3cpath%20id='Vector'%20d='M2.70139%207.11111V3.80556C2.70139%202.92887%203.01095%202.08809%203.56199%201.46817C4.11302%200.848263%204.86038%200.5%205.63966%200.5C6.41894%200.5%207.1663%200.848263%207.71733%201.46817C8.26836%202.08809%208.57793%202.92887%208.57793%203.80556V7.11111M4.90509%2011.2431C4.90509%2011.4622%204.98248%2011.6724%205.12024%2011.8274C5.258%2011.9824%205.44484%2012.0694%205.63966%2012.0694C5.83448%2012.0694%206.02132%2011.9824%206.15907%2011.8274C6.29683%2011.6724%206.37422%2011.4622%206.37422%2011.2431C6.37422%2011.0239%206.29683%2010.8137%206.15907%2010.6587C6.02132%2010.5037%205.83448%2010.4167%205.63966%2010.4167C5.44484%2010.4167%205.258%2010.5037%205.12024%2010.6587C4.98248%2010.8137%204.90509%2011.0239%204.90509%2011.2431Z'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_2'%20d='M0.5%208.76215C0.5%208.32381%200.654783%207.90342%200.9303%207.59346C1.20582%207.28351%201.5795%207.10937%201.96914%207.10938H9.31481C9.70445%207.10938%2010.0781%207.28351%2010.3536%207.59346C10.6292%207.90342%2010.7839%208.32381%2010.7839%208.76215V13.7205C10.7839%2014.1588%2010.6292%2014.5792%2010.3536%2014.8892C10.0781%2015.1991%209.70445%2015.3733%209.31481%2015.3733H1.96914C1.5795%2015.3733%201.20582%2015.1991%200.9303%2014.8892C0.654783%2014.5792%200.5%2014.1588%200.5%2013.7205V8.76215Z'%20stroke='var(--stroke-0,%20white)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e";
-  const gdprAnniversaryDotDSvg = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2010.3657%2013.3965'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%20opacity='0.2'%3e%3cpath%20id='Vector'%20d='M2.88661%2012.492L2.60068%2012.0644C2.35001%2011.6882%201.81671%2011.7185%201.60516%2012.1202C1.30766%2012.6854%200.5%2012.4604%200.5%2011.8127V1.58371C0.5%200.936023%201.30766%200.711039%201.60516%201.27567C1.81671%201.67791%202.35001%201.70828%202.60068%201.33207L2.88661%200.904414C3.24637%200.365195%203.99783%200.365195%204.35758%200.904414L4.40221%200.971971C4.784%201.54342%205.58119%201.54342%205.96353%200.971971L6.00816%200.904414C6.36791%200.365195%207.11937%200.365195%207.47913%200.904414L7.76506%201.33207C8.01573%201.70828%208.54903%201.67791%208.76058%201.27629C9.05808%200.711659%209.86574%200.936023%209.86574%201.58371V11.8127C9.86574%2012.4604%209.05808%2012.6854%208.76058%2012.1208C8.54903%2011.7185%208.01573%2011.6882%207.76506%2012.0644L7.47968%2012.492C7.11938%2013.0313%206.36791%2013.0313%206.00871%2012.492L5.96353%2012.4245C5.58174%2011.853%204.78455%2011.853%204.40221%2012.4245L4.35758%2012.492C3.99783%2013.0313%203.24637%2013.0313%202.88661%2012.492Z'%20stroke='var(--stroke-0,%20white)'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_2'%20d='M6.83334%204.83594L3.52779%208.55469'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_3'%20d='M6.83334%208.55469H6.82838M3.53274%204.83594H3.52779'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e";
-  const gdprAnniversaryDotESvg = "data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2010.3657%2013.3965'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%20opacity='0.2'%3e%3cpath%20id='Vector'%20d='M2.88661%2012.492L2.60068%2012.0644C2.35001%2011.6882%201.81671%2011.7185%201.60516%2012.1202C1.30766%2012.6854%200.5%2012.4604%200.5%2011.8127V1.58371C0.5%200.936023%201.30766%200.711039%201.60516%201.27567C1.81671%201.67791%202.35001%201.70828%202.60068%201.33207L2.88661%200.904414C3.24637%200.365195%203.99783%200.365195%204.35758%200.904414L4.40221%200.971971C4.784%201.54342%205.58119%201.54342%205.96353%200.971971L6.00816%200.904414C6.36791%200.365195%207.11937%200.365195%207.47913%200.904414L7.76506%201.33207C8.01573%201.70828%208.54903%201.67791%208.76058%201.27629C9.05808%200.711659%209.86574%200.936023%209.86574%201.58371V11.8127C9.86574%2012.4604%209.05808%2012.6854%208.76058%2012.1208C8.54903%2011.7185%208.01573%2011.6882%207.76506%2012.0644L7.47968%2012.492C7.11938%2013.0313%206.36791%2013.0313%206.00871%2012.492L5.96353%2012.4245C5.58174%2011.853%204.78455%2011.853%204.40221%2012.4245L4.35758%2012.492C3.99783%2013.0313%203.24637%2013.0313%202.88661%2012.492Z'%20stroke='var(--stroke-0,%20white)'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_2'%20d='M6.83333%204.83594L3.52777%208.55469'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_3'%20d='M6.83333%208.55469H6.82837M3.53273%204.83594H3.52777'%20stroke='var(--stroke-0,%20%2357BD8D)'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/g%3e%3c/svg%3e";
   const assets = {
     popupLayout: popupLayoutSvg,
     layouts: {
@@ -1016,7 +985,6 @@ var __async = (__this, __arguments, generator) => {
       sidebar: layoutSidebarSvg,
       pushdown: layoutPushdownSvg
     },
-    external: externalSvg,
     check: checkSvg,
     checkFill: checkFillSvg,
     lang: langSvg,
@@ -1052,17 +1020,7 @@ var __async = (__this, __arguments, generator) => {
     globalPrivacy: globalPrivacySvg,
     partnerAgency: partnerAgencySvg,
     partnerAffiliate: partnerAffiliateSvg,
-    rocket: rocketSvg,
-    gdprAnniversaryLogo: gdprAnniversaryLogoSvg,
-    gdprAnniversaryClose: gdprAnniversaryCloseSvg,
-    gdprAnniversaryBgOverlay: gdprAnniversaryBgOverlaySvg,
-    gdprAnniversarySparkLg: gdprAnniversarySparkLgSvg,
-    gdprAnniversarySparkSm: gdprAnniversarySparkSmSvg,
-    gdprAnniversaryDotA: gdprAnniversaryDotASvg,
-    gdprAnniversaryDotB: gdprAnniversaryDotBSvg,
-    gdprAnniversaryDotC: gdprAnniversaryDotCSvg,
-    gdprAnniversaryDotD: gdprAnniversaryDotDSvg,
-    gdprAnniversaryDotE: gdprAnniversaryDotESvg
+    rocket: rocketSvg
   };
   if (typeof document !== "undefined") {
     const root2 = document.documentElement;
@@ -20262,15 +20220,6 @@ var __async = (__this, __arguments, generator) => {
       }
     );
   }, "CkyIcon");
-  function __$1(text, domain) {
-    if (typeof window === "undefined") return text;
-    return __$2(text, domain);
-  }
-  __name(__$1, "__$1");
-  function t$1(text) {
-    return __$2(text, "cookie-law-info");
-  }
-  __name(t$1, "t$1");
   /**
    * @license lucide-react v0.543.0 - ISC
    *
@@ -29040,8 +28989,8 @@ var __async = (__this, __arguments, generator) => {
     );
   });
   DropdownMenuCheckboxItem.displayName = CheckboxItem2.displayName;
-  const DropdownMenuRadioItem = reactExports.forwardRef((_x2, ref) => {
-    var _y = _x2, { className, children } = _y, props = __objRest(_y, ["className", "children"]);
+  const DropdownMenuRadioItem = reactExports.forwardRef((_x, ref) => {
+    var _y = _x, { className, children } = _y, props = __objRest(_y, ["className", "children"]);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       RadioItem2,
       __spreadProps(__spreadValues({
@@ -30869,7 +30818,7 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
       }, props), {
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "close", width: "15px", height: "15px", color: "#8893a1" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:sr-only", children: __$2("Close", "cookie-law-info") })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:sr-only", children: __("Close", "cookie-law-info") })
         ]
       })
     );
@@ -48710,11 +48659,11 @@ For more information, see https://radix-ui.com/primitives/docs/components/${titl
     var _ref2 = viewBox, cx2 = _ref2.cx, cy = _ref2.cy, innerRadius = _ref2.innerRadius, outerRadius = _ref2.outerRadius, startAngle = _ref2.startAngle, endAngle = _ref2.endAngle;
     var midAngle = (startAngle + endAngle) / 2;
     if (position === "outside") {
-      var _polarToCartesian = polarToCartesian(cx2, cy, outerRadius + offset2, midAngle), _x2 = _polarToCartesian.x, _y = _polarToCartesian.y;
+      var _polarToCartesian = polarToCartesian(cx2, cy, outerRadius + offset2, midAngle), _x = _polarToCartesian.x, _y = _polarToCartesian.y;
       return {
-        x: _x2,
+        x: _x,
         y: _y,
-        textAnchor: _x2 >= cx2 ? "start" : "end",
+        textAnchor: _x >= cx2 ? "start" : "end",
         verticalAnchor: "middle"
       };
     }
@@ -62563,7 +62512,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       } catch (e) {
         throw {
           code: "invalid_json",
-          message: __$3("The response is not a valid JSON response.")
+          message: __("The response is not a valid JSON response.")
         };
       }
     });
@@ -62632,7 +62581,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           if (options2.parse !== false) {
             return Promise.reject({
               code: "post_process",
-              message: __$3(
+              message: __(
                 "Media upload failed. If this is a photo or a large image, please scale it down and try again."
               )
             });
@@ -62732,14 +62681,14 @@ ${colorConfig.map(([key, itemConfig]) => {
         if (!globalThis.navigator.onLine) {
           throw {
             code: "offline_error",
-            message: __$3(
+            message: __(
               "Unable to connect. Please check your Internet connection."
             )
           };
         }
         throw {
           code: "fetch_error",
-          message: __$3(
+          message: __(
             "Could not get a valid response from the server."
           )
         };
@@ -64325,7 +64274,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       (_a2 = window.open(url, "_blank")) == null ? void 0 : _a2.focus();
     } catch (e) {
       alert(
-        __$1(
+        __(
           "Your browser blocked the authorization window from opening. Please check your popup settings.",
           "cookie-law-info"
         )
@@ -64613,8 +64562,8 @@ ${colorConfig.map(([key, itemConfig]) => {
     window.open(`${base}/wp-plan-selector?${search.toString()}`, "_blank", "noopener,noreferrer");
   }
   __name(openFeatureUpgradeFlow, "openFeatureUpgradeFlow");
-  const BTN_ACCESS_PLANS = __$1("Connect to Web App to Access", "cookie-law-info");
-  const BTN_EXISTING_ACCOUNT = __$1("Have an account? Log in and connect", "cookie-law-info");
+  const BTN_ACCESS_PLANS = __("Connect to Web App to Access", "cookie-law-info");
+  const BTN_EXISTING_ACCOUNT = __("Have an account? Log in and connect", "cookie-law-info");
   function restoreBodyPointerAndScroll() {
     const { style } = document.body;
     const pe2 = style.pointerEvents;
@@ -64770,7 +64719,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         onInteractOutside: preventCloseWhenClickInsideContainer,
         children: [
           !isScannerModal && /* @__PURE__ */ jsxRuntimeExports.jsx(DialogClose, { className: MODAL_CORNER_CLOSE_CLASS }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { showClose: false, className: dialogHeaderClassName, children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-center", children: title || __$1("Connect to Web App", "cookie-law-info") }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { showClose: false, className: dialogHeaderClassName, children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-center", children: title || __("Connect to Web App", "cookie-law-info") }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogFooter, { className: dialogFooterClassName, children: [
             featureText && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: MODAL_FEATURE_TEXT_CLASS, children: featureText }),
             availabilityText && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: MODAL_AVAILABILITY_ROW_CLASS, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -64831,7 +64780,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         ),
         children: connectSuccessSyncing ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-col cky:items-center cky:justify-center", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(LoaderCircle, { className: "cky:w-10 cky:h-10 cky:animate-spin cky:text-blue-600" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "cky:mt-4 cky:text-base cky:font-medium cky:text-gray-700 cky:text-center cky:max-w-sm", children: __$1(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "cky:mt-4 cky:text-base cky:font-medium cky:text-gray-700 cky:text-center cky:max-w-sm", children: __(
             "Please wait while we connect your site to app.cookieyes.com",
             "cookie-law-info"
           ) })
@@ -64845,13 +64794,13 @@ ${colorConfig.map(([key, itemConfig]) => {
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mt-[15px] cky:mb-10 cky:text-center", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "cky:m-0 cky:!text-[22px] cky:font-semibold cky:text-text-primary", children: __$1("Your website is connected to app.cookieyes.com", "cookie-law-info") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mt-2 cky:m-0 cky:!text-sm cky:text-gray-600", children: __$1(
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "cky:m-0 cky:!text-[22px] cky:font-semibold cky:text-text-primary", children: __("Your website is connected to app.cookieyes.com", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mt-2 cky:m-0 cky:!text-sm cky:text-gray-600", children: __(
               "You can now continue to manage all your existing settings and access all free CookieYes features from your web app account",
               "cookie-law-info"
             ) })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: STACK_CENTER, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { size: "lg", external: true, onClick: handleGoToApp, className: "cky:font-medium", children: __$1("Go to CookieYes Web App", "cookie-law-info") }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: STACK_CENTER, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { size: "lg", external: true, onClick: handleGoToApp, className: "cky:font-medium", children: __("Go to CookieYes Web App", "cookie-law-info") }) })
         ] })
       }
     );
@@ -64917,7 +64866,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               className: "cky:w-15 cky:h-15 cky:shrink-0"
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mt-[15px] cky:mb-10 cky:text-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "cky:m-0 cky:text-base cky:font-semibold cky:text-text-primary", children: __$1(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mt-[15px] cky:mb-10 cky:text-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "cky:m-0 cky:text-base cky:font-semibold cky:text-text-primary", children: __(
             "Your website is now disconnected from app.cookieyes.com",
             "cookie-law-info"
           ) }) })
@@ -65151,9 +65100,9 @@ ${colorConfig.map(([key, itemConfig]) => {
   }
   __name(WpEditor, "WpEditor");
   function ctaLabelFromInfo(info) {
-    if (!info || typeof info !== "object") return __$1("Upgrade now", "cookie-law-info");
+    if (!info || typeof info !== "object") return __("Upgrade now", "cookie-law-info");
     const website = info.website;
-    return (website == null ? void 0 : website.canStartOptoutTrial) ? __$1("Try Pro for free", "cookie-law-info") : __$1("Upgrade now", "cookie-law-info");
+    return (website == null ? void 0 : website.canStartOptoutTrial) ? __("Try Pro for free", "cookie-law-info") : __("Upgrade now", "cookie-law-info");
   }
   __name(ctaLabelFromInfo, "ctaLabelFromInfo");
   function CkyUpgradeModal({
@@ -65346,8 +65295,8 @@ ${colorConfig.map(([key, itemConfig]) => {
       key: "agency",
       href: "https://www.cookieyes.com/partners/agency/?ref=cywpagb",
       icon: assets.partnerAgency,
-      title: __$1("Agency Partner", "cookie-law-info"),
-      description: __$1(
+      title: __("Agency Partner", "cookie-law-info"),
+      description: __(
         "Partner with us as a reseller or agency to manage and sell CookieYes to your clients.",
         "cookie-law-info"
       )
@@ -65356,8 +65305,8 @@ ${colorConfig.map(([key, itemConfig]) => {
       key: "affiliate",
       href: "https://www.cookieyes.com/partners/affiliates/?ref=cywpafb",
       icon: assets.partnerAffiliate,
-      title: __$1("Affiliate Partner", "cookie-law-info"),
-      description: __$1(
+      title: __("Affiliate Partner", "cookie-law-info"),
+      description: __(
         "Earn rewards by referring CookieYes to your audience.",
         "cookie-law-info"
       )
@@ -65371,7 +65320,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         variant: "ghost",
         className: "cky:h-auto cky:gap-1 cky:border-0 cky:bg-transparent cky:p-0 cky:text-white cky:shadow-none cky:transition-colors cky:hover:bg-transparent cky:hover:text-gray-200 focus-visible:cky:ring-0 focus-visible:cky:ring-offset-0",
         children: [
-          __$1("Become a Partner", "cookie-law-info"),
+          __("Become a Partner", "cookie-law-info"),
           /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { className: "cky:h-4 cky:w-4" })
         ]
       }
@@ -65400,12 +65349,12 @@ ${colorConfig.map(([key, itemConfig]) => {
     {
       href: "https://www.cookieyes.com/documentation/how-to-install-cookieyes-wordpress-plugin/",
       icon: "help",
-      label: __$1("Help Guides", "cookie-law-info")
+      label: __("Help Guides", "cookie-law-info")
     },
     {
       href: "https://www.cookieyes.com/support/",
       icon: "chat",
-      label: __$1("Support", "cookie-law-info")
+      label: __("Support", "cookie-law-info")
     }
   ];
   const CkyHeader = /* @__PURE__ */ __name(() => {
@@ -65496,7 +65445,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         formatted += ` (${pct}%)`;
       }
       const tooltipHtml = sprintfWp(
-        __$1(
+        __(
           /* translators: 1: Date when pageviews reset. 2: URL of the documentation page. */
           'Pageviews will reset on<br><b>%1$s</b>.<br><a class="cky-external-link cky:text-inherit! cky:underline!" href="%2$s" target="_blank">Learn more</a>',
           "cookie-law-info"
@@ -65521,37 +65470,37 @@ ${colorConfig.map(([key, itemConfig]) => {
     }
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-col cky:items-end cky:justify-end cky:text-right", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "cky:text-sm cky:text-[var(--cky-text-secondary-dark,#4a5568)] cky:m-0!", children: [
-        __$1("Current plan:", "cookie-law-info"),
+        __("Current plan:", "cookie-law-info"),
         " ",
         /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: planName }),
         showTrialExpiry && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("b", { children: [
             " ",
-            __$1("(Trial)", "cookie-law-info"),
+            __("(Trial)", "cookie-law-info"),
             " "
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:text-red-600", children: [
-            __$1("Expires in", "cookie-law-info"),
+            __("Expires in", "cookie-law-info"),
             " ",
             /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: endsIn }),
             " ",
             pickSingularPlural(
-              __$1("day", "cookie-law-info"),
-              __$1("days", "cookie-law-info"),
+              __("day", "cookie-law-info"),
+              __("days", "cookie-law-info"),
               endsIn
             )
           ] })
         ] })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:text-xs cky:text-gray-500 cky:flex cky:flex-wrap cky:items-center cky:justify-end cky:gap-x-1 cky:m-0!", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: __$1("Pageviews used: ", "cookie-law-info") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: __("Pageviews used: ", "cookie-law-info") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("b", { className: "cky:text-[11px] cky:text-[var(--cky-text-secondary-dark,#4a5568)]", children: formattedPageviewsText }),
         showOverageCount && overageData && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:text-xs cky:text-gray-500", children: [
           "+",
           " ",
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-[11px] cky:text-[var(--cky-text-secondary-dark,#4a5568)]", children: formattedOverageText }),
           " ",
-          __$1("extra", "cookie-law-info")
+          __("extra", "cookie-law-info")
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipProvider, { delayDuration: 200, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Tooltip$1, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -65559,7 +65508,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               variant: "ghost",
               className: "cky:inline-flex cky:h-4 cky:w-3 cky:p-0 cky:shrink-0 cky:border-0! cky:bg-transparent! cky:text-gray-400 hover:cky:bg-gray-100/80 hover:cky:text-gray-700",
-              "aria-label": __$1("Learn more", "cookie-law-info"),
+              "aria-label": __("Learn more", "cookie-law-info"),
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "tooltip", width: "12px", height: "12px", color: "currentColor" })
             }
           ) }),
@@ -65642,7 +65591,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         upgradeURL: url,
         buttonWidth: canTrial ? "167px" : "107px",
         showCrown: planLower !== "ultimate",
-        label: canTrial ? __$1("Try Pro for free", "cookie-law-info") : __$1("Upgrade", "cookie-law-info")
+        label: canTrial ? __("Try Pro for free", "cookie-law-info") : __("Upgrade", "cookie-law-info")
       };
     }, [info, account.website_id]);
     const openUpgrade = reactExports.useCallback(() => {
@@ -65676,48 +65625,29 @@ ${colorConfig.map(([key, itemConfig]) => {
   }
   __name(navTabFromPathname, "navTabFromPathname");
   const NAV_MENU_ITEMS = [
-    { text: __$1("Dashboard", "cookie-law-info"), to: { name: "dashboard" }, native: true },
-    { text: __$1("Cookie Banner", "cookie-law-info"), to: { name: "customize" } },
-    { text: __$1("Cookie Manager", "cookie-law-info"), to: { name: "cookies" } },
-    { text: __$1("Languages", "cookie-law-info"), to: { name: "languages" } },
-    { text: __$1("Policy Generators", "cookie-law-info"), to: { name: "policies" } },
+    { text: __("Dashboard", "cookie-law-info"), to: { name: "dashboard" }, native: true },
+    { text: __("Cookie Banner", "cookie-law-info"), to: { name: "customize" } },
+    { text: __("Cookie Manager", "cookie-law-info"), to: { name: "cookies" } },
+    { text: __("Languages", "cookie-law-info"), to: { name: "languages" } },
+    { text: __("Policy Generators", "cookie-law-info"), to: { name: "policies" } },
     {
-      text: __$1("Google Consent Mode (GCM)", "cookie-law-info"),
+      text: __("Google Consent Mode (GCM)", "cookie-law-info"),
       to: { name: "gcm" },
       native: true,
       hidden: true
     },
     {
-      text: __$1("Site Settings", "cookie-law-info"),
+      text: __("Site Settings", "cookie-law-info"),
       to: { name: "settings" },
       native: true,
       hidden: true
     }
   ];
-  const CkyNavMenu = /* @__PURE__ */ __name(({ onNavigate, showGdprIndicator = false }) => {
+  const CkyNavMenu = /* @__PURE__ */ __name(({ onNavigate }) => {
     var _a2;
     const navigate = useNavigate();
     const pathname = useRouterState({ select: /* @__PURE__ */ __name((s2) => s2.location.pathname, "select") });
     const navContainerRef = reactExports.useRef(null);
-    const dashboardTriggerRef = reactExports.useRef(null);
-    const [dashboardIndicator, setDashboardIndicator] = reactExports.useState({ left: 0, width: 0 });
-    const updateIndicator = reactExports.useCallback(() => {
-      if (!navContainerRef.current || !dashboardTriggerRef.current) return;
-      const containerRect = navContainerRef.current.getBoundingClientRect();
-      const triggerRect = dashboardTriggerRef.current.getBoundingClientRect();
-      setDashboardIndicator({
-        left: triggerRect.left - containerRect.left,
-        width: triggerRect.width
-      });
-    }, []);
-    reactExports.useLayoutEffect(() => {
-      if (!showGdprIndicator) return;
-      updateIndicator();
-      const observer = new ResizeObserver(updateIndicator);
-      if (navContainerRef.current) observer.observe(navContainerRef.current);
-      if (dashboardTriggerRef.current) observer.observe(dashboardTriggerRef.current);
-      return () => observer.disconnect();
-    }, [showGdprIndicator, updateIndicator]);
     const [activeTab, setActiveTab] = reactExports.useState(
       () => navTabFromPathname(pathname)
     );
@@ -65775,40 +65705,39 @@ ${colorConfig.map(([key, itemConfig]) => {
         void navigate({ to: `/${next}`, replace: true });
       }
     }, [visibleTabValues, activeTab, navigate, disconnectSuccessOverlay]);
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { ref: navContainerRef, className: "cky:px-8 cky:bg-white cky:relative", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:grid cky:w-full cky:min-w-0 cky:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] cky:items-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:min-w-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Tabs, { value: resolvedTab, onValueChange: handleNavigate, children: /* @__PURE__ */ jsxRuntimeExports.jsx(TabsList, { className: "cky:bg-transparent cky:h-auto cky:p-0 cky:inline-flex cky:max-w-full cky:flex-nowrap cky:overflow-x-auto", children: visibleMenus.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          TabsTrigger,
-          {
-            value: item.to.name,
-            ref: item.to.name === "dashboard" ? dashboardTriggerRef : void 0,
-            className: "cky:data-[state=active]:bg-transparent cky:data-[state=active]:shadow-none cky:py-3.5 cky:px-0 cky:mx-2.5 cky:first:ml-0 cky:transition-all cky:duration-200 cky:cursor-pointer cky:border-0 cky:bg-transparent cky:data-[state=active]:text-blue-600 cky:data-[state=active]:text-[15px]! cky:data-[state=active]:font-semibold! cky:text-gray-700 cky:hover:text-[var(--cky-primary-dark)] cky:shrink-0",
-            children: item.text
-          },
-          item.to.name
-        )) }) }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:min-w-0 cky:flex-row cky:items-center cky:justify-end cky:gap-2", children: showNavExtras ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CkyPageviews, {}),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(CkyNavUpgrade, {})
-        ] }) : null })
-      ] }),
-      showGdprIndicator && dashboardIndicator.width > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "div",
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { ref: navContainerRef, className: "cky:px-8 cky:bg-white cky:relative", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:grid cky:w-full cky:min-w-0 cky:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] cky:items-center", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:min-w-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Tabs, { value: resolvedTab, onValueChange: handleNavigate, children: /* @__PURE__ */ jsxRuntimeExports.jsx(TabsList, { className: "cky:bg-transparent cky:h-auto cky:p-0 cky:inline-flex cky:max-w-full cky:flex-nowrap cky:overflow-x-auto", children: visibleMenus.map((item) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TabsTrigger,
         {
-          className: "cky:absolute cky:bottom-0 cky:h-[5px] cky:bg-[var(--cky-primary)] cky:pointer-events-none",
-          style: { left: dashboardIndicator.left, width: dashboardIndicator.width }
-        }
-      )
-    ] });
+          value: item.to.name,
+          className: "cky:data-[state=active]:bg-transparent cky:data-[state=active]:shadow-none cky:py-3.5 cky:px-0 cky:mx-2.5 cky:first:ml-0 cky:transition-all cky:duration-200 cky:cursor-pointer cky:border-0 cky:bg-transparent cky:data-[state=active]:text-blue-600 cky:data-[state=active]:text-[15px]! cky:data-[state=active]:font-semibold! cky:text-gray-700 cky:hover:text-[var(--cky-primary-dark)] cky:shrink-0",
+          children: item.text
+        },
+        item.to.name
+      )) }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:min-w-0 cky:flex-row cky:items-center cky:justify-end cky:gap-2", children: showNavExtras ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CkyPageviews, {}),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CkyNavUpgrade, {})
+      ] }) : null })
+    ] }) });
   }, "CkyNavMenu");
   const LINK_BTN_BASE = "cky:p-0 cky:h-auto cky:text-[13px]! cky:font-normal! cky:hover:border-transparent cky:hover:no-underline cky:hover:opacity-100";
   const LINK_BTN_INLINE = `cky:inline-flex cky:items-center ${LINK_BTN_BASE}`;
   const PREMIUM_BADGE_ICON = "cky:ml-1 cky:w-[18px] cky:h-[18px] cky:p-0 cky:flex cky:items-center cky:justify-center";
-  function capitalizeString(str) {
-    if (!str) return str;
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  function formatTargetedLocation(value) {
+    if (!value) return value;
+    switch (value) {
+      case "worldwide":
+        return __("Worldwide", "cookie-law-info");
+      case "eu":
+        return __("EU Countries & UK", "cookie-law-info");
+      case "us":
+        return __("United States", "cookie-law-info");
+      default:
+        return value.charAt(0).toUpperCase() + value.slice(1);
+    }
   }
-  __name(capitalizeString, "capitalizeString");
+  __name(formatTargetedLocation, "formatTargetedLocation");
   function getDefaultLanguageDisplayLabel(getInfo2, info) {
     var _a2, _b2, _c2;
     const raw = getInfo2("defaultLanguage");
@@ -65827,7 +65756,7 @@ ${colorConfig.map(([key, itemConfig]) => {
   __name(getDefaultLanguageDisplayLabel, "getDefaultLanguageDisplayLabel");
   function GeoTargetCta({ onClick, showPremiumBadge }) {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { variant: "link", onClick, className: LINK_BTN_INLINE, children: [
-      __$1("Geo-target", "cookie-law-info"),
+      __("Geo-target", "cookie-law-info"),
       showPremiumBadge ? /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { variant: "premium", className: PREMIUM_BADGE_ICON, children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "crown", width: "10px", height: "8px" }) }) : null
     ] });
   }
@@ -65885,9 +65814,9 @@ ${colorConfig.map(([key, itemConfig]) => {
           if (banners.laws === "ccpa") {
             return "US State Laws";
           } else if (laws.includes("ccpa") && laws.includes("gdpr")) {
-            return banners.is_iab_enabled ? "GDPR (IAB TCF v2.3) & US State Laws" : "GDPR & US State Laws";
+            return banners.is_iab_enabled ? "GDPR (IAB TCF v2.4) & US State Laws" : "GDPR & US State Laws";
           }
-          return banners.is_iab_enabled ? "GDPR (IAB TCF v2.3)" : "GDPR";
+          return banners.is_iab_enabled ? "GDPR (IAB TCF v2.4)" : "GDPR";
         }
         return "GDPR";
       }
@@ -65976,14 +65905,14 @@ ${colorConfig.map(([key, itemConfig]) => {
     }
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: cn$1("cky-dashboard-overview", connected ? "connected" : ""), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: __$1("Overview", "cookie-law-info") }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: __("Overview", "cookie-law-info") }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: cardLoader ? "cky:min-h-[160px]" : void 0, children: cardLoader ? /* @__PURE__ */ jsxRuntimeExports.jsx(CardLoader, { className: "cky:py-2" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mb-0", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget-container", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-icon", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.status, alt: "status" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget-content", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-title", children: __$1("Banner status", "cookie-law-info") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-title", children: __("Banner status", "cookie-law-info") }),
               bannerStatus ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget-text", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-[15px] cky:font-semibold", style: { color: "#00aa62" }, children: __$1("Active", "cookie-law-info") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-[15px] cky:font-semibold", style: { color: "#00aa62" }, children: __("Active", "cookie-law-info") }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Button,
                   {
@@ -65994,29 +65923,29 @@ ${colorConfig.map(([key, itemConfig]) => {
                     children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "eye", width: "18px" })
                   }
                 )
-              ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky-info-widget-text cky-status-error", children: __$1("Inactive", "cookie-law-info") })
+              ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky-info-widget-text cky-status-error", children: __("Inactive", "cookie-law-info") })
             ] })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-icon", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.reg, alt: "regulation" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget-content", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-title", children: __$1("Regulation", "cookie-law-info") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-title", children: __("Regulation", "cookie-law-info") }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget-text", children: [
                 applicableLaws,
                 " ",
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "link", onClick: handleCustomizeCtaClick, className: LINK_BTN_BASE, children: __$1("Change", "cookie-law-info") })
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "link", onClick: handleCustomizeCtaClick, className: LINK_BTN_BASE, children: __("Change", "cookie-law-info") })
               ] })
             ] })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-icon", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.lang, alt: "language" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget-content", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-title", children: __$1("Language", "cookie-law-info") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-title", children: __("Language", "cookie-law-info") }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget-text", children: [
                 defaultLanguageLabel,
                 " ",
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(Button, { variant: "link", onClick: handleAddLanguagesClick, className: LINK_BTN_INLINE, children: [
-                  __$1("Add languages", "cookie-law-info"),
+                  __("Add languages", "cookie-law-info"),
                   showLanguagePremiumBadge ? /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { variant: "premium", className: PREMIUM_BADGE_ICON, children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "crown", width: "10px", height: "8px" }) }) : null
                 ] })
               ] })
@@ -66025,13 +65954,13 @@ ${colorConfig.map(([key, itemConfig]) => {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-icon", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.location, alt: "location" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-info-widget-content", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-title", children: __$1("Targeted location", "cookie-law-info") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-title", children: __("Targeted location", "cookie-law-info") }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-info-widget-text", children: connected ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:text-[14px]", children: [
-                capitalizeString(targetedLocation),
+                formatTargetedLocation(targetedLocation),
                 " ",
                 !isGeoTargeted ? /* @__PURE__ */ jsxRuntimeExports.jsx(GeoTargetCta, { onClick: handleGeoTargetClick, showPremiumBadge: showGeoPremiumBadge }) : null
               ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                __$1("Worldwide ", "cookie-law-info"),
+                __("Worldwide ", "cookie-law-info"),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(GeoTargetCta, { onClick: handleGeoTargetClick, showPremiumBadge: showGeoPremiumBadge })
               ] }) })
             ] })
@@ -66046,7 +65975,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               connected && "cky-external-link"
             ),
             onClick: handleCustomizeCtaClick,
-            children: __$1("Customise Banner", "cookie-law-info")
+            children: __("Customise Banner", "cookie-law-info")
           }
         ) }) }) : null
       ] }) }) }),
@@ -66059,8 +65988,8 @@ ${colorConfig.map(([key, itemConfig]) => {
           feature: "language_limit",
           onNavigate: handleNavigate,
           title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.addLanguage, alt: "languages" }),
-          featureText: __$1("Display your banner in multiple languages tailored for your audience", "cookie-law-info"),
-          availabilityText: __$1("Available in: <b>All premium plans</b>", "cookie-law-info")
+          featureText: __("Display your banner in multiple languages tailored for your audience", "cookie-law-info"),
+          availabilityText: __("Available in: <b>All premium plans</b>", "cookie-law-info")
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -66072,8 +66001,8 @@ ${colorConfig.map(([key, itemConfig]) => {
           feature: "config_geo_rules",
           onNavigate: handleNavigate,
           title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.geoTarget, alt: "location" }),
-          featureText: __$1("Display your banner to visitors from selected locations!", "cookie-law-info"),
-          availabilityText: __$1("Available in: <b>Pro</b> and <b>Ultimate</b> plans", "cookie-law-info")
+          featureText: __("Display your banner to visitors from selected locations!", "cookie-law-info"),
+          availabilityText: __("Available in: <b>Pro</b> and <b>Ultimate</b> plans", "cookie-law-info")
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -66083,8 +66012,8 @@ ${colorConfig.map(([key, itemConfig]) => {
           feature: "language_limit",
           upgradeSource: "cywpal",
           title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.addLanguage, alt: "languages" }),
-          featureText: __$1("Display your banner in multiple languages tailored for your audience", "cookie-law-info"),
-          availabilityText: __$1("Available in: <b>All premium plans</b>", "cookie-law-info")
+          featureText: __("Display your banner in multiple languages tailored for your audience", "cookie-law-info"),
+          availabilityText: __("Available in: <b>All premium plans</b>", "cookie-law-info")
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -66094,8 +66023,8 @@ ${colorConfig.map(([key, itemConfig]) => {
           feature: "config_geo_rules",
           upgradeSource: "cywpgt",
           title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.geoTarget, alt: "location" }),
-          featureText: __$1("Display your banner to visitors from selected locations!", "cookie-law-info"),
-          availabilityText: __$1("Available in: <b>Pro</b> and <b>Ultimate</b> plans", "cookie-law-info")
+          featureText: __("Display your banner to visitors from selected locations!", "cookie-law-info"),
+          availabilityText: __("Available in: <b>Pro</b> and <b>Ultimate</b> plans", "cookie-law-info")
         }
       )
     ] });
@@ -66220,11 +66149,11 @@ ${colorConfig.map(([key, itemConfig]) => {
   const TIMELINE_RAIL_CLASS = "cky:flex cky:flex-col cky:items-center cky:mr-4";
   const SCAN_BENEFIT_ROW_CLASS = "cky:flex cky:items-start cky:gap-1.5";
   const SCAN_BENEFIT_TEXT_CLASS = "cky:text-sm! cky:m-0! cky:font-normal cky:text-gray-700 cky:pr-6 cky:max-w-[216px]";
-  const SCAN_BENEFIT_MESSAGES = [
-    "Detect cookies and trackers on all web pages",
-    "Automatically classify cookies into categories",
-    "Generate a detailed cookie declaration"
-  ];
+  const getScanBenefitMessages = /* @__PURE__ */ __name(() => [
+    __("Detect cookies and trackers on all web pages", "cookie-law-info"),
+    __("Automatically classify cookies into categories", "cookie-law-info"),
+    __("Generate a detailed cookie declaration", "cookie-law-info")
+  ], "getScanBenefitMessages");
   const CkyConnectNotice = /* @__PURE__ */ __name(() => {
     var _a2;
     const navigate = useNavigate();
@@ -66310,13 +66239,13 @@ ${colorConfig.map(([key, itemConfig]) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mt-[30px] cky:mb-0 cky:bg-white cky:rounded cky:shadow-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:m-0 cky:py-[15px] cky:px-5", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:w-full cky:pt-[5px] cky:px-0 cky:pb-[3px]", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("h4", { className: "cky:m-0! cky:mb-4! cky:font-semibold cky:text-base! cky:flex! cky:items-center cky:gap-1.5", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.success, alt: "", className: "cky:w-4 cky:h-4 cky:shrink-0", style: { color: "#00aa63" } }),
-          __$1("Your website is connected to CookieYes web app", "cookie-law-info")
+          __("Your website is connected to CookieYes web app", "cookie-law-info")
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mb-[18px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-sm!", children: __$1(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mb-[18px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-sm!", children: __(
           "You can access all the plugin settings (Cookie Banner, Cookie Manager, Languages and Policy Generators) on the web app and unlock new features like Cookie Scanner and Consent Log.",
           "cookie-law-info"
         ) }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "cky-external-link", onClick: handleGoToWebApp, children: __$1("Go to Web App", "cookie-law-info") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "cky-external-link", onClick: handleGoToWebApp, children: __("Go to Web App", "cookie-law-info") })
       ] }) }) });
     }
     if (!tablesMissing) {
@@ -66324,8 +66253,8 @@ ${colorConfig.map(([key, itemConfig]) => {
         CkyConnectCard,
         {
           ref: ckyCardRef,
-          title: __$1("Get started with CookieYes", "cookie-law-info"),
-          tagline: __$1(
+          title: __("Get started with CookieYes", "cookie-law-info"),
+          tagline: __(
             "Welcome to CookieYes! To become legally compliant for your use of cookies, here’s what you need to do.",
             "cookie-law-info"
           ),
@@ -66337,26 +66266,26 @@ ${colorConfig.map(([key, itemConfig]) => {
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-0.5 cky:h-12 cky:bg-blue-600" })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-base! cky:font-semibold cky:text-gray-700 cky:m-0!", children: __$1("Activate your cookie banner", "cookie-law-info") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-base! cky:font-semibold cky:text-gray-700 cky:m-0!", children: __("Activate your cookie banner", "cookie-law-info") }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "cky:text-sm! cky:font-normal cky:text-gray-700 cky:m-0!", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: __$1("Well done!", "cookie-law-info") }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: __("Well done!", "cookie-law-info") }),
                   " 🎉",
                   " ",
-                  __$1("You have successfully implemented a cookie banner on your website.", "cookie-law-info")
+                  __("You have successfully implemented a cookie banner on your website.", "cookie-law-info")
                 ] })
               ] })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: STEP_ROW_CLASS, children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: TIMELINE_RAIL_CLASS, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:flex-col cky:justify-center cky:items-center cky:rounded-full cky:border-2 cky:border-blue-600 cky:bg-[#E8F1FE] cky:mb-1 cky:mt-1 cky:w-[28px] cky:h-[28px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-[12px] cky:h-[12px] cky:rounded-full cky:bg-blue-600" }) }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-base! cky:font-semibold cky:text-gray-700 cky:m-0! cky:mb-2", children: __$1("Connect and scan your website", "cookie-law-info") }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-sm! cky:font-normal cky:text-gray-700 cky:m-0! cky:mb-4", children: __$1(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-base! cky:font-semibold cky:text-gray-700 cky:m-0! cky:mb-2", children: __("Connect and scan your website", "cookie-law-info") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-sm! cky:font-normal cky:text-gray-700 cky:m-0! cky:mb-4", children: __(
                   "To initiate an automatic cookie scan, you need to connect to the CookieYes web app. By connecting you can:",
                   "cookie-law-info"
                 ) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:py-4 cky:pb-6 cky:flex-row cky:gap-2", children: SCAN_BENEFIT_MESSAGES.map((msg) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SCAN_BENEFIT_ROW_CLASS, children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:py-4 cky:pb-6 cky:flex-row cky:gap-2", children: getScanBenefitMessages().map((msg) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SCAN_BENEFIT_ROW_CLASS, children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.check, alt: "", className: "cky:w-5 cky:h-5 cky:mt-0.5 cky:shrink-0" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: SCAN_BENEFIT_TEXT_CLASS, children: t$1(msg) })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: SCAN_BENEFIT_TEXT_CLASS, children: msg })
                 ] }, msg)) })
               ] })
             ] }),
@@ -66366,7 +66295,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   className: hasFilter2 ? "cky-external-link" : "",
                   onClick: handleConnectToNewAccount,
-                  children: __$1("Connect to a new account", "cookie-law-info")
+                  children: __("Connect to a new account", "cookie-law-info")
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -66375,7 +66304,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   variant: "outline",
                   className: "cky:ml-0 cky:bg-white cky:text-blue-600 cky:border-blue-600 cky-external-link",
                   onClick: handleExistingAccount,
-                  children: __$1("Connect to an existing account", "cookie-law-info")
+                  children: __("Connect to an existing account", "cookie-law-info")
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -66384,18 +66313,18 @@ ${colorConfig.map(([key, itemConfig]) => {
                   variant: "ghost",
                   className: "cky:ml-auto cky:bg-transparent cky:text-[#686876] cky:border-none cky:hover:bg-[#dfdfe2]",
                   onClick: expandAccordion,
-                  children: __$1("Do it later", "cookie-law-info")
+                  children: __("Do it later", "cookie-law-info")
                 }
               )
             ] }),
             !isConnectNoticeClosed && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:pt-4 cky:pb-0 cky:px-5", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Alert, { variant: "info", className: "cky:relative cky:py-[15px] cky:px-5", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(AlertTitle, { className: "cky:font-medium", children: __$1("Connecting to the web app: what to expect", "cookie-law-info") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(AlertTitle, { className: "cky:font-medium", children: __("Connecting to the web app: what to expect", "cookie-law-info") }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDescription, { className: "cky:pr-5", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-sm cky:mb-2.5!", children: __$1(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-sm cky:mb-2.5!", children: __(
                   "When you connect to the web app, your banner will load from CookieYes’ external servers, and consent logs will be stored securely in the cloud. You’ll get access to advanced features and settings, and your banner will follow the monthly pageview limit of your selected plan.",
                   "cookie-law-info"
                 ) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-sm cky:m-0!", children: __$1(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-sm cky:m-0!", children: __(
                   "You can disconnect anytime to switch back to the plugin’s free native version, but the advanced features will be removed.",
                   "cookie-law-info"
                 ) })
@@ -66457,7 +66386,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     };
   }
   __name(createInitialErrors, "createInitialErrors");
-  const DELETE_COOKIE_BODY_TEMPLATE = __$1(
+  const DELETE_COOKIE_BODY_TEMPLATE = __(
     /* translators: %1$s: Cookie name. */
     "The cookie <b>%1$s</b> will be permanently deleted. This cookie will no longer be displayed on your cookie list nor be blocked prior to receiving user consent.",
     "cookie-law-info"
@@ -66503,76 +66432,76 @@ ${colorConfig.map(([key, itemConfig]) => {
     const isDraft = infoStatus === "draft";
     const hasPayment = !!website.payment_status;
     const selectedPlan = (_a2 = website.selected_plan) != null ? _a2 : "";
-    const gracePeriod = formatDeadlineDate(website.grace_period_ends_at) || t$1("soon");
+    const gracePeriod = formatDeadlineDate(website.grace_period_ends_at) || __("soon", "cookie-law-info");
     const redirectToOrgSettings = /* @__PURE__ */ __name(() => {
       openAppRedirect("settings/organizations-and-sites");
     }, "redirectToOrgSettings");
     if (isSubscriptionCancelled) {
       const isTrialCancellation = isTrial && !hasPayment;
       return {
-        header: __$1(
+        header: __(
           isTrialCancellation ? "Your trial subscription is due for cancellation" : "Your subscription is due for cancellation",
           "cookie-law-info"
         ),
         message: buildMessageHtml(
-          isTrialCancellation ? __$1(
+          isTrialCancellation ? __(
             /* translators: %s: End date of the billing period (formatted). */
             "Your trial subscription will be cancelled at the end of your billing period on <b>%s</b>, and your site will be removed from the web app account",
             "cookie-law-info"
-          ) : __$1(
+          ) : __(
             /* translators: %s: End date of the billing period (formatted). */
             "Your subscription will be cancelled at the end of your billing period on <b>%s</b>, and your site will be removed from the web app account.",
             "cookie-law-info"
           ),
           gracePeriod
         ),
-        buttonText: __$1("Reactivate subscription", "cookie-law-info"),
+        buttonText: __("Reactivate subscription", "cookie-law-info"),
         buttonAction: redirectToOrgSettings
       };
     }
     if (!hasPayment) {
       if (isTrial && !isSubscriptionCancelled && isDraft) {
         return {
-          header: __$1("Start your free trial to activate your banner", "cookie-law-info"),
+          header: __("Start your free trial to activate your banner", "cookie-law-info"),
           message: buildMessageHtml(
-            __$1(
+            __(
               /* translators: %s: Last date to add a payment method (formatted). */
               "Your cookie banner is currently inactive. Add a payment method to start your 14-day free trial and activate your banner. If you don't proceed with the trial by <b>%s</b>, your site will be removed from the web app account",
               "cookie-law-info"
             ),
             gracePeriod
           ),
-          buttonText: __$1("Start your free trial", "cookie-law-info"),
+          buttonText: __("Start your free trial", "cookie-law-info"),
           buttonAction: openDashboardStartTrial
         };
       }
       if (website.status === "paymentMethodMissingPaid" && !isTrial) {
         return {
-          header: __$1("No payment method available for this site", "cookie-law-info"),
+          header: __("No payment method available for this site", "cookie-law-info"),
           message: buildMessageHtml(
-            __$1(
+            __(
               /* translators: %s: Next renewal date (formatted). */
               "Add a payment method before the next renewal date, <b>%s</b>, to avoid suspension of your site. If no payment method is added by this date, your site will be removed from the web app account within 30 days of suspension.",
               "cookie-law-info"
             ),
             gracePeriod
           ),
-          buttonText: __$1("Add payment method", "cookie-law-info"),
+          buttonText: __("Add payment method", "cookie-law-info"),
           buttonAction: redirectToOrgSettings
         };
       }
       if (selectedPlan === "free" && !isTrial || isTrial && selectedPlan !== "free" && isSuspended) {
         return {
-          header: __$1("Select a plan to activate your banner", "cookie-law-info"),
+          header: __("Select a plan to activate your banner", "cookie-law-info"),
           message: buildMessageHtml(
-            __$1(
+            __(
               /* translators: %s: Last date to choose a plan (formatted). */
               "Your cookie banner is currently inactive. Choose a plan to activate your banner and unlock advanced customisation and features. If you don't proceed with a plan by <b>%s</b>, your site will be removed from the web app account.",
               "cookie-law-info"
             ),
             gracePeriod
           ),
-          buttonText: __$1("Select a plan", "cookie-law-info"),
+          buttonText: __("Select a plan", "cookie-law-info"),
           buttonAction: /* @__PURE__ */ __name(() => {
             openAppRedirect("wp-plan-selector");
           }, "buttonAction")
@@ -66580,16 +66509,16 @@ ${colorConfig.map(([key, itemConfig]) => {
       }
       if (!isTrial && selectedPlan !== "free" && isSuspended) {
         return {
-          header: __$1("Complete your payment to activate your banner", "cookie-law-info"),
+          header: __("Complete your payment to activate your banner", "cookie-law-info"),
           message: buildMessageHtml(
-            __$1(
+            __(
               /* translators: %s: Last date to complete payment (formatted). */
               "Your site is currently suspended and your cookie banner is inactive due to payment failure. Complete your payment to activate the banner. If you don't proceed with the payment by <b>%s</b>, your site will be removed from the web app account",
               "cookie-law-info"
             ),
             gracePeriod
           ),
-          buttonText: __$1("Complete your payment", "cookie-law-info"),
+          buttonText: __("Complete your payment", "cookie-law-info"),
           buttonAction: redirectToOrgSettings
         };
       }
@@ -66603,7 +66532,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     const website = (_a2 = info == null ? void 0 : info.website) != null ? _a2 : {};
     const infoStatus = typeof (info == null ? void 0 : info.status) === "string" ? info.status : "";
     const noteHtml = sprintf(
-      __$1(
+      __(
         /* translators: %1$s: opening bold tag, %2$s: closing bold tag, %3$s: settings page URL */
         `%1$sNote:%2$s To use the standalone plugin, you can <a href="%3$s">disconnect</a> from the web app. However, you'll lose advanced features and customizations.`,
         "cookie-law-info"
@@ -66693,29 +66622,29 @@ ${colorConfig.map(([key, itemConfig]) => {
         plan
       );
     }
-    return sprintf$2(__$2("🎉 You're on a 14-day %s trial", "cookie-law-info"), plan);
+    return sprintf$2(__("🎉 You're on a 14-day %s trial", "cookie-law-info"), plan);
   }
   __name(getNoticeHeader, "getNoticeHeader");
   function getNoticeMessage(noticeType, isInOptinTrial, plan, trialEndsAt) {
     if (noticeType === "warning") {
       return isInOptinTrial ? sprintf$2(
         /* translators: %s: plan name */
-        __$2("To avoid losing access to advanced features after the trial ends, add payment details now and continue on the %s plan seamlessly. You won't be charged until your trial ends.", "cookie-law-info"),
+        __("To avoid losing access to advanced features after the trial ends, add payment details now and continue on the %s plan seamlessly. You won't be charged until your trial ends.", "cookie-law-info"),
         plan
       ) : sprintf$2(
         /* translators: %s: plan name */
-        __$2("To keep your cookie banner active after the trial, add payment details now and continue on the %s plan seamlessly. You won't be charged until your trial ends.", "cookie-law-info"),
+        __("To keep your cookie banner active after the trial, add payment details now and continue on the %s plan seamlessly. You won't be charged until your trial ends.", "cookie-law-info"),
         plan
       );
     }
     return isInOptinTrial ? sprintf$2(
       /* translators: %1$s: plan name, %2$s: trial end date */
-      __$2("Your %1$s features are active until %2$s. After that, your plan will be downgraded to Free unless you add payment details. You won't be charged until your trial ends.", "cookie-law-info"),
+      __("Your %1$s features are active until %2$s. After that, your plan will be downgraded to Free unless you add payment details. You won't be charged until your trial ends.", "cookie-law-info"),
       plan,
       trialEndsAt
     ) : sprintf$2(
       /* translators: %1$s: plan name, %2$s: trial end date */
-      __$2("Your %1$s features are active until %2$s. After that, your cookie banner will be paused unless you add payment details. You won't be charged until your trial ends.", "cookie-law-info"),
+      __("Your %1$s features are active until %2$s. After that, your cookie banner will be paused unless you add payment details. You won't be charged until your trial ends.", "cookie-law-info"),
       plan,
       trialEndsAt
     );
@@ -66738,7 +66667,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         noticeIcon: getNoticeIcon(type),
         noticeHeader: getNoticeHeader(type, planName, endsIn),
         noticeMessage: getNoticeMessage(type, isInOptinTrial, planName, trialEndsAt),
-        primaryButtonText: __$2("Add payment details", "cookie-law-info"),
+        primaryButtonText: __("Add payment details", "cookie-law-info"),
         paymentData: {
           currency: (_e2 = plan == null ? void 0 : plan.currency) != null ? _e2 : "USD",
           is_trial: (_f = website.is_trial) != null ? _f : false,
@@ -66840,7 +66769,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               variant: "ghost",
               size: "icon",
-              "aria-label": t$1("Dismiss"),
+              "aria-label": __("Dismiss", "cookie-law-info"),
               onClick: /* @__PURE__ */ __name(() => void removeNotice(), "onClick"),
               className: "cky:!h-7 cky:!w-7 cky:absolute cky:top-2 cky:right-3 cky:z-10 cky:p-0 cky:text-xl! cky:font-light cky:leading-none cky:text-gray-400! hover:cky:text-gray-600! cky:shadow-none! cky:border-0! cky:hover:bg-transparent! cky:active:bg-transparent!",
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "aria-hidden": "true", children: "×" })
@@ -66853,14 +66782,15 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 className: "cky:mt-[15px] cky:mb-[5px] cky:text-sm cky:text-[#333]",
                 dangerouslySetInnerHTML: {
-                  __html: t$1(
-                    "Hey, we at <b>CookieYes</b> would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going."
+                  __html: __(
+                    "Hey, we at <b>CookieYes</b> would like to thank you for using our plugin. We would really appreciate if you could take a moment to drop a quick review that will inspire us to keep going.",
+                    "cookie-law-info"
                   )
                 }
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:gap-0 cky:mt-[10px]", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { size: "sm", onClick: redirectReview, children: t$1("Review now") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { size: "sm", onClick: redirectReview, children: __("Review now", "cookie-law-info") }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Button,
                 {
@@ -66868,7 +66798,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   size: "sm",
                   onClick: /* @__PURE__ */ __name(() => void removeNotice(0), "onClick"),
                   className: "cky:ml-[10px] cky:text-[#333] cky:border-[#ccc] hover:cky:bg-[#f7f7f7]",
-                  children: t$1("Never show again")
+                  children: __("Never show again", "cookie-law-info")
                 }
               )
             ] })
@@ -66895,7 +66825,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           onClick: /* @__PURE__ */ __name(() => {
             window.location.assign(legacyURL);
           }, "onClick"),
-          children: __$1("Switch back to old UI", "cookie-law-info")
+          children: __("Go back to previous version", "cookie-law-info")
         }
       )
     ] }) }) });
@@ -66907,7 +66837,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     "cky:py-3 cky:px-[50px]",
     "cky:max-[782px]:py-4 cky:max-[782px]:px-4"
   );
-  const CLOSE_BUTTON_CLASS$1 = cn$1(
+  const CLOSE_BUTTON_CLASS = cn$1(
     "cky-affiliate-close cky:absolute cky:top-1.5 cky:right-3 cky:z-20",
     "cky:!h-7 cky:!w-7 cky:p-0 cky:shrink-0",
     "cky:text-[20px]! cky:font-light cky:leading-none cky:tracking-normal",
@@ -66960,8 +66890,8 @@ ${colorConfig.map(([key, itemConfig]) => {
       if (w) w.opener = null;
     }, []);
     if (!loaded || !visible) return null;
-    const highlightText = __$1("Join our affiliate program", "cookie-law-info");
-    const baseText = __$1(
+    const highlightText = __("Join our affiliate program", "cookie-law-info");
+    const baseText = __(
       " and earn commissions when your referrals become paying customers.",
       "cookie-law-info"
     );
@@ -66971,9 +66901,9 @@ ${colorConfig.map(([key, itemConfig]) => {
         {
           variant: "ghost",
           size: "icon",
-          "aria-label": __$1("Close", "cookie-law-info"),
+          "aria-label": __("Close", "cookie-law-info"),
           onClick: handleDismiss,
-          className: CLOSE_BUTTON_CLASS$1,
+          className: CLOSE_BUTTON_CLASS,
           children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { "aria-hidden": "true", children: "×" })
         }
       ),
@@ -66989,7 +66919,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           ),
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex-1 cky:flex cky:flex-col", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-lg! cky:font-bold cky:text-white cky:leading-[27px] cky:max-[782px]:text-base cky:max-[782px]:leading-6", children: __$1("Promote privacy by referring others to CookieYes.", "cookie-law-info") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-lg! cky:font-bold cky:text-white cky:leading-[27px] cky:max-[782px]:text-base cky:max-[782px]:leading-6", children: __("Promote privacy by referring others to CookieYes.", "cookie-law-info") }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "cky:m-0! cky:text-sm! cky:font-normal cky:text-white cky:leading-5", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   "span",
@@ -67013,7 +66943,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 variant: "outline",
                 onClick: handleLearnMore,
                 className: "cky-external-link cky:text-[#0D47A1] cky:bg-white cky:border-white hover:cky:bg-white/90 cky:shadow-[0_8px_26px_-4px_rgba(39,40,60,0.20)]",
-                children: t$1("Learn More")
+                children: __("Learn More", "cookie-law-info")
               }
             ) })
           ]
@@ -67021,168 +66951,6 @@ ${colorConfig.map(([key, itemConfig]) => {
       )
     ] });
   }, "CkyAffiliateNotice");
-  const AGENCY_URL = "https://www.cookieyes.com/partners/agency/?ref=wpagency";
-  const DEADLINE_1 = /* @__PURE__ */ new Date("2026-05-31T23:59:59");
-  const GDPR_ANNIVERSARY_DEADLINE = /* @__PURE__ */ new Date("2026-06-14T23:59:59");
-  const DISMISS_KEY = "cky_gdpr_anniversary_dismissed";
-  const DISMISS_DURATION = 12 * 60 * 60 * 1e3;
-  const BANNER_BG_STYLE = {
-    background: "linear-gradient(271deg, #0F2942 -31.69%, #1E4DD8 105.53%)"
-  };
-  const GRADIENT_TEXT_STYLE = {
-    background: "linear-gradient(72deg, #E44B26 -64.63%, #F3CF4E 201.77%)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    backgroundClip: "text",
-    color: "transparent"
-  };
-  const CTA_BUTTON_STYLE = {
-    boxShadow: "0px 8px 13px rgba(39, 40, 60, 0.2)"
-  };
-  const CLOSE_BUTTON_CLASS = cn$1(
-    "cky:absolute cky:top-[7px] cky:right-3 cky:z-20",
-    "cky:!h-[19px] cky:!w-[19px] cky:p-0 cky:shrink-0",
-    "cky:shadow-none! cky:border-0!",
-    "cky:hover:bg-transparent! cky:hover:opacity-70!"
-  );
-  function isDismissed() {
-    try {
-      if (!sessionStorage.getItem(DISMISS_KEY)) return false;
-      const val = localStorage.getItem(DISMISS_KEY);
-      if (!val) return false;
-      return Date.now() < Number(val);
-    } catch (e) {
-      return false;
-    }
-  }
-  __name(isDismissed, "isDismissed");
-  function storeDismiss() {
-    const expiry = String(Date.now() + DISMISS_DURATION);
-    try {
-      sessionStorage.setItem(DISMISS_KEY, "1");
-    } catch (e) {
-    }
-    try {
-      localStorage.setItem(DISMISS_KEY, expiry);
-    } catch (e) {
-    }
-  }
-  __name(storeDismiss, "storeDismiss");
-  const CkyGdprAnniversaryBanner = /* @__PURE__ */ __name(({ onDismiss, onHeightChange }) => {
-    const bannerRef = reactExports.useRef(null);
-    const [dismissed, setDismissed] = reactExports.useState(isDismissed);
-    const now = Date.now();
-    const isExpired = now >= GDPR_ANNIVERSARY_DEADLINE.getTime();
-    const activeDeadlineLabel = now < DEADLINE_1.getTime() ? "May 31" : "Jun 14";
-    reactExports.useLayoutEffect(() => {
-      if (dismissed || isExpired || !onHeightChange || !bannerRef.current) return;
-      const el = bannerRef.current;
-      onHeightChange(el.offsetHeight);
-      const observer = new ResizeObserver(() => onHeightChange(el.offsetHeight));
-      observer.observe(el);
-      return () => observer.disconnect();
-    }, [dismissed, isExpired, onHeightChange]);
-    const handleDismiss = reactExports.useCallback(() => {
-      storeDismiss();
-      setDismissed(true);
-      onDismiss == null ? void 0 : onDismiss();
-    }, [onDismiss]);
-    const handleJoinAgency = reactExports.useCallback(() => {
-      window.open(AGENCY_URL, "_blank", "noopener,noreferrer");
-    }, []);
-    if (isExpired || dismissed) return null;
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      "div",
-      {
-        ref: bannerRef,
-        className: cn$1(
-          "cky-gdpr-anniversary-banner",
-          "cky:fixed cky:top-[calc(var(--wp-admin--admin-bar--height,32px)+108px)] cky:left-[var(--cky-nav-left)] cky:w-[var(--cky-nav-width)] cky:z-[9999] cky:overflow-hidden",
-          "cky:flex cky:items-center cky:justify-center",
-          "cky:h-[72px] cky:shrink-0",
-          "cky:max-[1100px]:h-auto cky:max-[1100px]:py-3"
-        ),
-        style: BANNER_BG_STYLE,
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "aria-hidden": "true", className: "cky:absolute cky:inset-0 cky:pointer-events-none cky:select-none", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute cky:mix-blend-soft-light", style: { top: "-490.24%", right: "-130.83%", bottom: "-682.93%", left: "158.33%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversaryBgOverlay, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute cky:opacity-20 cky:-rotate-180 cky:-scale-x-100", style: { top: "45.83%", right: "95.96%", bottom: "36.34%", left: "3.26%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversarySparkLg, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute cky:opacity-20 cky:-rotate-180 cky:-scale-x-100", style: { top: "52.16%", right: "96.18%", bottom: "43.53%", left: "3.48%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversarySparkSm, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute cky:opacity-20 cky:-rotate-180 cky:-scale-x-100", style: { top: "23.61%", right: "8.11%", bottom: "58.56%", left: "91.11%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversarySparkLg, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute cky:opacity-20 cky:-rotate-180 cky:-scale-x-100", style: { top: "29.94%", right: "8.33%", bottom: "65.76%", left: "91.33%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversarySparkSm, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute cky:opacity-20 cky:-rotate-180 cky:-scale-x-100", style: { top: "8.33%", right: "0.4%", bottom: "73.84%", left: "98.82%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversarySparkLg, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute cky:opacity-20 cky:-rotate-180 cky:-scale-x-100", style: { top: "14.66%", right: "0.62%", bottom: "81.03%", left: "99.04%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversarySparkSm, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute", style: { top: "11.11%", right: "11.28%", bottom: "71.67%", left: "87.99%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversaryDotE, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute", style: { top: "26.39%", right: "3.92%", bottom: "52.95%", left: "95.28%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversaryDotB, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute", style: { top: "58.33%", right: "6.25%", bottom: "29.98%", left: "92.99%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversaryDotA, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute", style: { top: "59.72%", right: "1.35%", bottom: "23.06%", left: "97.92%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversaryDotD, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:absolute", style: { top: "63.89%", right: "11%", bottom: "15.45%", left: "88.19%" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversaryDotC, alt: "", className: "cky:block cky:size-full cky:max-w-none" }) })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: cn$1(
-            "cky:relative cky:z-10",
-            "cky:flex cky:items-center cky:gap-8",
-            "cky:max-[1200px]:gap-5",
-            "cky:max-[960px]:gap-4",
-            "cky:max-[782px]:flex-wrap cky:max-[782px]:gap-3 cky:max-[782px]:pl-4 cky:max-[782px]:pr-10"
-          ), children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                src: assets.gdprAnniversaryLogo,
-                alt: __$1("GDPR 8th anniversary", "cookie-law-info"),
-                className: "cky:h-[50px] cky:w-[114px] cky:shrink-0 cky:object-contain cky:max-[960px]:h-10 cky:max-[960px]:w-auto cky:max-[600px]:hidden"
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-col cky:gap-px cky:shrink cky:min-w-0", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-lg! cky:font-bold cky:text-white cky:leading-[27px] cky:whitespace-nowrap cky:max-[1200px]:whitespace-normal cky:max-[960px]:text-base! cky:max-[782px]:text-sm!", children: __$1("Are you an agency managing multiple sites? Don't pay full price.", "cookie-law-info") }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "cky:m-0! cky:text-sm! cky:font-normal cky:text-white cky:leading-5 cky:max-[782px]:text-xs!", children: [
-                __$1("Join the CookieYes Agency Program and", "cookie-law-info"),
-                " ",
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:font-bold", style: GRADIENT_TEXT_STYLE, children: t$1("Get 30% + $150 off extra!") })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:gap-8 cky:shrink-0 cky:max-[960px]:gap-4 cky:max-[782px]:gap-3", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                Button,
-                {
-                  variant: "yellow",
-                  onClick: handleJoinAgency,
-                  className: "cky:text-base! cky:font-semibold! cky:leading-6! cky:px-6! cky:py-[7px]! cky:gap-2 cky:max-[960px]:text-sm! cky:max-[960px]:px-4! cky:max-[960px]:py-1.5!",
-                  style: CTA_BUTTON_STYLE,
-                  children: [
-                    t$1("Join agency program"),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.external, alt: "", "aria-hidden": "true", className: "cky:size-4 cky:shrink-0 cky:brightness-0" })
-                  ]
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:gap-[5px] cky:shrink-0", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:relative cky:flex cky:size-[10px]", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:animate-ping cky:absolute cky:inline-flex cky:size-full cky:rounded-full cky:bg-red-500 cky:opacity-75" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:relative cky:inline-flex cky:rounded-full cky:size-[10px] cky:bg-red-500" })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:text-white cky:text-xs cky:font-normal cky:leading-5 cky:whitespace-nowrap", children: [
-                  __$1("Deadline:", "cookie-law-info"),
-                  " ",
-                  activeDeadlineLabel
-                ] })
-              ] })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Button,
-            {
-              variant: "ghost",
-              size: "icon",
-              "aria-label": __$1("Dismiss banner", "cookie-law-info"),
-              onClick: handleDismiss,
-              className: CLOSE_BUTTON_CLASS,
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.gdprAnniversaryClose, alt: "", "aria-hidden": "true", className: "cky:size-full cky:brightness-0 cky:invert" })
-            }
-          )
-        ]
-      }
-    );
-  }, "CkyGdprAnniversaryBanner");
   const CkyTableMissingNotice = /* @__PURE__ */ __name(() => {
     const info = useAppStore((s2) => s2.info);
     const [loading, setLoading] = reactExports.useState(false);
@@ -67215,7 +66983,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         ),
         role: "alert",
         children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:m-0 cky:flex cky:w-full cky:items-center cky:px-[15px] cky:py-2.5", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:relative cky:flex-1 cky:pt-[5px] cky:pb-[3px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-wrap cky:items-center", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:border-0 cky:p-0 cky:text-[13px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: __$1(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:border-0 cky:p-0 cky:text-[13px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: __(
             "Missing database tables: Some features may be disabled or not work as expected since one or more required tables are missing from the database.",
             "cookie-law-info"
           ) }) }),
@@ -67225,9 +66993,9 @@ ${colorConfig.map(([key, itemConfig]) => {
               size: "sm",
               className: "cky:ml-[25px] cky:shrink-0",
               loading,
-              loadingText: __$1("Checking...", "cookie-law-info"),
+              loadingText: __("Checking...", "cookie-law-info"),
               onClick: /* @__PURE__ */ __name(() => void reInstallTables(), "onClick"),
-              children: __$1("Check again", "cookie-law-info")
+              children: __("Check again", "cookie-law-info")
             }
           )
         ] }) }) })
@@ -67268,7 +67036,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       showApiFailed && /* @__PURE__ */ jsxRuntimeExports.jsx(
         ErrorNotice,
         {
-          html: __$1(
+          html: __(
             /* translators: %s: URL of the troubleshooting documentation page. */
             'Unable to reach your web app account at the moment. Please reload the page to retry. If the issue persists, check out the <a href="%s" target="_blank">common issues causing this error</a> and try applying the suggested solutions.',
             "cookie-law-info"
@@ -67278,7 +67046,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       (errors == null ? void 0 : errors.urlMismatch) && /* @__PURE__ */ jsxRuntimeExports.jsx(
         ErrorNotice,
         {
-          html: __$1(
+          html: __(
             /* translators: %1$s: URL to the Organisations & Sites page. %2$s: URL to contact support. */
             'Looks like your website URL has changed. To ensure the proper functioning of your banner, update the registered URL on your CookieYes account (navigate to the <a href="%1$s" target="_blank">Organisations &amp; Sites</a> page and click the More button associated with your site). Then, reload this page to retry. If the issue persists, please <a href="%2$s" target="_blank">contact us</a>.',
             "cookie-law-info"
@@ -67288,7 +67056,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     ] });
   }, "CkyApiErrorNotice");
   const LASTSCAN_SLUG$1 = "lastscan";
-  const NOT_AVAILABLE = t$1("Not available");
+  const notAvailable = /* @__PURE__ */ __name(() => __("Not available", "cookie-law-info"), "notAvailable");
   const STAT_ICON_COLORS = {
     cookie: "#1C5C98",
     categories: "#087357",
@@ -67298,15 +67066,15 @@ ${colorConfig.map(([key, itemConfig]) => {
   const sizePx = /* @__PURE__ */ __name((w) => w.includes("px") ? w : `${w}px`, "sizePx");
   function renderLastScanDisplay(hasLastScanDisplay, lastScanDate, lastScanTime) {
     if (!hasLastScanDisplay) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-[14px]", children: NOT_AVAILABLE });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-[14px]", children: notAvailable() });
     }
     return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-[14px]!", children: lastScanDate || lastScanTime ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      lastScanDate || NOT_AVAILABLE,
+      lastScanDate || notAvailable(),
       lastScanTime ? /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
         " ",
         lastScanTime
       ] }) : null
-    ] }) : NOT_AVAILABLE });
+    ] }) : notAvailable() });
   }
   __name(renderLastScanDisplay, "renderLastScanDisplay");
   const CkyStatsCard = React.memo(/* @__PURE__ */ __name(function CkyStatsCard2({
@@ -67347,20 +67115,20 @@ ${colorConfig.map(([key, itemConfig]) => {
     ] });
   }, "CkyStatsCard2"));
   const LASTSCAN_SLUG = "lastscan";
-  const defaultStats = [
-    { slug: "cookies", icon: "cookie", title: t$1("Total cookies"), count: 0 },
-    { slug: "categories", icon: "categories", title: t$1("Categories"), count: 0 },
+  const getDefaultStats = /* @__PURE__ */ __name(() => [
+    { slug: "cookies", icon: "cookie", title: __("Total cookies", "cookie-law-info"), count: 0 },
+    { slug: "categories", icon: "categories", title: __("Categories", "cookie-law-info"), count: 0 },
     {
       slug: LASTSCAN_SLUG,
       icon: "scan",
-      title: t$1("Last successful scan (UTC)"),
-      count: t$1("Not available")
+      title: __("Last successful scan (UTC)", "cookie-law-info"),
+      count: __("Not available", "cookie-law-info")
     },
-    { slug: "pages", icon: "pages", title: t$1("Pages scanned"), count: 0 }
-  ];
+    { slug: "pages", icon: "pages", title: __("Pages scanned", "cookie-law-info"), count: 0 }
+  ], "getDefaultStats");
   const ICON_BG_COLORS = ["#E8F1FE", "#E5F4EF", "#C4DDFD", "#FFE8C6"];
   function cloneDefaultStats() {
-    return defaultStats.map((s2) => __spreadValues({}, s2));
+    return getDefaultStats().map((s2) => __spreadValues({}, s2));
   }
   __name(cloneDefaultStats, "cloneDefaultStats");
   function normalizeCount(raw) {
@@ -67406,7 +67174,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       };
     }, []);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: t$1("Cookie Summary") }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: __("Cookie Summary", "cookie-law-info") }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "cky:pb-8 cky:h-[255px]", children: showLoader ? /* @__PURE__ */ jsxRuntimeExports.jsx(CardLoader, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:flex-wrap", children: stats.map((stat, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex-[0_0_50%] cky:pr-3 cky:pt-[30px] cky:pb-[30px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         CkyStatsCard,
         {
@@ -67418,46 +67186,59 @@ ${colorConfig.map(([key, itemConfig]) => {
       ) }, stat.slug)) }) })
     ] });
   }, "CkyScanSummary");
-  const FAQ_SOURCE = [
+  const getFaqs = /* @__PURE__ */ __name(() => [
     {
       id: "faq1",
-      q: "How do I customise the cookie consent banner?",
-      a: 'You can customise the banner by clicking the "Customise Banner" button on the plugin dashboard. It will take you to the web app settings, where you have several options to customise the banner to your liking.'
+      question: __("How do I customise the cookie consent banner?", "cookie-law-info"),
+      answer: __(
+        'You can customise the banner by clicking the "Customise Banner" button on the plugin dashboard. It will take you to the web app settings, where you have several options to customise the banner to your liking.',
+        "cookie-law-info"
+      )
     },
     {
       id: "faq2",
-      q: "How do I scan web pages for cookies?",
-      a: 'Click the "Go to Web App" to access the web app. There, you will find the option to initiate a cookie scan for your website. Our premium plan offers a scheduled scan feature that automates this process for you.'
+      question: __("How do I scan web pages for cookies?", "cookie-law-info"),
+      answer: __(
+        'Click the "Go to Web App" to access the web app. There, you will find the option to initiate a cookie scan for your website. Our premium plan offers a scheduled scan feature that automates this process for you.',
+        "cookie-law-info"
+      )
     },
     {
       id: "faq3",
-      q: "What are pageviews?",
-      a: "Pageviews are the number of times the web pages containing CookieYes banner have been loaded or reloaded. This excludes known bot traffic."
+      question: __("What are pageviews?", "cookie-law-info"),
+      answer: __(
+        "Pageviews are the number of times the web pages containing CookieYes banner have been loaded or reloaded. This excludes known bot traffic.",
+        "cookie-law-info"
+      )
     },
     {
       id: "faq4",
-      q: "What happens if the monthly pageview limit exceeds?",
-      a: "The cookie banner will no longer be displayed on your site, which will result in non-compliance. You can either upgrade to a higher plan for an increased pageview limit or disconnect your site from the web app."
+      question: __("What happens if the monthly pageview limit exceeds?", "cookie-law-info"),
+      answer: __(
+        "The cookie banner will no longer be displayed on your site, which will result in non-compliance. You can either upgrade to a higher plan for an increased pageview limit or disconnect your site from the web app.",
+        "cookie-law-info"
+      )
     },
     {
       id: "faq5",
-      q: "What happens if I disconnect my site from the app?",
-      a: "When you disconnect from the web app, you can continue using the plugin. However, this means you will lose your banner customisation and access to advanced features."
+      question: __("What happens if I disconnect my site from the app?", "cookie-law-info"),
+      answer: __(
+        "When you disconnect from the web app, you can continue using the plugin. However, this means you will lose your banner customisation and access to advanced features.",
+        "cookie-law-info"
+      )
     },
     {
       id: "faq6",
-      q: "How do I disconnect the plugin from the web app?",
-      a: 'Go to "Site settings" on the plugin dashboard and click "Disconnect" to disconnect the plugin from the web app.'
+      question: __("How do I disconnect the plugin from the web app?", "cookie-law-info"),
+      answer: __(
+        'Go to "Site settings" on the plugin dashboard and click "Disconnect" to disconnect the plugin from the web app.',
+        "cookie-law-info"
+      )
     }
-  ];
-  const defaultFaqs = FAQ_SOURCE.map(({ id, q, a: a2 }) => ({
-    id,
-    question: t$1(q),
-    answer: t$1(a2)
-  }));
+  ], "getFaqs");
   const CkyFaqWidget = /* @__PURE__ */ __name(() => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mt-[30px]", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-faq-title cky:mb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "cky:m-0! cky:text-base! cky:font-semibold!", children: t$1("Frequently Asked Questions") }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Accordion, { type: "single", collapsible: true, className: "cky:w-full cky:py-0 cky:px-5", children: defaultFaqs.map((faq) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-faq-title cky:mb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "cky:m-0! cky:text-base! cky:font-semibold!", children: __("Frequently Asked Questions", "cookie-law-info") }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Accordion, { type: "single", collapsible: true, className: "cky:w-full cky:py-0 cky:px-5", children: getFaqs().map((faq) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
       AccordionItem,
       {
         value: faq.id,
@@ -67471,17 +67252,17 @@ ${colorConfig.map(([key, itemConfig]) => {
     )) })
   ] }), "CkyFaqWidget");
   const ENTERPRISE_SUPPORT_URL = "https://www.cookieyes.com/support/?query=enterprise&ref=cypluginupgrade#enterprise";
-  const UPGRADE = {
-    title: t$1("Upgrade to our best plans as your website grows"),
-    description: t$1("Access advanced features and future-proof your business against legal risks."),
+  const getUpgradeCopy = /* @__PURE__ */ __name(() => ({
+    title: __("Upgrade to our best plans as your website grows", "cookie-law-info"),
+    description: __("Access advanced features and future-proof your business against legal risks.", "cookie-law-info"),
     features: [
-      t$1("Advanced banner customisation"),
-      t$1("Increased monthly pageviews/month"),
-      t$1("Geo-targeted cookie banners"),
-      t$1("Scheduled scan for automatic updates")
+      __("Advanced banner customisation", "cookie-law-info"),
+      __("Increased monthly pageviews/month", "cookie-law-info"),
+      __("Geo-targeted cookie banners", "cookie-law-info"),
+      __("Scheduled scan for automatic updates", "cookie-law-info")
     ],
-    cta: t$1("Upgrade Now")
-  };
+    cta: __("Upgrade Now", "cookie-law-info")
+  }), "getUpgradeCopy");
   function asRecord(v) {
     return v && typeof v === "object" ? v : {};
   }
@@ -67519,7 +67300,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       String((_a2 = account == null ? void 0 : account.website_id) != null ? _a2 : ""),
       canStartOptoutTrial2
     );
-    const ctaLabel = canStartOptoutTrial2 ? t$1("Try Pro for free") : UPGRADE.cta;
+    const ctaLabel = canStartOptoutTrial2 ? __("Try Pro for free", "cookie-law-info") : getUpgradeCopy().cta;
     return { upgradeURL, ctaLabel };
   }
   __name(computeUpgradeLink, "computeUpgradeLink");
@@ -67527,6 +67308,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     const { options: options2, info } = useAppStore(
       useShallow((s2) => ({ options: s2.options, info: s2.info }))
     );
+    const upgradeCopy = getUpgradeCopy();
     const { upgradeURL, ctaLabel } = reactExports.useMemo(() => {
       var _a2, _b2, _c2, _d, _e2;
       const account = (_a2 = options2 == null ? void 0 : options2.account) != null ? _a2 : {};
@@ -67537,10 +67319,10 @@ ${colorConfig.map(([key, itemConfig]) => {
     }, [options2 == null ? void 0 : options2.account, info]);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: "cky:mt-[30px] cky:rounded-[5px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(CardContent, { className: "cky:py-6 cky:px-6", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:w-full", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cky:text-[20px]! cky:leading-[30px] cky:m-0! cky:mb-2!", children: UPGRADE.title }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:py-2 cky:text-[14px]! cky:leading-5 cky:m-0!", children: UPGRADE.description })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cky:text-[20px]! cky:leading-[30px] cky:m-0! cky:mb-2!", children: upgradeCopy.title }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:py-2 cky:text-[14px]! cky:leading-5 cky:m-0!", children: upgradeCopy.description })
       ] }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-premium-features-list cky:my-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "cky:list-none cky:pl-0 cky:m-0", children: UPGRADE.features.map((feature) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-premium-features-list cky:my-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "cky:list-none cky:pl-0 cky:m-0", children: upgradeCopy.features.map((feature) => /* @__PURE__ */ jsxRuntimeExports.jsx(
         "li",
         {
           className: "cky:before:content-['✓'] cky:before:text-[#1578F7] cky:before:font-extrabold cky:before:mr-1.5 cky:font-normal cky:mb-[10px]",
@@ -67646,9 +67428,9 @@ ${colorConfig.map(([key, itemConfig]) => {
     const [loading, setLoading] = reactExports.useState(true);
     const [counts, setCounts] = reactExports.useState([0, 0, 0]);
     const consentLabels = {
-      accepted: __$1("Accepted", "cookie-law-info"),
-      rejected: __$1("Rejected", "cookie-law-info"),
-      partial: __$1("Partially Accepted", "cookie-law-info")
+      accepted: __("Accepted", "cookie-law-info"),
+      rejected: __("Rejected", "cookie-law-info"),
+      partial: __("Partially Accepted", "cookie-law-info")
     };
     const chartConfig2 = {
       accepted: { label: consentLabels.accepted, color: CONSENT_COLORS_SOLID.accepted },
@@ -67660,7 +67442,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       label: consentLabels[key],
       color: CONSENT_COLORS[key]
     }));
-    const totalConsentsLabel = __$1("Total Consents", "cookie-law-info");
+    const totalConsentsLabel = __("Total Consents", "cookie-law-info");
     const chartData = reactExports.useMemo(
       () => CONSENT_TYPES.map((name, i2) => ({
         name,
@@ -67732,12 +67514,12 @@ ${colorConfig.map(([key, itemConfig]) => {
     }, []);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: __$1("Consent trends", "cookie-law-info") }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardSubtitle, { className: "cky:pl-1", children: __$1("(Last 7 days)", "cookie-law-info") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { children: __("Consent trends", "cookie-law-info") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardSubtitle, { className: "cky:pl-1", children: __("(Last 7 days)", "cookie-law-info") })
       ] }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "cky:flex cky:flex-col cky:relative cky:h-[198px] cky:min-h-[152px] cky:py-4 cky:px-5", children: cardLoader ? /* @__PURE__ */ jsxRuntimeExports.jsx(CardLoader, {}) : !hasData ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-empty-state cky:absolute cky:top-1/2 cky:left-0 cky:right-0 cky:-translate-y-1/2 cky:flex cky:flex-col cky:items-center cky:justify-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "blank", width: "80px", height: "80px", color: "#d1d1d1" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mt-2 cky:text-sm cky:m-0", children: __$1("No consents were logged", "cookie-law-info") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mt-2 cky:text-sm cky:m-0", children: __("No consents were logged", "cookie-law-info") })
       ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
         ChartContainer,
         {
@@ -67803,7 +67585,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           size: "default",
           className: "cky-external-link cky:py-2 cky:px-0 cky:text-base! cky:leading-6 cky:font-medium! cky:border-none cky:hover:border-blue-500 cky:hover:border-solid",
           onClick: handleViewReports,
-          children: __$1("View All", "cookie-law-info")
+          children: __("View All", "cookie-law-info")
         }
       ) }) })
     ] });
@@ -67820,7 +67602,7 @@ ${colorConfig.map(([key, itemConfig]) => {
   }
   __name(formatPageviewDate, "formatPageviewDate");
   const chartConfig = {
-    total: { label: __$1("Views", "cookie-law-info"), color: "#4493F9" }
+    total: { label: __("Views", "cookie-law-info"), color: "#4493F9" }
   };
   const STROKE_MUTED = "#D7E1F2";
   const Y_AXIS_TICK_FILL = "#4E4B66";
@@ -67961,10 +67743,10 @@ ${colorConfig.map(([key, itemConfig]) => {
       };
     }, []);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "cky:mt-4 cky:w-full cky:border cky:border-[#d7e1f2] cky:rounded-[5px] cky:bg-white", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "cky:border-b cky:border-[#d7e1f2] cky:py-3 cky:px-5", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "cky:text-base cky:leading-6 cky:block cky:m-0 cky:p-0", children: __$1("Pageviews", "cookie-law-info") }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "cky:border-b cky:border-[#d7e1f2] cky:py-3 cky:px-5", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "cky:text-base cky:leading-6 cky:block cky:m-0 cky:p-0", children: __("Pageviews", "cookie-law-info") }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "cky:w-full cky:py-4 cky:px-5 cky:min-h-[152px] cky:relative", children: cardLoader ? /* @__PURE__ */ jsxRuntimeExports.jsx(CardLoader, {}) : !hasData ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-empty-state cky:absolute cky:top-1/2 cky:left-0 cky:right-0 cky:-translate-y-1/2 cky:flex cky:flex-col cky:items-center cky:justify-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "blank", width: "80px", height: "80px", color: "#d1d1d1" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mt-2 cky:text-sm cky:m-0", children: __$1("No pageviews found!", "cookie-law-info") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mt-2 cky:text-sm cky:m-0", children: __("No pageviews found!", "cookie-law-info") })
       ] }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
         ChartContainer,
         {
@@ -68043,7 +67825,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           size: "default",
           className: "cky-external-link cky:border-0 cky:text-base! cky:py-2 cky:px-0 cky:hover:border cky:hover:border-[#1863dc] cky:hover:bg-transparent cky:hover:text-[#1863dc]",
           onClick: handleViewReports,
-          children: __$1("View All", "cookie-law-info")
+          children: __("View All", "cookie-law-info")
         }
       ) }) })
     ] });
@@ -68093,7 +67875,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           className: cn$1(hasErrors && "cky:!border-red-500")
         }
       ),
-      errors.maxLimit && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mt-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500 cky:text-sm", children: __$1("The value must be a positive integer.", "cookie-law-info") }) })
+      errors.maxLimit && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mt-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500 cky:text-sm", children: __("The value must be a positive integer.", "cookie-law-info") }) })
     ] });
   }, "CkyWaitUpdate");
   function GcmHeadsUpModal({ onClose, ref }) {
@@ -68151,8 +67933,8 @@ ${colorConfig.map(([key, itemConfig]) => {
               className: "cky:border-b-0 cky:pr-0",
               closeClassName: "cky:!right-[15px] cky:!top-0",
               children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-left cky:px-5 cky:text-base cky:font-semibold cky:m-0", children: __$1("Heads up!", "cookie-law-info") }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "cky:py-4 cky:px-5 cky:!m-0 cky:text-left cky:text-[13px] cky:text-text-primary", children: __$1(
+                /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-left cky:px-5 cky:text-base cky:font-semibold cky:m-0", children: __("Heads up!", "cookie-law-info") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "cky:py-4 cky:px-5 cky:!m-0 cky:text-left cky:text-[13px] cky:text-text-primary", children: __(
                   "Please ensure that you've NOT manually added any custom scripts for implementing Google Consent Mode (GCM) on your site. If such scripts are present, remove them before enabling GCM here.",
                   "cookie-law-info"
                 ) })
@@ -68160,8 +67942,8 @@ ${colorConfig.map(([key, itemConfig]) => {
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogFooter, { className: cn$1(CKY_DIALOG_FOOTER_CLASS, "cky:!p-0 cky:!px-5"), children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { ref: cancelButtonRef, variant: "outline", onClick: handleCancel, children: __$1("Cancel", "cookie-law-info") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: handleEnableGcm, className: "cky:ml-[10px] cky:font-medium!", children: __$1("Enable GCM", "cookie-law-info") })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { ref: cancelButtonRef, variant: "outline", onClick: handleCancel, children: __("Cancel", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: handleEnableGcm, className: "cky:ml-[10px] cky:font-medium!", children: __("Enable GCM", "cookie-law-info") })
           ] })
         ]
       }
@@ -68179,16 +67961,16 @@ ${colorConfig.map(([key, itemConfig]) => {
     regions: "All"
   };
   const CONSENT_DENIED_GRANTED_OPTIONS = [
-    { index: "denied", value: __$1("Denied", "cookie-law-info") },
-    { index: "granted", value: __$1("Granted", "cookie-law-info") }
+    { index: "denied", value: __("Denied", "cookie-law-info") },
+    { index: "granted", value: __("Granted", "cookie-law-info") }
   ];
   const CONSENT_SELECT_FIELDS = [
-    { field: "analytics", label: __$1("Analytics", "cookie-law-info") },
-    { field: "advertisement", label: __$1("Advertisement", "cookie-law-info") },
-    { field: "functional", label: __$1("Functional", "cookie-law-info") },
-    { field: "necessary", label: __$1("Necessary", "cookie-law-info") },
-    { field: "ad_user_data", label: __$1("Share user data with Google", "cookie-law-info") },
-    { field: "ad_personalization", label: __$1("Use data for ads personalisation", "cookie-law-info") }
+    { field: "analytics", label: __("Analytics", "cookie-law-info") },
+    { field: "advertisement", label: __("Advertisement", "cookie-law-info") },
+    { field: "functional", label: __("Functional", "cookie-law-info") },
+    { field: "necessary", label: __("Necessary", "cookie-law-info") },
+    { field: "ad_user_data", label: __("Share user data with Google", "cookie-law-info") },
+    { field: "ad_personalization", label: __("Use data for ads personalisation", "cookie-law-info") }
   ];
   function ConsentSettingModal({ onClear, ref }) {
     const [isOpen, setIsOpen] = reactExports.useState(false);
@@ -68260,8 +68042,8 @@ ${colorConfig.map(([key, itemConfig]) => {
         onOpenAutoFocus: handleOpenAutoFocus,
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogHeader, { className: "cky:border-b cky:border-gray-200 cky:p-[20px_30px]", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:m-0 cky:text-base! cky:font-semibold cky:leading-[18px]", children: itemIndex !== null ? __$1("Edit Region", "cookie-law-info") : __$1("New Region", "cookie-law-info") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "cky:sr-only", children: itemIndex !== null ? __$1("Configure consent settings for this region", "cookie-law-info") : __$1("Add a new region with custom consent settings", "cookie-law-info") })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:m-0 cky:text-base! cky:font-semibold cky:leading-[18px]", children: itemIndex !== null ? __("Edit Region", "cookie-law-info") : __("New Region", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "cky:sr-only", children: itemIndex !== null ? __("Configure consent settings for this region", "cookie-law-info") : __("Add a new region with custom consent settings", "cookie-law-info") })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:p-[20px_30px] cky:max-h-[calc(100vh-3.5rem)] cky:overflow-y-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:grid cky:grid-cols-2 cky:gap-x-[30px] cky:gap-y-5", children: [
             CONSENT_SELECT_FIELDS.map(({ field, label }) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:space-y-2.5", children: [
@@ -68279,7 +68061,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               )
             ] }, field)),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:col-span-2 cky:space-y-2.5", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: "cky:block cky:text-sm", children: __$1("Region", "cookie-law-info") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: "cky:block cky:text-sm", children: __("Region", "cookie-law-info") }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 CkyInput,
                 {
@@ -68295,7 +68077,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   className: "cky:text-sm cky:mt-5 cky:pt-[4px]",
                   dangerouslySetInnerHTML: {
-                    __html: __$1(
+                    __html: __(
                       /* translators: %1$s: URL to the ISO 3166-2 regions reference (Wikipedia). */
                       'By specifying "All", consent will apply to all regions. You can specify a comma-separated list of <a href="%1$s" target="_blank" class="cky:font-semibold">regions</a> to apply consent to specific regions.',
                       "cookie-law-info"
@@ -68306,8 +68088,8 @@ ${colorConfig.map(([key, itemConfig]) => {
             ] })
           ] }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogFooter, { className: CKY_DIALOG_FOOTER_CLASS, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", onClick: closeConsentSettingModal, children: __$1("Cancel", "cookie-law-info") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: addOrEditRegion, className: "cky:font-medium!", children: __$1("Save Changes", "cookie-law-info") })
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", onClick: closeConsentSettingModal, children: __("Cancel", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: addOrEditRegion, className: "cky:font-medium!", children: __("Save Changes", "cookie-law-info") })
           ] })
         ]
       }
@@ -68517,13 +68299,13 @@ ${colorConfig.map(([key, itemConfig]) => {
         setIsOpen(false);
         triggerNotification({
           type: "success",
-          message: __$1("Default language changed successfully!", "cookie-law-info")
+          message: __("Default language changed successfully!", "cookie-law-info")
         });
       } catch (error) {
         console.error("Error changing language:", error);
         triggerNotification({
           type: "error",
-          message: __$1(
+          message: __(
             "Problem occurred while adding languages. Please try again later!",
             "cookie-law-info"
           )
@@ -68606,8 +68388,8 @@ ${colorConfig.map(([key, itemConfig]) => {
         onCloseAutoFocus: handleCloseAutoFocus,
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogHeader, { className: cn$1(SECTION_PADDING, "cky:pt-5 cky:pb-5 cky:border-b cky:border-gray-200"), children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-xl cky:font-semibold cky:text-[#14142A] cky:text-left", children: __$1("Change language", "cookie-law-info") }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "cky:sr-only", children: __$1(
+            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-xl cky:font-semibold cky:text-[#14142A] cky:text-left", children: __("Change language", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "cky:sr-only", children: __(
               "Select a language to change the default language for your cookie banner",
               "cookie-law-info"
             ) })
@@ -68615,7 +68397,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: cn$1(SECTION_PADDING, "cky:pt-5 cky:pb-4"), children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Alert, { variant: "info", className: "cky:mb-[10px] cky:py-2.5 cky:px-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-start cky:gap-2 cky:pt-[5px] cky:pb-[3px]", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.info, alt: "", className: "cky:w-5 cky:h-5" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDescription, { className: "cky:text-[13px]", children: __$1(
+              /* @__PURE__ */ jsxRuntimeExports.jsx(AlertDescription, { className: "cky:text-[13px]", children: __(
                 "Any changes you've made to the current language will be discarded",
                 "cookie-law-info"
               ) })
@@ -68626,7 +68408,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 value: "language-selector",
                 className: "cky:border-none cky-language-selector-accordion-item",
                 children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionTrigger$1, { className: "cky-language-selector-trigger cky-accordion-chevron-right cky:relative cky:w-full cky:py-2 cky:pl-[27px] cky:pr-[10px] cky:min-h-[40px] cky:h-auto cky:border cky:border-[#ddd] cky:rounded-[3px] cky:bg-white cky:!text-[14px] cky:!font-normal cky:leading-4 cky:shadow-none cky:outline-none cky:transition-all cky:duration-300 cky:ease-in-out cky:cursor-pointer cky:hover:no-underline cky:data-[state=open]:rounded-b-none cky:appearance-none [&>svg]:cky:!absolute [&>svg]:cky:!right-[10px] [&>svg]:cky:!top-1/2 [&>svg]:cky:!-translate-y-1/2 [&>svg]:cky:!h-[10px] [&>svg]:cky:!w-[10px]", children: __$1("Select default language", "cookie-law-info") }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionTrigger$1, { className: "cky-language-selector-trigger cky-accordion-chevron-right cky:relative cky:w-full cky:py-2 cky:pl-[27px] cky:pr-[10px] cky:min-h-[40px] cky:h-auto cky:border cky:border-[#ddd] cky:rounded-[3px] cky:bg-white cky:!text-[14px] cky:!font-normal cky:leading-4 cky:shadow-none cky:outline-none cky:transition-all cky:duration-300 cky:ease-in-out cky:cursor-pointer cky:hover:no-underline cky:data-[state=open]:rounded-b-none cky:appearance-none [&>svg]:cky:!absolute [&>svg]:cky:!right-[10px] [&>svg]:cky:!top-1/2 [&>svg]:cky:!-translate-y-1/2 [&>svg]:cky:!h-[10px] [&>svg]:cky:!w-[10px]", children: __("Select default language", "cookie-law-info") }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionContent, { className: "cky:!pt-0 cky:!pb-0 cky:border cky:border-t-0 cky:border-[#ddd] cky:rounded-b-[3px] cky:rounded-t-none cky:bg-white cky:p-0 cky:shadow-[0_3px_7px_0_rgba(0,0,0,0.07)]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Command, { className: "cky-language-selector-command cky:rounded-none cky:border-0 cky:bg-white", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mb-0 cky:border-b cky:border-[#ddd]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                       "div",
@@ -68634,19 +68416,19 @@ ${colorConfig.map(([key, itemConfig]) => {
                         ref: searchWrapperRef,
                         className: "cky-language-selector-search cky:flex cky:flex-1 cky:w-full cky:items-center cky:!border-0 cky:!px-0 [&_svg]:cky:hidden cky:outline-none cky:focus:outline-none",
                         role: "group",
-                        "aria-label": __$1("Search languages", "cookie-law-info"),
+                        "aria-label": __("Search languages", "cookie-law-info"),
                         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                           CommandInput,
                           {
                             ref: searchInputRef,
-                            placeholder: __$1("Search...", "cookie-law-info"),
+                            placeholder: __("Search...", "cookie-law-info"),
                             className: "cky:w-full cky:min-w-0 cky:h-auto cky:rounded-none cky:bg-transparent cky:relative cky:z-[1] cky:!py-[5px] cky:!px-0 cky:!border-none cky:!shadow-none cky:placeholder:!text-gray-500 cky:outline-none"
                           }
                         )
                       }
                     ) }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(CommandList, { className: "cky:max-h-[180px]", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(CommandEmpty, { children: __$1("No language found.", "cookie-law-info") }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(CommandEmpty, { children: __("No language found.", "cookie-law-info") }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx(CommandGroup, { className: "cky:py-0", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
                         CommandItem,
                         {
@@ -68677,7 +68459,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                                 }
                               )
                             ] }),
-                            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-[12px] cky:text-[#4E4B66]", children: __$1("Default", "cookie-law-info") })
+                            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-[12px] cky:text-[#4E4B66]", children: __("Default", "cookie-law-info") })
                           ]
                         }
                       ) }),
@@ -68715,7 +68497,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                             ] }),
                             !isLanguageTranslated(item.code) && selectedLanguage === item.code && /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:flex cky:items-center cky:bg-[#FFF8D9] cky:rounded-[3px] cky:text-[13px] cky:text-[#a66300] cky:mb-0 cky:px-[5px] cky:py-[5px]", children: [
                               /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.warning, alt: "", className: "cky:h-[13px] cky:mr-[5px]" }),
-                              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:inline-block cky:leading-[18.2px]", children: __$1("Translations not available", "cookie-law-info") })
+                              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:inline-block cky:leading-[18.2px]", children: __("Translations not available", "cookie-law-info") })
                             ] })
                           ]
                         },
@@ -68744,13 +68526,13 @@ ${colorConfig.map(([key, itemConfig]) => {
                     "span",
                     {
                       dangerouslySetInnerHTML: {
-                        __html: __$1(
+                        __html: __(
                           "By clicking <b>Change</b>, the translations for the selected language, sourced externally from the CookieYes web app, will be downloaded to the plugin.",
                           "cookie-law-info"
                         )
                       }
                     }
-                  ) : __$1(
+                  ) : __(
                     "Translations are not available for the language you have selected, so the banner content that has not been translated will be displayed in English.",
                     "cookie-law-info"
                   ) })
@@ -68759,7 +68541,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             )
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogFooter, { className: cn$1(CKY_DIALOG_FOOTER_CLASS, "cky:pb-[30px]", SECTION_PADDING), children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "button", onClick: handleCancel, variant: "outline", className: "cky:!text-sm", children: __$1("Cancel", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "button", onClick: handleCancel, variant: "outline", className: "cky:!text-sm", children: __("Cancel", "cookie-law-info") }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               Button,
               {
@@ -68767,7 +68549,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 onClick: /* @__PURE__ */ __name(() => void handleChange(), "onClick"),
                 disabled: isDisabled || loading,
                 className: "cky:!text-sm",
-                children: loading ? __$1("Changing...", "cookie-law-info") : __$1("Change", "cookie-law-info")
+                children: loading ? __("Changing...", "cookie-law-info") : __("Change", "cookie-law-info")
               }
             )
           ] })
@@ -68829,15 +68611,15 @@ ${colorConfig.map(([key, itemConfig]) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-wrap cky:justify-between cky:items-center cky:my-[5px] cky:mx-[1px] cky:mb-[15px] cky:bg-[#f6f7f7]", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-[83.33333333%] cky:p-2.5", children: /* @__PURE__ */ jsxRuntimeExports.jsx("table", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tbody", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: TH_CLASS, children: __$1("Cookie", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: TH_CLASS, children: __("Cookie", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: TD_CLASS, children: cookie.name })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: TH_CLASS, children: __$1("Duration", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: TH_CLASS, children: __("Duration", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: TD_CLASS, children: ((_a2 = cookie.duration) == null ? void 0 : _a2[language]) || "" })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: TH_CLASS, children: __$1("Description", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("th", { className: TH_CLASS, children: __("Description", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("td", { className: TD_CLASS, children: strippedContent(((_b2 = cookie.description) == null ? void 0 : _b2[language]) || "") })
         ] })
       ] }) }) }),
@@ -68853,7 +68635,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "edit", width: "14px", height: "14px", color: "#000000" })
             }
           ) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContentWithArrow, { side: "top", children: __$1("Edit cookie", "cookie-law-info") })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContentWithArrow, { side: "top", children: __("Edit cookie", "cookie-law-info") })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(Tooltip$1, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -68866,7 +68648,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "trash", width: "14px", height: "14px", color: "#eb4034" })
             }
           ) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContentWithArrow, { side: "top", children: __$1("Delete cookie", "cookie-law-info") })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContentWithArrow, { side: "top", children: __("Delete cookie", "cookie-law-info") })
         ] })
       ] })
     ] });
@@ -68912,14 +68694,14 @@ ${colorConfig.map(([key, itemConfig]) => {
     if (list.length === 0) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:min-h-[200px] cky:flex cky:items-center cky:justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:text-center cky:flex cky:flex-col cky:items-center cky:justify-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "blank", width: "100px", height: "100px", color: "#d1d1d1" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mt-4 cky:text-gray-500", children: __$1("No cookies found for this category!", "cookie-law-info") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mt-4 cky:text-gray-500", children: __("No cookies found for this category!", "cookie-law-info") })
       ] }) });
     }
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         CookieSection,
         {
-          title: __$1("Discovered Cookies", "cookie-law-info"),
+          title: __("Discovered Cookies", "cookie-law-info"),
           items: discovered,
           keyPrefix: "discovered",
           language,
@@ -68930,7 +68712,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         CookieSection,
         {
-          title: __$1("Self-declared Cookies", "cookie-law-info"),
+          title: __("Self-declared Cookies", "cookie-law-info"),
           items: selfDeclared,
           keyPrefix: "declared",
           language,
@@ -69075,7 +68857,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     }
   };
   const SCRIPT_URL_PATTERN_ALERT_HTML = sprintf(
-    __$1(
+    __(
       /* translators: 1: Example third-party script tag shown as escaped text. 2: Example Script URL Pattern hostname. */
       'If the third-party script setting this cookie is %1$s then you can specify its "Script URL Pattern" as <b>%2$s</b>',
       "cookie-law-info"
@@ -69287,12 +69069,12 @@ ${colorConfig.map(([key, itemConfig]) => {
           if (response) {
             yield loadItems();
             closeCookieModal();
-            triggerNotification({ type: "success", message: __$1("Successfully updated", "cookie-law-info") });
+            triggerNotification({ type: "success", message: __("Successfully updated", "cookie-law-info") });
           }
         }
       } catch (error) {
         console.error(error);
-        triggerNotification({ type: "error", message: __$1("Problem occurred while saving your settings. Please try again later!", "cookie-law-info") });
+        triggerNotification({ type: "error", message: __("Problem occurred while saving your settings. Please try again later!", "cookie-law-info") });
       } finally {
         setSaving(false);
       }
@@ -69312,12 +69094,12 @@ ${colorConfig.map(([key, itemConfig]) => {
           if (response) {
             yield loadItems();
             closeCookieCategoryModal();
-            triggerNotification({ type: "success", message: __$1("Successfully updated", "cookie-law-info") });
+            triggerNotification({ type: "success", message: __("Successfully updated", "cookie-law-info") });
           }
         }
       } catch (error) {
         console.error(error);
-        triggerNotification({ type: "error", message: __$1("Problem occurred while saving your settings. Please try again later!", "cookie-law-info") });
+        triggerNotification({ type: "error", message: __("Problem occurred while saving your settings. Please try again later!", "cookie-law-info") });
       } finally {
         setSaving(false);
       }
@@ -69335,13 +69117,13 @@ ${colorConfig.map(([key, itemConfig]) => {
           const response = yield cookieApi.deleteCookie(cookieId);
           if (response && response.id > 0) {
             yield loadItems();
-            triggerNotification({ type: "success", message: __$1("Successfully deleted the cookie", "cookie-law-info") });
+            triggerNotification({ type: "success", message: __("Successfully deleted the cookie", "cookie-law-info") });
           } else {
-            triggerNotification({ type: "error", message: __$1("Failed", "cookie-law-info") });
+            triggerNotification({ type: "error", message: __("Failed", "cookie-law-info") });
           }
         } catch (error) {
           console.error(error);
-          triggerNotification({ type: "error", message: __$1("Problem occurred while saving your settings. Please try again later!", "cookie-law-info") });
+          triggerNotification({ type: "error", message: __("Problem occurred while saving your settings. Please try again later!", "cookie-law-info") });
         }
       }
       if (headsUpPopupRef.current) {
@@ -69401,26 +69183,26 @@ ${colorConfig.map(([key, itemConfig]) => {
             children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: cn$1(rtl && "cky-app-rtl"), children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:justify-between cky:items-center cky:mb-5", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:w-1/3", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "cky:m-0! cky:text-[16px]! cky:leading-[18px]! cky:font-medium", children: __$1("Cookie List", "cookie-law-info") }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "cky:m-0! cky:text-[16px]! cky:leading-[18px]! cky:font-medium", children: __("Cookie List", "cookie-law-info") }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     Button,
                     {
                       variant: "primary",
                       className: "cky:ml-2.5",
                       onClick: /* @__PURE__ */ __name(() => openCookieModal(), "onClick"),
-                      children: __$1(" + Add Cookie", "cookie-law-info")
+                      children: __(" + Add Cookie", "cookie-law-info")
                     }
                   )
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:w-2/3 cky:justify-end", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h5", { className: "cky:m-[0.5em_0]! cky:text-[15px]! cky:font-medium", children: __$1("Edit content in: ", "cookie-law-info") }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h5", { className: "cky:m-[0.5em_0]! cky:text-[15px]! cky:font-medium", children: __("Edit content in: ", "cookie-law-info") }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(
                     Select,
                     {
                       value: language,
                       onValueChange: handleLanguageChange,
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SelectTrigger, { className: "cky:ml-[10px] cky:min-w-[150px] cky:max-w-[400px] cky:w-auto cky:h-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectValue, { placeholder: __$1("Select language...", "cookie-law-info") }) }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SelectTrigger, { className: "cky:ml-[10px] cky:min-w-[150px] cky:max-w-[400px] cky:w-auto cky:h-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectValue, { placeholder: __("Select language...", "cookie-law-info") }) }),
                         /* @__PURE__ */ jsxRuntimeExports.jsx(SelectContent, { children: selectedLanguages.map((lang) => /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: lang.code, variant: "modal", children: lang.name }, lang.code)) })
                       ]
                     }
@@ -69441,7 +69223,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "edit", width: "14px", height: "14px", color: "#000000" })
                       }
                     ) }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContentWithArrow, { side: TOOLTIP_TOP, children: __$1("Edit category", "cookie-law-info") })
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContentWithArrow, { side: TOOLTIP_TOP, children: __("Edit category", "cookie-law-info") })
                   ] })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-category-description cky:text-sm cky:mt-1", children: strippedContent(category.description[language] || category.description[defaultLanguage] || "") })
@@ -69471,12 +69253,12 @@ ${colorConfig.map(([key, itemConfig]) => {
           ),
           onOpenAutoFocus: /* @__PURE__ */ __name((e) => e.preventDefault(), "onOpenAutoFocus"),
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { className: "cky:px-[30px] cky:py-[20px] cky:border-b cky:border-b-[#dfe1e5]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-left cky:text-[16px]! cky:leading-[18px]!", children: (currentCookie == null ? void 0 : currentCookie.id) ? __$1("Edit Cookie", "cookie-law-info") : __$1("New Cookie", "cookie-law-info") }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { className: "cky:px-[30px] cky:py-[20px] cky:border-b cky:border-b-[#dfe1e5]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-left cky:text-[16px]! cky:leading-[18px]!", children: (currentCookie == null ? void 0 : currentCookie.id) ? __("Edit Cookie", "cookie-law-info") : __("New Cookie", "cookie-law-info") }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:relative cky:px-[30px] cky:py-[20px] cky:max-h-[calc(100vh-3.5rem)] cky:overflow-y-auto", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/2 cky:pr-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mb-4", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:mb-[10px] cky:inline-block cky:text-[14px]", children: [
-                    __$1("Cookie ID", "cookie-law-info"),
+                    __("Cookie ID", "cookie-law-info"),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-red-500", children: " *" })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -69487,11 +69269,11 @@ ${colorConfig.map(([key, itemConfig]) => {
                       onChange: /* @__PURE__ */ __name((e) => setCurrentCookie((prev) => prev ? __spreadProps(__spreadValues({}, prev), { name: e.target.value }) : prev), "onChange")
                     }
                   ),
-                  errors.cookie.id && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500", children: __$1("Cookie ID is required", "cookie-law-info") })
+                  errors.cookie.id && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500", children: __("Cookie ID is required", "cookie-law-info") })
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/2 cky:pl-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mb-4", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:mb-[10px] cky:inline-block cky:text-[14px]", children: [
-                    __$1("Domain", "cookie-law-info"),
+                    __("Domain", "cookie-law-info"),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-red-500", children: " *" })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -69502,13 +69284,13 @@ ${colorConfig.map(([key, itemConfig]) => {
                       onChange: /* @__PURE__ */ __name((e) => setCurrentCookie((prev) => prev ? __spreadProps(__spreadValues({}, prev), { domain: e.target.value }) : prev), "onChange")
                     }
                   ),
-                  errors.cookie.domain && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500", children: __$1("Domain is required", "cookie-law-info") })
+                  errors.cookie.domain && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500", children: __("Domain is required", "cookie-law-info") })
                 ] }) })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/2 cky:pr-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mb-4", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:mb-[10px] cky:inline-block cky:text-[14px]", children: [
-                    __$1("Duration", "cookie-law-info"),
+                    __("Duration", "cookie-law-info"),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-red-500", children: " *" })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -69527,11 +69309,11 @@ ${colorConfig.map(([key, itemConfig]) => {
                       }, "onChange")
                     }
                   ),
-                  errors.cookie.duration && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500", children: __$1("Duration is required", "cookie-law-info") })
+                  errors.cookie.duration && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500", children: __("Duration is required", "cookie-law-info") })
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/2 cky:pl-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mb-4", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:mb-[10px] cky:inline-block cky:text-[14px]", children: [
-                    __$1("Category", "cookie-law-info"),
+                    __("Category", "cookie-law-info"),
                     /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-red-500", children: " *" })
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -69541,7 +69323,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                       onValueChange: /* @__PURE__ */ __name((value) => setCurrentCookie((prev) => prev ? __spreadProps(__spreadValues({}, prev), { category: value }) : prev), "onValueChange"),
                       disabled: !(currentCookie == null ? void 0 : currentCookie.id),
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(SelectTrigger, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectValue, { placeholder: __$1("Select category...", "cookie-law-info") }) }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx(SelectTrigger, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectValue, { placeholder: __("Select category...", "cookie-law-info") }) }),
                         /* @__PURE__ */ jsxRuntimeExports.jsx(SelectContent, { children: categories.map((cat) => /* @__PURE__ */ jsxRuntimeExports.jsx(SelectItem, { value: String(cat.id), children: localizedCategoryName(cat.name, language, defaultLanguage) }, cat.id)) })
                       ]
                     }
@@ -69550,7 +69332,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:mt-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mb-2", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:mb-1 cky:inline-block cky:text-[14px]", children: [
-                  __$1("Description", "cookie-law-info"),
+                  __("Description", "cookie-law-info"),
                   /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-red-500", children: " *" })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:-mt-[30px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -69569,13 +69351,13 @@ ${colorConfig.map(([key, itemConfig]) => {
                     height: "100"
                   }
                 ) }),
-                errors.cookie.description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500", children: __$1("Description is required", "cookie-law-info") })
+                errors.cookie.description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500", children: __("Description is required", "cookie-law-info") })
               ] }) }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Accordion, { type: "single", collapsible: true, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(AccordionItem, { value: "advanced", className: "cky:border-none", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionTrigger$1, { className: "cky:cursor-pointer cky:text-blue-600 hover:cky:no-underline cky:font-medium! cky:text-[14px]! cky:border-b-0 cky:py-0! cky:gap-2 cky-accordion-trigger", children: __$1("Advanced Options", "cookie-law-info") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(AccordionTrigger$1, { className: "cky:cursor-pointer cky:text-blue-600 hover:cky:no-underline cky:font-medium! cky:text-[14px]! cky:border-b-0 cky:py-0! cky:gap-2 cky-accordion-trigger", children: __("Advanced Options", "cookie-law-info") }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(AccordionContent, { children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:mb-[10px] cky:flex cky:items-center cky:gap-1", children: [
-                    __$1("Script URL Pattern", "cookie-law-info"),
+                    __("Script URL Pattern", "cookie-law-info"),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(Tooltip$1, { children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:cursor-pointer", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                         CkyIcon,
@@ -69586,10 +69368,10 @@ ${colorConfig.map(([key, itemConfig]) => {
                           color: "#A6A8B1"
                         }
                       ) }) }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContentWithArrow, { side: "right", children: __$1("Our auto-blocking mechanism will use the Script URL Pattern to identify the third-party script (setting a cookie) by purpose category, and consequently, the associated cookie will be automatically blocked prior to receiving user consent for the respective category.", "cookie-law-info") })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipContentWithArrow, { side: "right", children: __("Our auto-blocking mechanism will use the Script URL Pattern to identify the third-party script (setting a cookie) by purpose category, and consequently, the associated cookie will be automatically blocked prior to receiving user consent for the respective category.", "cookie-law-info") })
                     ] })
                   ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-[14px]! cky:m-0!", children: __$1(
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-[14px]! cky:m-0!", children: __(
                     "URL pattern for blocking the third-party script settings of this cookie",
                     "cookie-law-info"
                   ) }),
@@ -69607,7 +69389,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                       className: "cky:m-0!",
                       value: (currentCookie == null ? void 0 : currentCookie.url_pattern) || "",
                       onChange: /* @__PURE__ */ __name((e) => setCurrentCookie((prev) => prev ? __spreadProps(__spreadValues({}, prev), { url_pattern: e.target.value }) : prev), "onChange"),
-                      placeholder: __$1("Please enter a valid Script URL Pattern. Eg:- google-analytics.com", "cookie-law-info")
+                      placeholder: __("Please enter a valid Script URL Pattern. Eg:- google-analytics.com", "cookie-law-info")
                     }
                   )
                 ] })
@@ -69620,7 +69402,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   variant: "outline",
                   onClick: closeCookieModal,
                   className: "cky:ml-2.5",
-                  children: __$1("Cancel", "cookie-law-info")
+                  children: __("Cancel", "cookie-law-info")
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -69629,7 +69411,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   onClick: addOrEditCookie,
                   disabled: saving,
                   className: "cky:ml-2.5",
-                  children: saving ? __$1("Saving...", "cookie-law-info") : __$1("Save Changes", "cookie-law-info")
+                  children: saving ? __("Saving...", "cookie-law-info") : __("Save Changes", "cookie-law-info")
                 }
               )
             ] })
@@ -69647,11 +69429,11 @@ ${colorConfig.map(([key, itemConfig]) => {
           ),
           onOpenAutoFocus: /* @__PURE__ */ __name((e) => e.preventDefault(), "onOpenAutoFocus"),
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { className: "cky:px-[30px] cky:py-[20px] cky:border-b cky:border-b-[#dfe1e5]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-left cky:leading-[18px]", children: __$1("Edit Category", "cookie-law-info") }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { className: "cky:px-[30px] cky:py-[20px] cky:border-b cky:border-b-[#dfe1e5]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:text-left cky:leading-[18px]", children: __("Edit Category", "cookie-law-info") }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:relative cky:px-[30px] cky:py-[20px] cky:max-h-[calc(100vh-3.5rem)] cky:overflow-y-auto", children: currentCategoryEdit && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mb-5", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:block cky:mb-[10px] cky:text-sm cky:font-normal", children: [
-                  __$1("Name", "cookie-law-info"),
+                  __("Name", "cookie-law-info"),
                   /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-red-500", children: " *" })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -69668,11 +69450,11 @@ ${colorConfig.map(([key, itemConfig]) => {
                     }, "onChange")
                   }
                 ),
-                errors.category.name && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500 cky:py-1.5 cky:text-sm", children: __$1("Name is required", "cookie-law-info") })
+                errors.category.name && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500 cky:py-1.5 cky:text-sm", children: __("Name is required", "cookie-law-info") })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mb-2", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:block cky:text-sm cky:font-normal cky:mb-1", children: [
-                  __$1("Description", "cookie-law-info"),
+                  __("Description", "cookie-law-info"),
                   /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:text-red-500", children: " *" })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:-mt-[30px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -69691,12 +69473,12 @@ ${colorConfig.map(([key, itemConfig]) => {
                     height: "100"
                   }
                 ) }),
-                errors.category.description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500 cky:py-1.5 cky:text-sm", children: __$1("Description is required", "cookie-law-info") })
+                errors.category.description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:text-red-500 cky:py-1.5 cky:text-sm", children: __("Description is required", "cookie-law-info") })
               ] })
             ] }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogFooter, { className: CKY_DIALOG_FOOTER_CLASS, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", onClick: closeCookieCategoryModal, children: __$1("Cancel", "cookie-law-info") }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: addOrEditCookieCategory, disabled: saving, className: "cky:ml-[10px]", children: saving ? __$1("Saving...", "cookie-law-info") : __$1("Save Changes", "cookie-law-info") })
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", onClick: closeCookieCategoryModal, children: __("Cancel", "cookie-law-info") }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: addOrEditCookieCategory, disabled: saving, className: "cky:ml-[10px]", children: saving ? __("Saving...", "cookie-law-info") : __("Save Changes", "cookie-law-info") })
             ] })
           ]
         }
@@ -69705,10 +69487,10 @@ ${colorConfig.map(([key, itemConfig]) => {
         CkyHeadsUpPopup,
         {
           ref: headsUpPopupRef,
-          header: __$1("Delete cookie?", "cookie-law-info"),
+          header: __("Delete cookie?", "cookie-law-info"),
           body: bodyContent,
-          cancelBtn: __$1("Cancel", "cookie-law-info"),
-          confirmBtn: __$1("Delete cookie", "cookie-law-info"),
+          cancelBtn: __("Cancel", "cookie-law-info"),
+          confirmBtn: __("Delete cookie", "cookie-law-info"),
           onDeleteItem: deleteCookie,
           onClear: clearHeadsUpPopup
         }
@@ -69742,11 +69524,11 @@ ${colorConfig.map(([key, itemConfig]) => {
                 visible: true,
                 className: "cky-app-modal-scanner",
                 container: container || void 0,
-                featureText: __$1(
+                featureText: __(
                   "Scan your website to generate a detailed cookie list and track your scan details",
                   "cookie-law-info"
                 ),
-                availabilityText: __$1("Available in: <b>All plans</b>", "cookie-law-info")
+                availabilityText: __("Available in: <b>All plans</b>", "cookie-law-info")
               }
             )
           }
@@ -71794,7 +71576,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     }
     __name(assertIs, "assertIs");
     util2.assertIs = assertIs;
-    function assertNever(_x2) {
+    function assertNever(_x) {
       throw new Error();
     }
     __name(assertNever, "assertNever");
@@ -75398,7 +75180,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       if (data.optSuccessText.trim() === "") {
         ctx2.addIssue({
           code: ZodIssueCode.custom,
-          message: __$2(
+          message: __(
             "A message is required to show upon opt-out.",
             "cookie-law-info"
           ),
@@ -75574,7 +75356,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   role: "heading",
                   "aria-level": 6,
                   className: "cky:m-0 cky:mb-1 cky:text-sm cky:font-semibold cky:leading-4 cky:text-[#4E4B66]",
-                  children: __$2(
+                  children: __(
                     "Colour customisation is now limited on Free plan",
                     "cookie-law-info"
                   )
@@ -75585,7 +75367,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   className: "cky:m-0 cky:text-[13px] cky:font-normal cky:leading-[18px] cky:text-[#4E4B66]",
                   dangerouslySetInnerHTML: {
-                    __html: __$2(
+                    __html: __(
                       "You can continue using your existing customised banner as is. However, <b>further edits or new colour customisations are no longer available in your Free plan.</b>",
                       "cookie-law-info"
                     )
@@ -75603,7 +75385,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               onClick: /* @__PURE__ */ __name(() => {
                 globalThis.location.href = "#/dashboard/plans?available=premium";
               }, "onClick"),
-              children: __$2("Connect to Web App to Access", "cookie-law-info")
+              children: __("Connect to Web App to Access", "cookie-law-info")
             }
           ) })
         ] })
@@ -75690,7 +75472,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           className
         ),
         onClick: onPremiumClick,
-        "aria-label": __$2(
+        "aria-label": __(
           "Premium colour customisation — open upgrade options",
           "cookie-law-info"
         ),
@@ -75727,13 +75509,13 @@ ${colorConfig.map(([key, itemConfig]) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
       PremiumColourBlock,
       {
-        label: __$2("Colours", "cookie-law-info"),
+        label: __("Colours", "cookie-law-info"),
         onPremiumClick: onOpenPremium,
         children: [
           bg && st["background-color"] != null ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             ColourPickerField,
             {
-              fieldLabel: __$2("Background", "cookie-law-info"),
+              fieldLabel: __("Background", "cookie-law-info"),
               value: readString(st["background-color"]),
               onChange: /* @__PURE__ */ __name((hex2) => onStyleChange("background-color", hex2), "onChange")
             }
@@ -75741,7 +75523,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           border && st["border-color"] != null ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             ColourPickerField,
             {
-              fieldLabel: __$2("Border", "cookie-law-info"),
+              fieldLabel: __("Border", "cookie-law-info"),
               value: readString(st["border-color"]),
               onChange: /* @__PURE__ */ __name((hex2) => onStyleChange("border-color", hex2), "onChange")
             }
@@ -75749,7 +75531,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           text && st.color != null ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             ColourPickerField,
             {
-              fieldLabel: __$2("Text", "cookie-law-info"),
+              fieldLabel: __("Text", "cookie-law-info"),
               value: readString(st.color),
               onChange: /* @__PURE__ */ __name((hex2) => onStyleChange("color", hex2), "onChange")
             }
@@ -75762,10 +75544,10 @@ ${colorConfig.map(([key, itemConfig]) => {
   function TemplateLawBanner({
     consentLaw
   }) {
-    const text = consentLaw === "gdpr" ? __$2(
+    const text = consentLaw === "gdpr" ? __(
       "The selected template (opt-in banner) supports GDPR (EU & UK), LGPD (Brazil), PIPEDA (Canada), Law 25 (Quebec), POPIA (South Africa), nFADP (Switzerland), Privacy Act (Australia), PDPL (Saudi Arabia), PDPL (Argentina), PDPL (Andorra), DPA (Faroe Island)",
       "cookie-law-info"
-    ) : __$2(
+    ) : __(
       "The selected template (opt-out banner) supports CCPA/CPRA (California), VCDPA (Virginia), CPA (Colorado), CTDPA (Connecticut), & UCPA (Utah)",
       "cookie-law-info"
     );
@@ -76081,7 +75863,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                       {
                         htmlFor: inputId,
                         className: "cky:!font-normal cky:text-[#23282d]",
-                        children: __$2("Label", "cookie-law-info")
+                        children: __("Label", "cookie-law-info")
                       }
                     ),
                     labelTypography: "plain",
@@ -76146,9 +75928,9 @@ ${colorConfig.map(([key, itemConfig]) => {
     if (((_e2 = (_d = (_c2 = current.properties) == null ? void 0 : _c2.config) == null ? void 0 : _d.notice) == null ? void 0 : _e2.status) === false) return null;
     const applicableLaw = (_h = (_g = (_f = current.properties) == null ? void 0 : _f.settings) == null ? void 0 : _g.applicableLaw) != null ? _h : "";
     const gdprButtons = [
-      ["accept", __$2('"Accept All" button', "cookie-law-info")],
-      ["reject", __$2('"Reject All" button', "cookie-law-info")],
-      ["settings", __$2('"Customise" button', "cookie-law-info")]
+      ["accept", __('"Accept All" button', "cookie-law-info")],
+      ["reject", __('"Reject All" button', "cookie-law-info")],
+      ["settings", __('"Customise" button', "cookie-law-info")]
     ].map(([name, heading]) => ({
       name,
       heading,
@@ -76164,7 +75946,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "notice",
-        title: __$2("Cookie Notice", "cookie-law-info"),
+        title: __("Cookie Notice", "cookie-law-info"),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: bannerFormSectionGroupClass, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-form-header" }),
@@ -76174,7 +75956,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "title",
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Title", "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Title", "cookie-law-info") }),
                   inputId: "cky-notice-title",
                   disabled,
                   patchContent,
@@ -76186,7 +75968,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "description",
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Message", "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Message", "cookie-law-info") }),
                   inputId: "cky-notice-message",
                   disabled,
                   patchContent,
@@ -76215,7 +75997,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               control: form.control,
               name: "readMore",
-              heading: __$2('"Cookie Policy" link', "cookie-law-info"),
+              heading: __('"Cookie Policy" link', "cookie-law-info"),
               onLabelCommit: /* @__PURE__ */ __name((v) => patchContent(
                 ["notice", "elements", "buttons", "elements", "readMore"],
                 v
@@ -76226,12 +76008,12 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "privacyLink",
-                  label: __$2("URL", "cookie-law-info"),
+                  label: __("URL", "cookie-law-info"),
                   inputId: "cky-notice-privacy-link",
                   disabled,
                   patchContent,
                   patchPath: ["notice", "elements", "privacyLink"],
-                  placeholder: __$2(
+                  placeholder: __(
                     "Enter the URL to your cookie policy or privacy page",
                     "cookie-law-info"
                   )
@@ -76244,7 +76026,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               control: form.control,
               name: "donotSell",
-              heading: __$2('"Do Not Sell" link', "cookie-law-info"),
+              heading: __('"Do Not Sell" link', "cookie-law-info"),
               onLabelCommit: /* @__PURE__ */ __name((v) => patchContent(
                 ["notice", "elements", "buttons", "elements", "donotSell"],
                 v
@@ -76294,7 +76076,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "preference",
-        title: __$2("Preference Centre", "cookie-law-info"),
+        title: __("Preference Centre", "cookie-law-info"),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: bannerFormSectionGroupClass, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-form-header" }),
@@ -76304,7 +76086,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "title",
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Title", "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Title", "cookie-law-info") }),
                   inputId: "cky-pref-title",
                   disabled,
                   patchContent,
@@ -76316,7 +76098,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "description",
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Privacy overview", "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Privacy overview", "cookie-law-info") }),
                   inputId: "cky-preference-privacy",
                   disabled,
                   patchContent,
@@ -76332,7 +76114,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "showMore",
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2('"Show more" button', "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __('"Show more" button', "cookie-law-info") }),
                   inputId: "cky-pref-show-more",
                   disabled,
                   patchContent,
@@ -76344,7 +76126,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "showLess",
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2('"Show less" button', "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __('"Show less" button', "cookie-law-info") }),
                   inputId: "cky-pref-show-less",
                   disabled,
                   patchContent,
@@ -76358,7 +76140,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               control: form.control,
               name: "saveLabel",
-              heading: __$2('"Save My Preferences" button', "cookie-law-info"),
+              heading: __('"Save My Preferences" button', "cookie-law-info"),
               onLabelCommit: patchSaveLabel,
               disabled
             }
@@ -76407,12 +76189,12 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "cookie-list",
-        title: __$2("Cookie List", "cookie-law-info"),
+        title: __("Cookie List", "cookie-law-info"),
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: bannerFormSectionClass, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-form-header" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-form-content", children: [
             !translate && applicableLaw !== "ccpa" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: rowClass, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, htmlFor: "cky-show-cookie-declaration", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Show cookie list", "cookie-law-info") }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, htmlFor: "cky-show-cookie-declaration", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Show cookie list", "cookie-law-info") }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: valueColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Switch,
                 {
@@ -76428,7 +76210,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "headerId",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2('"Cookie" label', "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __('"Cookie" label', "cookie-law-info") }),
                 inputId: "cky-cookie-label-id",
                 disabled,
                 patchContent,
@@ -76446,7 +76228,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "headerDuration",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2('"Duration" label', "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __('"Duration" label', "cookie-law-info") }),
                 inputId: "cky-cookie-label-duration",
                 disabled,
                 patchContent,
@@ -76464,7 +76246,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "headerDescription",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2('"Description" label', "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __('"Description" label', "cookie-law-info") }),
                 inputId: "cky-cookie-label-description",
                 disabled,
                 patchContent,
@@ -76483,7 +76265,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "alwaysEnabled",
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2('"Always Active" label', "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __('"Always Active" label', "cookie-law-info") }),
                   inputId: "cky-cookie-always-enabled",
                   disabled,
                   patchContent,
@@ -76501,7 +76283,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   control: form.control,
                   name: "noCookiesMessage",
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2('"No cookies to display" label', "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __('"No cookies to display" label', "cookie-law-info") }),
                   inputId: "cky-cookie-no-cookies-msg",
                   disabled,
                   patchContent,
@@ -76549,12 +76331,12 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "revisit-consent",
-        title: __$2("Revisit Consent Button", "cookie-law-info"),
+        title: __("Revisit Consent Button", "cookie-law-info"),
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: bannerFormSectionClass, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-form-header" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-form-content", children: [
             !translate && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: rowClass, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, htmlFor: "cky-revisit-consent-button", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Revisit consent button", "cookie-law-info") }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, htmlFor: "cky-revisit-consent-button", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Revisit consent button", "cookie-law-info") }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: valueColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Switch,
                 {
@@ -76570,7 +76352,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "hoverTitle",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Text on hover", "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Text on hover", "cookie-law-info") }),
                 inputId: "cky-revisit-hover-text",
                 disabled,
                 patchContent,
@@ -76588,7 +76370,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                     "data-invalid": fieldState.invalid,
                     className: "cky:space-y-0",
                     children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: rowClass, children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Position", "cookie-law-info") }) }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Position", "cookie-law-info") }) }),
                       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: valueColClass, children: [
                         /* @__PURE__ */ jsxRuntimeExports.jsxs(
                           RadioGroup,
@@ -76616,7 +76398,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                                         id: "cky-revisit-consent-position-bl"
                                       }
                                     ),
-                                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: __$2("Left", "cookie-law-info") })
+                                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: __("Left", "cookie-law-info") })
                                   ]
                                 }
                               ),
@@ -76633,7 +76415,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                                         id: "cky-revisit-consent-position-br"
                                       }
                                     ),
-                                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: __$2("Right", "cookie-law-info") })
+                                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: __("Right", "cookie-law-info") })
                                   ]
                                 }
                               )
@@ -76648,11 +76430,11 @@ ${colorConfig.map(([key, itemConfig]) => {
               }
             ),
             !translate && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: rowClass, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Colours", "cookie-law-info") }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Colours", "cookie-law-info") }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: valueColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:flex-wrap cky:items-end cky:gap-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 BannerHexColorField,
                 {
-                  label: __$2("Background", "cookie-law-info"),
+                  label: __("Background", "cookie-law-info"),
                   value: String(bgColor),
                   pickerFallback: "#0056A7",
                   onChange: /* @__PURE__ */ __name((v) => patchConfigPath(
@@ -76699,7 +76481,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "blocked-content",
-        title: __$2("Blocked Content", "cookie-law-info"),
+        title: __("Blocked Content", "cookie-law-info"),
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: bannerFormSectionClass, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-form-header" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-form-content", children: [
@@ -76708,7 +76490,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "blockedLabel",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Label", "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Label", "cookie-law-info") }),
                 inputId: labelInputId,
                 disabled,
                 patchContent,
@@ -76716,12 +76498,12 @@ ${colorConfig.map(([key, itemConfig]) => {
               }
             ),
             !translate && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: rowClass, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$2("Colours", "cookie-law-info") }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: labelColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Colours", "cookie-law-info") }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: valueColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-wrap cky:items-end cky:gap-6", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   BannerHexColorField,
                   {
-                    label: __$2("Background", "cookie-law-info"),
+                    label: __("Background", "cookie-law-info"),
                     value: String(bgColor),
                     onChange: /* @__PURE__ */ __name((v) => patchConfigPath(
                       ["videoPlaceholder", "styles", "background-color"],
@@ -76733,7 +76515,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   BannerHexColorField,
                   {
-                    label: __$2("Border", "cookie-law-info"),
+                    label: __("Border", "cookie-law-info"),
                     value: String(borderColor),
                     onChange: /* @__PURE__ */ __name((v) => patchConfigPath(
                       ["videoPlaceholder", "styles", "border-color"],
@@ -76745,7 +76527,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   BannerHexColorField,
                   {
-                    label: __$2("Text", "cookie-law-info"),
+                    label: __("Text", "cookie-law-info"),
                     value: String(textColor),
                     onChange: /* @__PURE__ */ __name((v) => patchConfigPath(
                       [
@@ -76936,11 +76718,11 @@ ${colorConfig.map(([key, itemConfig]) => {
   }
   __name(arrayReplaceRecursive, "arrayReplaceRecursive");
   function defaultOptoutSuccessText() {
-    return __$2("Your opt-out preference has been honored.", "cookie-law-info");
+    return __("Your opt-out preference has been honored.", "cookie-law-info");
   }
   __name(defaultOptoutSuccessText, "defaultOptoutSuccessText");
   function defaultOptoutSuccessSubtext() {
-    return __$2(
+    return __(
       'Banner closes automatically in <span id="ckyCountdownTimer"></span> s...',
       "cookie-law-info"
     );
@@ -77262,7 +77044,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "opt-out-center",
-        title: __$1("Opt-out center", "cookie-law-info"),
+        title: __("Opt-out center", "cookie-law-info"),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: bannerFormSectionGroupClass, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-form-content", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -77270,7 +77052,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "title",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$1("Title", "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Title", "cookie-law-info") }),
                 inputId: "cky-optout-title",
                 disabled,
                 patchContent,
@@ -77282,7 +77064,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "description",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$1("Privacy overview", "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("Privacy overview", "cookie-law-info") }),
                 inputId: "cky-optout-privacy",
                 disabled,
                 patchContent,
@@ -77298,7 +77080,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "showMore",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$1("“Show more” button", "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("“Show more” button", "cookie-law-info") }),
                 inputId: "cky-optout-show-more",
                 disabled,
                 patchContent,
@@ -77310,7 +77092,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 control: form.control,
                 name: "showLess",
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __$1("“Show less” button", "cookie-law-info") }),
+                label: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { children: __("“Show less” button", "cookie-law-info") }),
                 inputId: "cky-optout-show-less",
                 disabled,
                 patchContent,
@@ -77322,14 +77104,14 @@ ${colorConfig.map(([key, itemConfig]) => {
             PremiumColourBlock,
             {
               label: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky-action-link cky:inline-flex cky:items-center cky:gap-1.5", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { className: "cky:m-0 cky:inline", children: __$1("Checkbox", "cookie-law-info") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { className: "cky:m-0 cky:inline", children: __("Checkbox", "cookie-law-info") }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "crown", width: "10px", height: "8px", "aria-hidden": true })
               ] }),
               labelVariant: "heading",
               onPremiumClick: openConnectOrPremium,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:-mx-[15px] cky:flex cky:flex-wrap", children: [
-                ["active", __$1("Enabled state", "cookie-law-info"), optActiveSt],
-                ["inactive", __$1("Disabled state", "cookie-law-info"), optInactiveSt]
+                ["active", __("Enabled state", "cookie-law-info"), optActiveSt],
+                ["inactive", __("Disabled state", "cookie-law-info"), optInactiveSt]
               ].map(([state, fieldLabel, st]) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: premiumColourPickerColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 ColourPickerField,
                 {
@@ -77346,7 +77128,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               control: form.control,
               name: "cancel",
-              heading: __$1("“Cancel” button", "cookie-law-info"),
+              heading: __("“Cancel” button", "cookie-law-info"),
               onLabelCommit: /* @__PURE__ */ __name((v) => patchContent(
                 ["optoutPopup", "elements", "buttons", "elements", "cancel"],
                 v
@@ -77359,7 +77141,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               control: form.control,
               name: "confirm",
-              heading: __$1(
+              heading: __(
                 "“Save My Preferences” button",
                 "cookie-law-info"
               ),
@@ -77371,13 +77153,13 @@ ${colorConfig.map(([key, itemConfig]) => {
             }
           ),
           optSuccessContent ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: bannerFormSectionClass, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h5", { className: "cky-form-heading", children: __$1("Opt-out confirmation message", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h5", { className: "cky-form-heading", children: __("Opt-out confirmation message", "cookie-law-info") }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               BannerPatchTextRow,
               {
                 control: form.control,
                 name: "optSuccessText",
-                label: __$1("Label", "cookie-law-info"),
+                label: __("Label", "cookie-law-info"),
                 inputId: "cky-optout-success-message",
                 disabled,
                 patchContent,
@@ -77388,7 +77170,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   "elements",
                   "text"
                 ],
-                placeholder: __$1(
+                placeholder: __(
                   "Your opt-out preference has been honored.",
                   "cookie-law-info"
                 )
@@ -77397,13 +77179,13 @@ ${colorConfig.map(([key, itemConfig]) => {
             translate ? null : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-form-content", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               PremiumColourBlock,
               {
-                label: __$1("Colours", "cookie-law-info"),
+                label: __("Colours", "cookie-law-info"),
                 onPremiumClick: openConnectOrPremium,
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:-mx-[15px] cky:flex cky:flex-wrap", children: [
-                  ["bg", __$1("Background", "cookie-law-info"), () => readString(optSuccessSt == null ? void 0 : optSuccessSt["background-color"])],
-                  ["icon", __$1("Icon", "cookie-law-info"), () => readString(optSuccessIconSt == null ? void 0 : optSuccessIconSt.color)],
-                  ["text", __$1("Text", "cookie-law-info"), () => readString(optSuccessTextSt == null ? void 0 : optSuccessTextSt.color)],
-                  ["subtext", __$1("Subtext", "cookie-law-info"), () => readString(optSuccessSubtextSt == null ? void 0 : optSuccessSubtextSt.color)]
+                  ["bg", __("Background", "cookie-law-info"), () => readString(optSuccessSt == null ? void 0 : optSuccessSt["background-color"])],
+                  ["icon", __("Icon", "cookie-law-info"), () => readString(optSuccessIconSt == null ? void 0 : optSuccessIconSt.color)],
+                  ["text", __("Text", "cookie-law-info"), () => readString(optSuccessTextSt == null ? void 0 : optSuccessTextSt.color)],
+                  ["subtext", __("Subtext", "cookie-law-info"), () => readString(optSuccessSubtextSt == null ? void 0 : optSuccessSubtextSt.color)]
                 ].map(([target, fieldLabel, readVal]) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: premiumColourPickerColClass, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ColourPickerField,
                   {
@@ -77425,7 +77207,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 className: "cky-action-link cky:m-0 cky:inline-flex cky:items-center cky:gap-1.5 cky:border-0 cky:bg-transparent cky:p-0 cky:text-left",
                 onClick: openConnectOrPremium,
                 children: [
-                  __$1(
+                  __(
                     "Respect “Global Privacy control”",
                     "cookie-law-info"
                   ),
@@ -77515,7 +77297,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       }
     );
   }, "TabContentAccordion");
-  function App({ hideNav = false, showGdprIndicator = false }) {
+  function App({ hideNav = false }) {
     reactExports.useEffect(() => {
       const { loadInfo, reInit } = useAppStore.getState();
       void (() => __async(null, null, function* () {
@@ -77528,7 +77310,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     }, []);
     return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-app-nav-bar", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(CkyHeader, {}),
-      !hideNav ? /* @__PURE__ */ jsxRuntimeExports.jsx(CkyNavMenu, { showGdprIndicator }) : null
+      !hideNav ? /* @__PURE__ */ jsxRuntimeExports.jsx(CkyNavMenu, {}) : null
     ] }) });
   }
   __name(App, "App");
@@ -77541,12 +77323,6 @@ ${colorConfig.map(([key, itemConfig]) => {
     return Boolean((_b2 = (_a2 = matches.at(-1)) == null ? void 0 : _a2.staticData) == null ? void 0 : _b2.showAffiliateBanner);
   }
   __name(useAffiliateBannerRoute, "useAffiliateBannerRoute");
-  function useGdprAnniversaryBannerRoute() {
-    var _a2, _b2;
-    const matches = useMatches();
-    return Boolean((_b2 = (_a2 = matches.at(-1)) == null ? void 0 : _a2.staticData) == null ? void 0 : _b2.showGdprAnniversaryBanner);
-  }
-  __name(useGdprAnniversaryBannerRoute, "useGdprAnniversaryBannerRoute");
   function useHideNav() {
     var _a2, _b2;
     const matches = useMatches();
@@ -77560,20 +77336,9 @@ ${colorConfig.map(([key, itemConfig]) => {
   }
   __name(useIsAgencyPlan, "useIsAgencyPlan");
   const NotFound = /* @__PURE__ */ __name(() => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:container cky:py-8", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:text-center", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "cky:text-2xl cky:font-bold cky:mb-4", children: __$2("Page Not Found", "cookie-law-info") }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-gray-600", children: __$2("The page you're looking for doesn't exist.", "cookie-law-info") })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "cky:text-2xl cky:font-bold cky:mb-4", children: __("Page Not Found", "cookie-law-info") }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-gray-600", children: __("The page you're looking for doesn't exist.", "cookie-law-info") })
   ] }) }), "NotFound");
-  const GDPR_DISMISS_KEY = "cky_gdpr_anniversary_dismissed";
-  function isGdprDismissed() {
-    try {
-      if (!sessionStorage.getItem(GDPR_DISMISS_KEY)) return false;
-      const val = localStorage.getItem(GDPR_DISMISS_KEY);
-      return !!val && Date.now() < Number(val);
-    } catch (e) {
-      return false;
-    }
-  }
-  __name(isGdprDismissed, "isGdprDismissed");
   function RootLayout() {
     const infoLoaded = useAppStore((s2) => s2.info_loaded);
     const connected = useAppStore((s2) => {
@@ -77582,23 +77347,11 @@ ${colorConfig.map(([key, itemConfig]) => {
     });
     const isAgencyPlan = useIsAgencyPlan();
     const affiliateBannerRoute = useAffiliateBannerRoute();
-    const gdprAnniversaryBannerRoute = useGdprAnniversaryBannerRoute();
     const hideNav = useHideNav();
-    const [gdprDismissed, setGdprDismissed] = reactExports.useState(isGdprDismissed);
-    const [bannerHeight, setBannerHeight] = reactExports.useState(0);
-    const gdprExpired = Date.now() >= GDPR_ANNIVERSARY_DEADLINE.getTime();
-    const handleGdprDismiss = reactExports.useCallback(() => setGdprDismissed(true), []);
-    const handleBannerHeightChange = reactExports.useCallback((h) => setBannerHeight(h), []);
-    const showGdprAnniversaryBanner = infoLoaded && !connected && !gdprExpired && gdprAnniversaryBannerRoute;
-    const showGdprIndicator = showGdprAnniversaryBanner && !gdprDismissed && !gdprExpired;
     const showAffiliateBanner = infoLoaded && connected && !isAgencyPlan && affiliateBannerRoute;
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(App, { hideNav, showGdprIndicator }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(App, { hideNav }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: hideNav ? APP_BODY_WITHOUT_NAV_CLASS : APP_BODY_CLASS, children: [
-        showGdprAnniversaryBanner ? /* @__PURE__ */ jsxRuntimeExports.jsx(CkyGdprAnniversaryBanner, { onDismiss: handleGdprDismiss, onHeightChange: handleBannerHeightChange }) : null,
-        showGdprIndicator && bannerHeight > 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:shrink-0", style: {
-          height: bannerHeight
-        } }) : null,
         showAffiliateBanner ? /* @__PURE__ */ jsxRuntimeExports.jsx(CkyAffiliateNotice, {}) : null,
         /* @__PURE__ */ jsxRuntimeExports.jsx(CkyTableMissingNotice, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsx(CkyReviewNotice, {}),
@@ -77659,8 +77412,7 @@ ${colorConfig.map(([key, itemConfig]) => {
   const $$splitComponentImporter$2 = /* @__PURE__ */ __name(() => __vitePreload(() => Promise.resolve().then(() => dashboard_index), false ? __VITE_PRELOAD__ : void 0, _documentCurrentScript && _documentCurrentScript.tagName.toUpperCase() === "SCRIPT" && _documentCurrentScript.src || new URL("js/index.js", document.baseURI).href), "$$splitComponentImporter$2");
   const Route$2 = createFileRoute("/dashboard/")({
     staticData: {
-      showAffiliateBanner: true,
-      showGdprAnniversaryBanner: true
+      showAffiliateBanner: true
     },
     component: lazyRouteComponent($$splitComponentImporter$2, "component")
   });
@@ -77712,7 +77464,7 @@ ${colorConfig.map(([key, itemConfig]) => {
   function bannerCloseCountdownText(seconds) {
     return sprintf$2(
       /* translators: %d: Seconds remaining before the banner preview closes. */
-      __$2("Banner closes automatically in %d s...", "cookie-law-info"),
+      __("Banner closes automatically in %d s...", "cookie-law-info"),
       seconds
     );
   }
@@ -79033,13 +78785,13 @@ ${colorConfig.map(([key, itemConfig]) => {
     if (sessionExpired) {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mt-[30px] cky:mx-20 cky:py-[48px] cky:px-[65px] cky:bg-white cky:rounded-xl cky:border cky:border-[#d9d9d9] cky:flex cky:flex-col cky:items-center cky:justify-center cky:min-h-[610px] cky:gap-[26px] cky:text-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.sessionExpired, alt: "", "aria-hidden": "true" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: __$2("Your session has ended", "cookie-law-info") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { children: __("Your session has ended", "cookie-law-info") }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "cky:text-center", children: [
-          __$2("Sorry, your session has expired. Sign in again to pick up where you left off.", "cookie-law-info"),
+          __("Sorry, your session has expired. Sign in again to pick up where you left off.", "cookie-law-info"),
           /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-          __$2("If you don't have an account, try disconnecting and reconnecting to the web app.", "cookie-law-info")
+          __("If you don't have an account, try disconnecting and reconnecting to the web app.", "cookie-law-info")
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { external: true, onClick: sessionExpiredLogin, className: "cky:py-3! cky:px-4!", children: __$2("Log in to CookieYes", "cookie-law-info") })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { external: true, onClick: sessionExpiredLogin, className: "cky:py-3! cky:px-4!", children: __("Log in to CookieYes", "cookie-law-info") })
       ] });
     }
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -79151,15 +78903,15 @@ ${colorConfig.map(([key, itemConfig]) => {
             iconSrc: assets.search,
             iconAlt: "search",
             iconClassName: "cky-search-icon",
-            title: __$1("Last successful scan", "cookie-law-info"),
-            subtitle: __$1("Scan not initiated", "cookie-law-info"),
+            title: __("Last successful scan", "cookie-law-info"),
+            subtitle: __("Scan not initiated", "cookie-law-info"),
             action: /* @__PURE__ */ jsxRuntimeExports.jsx(
               Button,
               {
                 variant: "primary",
                 size: "sm",
                 onClick: showScanNowModal,
-                children: __$1("Scan now", "cookie-law-info")
+                children: __("Scan now", "cookie-law-info")
               }
             )
           }
@@ -79170,8 +78922,8 @@ ${colorConfig.map(([key, itemConfig]) => {
             iconSrc: assets.timeSchedule,
             iconAlt: "schedule",
             iconClassName: "cky-time-schedule-icon",
-            title: __$1("Next Scan", "cookie-law-info"),
-            subtitle: __$1("Not scheduled", "cookie-law-info"),
+            title: __("Next Scan", "cookie-law-info"),
+            subtitle: __("Not scheduled", "cookie-law-info"),
             action: /* @__PURE__ */ jsxRuntimeExports.jsxs(
               Button,
               {
@@ -79187,7 +78939,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                       children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "crown", width: "10px", height: "8px" })
                     }
                   ),
-                  __$1("Schedule scan", "cookie-law-info")
+                  __("Schedule scan", "cookie-law-info")
                 ]
               }
             )
@@ -79200,8 +78952,8 @@ ${colorConfig.map(([key, itemConfig]) => {
           ref: scanNowModalRef,
           feature: "scan_behind_login",
           title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.scanNow, alt: "scanner" }),
-          featureText: __$1("Scan your site to generate a detailed cookie list", "cookie-law-info"),
-          availabilityText: __$1("Available in: <b>All plans</b>", "cookie-law-info")
+          featureText: __("Scan your site to generate a detailed cookie list", "cookie-law-info"),
+          availabilityText: __("Available in: <b>All plans</b>", "cookie-law-info")
         }
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -79211,11 +78963,11 @@ ${colorConfig.map(([key, itemConfig]) => {
           availablePlan: "premium",
           feature: "schedule_scan",
           title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.scheduleScan, alt: "schedule" }),
-          featureText: __$1(
+          featureText: __(
             "Run automated scans and get an up-to-date cookie list every time",
             "cookie-law-info"
           ),
-          availabilityText: __$1(
+          availabilityText: __(
             "Available in: <b>All premium plans</b>",
             "cookie-law-info"
           )
@@ -79223,8 +78975,8 @@ ${colorConfig.map(([key, itemConfig]) => {
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:mt-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { role: "navigation", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Tabs, { value: currentTab, onValueChange: setCurrentTab, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(TabsList, { className: "cky:flex cky:justify-start cky:space-x-4 cky:p-0 cky:bg-transparent cky:text-text-primary", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "cookies", className: cn$1(TAB_TRIGGER_CLASS, "cky:mr-0"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: TAB_INNER_CLASS, children: __$1("Cookie List", "cookie-law-info") }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "scanner", className: TAB_TRIGGER_CLASS, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: TAB_INNER_CLASS, children: __$1("Scan History", "cookie-law-info") }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "cookies", className: cn$1(TAB_TRIGGER_CLASS, "cky:mr-0"), children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: TAB_INNER_CLASS, children: __("Cookie List", "cookie-law-info") }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TabsTrigger, { value: "scanner", className: TAB_TRIGGER_CLASS, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: TAB_INNER_CLASS, children: __("Scan History", "cookie-law-info") }) })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "cookies", className: "cky:mt-0 cky:bg-white", children: currentTab === "cookies" ? /* @__PURE__ */ jsxRuntimeExports.jsx(TabCookies, {}) : null }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(TabsContent, { value: "scanner", className: "cky:mt-0 cky:bg-white", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TabScanner, {}) })
@@ -79289,7 +79041,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 className: "cky:m-0! cky:text-[16px]! cky:font-semibold! cky:leading-[18px]! cky:flex! cky:justify-start!",
                 asChild: true,
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { role: "heading", "aria-level": 4, children: __$2("Leave page?", "cookie-law-info") })
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { role: "heading", "aria-level": 4, children: __("Leave page?", "cookie-law-info") })
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -79299,7 +79051,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 variant: "ghost",
                 size: "icon",
                 className: "cky-button-close cky:absolute cky:right-[15px] cky:!h-8 cky:!w-8 cky:!min-w-0 cky:rounded-sm cky:border-0 cky:bg-transparent! cky:p-0! cky:shadow-none cky:hover:bg-black/[0.06]!",
-                "aria-label": __$2("Close cky-modal", "cookie-law-info"),
+                "aria-label": __("Close cky-modal", "cookie-law-info"),
                 onClick: handleStayClick,
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "close", width: "15px", height: "15px", color: "#8893a1" })
               }
@@ -79310,7 +79062,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               asChild: true,
               className: "cky:m-0! cky:text-[13px]! cky:font-normal! cky:leading-[18px]! cky:text-[#4E4B66]!",
-              children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: __$2(
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: __(
                 "You’ve made changes that haven’t been published yet.",
                 "cookie-law-info"
               ) })
@@ -79324,7 +79076,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 variant: "outline",
                 className: "cky:relative cky:inline-flex cky:w-auto cky:min-w-[80px] cky:rounded-[3px]! cky:border-[#c9d0d6]! cky:bg-transparent! cky:px-[15px]! cky:py-2! cky:!text-[14px] cky:!font-[500] cky:leading-4 cky:!text-[#555d66] cky:hover:bg-[#fafafb]! cky:focus:bg-[#fafafb]!",
                 onClick: handleDiscardClick,
-                children: __$2("Discard changes & leave this page", "cookie-law-info")
+                children: __("Discard changes & leave this page", "cookie-law-info")
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -79334,7 +79086,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 variant: "default",
                 className: "cky:relative cky:inline-flex cky:w-auto cky:min-w-[80px] cky:rounded-[3px]! cky:border-[#1578f7]! cky:bg-[#1578f7]! cky:px-[15px]! cky:py-2! cky:!text-[14px] cky:!font-[500] cky:leading-4 cky:!text-white cky:hover:border-[#0760d2]! cky:hover:bg-[#0760d2]! cky:focus:border-[#0760d2]! cky:focus:bg-[#0760d2]!",
                 onClick: handleStayClick,
-                children: __$2("Stay on page", "cookie-law-info")
+                children: __("Stay on page", "cookie-law-info")
               }
             )
           ] }) })
@@ -80162,13 +79914,13 @@ ${colorConfig.map(([key, itemConfig]) => {
     margin: 0
   };
   const GCM_CONSENT_COLUMNS = [
-    { key: "analytics", label: __$1("Analytics", "cookie-law-info") },
-    { key: "advertisement", label: __$1("Advertisement", "cookie-law-info") },
-    { key: "functional", label: __$1("Functional", "cookie-law-info") },
-    { key: "necessary", label: __$1("Necessary", "cookie-law-info") },
-    { key: "ad_user_data", label: __$1("Share user data with Google", "cookie-law-info") },
-    { key: "ad_personalization", label: __$1("Use data for ads personalisation", "cookie-law-info") },
-    { key: "regions", label: __$1("Region", "cookie-law-info") }
+    { key: "analytics", label: __("Analytics", "cookie-law-info") },
+    { key: "advertisement", label: __("Advertisement", "cookie-law-info") },
+    { key: "functional", label: __("Functional", "cookie-law-info") },
+    { key: "necessary", label: __("Necessary", "cookie-law-info") },
+    { key: "ad_user_data", label: __("Share user data with Google", "cookie-law-info") },
+    { key: "ad_personalization", label: __("Use data for ads personalisation", "cookie-law-info") },
+    { key: "regions", label: __("Region", "cookie-law-info") }
   ];
   const DEFAULT_REGION_SETTING = {
     analytics: "denied",
@@ -80206,7 +79958,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(TableRow, { className: "cky:border-t cky:border-gray-300 cky:align-middle", children: [
       GCM_CONSENT_COLUMNS.map(({ key }) => /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { className: GCM_TABLE_CELL_CLASS, children: key === "regions" ? regionMappedVal(item.regions) : mappedValue(item[key]) }, key)),
       /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { className: `cky:!pl-0 ${GCM_TABLE_CELL_CLASS}`, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-row cky:items-center cky:w-full", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex-1 cky:flex cky:justify-center cky:min-w-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipWithContent, { content: __$1("Edit", "cookie-law-info"), className: CKY_TOOLTIP_CONSENT_ACTIONS_CLASS, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex-1 cky:flex cky:justify-center cky:min-w-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipWithContent, { content: __("Edit", "cookie-law-info"), className: CKY_TOOLTIP_CONSENT_ACTIONS_CLASS, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           Button,
           {
             variant: "ghost",
@@ -80219,14 +79971,14 @@ ${colorConfig.map(([key, itemConfig]) => {
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex-1 cky:flex cky:justify-center cky:min-w-0", children: isDeleteDisabled ? /* @__PURE__ */ jsxRuntimeExports.jsx(
           TooltipWithContent,
           {
-            content: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:block cky:whitespace-pre-line cky:text-center", children: __$1(
+            content: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:block cky:whitespace-pre-line cky:text-center", children: __(
               "This row can’t be\ndeleted as it specifies\nthe default values.",
               "cookie-law-info"
             ) }),
             className: CKY_TOOLTIP_CONSENT_ACTIONS_CLASS,
             children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:inline-flex cky:cursor-default", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "trash", width: "14px", height: "14px", color: "#DE443780" }) })
           }
-        ) : /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipWithContent, { content: __$1("Delete", "cookie-law-info"), className: CKY_TOOLTIP_CONSENT_ACTIONS_CLASS, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        ) : /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipWithContent, { content: __("Delete", "cookie-law-info"), className: CKY_TOOLTIP_CONSENT_ACTIONS_CLASS, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           Button,
           {
             variant: "ghost",
@@ -80285,7 +80037,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     const deleteRegion = reactExports.useCallback((index2) => {
       const { gcm: current, updateGcm: patch } = useAppStore.getState();
       if (!(current == null ? void 0 : current.default_settings) || current.default_settings.length <= 1) return;
-      if (window.confirm(__$1("Are you sure you want to delete this region?", "cookie-law-info"))) {
+      if (window.confirm(__("Are you sure you want to delete this region?", "cookie-law-info"))) {
         const regions = [...current.default_settings];
         regions.splice(index2, 1);
         patch(__spreadProps(__spreadValues({}, current), { default_settings: regions }));
@@ -80299,7 +80051,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         if (response) {
           triggerNotification({
             type: "success",
-            message: saveSuccessMessage(__$1)
+            message: saveSuccessMessage(__)
           });
           setInitialStoreState(cloneState(gcm2));
           setHasChanges(false);
@@ -80307,7 +80059,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       } catch (e) {
         triggerNotification({
           type: "error",
-          message: saveErrorMessage(__$1)
+          message: saveErrorMessage(__)
         });
       } finally {
         setSaving(false);
@@ -80355,7 +80107,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:justify-between cky:p-[15px]", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cky:text-lg cky:font-medium cky:m-0!", children: __$1("Google Consent Mode Settings", "cookie-law-info") }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cky:text-lg cky:font-medium cky:m-0!", children: __("Google Consent Mode Settings", "cookie-law-info") }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               Button,
               {
@@ -80363,13 +80115,13 @@ ${colorConfig.map(([key, itemConfig]) => {
                 disabled: saving,
                 variant: "green",
                 className: "cky:ml-[15px]",
-                children: saving ? __$1("Saving...", "cookie-law-info") : __$1("Publish Changes", "cookie-law-info")
+                children: saving ? __("Saving...", "cookie-law-info") : __("Publish Changes", "cookie-law-info")
               }
             ) })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:relative", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full cky:px-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:bg-white cky:py-[12px] cky:px-[20px] cky:rounded-[3px] cky:shadow-sm cky:border cky:border-gray-200", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:pb-[15px] cky:border-b cky:border-gray-200 cky:flex cky:flex-wrap", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/4 cky:pr-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: "cky:p-0 cky:m-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { className: "cky:text-sm! cky:my-2!", children: __$1("Enable Google Consent Mode (GCM)", "cookie-law-info") }) }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/4 cky:pr-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: "cky:p-0 cky:m-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { className: "cky:text-sm! cky:my-2!", children: __("Enable Google Consent Mode (GCM)", "cookie-law-info") }) }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:flex cky:items-center cky:px-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Switch,
                 {
@@ -80379,14 +80131,14 @@ ${colorConfig.map(([key, itemConfig]) => {
                 }
               ) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/4" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:text-sm cky:px-[15px] cky:pt-[5px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0!", children: __$1(
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:text-sm cky:px-[15px] cky:pt-[5px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0!", children: __(
                 "When enabled, GCM will be implemented on your website.",
                 "cookie-law-info"
               ) }) })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-wrap cky:py-4", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full cky:mb-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { className: "cky:text-sm! cky:m-0!", children: __$1("Default consent settings", "cookie-law-info") }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full cky:text-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0!", children: __$1(
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full cky:mb-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { className: "cky:text-sm! cky:m-0!", children: __("Default consent settings", "cookie-law-info") }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full cky:text-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0!", children: __(
                 "The default consent state, 'Denied', will apply to non-necessary categories until consent is received. You can customise the default consent states for users in different geographical regions.",
                 "cookie-law-info"
               ) }) })
@@ -80400,7 +80152,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsx(TableHeader, { className: "cky:bg-[#E1E0E1] cky:[&_tr]:border-b-0", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(TableRow, { className: "cky:border-b-0", children: [
                       GCM_CONSENT_COLUMNS.map(({ key, label }) => /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: GCM_TABLE_HEAD_CLASS, children: label }, key)),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: GCM_TABLE_HEAD_CLASS, children: __$1("Actions", "cookie-law-info") })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: GCM_TABLE_HEAD_CLASS, children: __("Actions", "cookie-law-info") })
                     ] }) }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(TableBody, { className: "cky:relative", children: defaultSettings.map((item, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
                       GcmRegionTableRow,
@@ -80424,34 +80176,34 @@ ${colorConfig.map(([key, itemConfig]) => {
                   size: "sm",
                   children: [
                     "+ ",
-                    __$1("New Region", "cookie-law-info")
+                    __("New Region", "cookie-law-info")
                   ]
                 }
               ) })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:py-4 cky:space-y-4", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { className: "cky:text-sm! cky:font-medium cky:m-0!", children: __$1("Other settings", "cookie-law-info") }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h6", { className: "cky:text-sm! cky:font-medium cky:m-0!", children: __("Other settings", "cookie-law-info") }) }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: OTHER_SETTINGS_ROW, children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Label$1,
                   {
                     className: OTHER_SETTINGS_LABEL,
                     htmlFor: "cky-wait-update",
-                    children: __$1("Wait for update", "cookie-law-info")
+                    children: __("Wait for update", "cookie-law-info")
                   }
                 ),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:w-3/4 cky:flex cky:items-center", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(CkyWaitUpdate, {}),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:ml-2 cky:text-sm", children: __$1("milliseconds", "cookie-law-info") })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:ml-2 cky:text-sm", children: __("milliseconds", "cookie-law-info") })
                 ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/4" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:text-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: __$1(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:text-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: __(
                   "Number of milliseconds to wait before firing tags that are waiting for consent.",
                   "cookie-law-info"
                 ) }) })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: OTHER_SETTINGS_ROW, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: OTHER_SETTINGS_LABEL, children: __$1("Pass ad click information through URLs", "cookie-law-info") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: OTHER_SETTINGS_LABEL, children: __("Pass ad click information through URLs", "cookie-law-info") }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:flex cky:items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Switch,
                   {
@@ -80461,13 +80213,13 @@ ${colorConfig.map(([key, itemConfig]) => {
                   }
                 ) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/4" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:text-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: __$1(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:text-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: __(
                   "When enabled, internal links will include advertising identifiers (such as gclid, dclid, gclsrc, and _gl) in their URLs while awaiting consent.",
                   "cookie-law-info"
                 ) }) })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: OTHER_SETTINGS_ROW, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: OTHER_SETTINGS_LABEL, children: __$1("Redact ads data", "cookie-law-info") }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Label$1, { className: OTHER_SETTINGS_LABEL, children: __("Redact ads data", "cookie-law-info") }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:flex cky:items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                   Switch,
                   {
@@ -80477,7 +80229,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   }
                 ) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-1/4" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:text-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: __$1(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-3/4 cky:text-sm", children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: __(
                   `When enabled and the default consent state of "Advertisement Cookies" is disabled, Google's advertising tags will remove all advertising identifiers from the requests, and route the traffic through domains that do not use cookies.`,
                   "cookie-law-info"
                 ) }) })
@@ -80491,8 +80243,8 @@ ${colorConfig.map(([key, itemConfig]) => {
     ] });
   }
   __name(Gcm, "Gcm");
-  const MENU_DELETE = __$1("Delete", "cookie-law-info");
-  const DELETE_CONFIRM_TEMPLATE = __$1(
+  const MENU_DELETE = __("Delete", "cookie-law-info");
+  const DELETE_CONFIRM_TEMPLATE = __(
     /* translators: %1$s: Language name. */
     "The <b>%1$s</b> language and any translations you've added in this language will be permanently deleted.",
     "cookie-law-info"
@@ -80555,7 +80307,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           onPointerEnter: openMenu,
           onPointerLeave: scheduleMenuClose,
           children: [
-            isDefault && selectedCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(DropdownMenuItem$1, { onClick: onOpenLanguageModal, className: DROPDOWN_ITEM_CLASS, children: __$1("Change default language", "cookie-law-info") }) : isDefault && selectedCount > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            isDefault && selectedCount === 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(DropdownMenuItem$1, { onClick: onOpenLanguageModal, className: DROPDOWN_ITEM_CLASS, children: __("Change default language", "cookie-law-info") }) : isDefault && selectedCount > 1 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               DropdownMenuItem$1,
               {
                 "aria-disabled": true,
@@ -80571,7 +80323,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                     {
                       side: "top",
                       className: "cky:!max-w-[150px] cky:box-border",
-                      children: __$1("You can't delete the default language.", "cookie-law-info")
+                      children: __("You can't delete the default language.", "cookie-law-info")
                     }
                   )
                 ] })
@@ -80589,7 +80341,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 onClick: /* @__PURE__ */ __name(() => onSetDefault(language), "onClick"),
                 className: DROPDOWN_ITEM_CLASS,
-                children: __$1("Set as default", "cookie-law-info")
+                children: __("Set as default", "cookie-law-info")
               }
             )
           ]
@@ -80728,7 +80480,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     );
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:p-[15px]", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cky:m-0! cky:mr-3.5! cky:text-lg cky:font-semibold cky:text-primary", children: __$1("Languages", "cookie-law-info") }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cky:m-0! cky:mr-3.5! cky:text-lg cky:font-semibold cky:text-primary", children: __("Languages", "cookie-law-info") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:gap-3 cky:items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
           Button,
           {
@@ -80744,15 +80496,15 @@ ${colorConfig.map(([key, itemConfig]) => {
                   children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "crown", width: "10px", height: "8px" })
                 }
               ),
-              __$1("Add Language", "cookie-law-info")
+              __("Add Language", "cookie-law-info")
             ]
           }
         ) })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:border cky:border-gray-300 cky:bg-white cky:p-2.5", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Table, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(TableHeader, { className: "cky:bg-gray-100 cky:text-text-primary", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(TableRow, { children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "cky:text-text-primary", children: __$1("Language List", "cookie-law-info") }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "cky:w-[15%] cky:text-text-primary", children: __$1("Language Code", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "cky:text-text-primary", children: __("Language List", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "cky:w-[15%] cky:text-text-primary", children: __("Language Code", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, {}),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, {})
         ] }) }),
@@ -80764,7 +80516,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               variant: "default",
               className: "cky:rounded-full cky:bg-[rgba(0,86,167,0.05)] cky:text-[#2170f9] cky:px-3 cky:py-1 cky:text-xs cky:transition-none cky:hover:bg-[rgba(0,86,167,0.05)] cky:hover:text-[#2170f9]",
-              children: __$1("Default", "cookie-law-info")
+              children: __("Default", "cookie-law-info")
             }
           ) }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { className: "cky:text-right cky:text-text-primary", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:justify-end cky:gap-2", children: [
@@ -80777,7 +80529,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 onClick: /* @__PURE__ */ __name(() => handleEditContent(language.code), "onClick"),
                 children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "editAlt", width: "13px" }),
-                  __$1("Edit Content", "cookie-law-info")
+                  __("Edit Content", "cookie-law-info")
                 ]
               }
             ),
@@ -80800,10 +80552,10 @@ ${colorConfig.map(([key, itemConfig]) => {
         CkyHeadsUpPopup,
         {
           ref: ckyHeadsUpPopupRef,
-          header: __$1("Delete language?", "cookie-law-info"),
+          header: __("Delete language?", "cookie-law-info"),
           body: bodyContent,
-          cancelBtn: __$1("Cancel", "cookie-law-info"),
-          confirmBtn: __$1("Delete language", "cookie-law-info"),
+          cancelBtn: __("Cancel", "cookie-law-info"),
+          confirmBtn: __("Delete language", "cookie-law-info"),
           onDeleteItem: deleteLanguage,
           onClear: clearHeadsUpPopup
         }
@@ -80816,11 +80568,11 @@ ${colorConfig.map(([key, itemConfig]) => {
           feature: "language_limit",
           onNavigate: handleNavigate,
           title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.addLanguage, alt: "languages" }),
-          featureText: __$1(
+          featureText: __(
             "Display your banner in multiple languages tailored for your audience",
             "cookie-law-info"
           ),
-          availabilityText: __$1(
+          availabilityText: __(
             "Available in: <b>All premium plans</b>",
             "cookie-law-info"
           )
@@ -81120,7 +80872,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       )) {
         triggerNotification({
           type: "error",
-          message: __$1(
+          message: __(
             "A message is required to show upon opt-out.",
             "cookie-law-info"
           )
@@ -81133,7 +80885,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         if (success) {
           triggerNotification({
             type: "success",
-            message: saveSuccessMessage(__$1)
+            message: saveSuccessMessage(__)
           });
           const banner2 = useBannerStore.getState().current;
           if (banner2 !== false && banner2.contents) {
@@ -81147,14 +80899,14 @@ ${colorConfig.map(([key, itemConfig]) => {
         } else {
           triggerNotification({
             type: "error",
-            message: saveErrorMessage(__$1)
+            message: saveErrorMessage(__)
           });
         }
       } catch (error) {
         console.error("Error saving:", error);
         triggerNotification({
           type: "error",
-          message: saveErrorMessage(__$1)
+          message: saveErrorMessage(__)
         });
       } finally {
         setSaving(false);
@@ -81187,7 +80939,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       }
       const bannerMissing = currentBanner === false || !currentBanner;
       if (bannerMissing) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-sm cky:text-muted-foreground", children: __$1("No banner found", "cookie-law-info") });
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:text-sm cky:text-muted-foreground", children: __("No banner found", "cookie-law-info") });
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:-mx-[15px] cky:flex cky:flex-wrap", children: [
         showDefaultColumn && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:relative cky:min-h-[1px] cky:box-border cky:min-w-0 cky:flex-1 cky:px-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -81211,7 +80963,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         "cky-lang-edit-lists-heading cky:!m-0 cky:!text-[15px] cky:font-semibold cky:leading-[1.3] cky:text-[#23282d]"
                       ),
                       children: [
-                        __$1("Default language:", "cookie-law-info"),
+                        __("Default language:", "cookie-law-info"),
                         " ",
                         /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: getLanguageName(defaultLanguage) })
                       ]
@@ -81254,7 +81006,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         className: cn$1(
                           "cky:!m-0 cky:shrink-0 cky:!text-[15px] cky:font-semibold cky:leading-[1.3] cky:text-[#23282d]"
                         ),
-                        children: __$1("Edit content in:", "cookie-law-info")
+                        children: __("Edit content in:", "cookie-law-info")
                       }
                     ),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -81276,7 +81028,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                               children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                                 SelectValue,
                                 {
-                                  placeholder: __$1(
+                                  placeholder: __(
                                     "Select language…",
                                     "cookie-law-info"
                                   )
@@ -81330,7 +81082,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-section-header cky:flex cky:items-center cky:justify-between", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-section-title", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/languages", className: "cky-breadcrumbs-title", children: __$1("Back to Language List", "cookie-law-info") }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-section-title", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { to: "/languages", className: "cky-breadcrumbs-title", children: __("Back to Language List", "cookie-law-info") }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky-section-header-actions cky:ml-auto cky:flex cky:items-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:items-center cky:justify-end", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:inline-flex cky:cursor-pointer cky:items-center cky:gap-2", children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -81338,7 +81090,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   {
                     htmlFor: "cky-banner-preview",
                     className: "cky:m-0 cky:cursor-pointer cky:text-sm cky:font-medium cky:text-[#23282d]",
-                    children: __$1("Banner Preview", "cookie-law-info")
+                    children: __("Banner Preview", "cookie-law-info")
                   }
                 ),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -81357,9 +81109,9 @@ ${colorConfig.map(([key, itemConfig]) => {
                   className: "cky:ml-[15px]",
                   onClick: handleSave,
                   loading: saving,
-                  loadingText: __$1("Saving...", "cookie-law-info"),
+                  loadingText: __("Saving...", "cookie-law-info"),
                   disabled: publishDisabled || optOutConfirmationPublishBlocked || loading,
-                  children: __$1("Publish Changes", "cookie-law-info")
+                  children: __("Publish Changes", "cookie-law-info")
                 }
               )
             ] }) })
@@ -81384,7 +81136,7 @@ ${colorConfig.map(([key, itemConfig]) => {
   }
   __name(LanguagesEdit, "LanguagesEdit");
   const arrowBackSvg = '<svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.667 16h18.666M6.667 16l8 8m-8-8 8-8" stroke="#4E4B66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>\n';
-  const PAGE_LIMIT_LONG = __$2(
+  const PAGE_LIMIT_LONG = __(
     "A pageview is every instance that a page on a website with CookieYes code is loaded or reloaded.<br>If Extra Pageviews are enabled for your account, you'll be charged [OVERAGE_PRICE] for every 1,000 additional pageviews per site, beyond your monthly plan limit.",
     "cookie-law-info"
   );
@@ -81466,43 +81218,43 @@ ${colorConfig.map(([key, itemConfig]) => {
     const [available, setAvailable] = reactExports.useState("all");
     const contents = reactExports.useMemo(
       () => ({
-        showMonthly: __$2("/month/domain", "cookie-law-info"),
-        showYearly: __$2("/year/domain", "cookie-law-info"),
-        custom_css: __$2("Custom CSS", "cookie-law-info"),
-        custom_branding: __$2("Option to add custom logo on banner", "cookie-law-info"),
-        schedule_scan: __$2("Scheduled scan", "cookie-law-info"),
-        static_ip_scan: __$2("Static IP scan", "cookie-law-info"),
-        config_geo_rules: __$2("Geo-target banner", "cookie-law-info"),
-        popup_layout: __$2("Pop-up banner layout", "cookie-law-info"),
-        respect_gpc: __$2("Support for Global Privacy Control (GPC)", "cookie-law-info"),
-        hide_banner_on_specific_pages: __$2("Disable banner on specific pages", "cookie-law-info"),
-        iab: __$2("IAB TCF Support", "cookie-law-info"),
-        gacm_support: __$2("Google's Additional Consent Mode", "cookie-law-info"),
-        revisit_custom_branding: __$2("Custom revisit consent button", "cookie-law-info"),
-        scan_behind_login: __$2("Scan behind login", "cookie-law-info"),
-        remove_powered_by: __$2('Disable "Powered by" branding', "cookie-law-info"),
-        pages_per_scan: __$2("&nbsp;pages per scan", "cookie-law-info"),
-        pageview_per_month: __$2("&nbsp;pageviews / month", "cookie-law-info"),
-        unlimited_pageviews: __$2("<b>Unlimited</b>&nbsp;pageviews", "cookie-law-info"),
-        staging_mode: __$2("Staging mode", "cookie-law-info"),
-        subdomain_consent_sharing: __$2("Subdomain consent sharing", "cookie-law-info"),
-        multi_user_management: __$2("Multi-user management", "cookie-law-info"),
-        gcm_support: __$2("Support for Google Consent Mode (GCM) v2", "cookie-law-info"),
-        policy_generators: __$2("Cookie/Privacy Policy Generators", "cookie-law-info"),
-        renew_user_consent: __$2("Renew user consents", "cookie-law-info"),
-        do_not_track_support: __$2("Do Not Track (DNT) support", "cookie-law-info"),
-        "2fa": __$2("Two-factor authentication (2FA)", "cookie-law-info"),
-        automatic_cookie_blocking: __$2("Automatic cookie blocking", "cookie-law-info"),
-        language_limit: __$2("Multilingual banner", "cookie-law-info"),
-        unlimited_scans: __$2("<b>Unlimited</b>&nbsp;cookie scans", "cookie-law-info"),
-        scans_per_month: __$2("&nbsp;cookie scans / month", "cookie-law-info"),
-        chat_support: __$2("Chat support", "cookie-law-info"),
-        opt_in_banner_for_gdpr: __$2("Opt-in consent banner for GDPR", "cookie-law-info"),
-        opt_out_banner_for_us_state_laws: __$2("Opt-out banner for US State laws", "cookie-law-info"),
-        per_category_consent: __$2("Per-category consent", "cookie-law-info"),
-        revisit_consent: __$2("Revisit consent button", "cookie-law-info"),
-        advanced_customisation: __$2("Advanced customisation", "cookie-law-info"),
-        basic_customisation: __$2("Basic customisation", "cookie-law-info")
+        showMonthly: __("/month/domain", "cookie-law-info"),
+        showYearly: __("/year/domain", "cookie-law-info"),
+        custom_css: __("Custom CSS", "cookie-law-info"),
+        custom_branding: __("Option to add custom logo on banner", "cookie-law-info"),
+        schedule_scan: __("Scheduled scan", "cookie-law-info"),
+        static_ip_scan: __("Static IP scan", "cookie-law-info"),
+        config_geo_rules: __("Geo-target banner", "cookie-law-info"),
+        popup_layout: __("Pop-up banner layout", "cookie-law-info"),
+        respect_gpc: __("Support for Global Privacy Control (GPC)", "cookie-law-info"),
+        hide_banner_on_specific_pages: __("Disable banner on specific pages", "cookie-law-info"),
+        iab: __("IAB TCF Support", "cookie-law-info"),
+        gacm_support: __("Google's Additional Consent Mode", "cookie-law-info"),
+        revisit_custom_branding: __("Custom revisit consent button", "cookie-law-info"),
+        scan_behind_login: __("Scan behind login", "cookie-law-info"),
+        remove_powered_by: __('Disable "Powered by" branding', "cookie-law-info"),
+        pages_per_scan: __("&nbsp;pages per scan", "cookie-law-info"),
+        pageview_per_month: __("&nbsp;pageviews / month", "cookie-law-info"),
+        unlimited_pageviews: __("<b>Unlimited</b>&nbsp;pageviews", "cookie-law-info"),
+        staging_mode: __("Staging mode", "cookie-law-info"),
+        subdomain_consent_sharing: __("Subdomain consent sharing", "cookie-law-info"),
+        multi_user_management: __("Multi-user management", "cookie-law-info"),
+        gcm_support: __("Support for Google Consent Mode (GCM) v2", "cookie-law-info"),
+        policy_generators: __("Cookie/Privacy Policy Generators", "cookie-law-info"),
+        renew_user_consent: __("Renew user consents", "cookie-law-info"),
+        do_not_track_support: __("Do Not Track (DNT) support", "cookie-law-info"),
+        "2fa": __("Two-factor authentication (2FA)", "cookie-law-info"),
+        automatic_cookie_blocking: __("Automatic cookie blocking", "cookie-law-info"),
+        language_limit: __("Multilingual banner", "cookie-law-info"),
+        unlimited_scans: __("<b>Unlimited</b>&nbsp;cookie scans", "cookie-law-info"),
+        scans_per_month: __("&nbsp;cookie scans / month", "cookie-law-info"),
+        chat_support: __("Chat support", "cookie-law-info"),
+        opt_in_banner_for_gdpr: __("Opt-in consent banner for GDPR", "cookie-law-info"),
+        opt_out_banner_for_us_state_laws: __("Opt-out banner for US State laws", "cookie-law-info"),
+        per_category_consent: __("Per-category consent", "cookie-law-info"),
+        revisit_consent: __("Revisit consent button", "cookie-law-info"),
+        advanced_customisation: __("Advanced customisation", "cookie-law-info"),
+        basic_customisation: __("Basic customisation", "cookie-law-info")
       }),
       []
     );
@@ -81512,7 +81264,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     }, [planDetails, selected]);
     const formattedOverageText = reactExports.useMemo(
       () => sprintf$2(
-        __$2(
+        __(
           /* translators: %1$s: Currency symbol. %2$s: Price per 1,000 extra pageviews. */
           "+ %1$s%2$s per 1,000 extra pageviews*",
           "cookie-law-info"
@@ -81524,7 +81276,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     );
     const formattedOverageNote = reactExports.useMemo(
       () => sprintf$2(
-        __$2(
+        __(
           /* translators: %s: Release date when extra pageviews became automatically enabled. */
           "*Extra pageviews are automatically enabled for users who created their CookieYes account on or after %s. Users who created their account before this date can enable it anytime from Billing & Invoices. ",
           "cookie-law-info"
@@ -81606,63 +81358,63 @@ ${colorConfig.map(([key, itemConfig]) => {
     const getPopperFeatures = reactExports.useCallback(
       (planSlug) => {
         const pricePart = (planDetails == null ? void 0 : planDetails.overage_price) ? (planDetails.overage_price[selected.toLowerCase()] / 100).toFixed(2) : "0.30";
-        const pageViewPopper = planSlug === "basic" || planSlug === "pro" ? PAGE_LIMIT_LONG.replace("[OVERAGE_PRICE]", symbol + pricePart) : __$2(
+        const pageViewPopper = planSlug === "basic" || planSlug === "pro" ? PAGE_LIMIT_LONG.replace("[OVERAGE_PRICE]", symbol + pricePart) : __(
           "A pageview is every instance that a page on a website with CookieYes code is loaded or reloaded.",
           "cookie-law-info"
         );
         return {
-          staging_mode: __$2(
+          staging_mode: __(
             "Allows you to add your staging site URL to the main site, enabling you to set up and test the cookie banner in your staging environment.",
             "cookie-law-info"
           ),
-          automatic_cookie_blocking: __$2(
+          automatic_cookie_blocking: __(
             "Automatically scan, detect and block third-party cookie scripts until your site visitors give consent.",
             "cookie-law-info"
           ),
-          scan_behind_login: __$2(
+          scan_behind_login: __(
             `To scan your web page behind a login or a cookie wall, <a href="https://www.cookieyes.com/support" target="_blank">contact us</a> and provide your <b>login URL</b> along with the <b>test login credentials</b>. This will enable us to configure our scanner to scan behind your login pages.`,
             "cookie-law-info"
           ),
-          gacm_support: __$2(
+          gacm_support: __(
             `Google's Additional Consent (AC) Mode allows the collection of consents for Google's Ad Technology Providers (ATPs) that are not yet registered on the IAB Europe Global Vendor List (GVL). <b>AC Mode is intended only for use alongside IAB TCF.</b>`,
             "cookie-law-info"
           ),
-          remove_powered_by: __$2("Remove CookieYes logo from your cookie banner.", "cookie-law-info"),
-          custom_css: __$2("Add CSS code and customise the way your cookie banner looks.", "cookie-law-info"),
-          config_geo_rules: __$2(
+          remove_powered_by: __("Remove CookieYes logo from your cookie banner.", "cookie-law-info"),
+          custom_css: __("Add CSS code and customise the way your cookie banner looks.", "cookie-law-info"),
+          config_geo_rules: __(
             "Geo-target your cookie banner and display it as per your visitor's location.",
             "cookie-law-info"
           ),
-          static_ip_scan: __$2(
+          static_ip_scan: __(
             `If your website's firewall or configuration restricts external access, enable static IP scan for your site, ensuring that the scan requests consistently originate from the same IP. Additionally, <a href="https://www.cookieyes.com/documentation/whitelisting-cookieyes-scanner/" target="_blank">whitelist the static IP addresses</a> of the CookieYes scanner.`,
             "cookie-law-info"
           ),
-          revisit_custom_branding: __$2(
+          revisit_custom_branding: __(
             "Replace the default icon of the revisit consent button with your custom icon.",
             "cookie-law-info"
           ),
-          revisit_consent: __$2(
+          revisit_consent: __(
             "Displays a floating button on your website allowing your visitors to withdraw or change their consent at any time.",
             "cookie-law-info"
           ),
-          respect_gpc: __$2(
+          respect_gpc: __(
             "Global Privacy Control (GPC) is a web standard (necessary for CCPA/CPRA compliance) that allows users to signal to websites that they do not want their data to be collected or shared. If enabled, CookieYes will respect your user's GPC setting.",
             "cookie-law-info"
           ),
-          renew_user_consent: __$2(
+          renew_user_consent: __(
             "This action will trigger the cookie banner to reappear for all existing users who have already given consent.",
             "cookie-law-info"
           ),
-          subdomain_consent_sharing: __$2(
+          subdomain_consent_sharing: __(
             "Allows you to share your visitor consent information among different subdomains of your website.",
             "cookie-law-info"
           ),
-          do_not_track_support: __$2(
+          do_not_track_support: __(
             "DNT is a web browser setting that enables you to opt-out of tracking by websites. CookieYes will respect your visitor's DNT setting.",
             "cookie-law-info"
           ),
           page_view_limit: pageViewPopper,
-          pages_per_scan: __$2(
+          pages_per_scan: __(
             "The number of pages of your website that will be scanned.",
             "cookie-law-info"
           )
@@ -81743,22 +81495,22 @@ ${colorConfig.map(([key, itemConfig]) => {
     const getHeading = /* @__PURE__ */ __name((plan) => {
       switch (plan) {
         case "free":
-          return __$2("Key features in Free", "cookie-law-info");
+          return __("Key features in Free", "cookie-law-info");
         case "basic":
           if (!plans.some((p2) => p2.slug === "free")) {
-            return __$2("Key features in Basic", "cookie-law-info");
+            return __("Key features in Basic", "cookie-law-info");
           }
-          return __$2("Everything in Free, plus", "cookie-law-info");
+          return __("Everything in Free, plus", "cookie-law-info");
         case "pro":
           if (!plans.some((p2) => p2.slug === "basic")) {
-            return __$2("Key features in Pro", "cookie-law-info");
+            return __("Key features in Pro", "cookie-law-info");
           }
-          return __$2("Everything in Basic, plus", "cookie-law-info");
+          return __("Everything in Basic, plus", "cookie-law-info");
         case "ultimate":
           if (!plans.some((p2) => p2.slug === "pro")) {
-            return __$2("Key features in Ultimate", "cookie-law-info");
+            return __("Key features in Ultimate", "cookie-law-info");
           }
-          return __$2("Everything in Pro, plus", "cookie-law-info");
+          return __("Everything in Pro, plus", "cookie-law-info");
         default:
           return "";
       }
@@ -81789,22 +81541,22 @@ ${colorConfig.map(([key, itemConfig]) => {
         {
           slug: "free",
           name: "Free",
-          description: __$2("For blogs and personal websites", "cookie-law-info")
+          description: __("For blogs and personal websites", "cookie-law-info")
         },
         {
           slug: "basic",
           name: "Basic",
-          description: __$2("For small business and startups", "cookie-law-info")
+          description: __("For small business and startups", "cookie-law-info")
         },
         {
           slug: "pro",
           name: "Pro",
-          description: __$2("For medium business with growing traffic", "cookie-law-info")
+          description: __("For medium business with growing traffic", "cookie-law-info")
         },
         {
           slug: "ultimate",
           name: "Ultimate",
-          description: __$2("For large business with high traffic", "cookie-law-info")
+          description: __("For large business with high traffic", "cookie-law-info")
         }
       ],
       []
@@ -81869,7 +81621,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:box-border cky:min-h-px cky:min-w-0 cky:flex-[0_0_83.333333%] cky:max-w-[83.333333%] cky:shrink-0 cky:px-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:min-w-0 cky:w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: "cky:rounded-[9px]!", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipProvider, { delayDuration: 200, children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "cky:min-h-0! cky:p-7!", children: cardLoader ? /* @__PURE__ */ jsxRuntimeExports.jsx(CardLoader, { className: "cky:pt-6" }) : /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-section-plans cky-section-row cky:flex cky:w-full cky:flex-col cky:items-start cky:gap-4 cky:md:flex-row! cky:md:flex-nowrap! cky:md:gap-x-0", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cky-plans-heading cky:m-0! cky:min-w-0 cky:shrink cky:text-xl! cky:font-semibold cky:leading-[30px] cky:text-[#14142a] cky:md:min-w-0", children: __$2("Create a new account and connect to web app", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "cky-plans-heading cky:m-0! cky:min-w-0 cky:shrink cky:text-xl! cky:font-semibold cky:leading-[30px] cky:text-[#14142a] cky:md:min-w-0", children: __("Create a new account and connect to web app", "cookie-law-info") }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky-button-group cky:inline-flex cky:min-h-[34px] cky:min-w-[170px] cky:shrink-0 cky:self-end cky:rounded-lg cky:border cky:border-[#BEBFC5] cky:bg-white cky:md:ml-auto! cky:md:self-end cky:md:mr-[26px]", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Button,
@@ -81879,7 +81631,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   size: "toggle",
                   className: "cky:!rounded-l-lg cky:!rounded-r-none",
                   onClick: /* @__PURE__ */ __name(() => setShowMonthly(true), "onClick"),
-                  children: __$2("Monthly", "cookie-law-info")
+                  children: __("Monthly", "cookie-law-info")
                 }
               ),
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -81898,10 +81650,10 @@ ${colorConfig.map(([key, itemConfig]) => {
                           "cky:pointer-events-none cky:absolute cky:bottom-10 cky:left-1/2 cky:z-[1] cky:box-border cky:flex cky:w-full cky:max-h-5 cky:min-w-0 cky:-translate-x-1/2 cky:items-center cky:justify-center cky:rounded cky:bg-[#2DAD70] cky:text-[11px] cky:font-medium cky:leading-4 cky:text-white",
                           "cky:after:absolute cky:after:left-1/2 cky:after:top-[12px] cky:after:z-0 cky:after:w-0 cky:after:-translate-x-1/2 cky:after:border-l-8 cky:after:border-r-8 cky:after:border-t-[10px] cky:after:border-l-transparent cky:after:border-r-transparent cky:after:border-t-[#2DAD70] cky:after:content-['']"
                         ),
-                        children: __$2("2 months free", "cookie-law-info")
+                        children: __("2 months free", "cookie-law-info")
                       }
                     ),
-                    __$2("Annually", "cookie-law-info")
+                    __("Annually", "cookie-law-info")
                   ]
                 }
               )
@@ -81912,7 +81664,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 {
                   variant: "currency",
                   className: "cky:w-auto! cky:min-w-[82px]! cky:shrink-0! cky:bg-white! cky:text-sm! cky:text-[#14142a]!",
-                  "aria-label": __$2("Currency", "cookie-law-info"),
+                  "aria-label": __("Currency", "cookie-law-info"),
                   children: /* @__PURE__ */ jsxRuntimeExports.jsx(SelectValue, { placeholder: selected })
                 }
               ),
@@ -81947,7 +81699,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                           ),
                           children: [
                             /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.starPopular, alt: "", className: "cky:h-[17px] cky:w-4" }),
-                            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-[13px] cky:font-bold cky:leading-[18px] cky:text-white", children: __$2("POPULAR", "cookie-law-info") })
+                            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-[13px] cky:font-bold cky:leading-[18px] cky:text-white", children: __("POPULAR", "cookie-law-info") })
                           ]
                         }
                       ) : null
@@ -81974,7 +81726,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                           children: plan.slug === "free" ? symbol + "0" : symbol + getPrice(plan.slug)
                         }
                       ),
-                      plan.slug === "free" ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-[13px] cky:font-normal cky:leading-[18px] cky:text-[#6E7191]", children: __$2("Free forever", "cookie-law-info") }) : showMonthly ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-[13px] cky:font-normal cky:leading-[18px] cky:text-[#6E7191]", children: contents.showMonthly }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-[13px] cky:font-normal cky:leading-[18px] cky:text-[#6E7191]", children: contents.showYearly })
+                      plan.slug === "free" ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-[13px] cky:font-normal cky:leading-[18px] cky:text-[#6E7191]", children: __("Free forever", "cookie-law-info") }) : showMonthly ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-[13px] cky:font-normal cky:leading-[18px] cky:text-[#6E7191]", children: contents.showMonthly }) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0! cky:text-[13px] cky:font-normal cky:leading-[18px] cky:text-[#6E7191]", children: contents.showYearly })
                     ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       Button,
@@ -81987,7 +81739,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                           (planCount === 1 || planCount === 2) && "cky:max-w-[140px]!"
                         ),
                         onClick: /* @__PURE__ */ __name(() => connectToWebapp(plan.slug), "onClick"),
-                        children: plan.slug === "free" ? __$2("Get started", "cookie-law-info") : __$2("Start free trial", "cookie-law-info")
+                        children: plan.slug === "free" ? __("Get started", "cookie-law-info") : __("Start free trial", "cookie-law-info")
                       }
                     )
                   ] }),
@@ -82000,7 +81752,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         planCount === 2 && "cky:md:max-w-none"
                       ),
                       children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mb-2 cky:m-0 cky:text-[13px] cky:font-bold cky:leading-[18px]", children: __$2("Usage", "cookie-law-info") }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:mb-2 cky:m-0 cky:text-[13px] cky:font-bold cky:leading-[18px]", children: __("Usage", "cookie-law-info") }),
                         /* @__PURE__ */ jsxRuntimeExports.jsx("ul", { className: "cky:m-0! cky:mb-5! cky:flex cky:list-none! cky:flex-col cky:gap-2 cky:p-0! cky:pl-0!", children: Object.entries(usageFeats).map(([key, feature]) => /* @__PURE__ */ jsxRuntimeExports.jsxs("li", { className: featureRow, children: [
                           /* @__PURE__ */ jsxRuntimeExports.jsx(Check, { className: "cky:mt-0.5 cky:h-4 cky:w-4 cky:flex-shrink-0 cky:text-[#1578F7]", strokeWidth: 2, "aria-hidden": true }),
                           /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:min-w-0 cky:flex-1", children: [
@@ -82072,7 +81824,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               className: "cky:inline-flex cky:h-auto cky:items-center cky:gap-2.5 cky:border-none! cky:hover:border-transparent! cky:p-0 cky:text-base cky:leading-6 cky:font-normal cky:text-[#136fe8] cky:hover:text-[#136fe8]",
               onClick: /* @__PURE__ */ __name(() => setToggleSettings(!toggleSettings), "onClick"),
               children: [
-                toggleSettings ? __$2("See less", "cookie-law-info") : __$2("See all benefits", "cookie-law-info"),
+                toggleSettings ? __("See less", "cookie-law-info") : __("See all benefits", "cookie-law-info"),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ChevronDown,
                   {
@@ -82089,7 +81841,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           /* @__PURE__ */ jsxRuntimeExports.jsx("hr", { className: "cky:my-[15px] cky:border-[#E9E9EB]" }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:w-full cky:items-center cky:justify-center cky:gap-1", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.checkFill, alt: "", className: "cky:h-5 cky:w-5" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0 cky:text-[13px] cky:font-semibold cky:leading-[18px] cky:text-[#4e4b66]", children: __$2("15-day money-back guarantee", "cookie-law-info") })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:m-0 cky:text-[13px] cky:font-semibold cky:leading-[18px] cky:text-[#4e4b66]", children: __("15-day money-back guarantee", "cookie-law-info") })
           ] })
         ] }) }) }) }) }) })
       ] }),
@@ -82102,7 +81854,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             href: "https://www.cookieyes.com/documentation/pageview-pricing/#:~:text=includes%20unlimited%20pageviews.-,Who%20gets%20extra%20pageviews%20enabled%20by%20default%3F,-Extra%20pageviews%20lets",
             target: "_blank",
             rel: "noreferrer",
-            children: __$2("Learn more", "cookie-law-info")
+            children: __("Learn more", "cookie-law-info")
           }
         )
       ] }) }) })
@@ -82140,7 +81892,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           availablePlan: "all",
           title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: card.modalTitleImage, alt: card.modalTitleAlt }),
           featureText: card.modalDescription,
-          availabilityText: __$2("Available in: <b>All plans</b>", "cookie-law-info")
+          availabilityText: __("Available in: <b>All plans</b>", "cookie-law-info")
         }
       )
     ] });
@@ -82149,16 +81901,16 @@ ${colorConfig.map(([key, itemConfig]) => {
     const ckyPrivacyPolicyModalRef = reactExports.useRef(null);
     const ckyCookiePolicyModalRef = reactExports.useRef(null);
     const ckyPrivacyPolicyFeatures = [
-      __$2("Answer a simple questionnaire", "cookie-law-info"),
-      __$2("Generate policy in minutes", "cookie-law-info"),
-      __$2("Copy as text/HTML", "cookie-law-info"),
-      __$2("Customise as required", "cookie-law-info")
+      __("Answer a simple questionnaire", "cookie-law-info"),
+      __("Generate policy in minutes", "cookie-law-info"),
+      __("Copy as text/HTML", "cookie-law-info"),
+      __("Customise as required", "cookie-law-info")
     ];
     const ckyCookiePolicyFeatures = [
-      __$2("Instantly generate custom policy", "cookie-law-info"),
-      __$2("Auto-updating cookie list", "cookie-law-info"),
-      __$2("Copy as text/HTML", "cookie-law-info"),
-      __$2("Customise as required", "cookie-law-info")
+      __("Instantly generate custom policy", "cookie-law-info"),
+      __("Auto-updating cookie list", "cookie-law-info"),
+      __("Copy as text/HTML", "cookie-law-info"),
+      __("Customise as required", "cookie-law-info")
     ];
     const ckyShowPrivacyPolicy = /* @__PURE__ */ __name(() => {
       if (ckyPrivacyPolicyModalRef.current) {
@@ -82174,32 +81926,32 @@ ${colorConfig.map(([key, itemConfig]) => {
       {
         id: "privacy-policy",
         icon: "privacy-policy",
-        title: __$2("Privacy Policy Generator", "cookie-law-info"),
-        description: __$2(
+        title: __("Privacy Policy Generator", "cookie-law-info"),
+        description: __(
           "Create a privacy policy to inform users about the data collection practices of your website.",
           "cookie-law-info"
         ),
         features: ckyPrivacyPolicyFeatures,
         modalRef: ckyPrivacyPolicyModalRef,
         modalTitleImage: assets.privacyPolicy,
-        modalTitleAlt: __$2("Privacy Policy Generator", "cookie-law-info"),
-        modalDescription: __$2("Generate a custom privacy policy for your site in just minutes", "cookie-law-info"),
-        buttonText: __$2("Connect to Web App to Generate", "cookie-law-info")
+        modalTitleAlt: __("Privacy Policy Generator", "cookie-law-info"),
+        modalDescription: __("Generate a custom privacy policy for your site in just minutes", "cookie-law-info"),
+        buttonText: __("Connect to Web App to Generate", "cookie-law-info")
       },
       {
         id: "cookie-policy",
         icon: "cookie-policy",
-        title: __$2("Cookie Policy Generator", "cookie-law-info"),
-        description: __$2(
+        title: __("Cookie Policy Generator", "cookie-law-info"),
+        description: __(
           "Generate a custom cookie policy and inform users about your site's use of cookies.",
           "cookie-law-info"
         ),
         features: ckyCookiePolicyFeatures,
         modalRef: ckyCookiePolicyModalRef,
         modalTitleImage: assets.cookiePolicy,
-        modalTitleAlt: __$2("Cookie Policy Generator", "cookie-law-info"),
-        modalDescription: __$2("Generate an auto-updating cookie policy for your website", "cookie-law-info"),
-        buttonText: __$2("Connect to Web App to Generate", "cookie-law-info")
+        modalTitleAlt: __("Cookie Policy Generator", "cookie-law-info"),
+        modalDescription: __("Generate an auto-updating cookie policy for your website", "cookie-law-info"),
+        buttonText: __("Connect to Web App to Generate", "cookie-law-info")
       }
     ];
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:p-0! cky:m-0!", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:flex-col cky:items-start", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:w-full cky:px-[8px]", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:flex-row cky:pt-[30px] cky:gap-10", children: ckyPolicyCards.map((card) => /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -82211,7 +81963,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       card.id
     )) }) }) }) });
   }, "PolicyGenerator");
-  const BTN_DISCONNECT = __$1("Disconnect", "cookie-law-info");
+  const BTN_DISCONNECT = __("Disconnect", "cookie-law-info");
   function openUrlInNewTabViaAnchor(url) {
     try {
       const a2 = document.createElement("a");
@@ -82288,7 +82040,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         console.error("Error disconnecting:", error);
         triggerNotification({
           type: "error",
-          message: __$1("Failed to disconnect. Please try again.", "cookie-law-info")
+          message: __("Failed to disconnect. Please try again.", "cookie-law-info")
         });
         setIsDisconnecting(false);
       }
@@ -82329,7 +82081,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         window.open(url.toString(), "_blank", "noopener,noreferrer");
       } catch (e) {
         alert(
-          __$1(
+          __(
             "Your browser blocked the authorization window from opening. Please check your popup settings.",
             "cookie-law-info"
           )
@@ -82354,57 +82106,57 @@ ${colorConfig.map(([key, itemConfig]) => {
                 className: "cky:w-4 cky:h-4 cky:mr-2 cky:inline-block"
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "cky:my-[0.5em]! cky:ml-1 cky:text-base!", children: __$1("Your website is connected to CookieYes", "cookie-law-info") })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "cky:my-[0.5em]! cky:ml-1 cky:text-base!", children: __("Your website is connected to CookieYes", "cookie-law-info") })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:w-full cky:m-0! cky:text-sm!", children: __$1(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "cky:w-full cky:m-0! cky:text-sm!", children: __(
             "You can access all the plugin settings (Cookie Banner, Cookie Manager, Languages & Policy Generators) on the web app and unlock new features like Cookie Scan and Consent Log.",
             "cookie-law-info"
           ) })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:mt-4", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:block cky:font-medium cky:mb-2", children: [
-            __$1("Email", "cookie-law-info"),
+            __("Email", "cookie-law-info"),
             ":",
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:font-normal cky:ml-2", children: (user == null ? void 0 : user.email) || "" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:block cky:font-medium cky:mb-2", children: [
-            __$1("Site Key", "cookie-law-info"),
+            __("Site Key", "cookie-law-info"),
             ":",
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:font-normal cky:ml-2", children: (account == null ? void 0 : account.website_key) || "" })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs(Label$1, { className: "cky:block cky:font-medium", children: [
-            __$1("Plan", "cookie-law-info"),
+            __("Plan", "cookie-law-info"),
             ":",
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:font-normal cky:ml-2", children: (plan == null ? void 0 : plan.name) || "Free" }),
-            isTrial && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:ml-1", children: __$1("(Trial)", "cookie-law-info") })
+            isTrial && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:ml-1", children: __("(Trial)", "cookie-law-info") })
           ] })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:items-center cky-account-actions cky:mt-4", children: [
-          sessionStatus ? /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "cky-external-link", onClick: handleGoToWebApp, children: __$1("Go to Web App", "cookie-law-info") }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "cky-external-link", onClick: sessionExpiredLogin, children: __$1("Log in to CookieYes", "cookie-law-info") }),
+          sessionStatus ? /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "cky-external-link", onClick: handleGoToWebApp, children: __("Go to Web App", "cookie-law-info") }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { className: "cky-external-link", onClick: sessionExpiredLogin, children: __("Log in to CookieYes", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "dangerOutline", className: "cky:ml-4", onClick: openModal, children: BTN_DISCONNECT })
         ] })
       ] }) }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Dialog, { open: isDisconnectModalOpen, onOpenChange: setIsDisconnectModalOpen, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogContent, { className: "cky:max-w-[500px] cky:text-center cky:gap-0 cky:!rounded-[2px]", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:px-[30px] cky:py-5 cky:max-h-[calc(100vh-3.5rem)] cky:overflow-y-auto", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:m-0 cky:!text-lg cky:leading-[22px] cky:font-semibold cky:text-text-primary", children: __$1("Disconnect from CookieYes web app?", "cookie-law-info") }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "cky:mt-2 cky:!mb-0 cky:!text-sm cky:text-text-primary", children: __$1(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "cky:m-0 cky:!text-lg cky:leading-[22px] cky:font-semibold cky:text-text-primary", children: __("Disconnect from CookieYes web app?", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(DialogDescription, { className: "cky:mt-2 cky:!mb-0 cky:!text-sm cky:text-text-primary", children: __(
             "When you disconnect, your website will no longer be synced to your CookieYes account. You will be able to manage all your settings within WordPress. You can connect to your CookieYes account anytime later.",
             "cookie-law-info"
           ) })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(DialogFooter, { className: "cky:flex cky:flex-row cky:!justify-center cky:gap-[10px] cky:pt-0 cky:px-[30px] cky:pb-5 cky:border-none", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", onClick: closeModal, disabled: isDisconnecting, children: __$1("Cancel", "cookie-law-info") }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "danger", onClick: disconnectApp, disabled: isDisconnecting, children: isDisconnecting ? __$1("Disconnecting...", "cookie-law-info") : BTN_DISCONNECT })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "outline", onClick: closeModal, disabled: isDisconnecting, children: __("Cancel", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { variant: "danger", onClick: disconnectApp, disabled: isDisconnecting, children: isDisconnecting ? __("Disconnecting...", "cookie-law-info") : BTN_DISCONNECT })
         ] })
       ] }) })
     ] });
   }
   __name(SiteSettings, "SiteSettings");
   const BANNER_CUSTOMIZE_TABS = [
-    { id: "general", titleKey: "General", icon: "general" },
-    { id: "layout", titleKey: "Layout", icon: "layout" },
-    { id: "content", titleKey: "Content & Colours", icon: "note" },
-    { id: "css", titleKey: "Custom CSS", icon: "css" }
+    { id: "general", title: /* @__PURE__ */ __name(() => __("General", "cookie-law-info"), "title"), icon: "general" },
+    { id: "layout", title: /* @__PURE__ */ __name(() => __("Layout", "cookie-law-info"), "title"), icon: "layout" },
+    { id: "content", title: /* @__PURE__ */ __name(() => __("Content & Colours", "cookie-law-info"), "title"), icon: "note" },
+    { id: "css", title: /* @__PURE__ */ __name(() => __("Custom CSS", "cookie-law-info"), "title"), icon: "css" }
   ];
   const BannerPanelDirtyContext = reactExports.createContext(
     null
@@ -82448,6 +82200,16 @@ ${colorConfig.map(([key, itemConfig]) => {
     }, [panelId, dirty, setPanelDirty]);
   }
   __name(useSyncBannerPanelDirty, "useSyncBannerPanelDirty");
+  const LAYOUT_TITLES = {
+    Box: /* @__PURE__ */ __name(() => __("Box", "cookie-law-info"), "Box"),
+    Classic: /* @__PURE__ */ __name(() => __("Classic", "cookie-law-info"), "Classic"),
+    Banner: /* @__PURE__ */ __name(() => __("Banner", "cookie-law-info"), "Banner"),
+    Popup: /* @__PURE__ */ __name(() => __("Popup", "cookie-law-info"), "Popup"),
+    Center: /* @__PURE__ */ __name(() => __("Center", "cookie-law-info"), "Center"),
+    Sidebar: /* @__PURE__ */ __name(() => __("Sidebar", "cookie-law-info"), "Sidebar"),
+    "Push down": /* @__PURE__ */ __name(() => __("Push down", "cookie-law-info"), "Push down")
+  };
+  const getLayoutTitle = /* @__PURE__ */ __name((title) => LAYOUT_TITLES[title] ? LAYOUT_TITLES[title]() : title, "getLayoutTitle");
   const EMPTY_LAYOUT_PANEL_STATE = {
     bannerType: "box",
     position: "bottom-left",
@@ -82543,14 +82305,30 @@ ${colorConfig.map(([key, itemConfig]) => {
     return n2 !== "banner" && n2 !== "classic";
   }
   __name(isPushdownPreferenceLayoutDisabled, "isPushdownPreferenceLayoutDisabled");
-  function formatPreferenceSideLabel(value) {
-    const s2 = String(value);
+  const POSITION_LABELS = {
+    "bottom-left": /* @__PURE__ */ __name(() => __("Bottom left", "cookie-law-info"), "bottom-left"),
+    "bottom-right": /* @__PURE__ */ __name(() => __("Bottom right", "cookie-law-info"), "bottom-right"),
+    "top-left": /* @__PURE__ */ __name(() => __("Top left", "cookie-law-info"), "top-left"),
+    "top-right": /* @__PURE__ */ __name(() => __("Top right", "cookie-law-info"), "top-right"),
+    bottom: /* @__PURE__ */ __name(() => __("Bottom", "cookie-law-info"), "bottom"),
+    top: /* @__PURE__ */ __name(() => __("Top", "cookie-law-info"), "top"),
+    center: /* @__PURE__ */ __name(() => __("Center", "cookie-law-info"), "center"),
+    left: /* @__PURE__ */ __name(() => __("Left", "cookie-law-info"), "left"),
+    right: /* @__PURE__ */ __name(() => __("Right", "cookie-law-info"), "right")
+  };
+  function humanizeSlug(value) {
+    const s2 = String(value).replaceAll("-", " ");
     return s2.charAt(0).toUpperCase() + s2.slice(1);
+  }
+  __name(humanizeSlug, "humanizeSlug");
+  function formatPreferenceSideLabel(value) {
+    const key = String(value);
+    return POSITION_LABELS[key] ? POSITION_LABELS[key]() : humanizeSlug(key);
   }
   __name(formatPreferenceSideLabel, "formatPreferenceSideLabel");
   function formatNoticePositionLabel(pos) {
-    const modifiedString = String(pos).replaceAll("-", " ");
-    return modifiedString.charAt(0).toUpperCase() + modifiedString.slice(1);
+    const key = String(pos);
+    return POSITION_LABELS[key] ? POSITION_LABELS[key]() : humanizeSlug(key);
   }
   __name(formatNoticePositionLabel, "formatNoticePositionLabel");
   function getPreferenceLayouts(law) {
@@ -82681,18 +82459,18 @@ ${colorConfig.map(([key, itemConfig]) => {
   ), "AccordionChevron");
   const CONSENT_TRIGGER_CHEVRON = 'url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Ctitle%3Edown-arrow%3C%2Ftitle%3E%3Cg%20fill%3D%22%23000000%22%3E%3Cpath%20d%3D%22M10.293%2C3.293%2C6%2C7.586%2C1.707%2C3.293A1%2C1%2C0%2C0%2C0%2C.293%2C4.707l5%2C5a1%2C1%2C0%2C0%2C0%2C1.414%2C0l5-5a1%2C1%2C0%2C1%2C0-1.414-1.414Z%22%20fill%3D%22%23000000%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E")';
   const ITEM_CLASS = "cky:!m-0 cky:!min-h-0 cky:!cursor-pointer cky:!rounded-none cky:!py-[7px] cky:!text-sm cky:!font-medium cky:!leading-snug cky:!text-[#23282d] hover:cky:!bg-[#f8f9fa] hover:cky:!text-[#23282d] data-[highlighted]:cky:!bg-[#f8f9fa] data-[highlighted]:cky:!text-[#23282d]";
-  const GDPR_TEMPLATE_HOVER_TEXT = __$2(
+  const GDPR_TEMPLATE_HOVER_TEXT = __(
     "The selected template (opt-in banner) supports GDPR (EU & UK), LGPD (Brazil), PIPEDA (Canada), Law 25 (Quebec), POPIA (South Africa), nFADP (Switzerland), Privacy Act (Australia), PDPL (Saudi Arabia), PDPL (Argentina), PDPL (Andorra), DPA (Faroe Island).",
     "cookie-law-info"
   );
-  const US_STATE_TEMPLATE_HOVER_TEXT = __$2(
+  const US_STATE_TEMPLATE_HOVER_TEXT = __(
     "The selected template (opt-out banner) supports CCPA/CPRA (California), VCDPA (Virginia), CPA (Colorado), CTDPA (Connecticut), & UCPA (Utah).",
     "cookie-law-info"
   );
   const TEMPLATE_TOOLTIP_ROW_CLASS = "cky:!block cky:w-full cky:min-w-0 cky:cursor-pointer cky:text-inherit";
   function displayName(law) {
-    if (law === "ccpa") return __$2("US State Laws", "cookie-law-info");
-    return __$2("GDPR", "cookie-law-info");
+    if (law === "ccpa") return __("US State Laws", "cookie-law-info");
+    return __("GDPR", "cookie-law-info");
   }
   __name(displayName, "displayName");
   const ConsentTemplateDropdown = /* @__PURE__ */ __name(({
@@ -82713,7 +82491,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           {
             className: "cky:m-0 cky:inline-block cky:whitespace-nowrap cky:text-sm cky:font-medium cky:text-[#23282d]",
             htmlFor: "cky-consent-template-trigger",
-            children: __$2("Consent Template", "cookie-law-info")
+            children: __("Consent Template", "cookie-law-info")
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:relative cky:flex cky:min-w-0 cky:flex-1 cky:flex-col cky:items-stretch", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -82738,7 +82516,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                     backgroundPosition: "calc(100% - 10px) center",
                     backgroundRepeat: "no-repeat"
                   },
-                  "aria-label": __$2("Consent Template", "cookie-law-info"),
+                  "aria-label": __("Consent Template", "cookie-law-info"),
                   children: displayName(value)
                 }
               ) }),
@@ -82755,7 +82533,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         className: ITEM_CLASS,
                         onSelect: /* @__PURE__ */ __name(() => onChange("gdpr"), "onSelect"),
                         children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Tooltip$1, { delayDuration: 0, children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: TEMPLATE_TOOLTIP_ROW_CLASS, children: __$2("GDPR", "cookie-law-info") }) }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: TEMPLATE_TOOLTIP_ROW_CLASS, children: __("GDPR", "cookie-law-info") }) }),
                           /* @__PURE__ */ jsxRuntimeExports.jsx(
                             TooltipContentWithArrow,
                             {
@@ -82773,7 +82551,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         className: ITEM_CLASS,
                         onSelect: /* @__PURE__ */ __name(() => onChange("ccpa"), "onSelect"),
                         children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Tooltip$1, { delayDuration: 0, children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: TEMPLATE_TOOLTIP_ROW_CLASS, children: __$2("US State Laws", "cookie-law-info") }) }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(TooltipTrigger, { asChild: true, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: TEMPLATE_TOOLTIP_ROW_CLASS, children: __("US State Laws", "cookie-law-info") }) }),
                           /* @__PURE__ */ jsxRuntimeExports.jsx(
                             TooltipContentWithArrow,
                             {
@@ -82791,7 +82569,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         className: `${ITEM_CLASS} cky:!flex cky:!items-center data-[highlighted]:cky:[&_.cky-consent-premium-crown]:!text-[#FFB240]`,
                         onSelect: openDualLawModal,
                         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:flex cky:w-full cky:min-w-0 cky:items-center cky:gap-2", children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:min-w-0 cky:flex-1 cky:leading-snug", children: __$2("GDPR & US State Laws", "cookie-law-info") }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:min-w-0 cky:flex-1 cky:leading-snug", children: __("GDPR & US State Laws", "cookie-law-info") }),
                           /* @__PURE__ */ jsxRuntimeExports.jsx(
                             Badge,
                             {
@@ -82820,14 +82598,14 @@ ${colorConfig.map(([key, itemConfig]) => {
             "img",
             {
               src: assets.gdprUs,
-              alt: __$2("GDPR and US State Laws", "cookie-law-info")
+              alt: __("GDPR and US State Laws", "cookie-law-info")
             }
           ),
-          featureText: __$2(
+          featureText: __(
             "Display GDPR (opt-in) and US State Laws (opt-out) banners at the same time",
             "cookie-law-info"
           ),
-          availabilityText: __$2(
+          availabilityText: __(
             "Available in: <b>Pro and Ultimate plans</b>",
             "cookie-law-info"
           )
@@ -82846,7 +82624,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     publishing,
     onPublish
   }) {
-    const previewNotice = previewDisabledNotice(__$2);
+    const previewNotice = previewDisabledNotice(__);
     return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:-mx-[15px] cky:mb-0 cky:flex cky:flex-wrap cky:items-center", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:max-w-[66.666667%] cky:flex-[0_0_66.666667%] cky:flex-wrap cky:items-center cky:gap-0 cky:px-[15px] max-[782px]:cky:max-w-full max-[782px]:cky:flex-[0_0_100%]", children: [
@@ -82863,7 +82641,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 htmlFor: previewControlId,
                 className: "cky:m-0 cky:cursor-pointer cky:text-sm",
-                children: __$2("Banner Preview", "cookie-law-info")
+                children: __("Banner Preview", "cookie-law-info")
               }
             ),
             !showBanner ? /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -82898,9 +82676,9 @@ ${colorConfig.map(([key, itemConfig]) => {
             className: "cky:ml-[15px] cky:min-w-20 cky:rounded-[3px]",
             disabled: publishDisabled,
             loading: publishing,
-            loadingText: __$2("Saving…", "cookie-law-info"),
+            loadingText: __("Saving…", "cookie-law-info"),
             onClick: /* @__PURE__ */ __name(() => void onPublish(), "onClick"),
-            children: __$2("Publish Changes", "cookie-law-info")
+            children: __("Publish Changes", "cookie-law-info")
           }
         ) })
       ] }),
@@ -82908,44 +82686,44 @@ ${colorConfig.map(([key, itemConfig]) => {
     ] });
   }
   __name(BannerCustomizeToolbar, "BannerCustomizeToolbar");
-  const EXPIRY_TOOLTIP_GDPR = __$2(
+  const EXPIRY_TOOLTIP_GDPR = __(
     "Customise the validity period of your users' consent preferences here. While the <b>GDPR</b> does not specify a specific time limit for consent durations, the French Data Protection Authority, <b>CNIL</b>, recommends retaining user choices for a period of six months (<b>180</b> days) as a best practice.",
     "cookie-law-info"
   );
-  const EXPIRY_TOOLTIP_CCPA = __$2(
+  const EXPIRY_TOOLTIP_CCPA = __(
     "Customise the validity period of your users' consent preferences here. The <b>US State Laws</b> do not specify a specific time limit for retaining user choices.",
     "cookie-law-info"
   );
-  const IAB_TCF_LABEL = __$2(
-    "Support IAB TCF v2.3",
+  const IAB_TCF_LABEL = __(
+    "Support IAB TCF v2.4",
     "cookie-law-info"
   );
-  const IAB_TCF_TOOLTIP = __$2(
+  const IAB_TCF_TOOLTIP = __(
     "Enable the support for IAB Transparency and Consent Framework if you run ads on your site. When enabled, a GDPR-compliant consent banner will appear on your site, allowing your visitors to set granular advertising tracking preferences.",
     "cookie-law-info"
   );
-  const GACM_LABEL = __$2(
+  const GACM_LABEL = __(
     "Support Google's Additional Consent Mode",
     "cookie-law-info"
   );
-  const GACM_TOOLTIP = __$2(
+  const GACM_TOOLTIP = __(
     "Google's Additional Consent (AC) Mode allows the collection of consents for Google's Ad Technology Providers (ATPs) that are not yet registered on the IAB Europe Global Vendor List (GVL). AC Mode is intended only for use alongside IAB TCF.",
     "cookie-law-info"
   );
-  const TCF_UPGRADE_MESSAGE = __$2(
+  const TCF_UPGRADE_MESSAGE = __(
     "Comply with Google's requirements for serving ads in EEA, UK & Switzerland",
     "cookie-law-info"
   );
-  const PRIOR_CONSENT_WARNING = __$2(
+  const PRIOR_CONSENT_WARNING = __(
     "Choosing any of these categories(cookies) to load prior to receiving user consent will make your website non-compliant with GDPR.",
     "cookie-law-info"
   );
-  const HIDE_CATEGORIES_WARNING = __$2(
+  const HIDE_CATEGORIES_WARNING = __(
     "Hiding any of the categories (with cookies) will make your website non-compliant with GDPR.",
     "cookie-law-info"
   );
   function expiryRangeErrorMessage() {
-    return __$2(consentExpiryRangeMessage(), "cookie-law-info");
+    return __(consentExpiryRangeMessage(), "cookie-law-info");
   }
   __name(expiryRangeErrorMessage, "expiryRangeErrorMessage");
   function ConsentExpirationDaysBlock({
@@ -82964,7 +82742,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           className: "cky:m-0 cky:mb-0 cky:inline-flex cky:max-w-full cky:cursor-pointer cky:items-center cky:gap-1.5 cky:text-sm cky:font-medium cky:leading-none cky:text-[#23282d]",
           htmlFor: inputId,
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:min-w-0", children: __$2("Consent expiration (days)", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:min-w-0", children: __("Consent expiration (days)", "cookie-law-info") }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               TooltipWithContent,
               {
@@ -82981,7 +82759,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                     type: "button",
                     variant: "ghost",
                     className: "cky:m-0 cky:h-auto cky:w-auto cky:shrink-0 cky:cursor-help cky:rounded-full cky:border-0 cky:bg-transparent cky:p-0 cky:leading-none cky:text-[#a6a8b1] hover:cky:bg-transparent hover:cky:text-[#8c8f9a] focus-visible:cky:outline focus-visible:cky:outline-2 focus-visible:cky:outline-offset-2 focus-visible:cky:outline-[var(--cky-primary)]",
-                    "aria-label": __$2("More information", "cookie-law-info"),
+                    "aria-label": __("More information", "cookie-law-info"),
                     children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "tooltip", width: "14px", height: "14px" })
                   }
                 )
@@ -83132,7 +82910,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 variant: "ghost",
                 className: "cky:m-0 cky:h-auto cky:w-auto cky:shrink-0 cky:cursor-help cky:rounded-full cky:border-0 cky:bg-transparent cky:p-0 cky:leading-none cky:text-[#a6a8b1] hover:cky:bg-transparent hover:cky:text-[#8c8f9a] focus-visible:cky:outline focus-visible:cky:outline-2 focus-visible:cky:outline-offset-2 focus-visible:cky:outline-[var(--cky-primary)]",
-                "aria-label": __$2("More information", "cookie-law-info"),
+                "aria-label": __("More information", "cookie-law-info"),
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "tooltip", width: "14px", height: "14px" })
               }
             )
@@ -83143,7 +82921,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           {
             variant: "ghost",
             className: "cky:m-0 cky:h-auto cky:w-auto cky:shrink-0 cky:rounded cky:border-0 cky:bg-transparent cky:p-0 cky:align-middle cky:leading-none hover:cky:bg-transparent focus-visible:cky:outline focus-visible:cky:outline-2 focus-visible:cky:outline-offset-2 focus-visible:cky:outline-[var(--cky-primary)]",
-            "aria-label": __$2("Premium feature", "cookie-law-info"),
+            "aria-label": __("Premium feature", "cookie-law-info"),
             onClick: /* @__PURE__ */ __name((e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -83212,15 +82990,15 @@ ${colorConfig.map(([key, itemConfig]) => {
   __name(CategoryCheckboxList, "CategoryCheckboxList");
   function geoPremiumFeatureText(code) {
     if (code === "EU") {
-      return __$2(
+      return __(
         "Display your banner only in the EU and the UK",
         "cookie-law-info"
       );
     }
     if (code === "US") {
-      return __$2("Display your banner only in the US", "cookie-law-info");
+      return __("Display your banner only in the US", "cookie-law-info");
     }
-    return __$2(
+    return __(
       "Select the countries where you want to display your banner",
       "cookie-law-info"
     );
@@ -83435,7 +83213,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     ]);
     const handlePublish = /* @__PURE__ */ __name(() => __async(null, null, function* () {
       if (!bannerForCurrentLaw || !bannerForCurrentLaw.id) {
-        triggerNotification({ type: "error", message: noBannerFoundMessage(__$2) });
+        triggerNotification({ type: "error", message: noBannerFoundMessage(__) });
         return;
       }
       if (consentExpiryInputHasError(consentExpiration)) {
@@ -83485,22 +83263,22 @@ ${colorConfig.map(([key, itemConfig]) => {
         if (publishSucceeded) {
           triggerNotification({
             type: "success",
-            message: saveSuccessMessage(__$2)
+            message: saveSuccessMessage(__)
           });
         } else {
-          triggerNotification({ type: "error", message: saveErrorMessage(__$2) });
+          triggerNotification({ type: "error", message: saveErrorMessage(__) });
         }
         setPublishing(false);
       }
     }), "handlePublish");
     const geoOptions = consentTemplate === "gdpr" ? [
-      { code: "ALL", label: __$2("Worldwide", "cookie-law-info"), premium: false },
-      { code: "EU", label: __$2("EU Countries & UK", "cookie-law-info"), premium: true },
-      { code: "OTHER", label: __$2("Select countries", "cookie-law-info"), premium: true }
+      { code: "ALL", label: __("Worldwide", "cookie-law-info"), premium: false },
+      { code: "EU", label: __("EU Countries & UK", "cookie-law-info"), premium: true },
+      { code: "OTHER", label: __("Select countries", "cookie-law-info"), premium: true }
     ] : [
-      { code: "ALL", label: __$2("Worldwide", "cookie-law-info"), premium: false },
-      { code: "US", label: __$2("United States", "cookie-law-info"), premium: true },
-      { code: "OTHER", label: __$2("Select countries", "cookie-law-info"), premium: true }
+      { code: "ALL", label: __("Worldwide", "cookie-law-info"), premium: false },
+      { code: "US", label: __("United States", "cookie-law-info"), premium: true },
+      { code: "OTHER", label: __("Select countries", "cookie-law-info"), premium: true }
     ];
     const openGeoPremiumModal = /* @__PURE__ */ __name((code, resetRegion) => {
       var _a2;
@@ -83542,7 +83320,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:min-h-[min(700px,70vh)]", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:mb-[15px] cky:rounded-[3px] cky:border cky:border-[#dcdcde] cky:bg-white cky:px-5 cky:py-3 cky:shadow-[0_1px_1px_rgba(0,0,0,0.04)]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:w-full", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:m-0 cky:mb-4 cky:p-0 cky:text-sm cky:font-medium cky:leading-snug cky:text-[var(--cky-text-primary)]", children: __$2("Geo-target Banner", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:m-0 cky:mb-4 cky:p-0 cky:text-sm cky:font-medium cky:leading-snug cky:text-[var(--cky-text-primary)]", children: __("Geo-target Banner", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             RadioGroup,
             {
@@ -83617,7 +83395,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               className: "cky:m-0 cky:max-w-[25%] cky:flex-[0_0_25%] cky:px-[15px] cky:text-sm cky:font-normal cky:text-[var(--cky-text-primary)] max-[600px]:cky:max-w-full max-[600px]:cky:flex-[0_0_100%]",
               htmlFor: "cky-show-banner-react",
-              children: __$2("Show Banner", "cookie-law-info")
+              children: __("Show Banner", "cookie-law-info")
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:max-w-[75%] cky:flex-[0_0_75%] cky:px-[15px] max-[600px]:cky:mt-2 max-[600px]:cky:max-w-full max-[600px]:cky:flex-[0_0_100%]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -83636,7 +83414,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             className: "cky:mt-1 cky:h-auto cky:gap-1 cky:border-0 cky:bg-transparent cky:p-0 cky:text-sm cky:font-normal cky:text-[#1863dc] hover:cky:bg-transparent hover:cky:text-[var(--cky-primary-dark)] hover:cky:underline [&_svg]:cky:shrink-0",
             onClick: /* @__PURE__ */ __name(() => setAdvancedOpen((o2) => !o2), "onClick"),
             children: [
-              advancedOpen ? __$2("Hide advanced settings", "cookie-law-info") : __$2("Show advanced settings", "cookie-law-info"),
+              advancedOpen ? __("Hide advanced settings", "cookie-law-info") : __("Show advanced settings", "cookie-law-info"),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Caret,
                 {
@@ -83666,7 +83444,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 className: "cky:box-border cky:min-w-0 cky:max-w-[33.333%] cky:flex-[0_0_33.333%] cky:cursor-pointer cky:px-[15px] cky:text-sm cky:font-normal cky:leading-snug cky:text-[#23282d] max-[600px]:cky:mt-0 max-[600px]:cky:max-w-full max-[600px]:cky:flex-[0_0_100%]",
                 htmlFor: "cky-reload-on-consent-react",
-                children: __$2(
+                children: __(
                   "Reload page on consent action",
                   "cookie-law-info"
                 )
@@ -83686,7 +83464,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               BannerBoxedAccordionSection,
               {
                 sectionId: "cky-banner-prior-consent",
-                title: __$2(
+                title: __(
                   "Load cookies prior to consent",
                   "cookie-law-info"
                 ),
@@ -83711,7 +83489,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               BannerBoxedAccordionSection,
               {
                 sectionId: "cky-banner-hide-categories",
-                title: __$2("Hide categories from banner", "cookie-law-info"),
+                title: __("Hide categories from banner", "cookie-law-info"),
                 open: hideCategoriesAccordionOpen,
                 onToggle: /* @__PURE__ */ __name(() => setHideCategoriesAccordionOpen((o2) => !o2), "onToggle"),
                 children: [
@@ -83739,9 +83517,9 @@ ${colorConfig.map(([key, itemConfig]) => {
           visible: false,
           availablePlan: "pro",
           feature: "config_geo_rules",
-          title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.geoTarget, alt: __$2("Geo targeting", "cookie-law-info") }),
+          title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.geoTarget, alt: __("Geo targeting", "cookie-law-info") }),
           featureText: geoPremiumFeatureText(geoModalCode),
-          availabilityText: __$2(
+          availabilityText: __(
             "Available in: <b>Pro</b> and <b>Ultimate</b> plans",
             "cookie-law-info"
           )
@@ -83757,11 +83535,11 @@ ${colorConfig.map(([key, itemConfig]) => {
             "img",
             {
               src: assets.tcfGcm,
-              alt: __$2("TCF and Google Consent Mode", "cookie-law-info")
+              alt: __("TCF and Google Consent Mode", "cookie-law-info")
             }
           ),
           featureText: TCF_UPGRADE_MESSAGE,
-          availabilityText: __$2(
+          availabilityText: __(
             "Available in: <b> Pro and Ultimate plans </b>",
             "cookie-law-info"
           )
@@ -83769,7 +83547,6 @@ ${colorConfig.map(([key, itemConfig]) => {
       )
     ] }) });
   }, "CkyCustomizeGeneralPanel");
-  const __ = /* @__PURE__ */ __name((text) => __$2(text, "cookie-law-info"), "__");
   function patchNoticePackElement(patchDraft, adminLang, key, value) {
     patchDraft((d) => {
       mutateContentLang(d, adminLang, (pack) => {
@@ -83825,7 +83602,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   {
                     htmlFor: inputId,
                     className: "cky:!font-normal cky:text-[#23282d]",
-                    children: __("Label")
+                    children: __("Label", "cookie-law-info")
                   }
                 ),
                 labelTypography: "plain",
@@ -83978,7 +83755,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       },
       mode: "onChange"
     });
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs(BannerSection, { value: "notice", title: __("Cookie Notice"), children: [
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(BannerSection, { value: "notice", title: __("Cookie Notice", "cookie-law-info"), children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: FORM_SECTION_TOP, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           Controller,
@@ -83993,7 +83770,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   {
                     htmlFor: `${uid}-title`,
                     className: "cky:!font-medium cky:!leading-[18px] cky:text-[#23282d]",
-                    children: __("Title")
+                    children: __("Title", "cookie-law-info")
                   }
                 ),
                 labelTypography: "plain",
@@ -84037,7 +83814,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   {
                     htmlFor: `cky-notice-desc-${bannerId}`,
                     className: "cky:!font-medium cky:!leading-[18px] cky:text-[#23282d]",
-                    children: __("Message")
+                    children: __("Message", "cookie-law-info")
                   }
                 ),
                 labelTypography: "plain",
@@ -84069,13 +83846,13 @@ ${colorConfig.map(([key, itemConfig]) => {
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           PremiumColourBlock,
           {
-            label: __("Colours"),
+            label: __("Colours", "cookie-law-info"),
             onPremiumClick: onOpenPremium,
             children: [
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 ColourPickerField,
                 {
-                  fieldLabel: __("Background"),
+                  fieldLabel: __("Background", "cookie-law-info"),
                   value: readString(nStyles == null ? void 0 : nStyles["background-color"]),
                   onChange: /* @__PURE__ */ __name((hex2) => patchNoticeBannerColor("bg", hex2), "onChange")
                 }
@@ -84083,7 +83860,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 ColourPickerField,
                 {
-                  fieldLabel: __("Border"),
+                  fieldLabel: __("Border", "cookie-law-info"),
                   value: readString(nStyles == null ? void 0 : nStyles["border-color"]),
                   onChange: /* @__PURE__ */ __name((hex2) => patchNoticeBannerColor("border", hex2), "onChange")
                 }
@@ -84091,7 +83868,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 ColourPickerField,
                 {
-                  fieldLabel: __("Title"),
+                  fieldLabel: __("Title", "cookie-law-info"),
                   value: readString(nTitleSt == null ? void 0 : nTitleSt.color),
                   onChange: /* @__PURE__ */ __name((hex2) => patchNoticeBannerColor("title", hex2), "onChange"),
                   labelClassName: "cky:font-medium cky:text-[#23282d]"
@@ -84100,7 +83877,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 ColourPickerField,
                 {
-                  fieldLabel: __("Message"),
+                  fieldLabel: __("Message", "cookie-law-info"),
                   value: readString(nDescSt == null ? void 0 : nDescSt.color),
                   onChange: /* @__PURE__ */ __name((hex2) => patchNoticeBannerColor("desc", hex2), "onChange"),
                   labelClassName: "cky:font-medium cky:text-[#23282d]"
@@ -84112,7 +83889,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       ] }),
       consentLaw === "gdpr" ? /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SUBSECTION_TITLE, children: __('"Accept All" button') }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SUBSECTION_TITLE, children: __('"Accept All" button', "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             NoticeButtonTextRow,
             {
@@ -84134,7 +83911,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           )
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __('"Reject All" button'), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __('"Reject All" button', "cookie-law-info"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Switch,
             {
               id: "cky-notice-reject-toggle",
@@ -84163,7 +83940,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           )
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __('"Customise" button'), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __('"Customise" button', "cookie-law-info"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Switch,
             {
               id: "cky-notice-settings-toggle",
@@ -84193,7 +83970,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         ] })
       ] }) : null,
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __('"Cookie Policy" link'), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __('"Cookie Policy" link', "cookie-law-info"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           Switch,
           {
             id: "cky-notice-readmore-toggle",
@@ -84235,7 +84012,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   {
                     htmlFor: `${uid}-privacy`,
                     className: "cky:!font-normal cky:text-[#23282d]",
-                    children: __("URL")
+                    children: __("URL", "cookie-law-info")
                   }
                 ),
                 labelTypography: "plain",
@@ -84248,7 +84025,8 @@ ${colorConfig.map(([key, itemConfig]) => {
                       className: "cky:w-full",
                       "aria-invalid": fieldState.invalid,
                       placeholder: __(
-                        "Enter the URL to your cookie policy or privacy page"
+                        "Enter the URL to your cookie policy or privacy page",
+                        "cookie-law-info"
                       )
                     }, field), {
                       value: typeof field.value === "string" ? field.value : "",
@@ -84271,7 +84049,7 @@ ${colorConfig.map(([key, itemConfig]) => {
         )
       ] }),
       consentLaw === "ccpa" && (nBtns == null ? void 0 : nBtns.donotSell) ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SUBSECTION_TITLE, children: __('"Do Not Sell" link') }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SUBSECTION_TITLE, children: __('"Do Not Sell" link', "cookie-law-info") }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           NoticeButtonTextRow,
           {
@@ -84301,19 +84079,20 @@ ${colorConfig.map(([key, itemConfig]) => {
             htmlFor: "cky-toggle-banner-close-btn",
             className: "cky:m-0 cky:flex cky:min-h-10 cky:items-center cky:gap-1 cky:p-0 cky:text-sm cky:font-normal cky:leading-4 cky:text-[#23282d]",
             children: [
-              __("Close [X] button"),
+              __("Close [X] button", "cookie-law-info"),
               consentLaw === "gdpr" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                 TooltipWithContent,
                 {
                   content: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:max-w-[260px] cky:text-xs", children: __(
-                    "Enable the close button to let users close the banner and continue browsing the site without being tracked. A close button is required by the Italian DPA."
+                    "Enable the close button to let users close the banner and continue browsing the site without being tracked. A close button is required by the Italian DPA.",
+                    "cookie-law-info"
                   ) }),
                   children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                     Button,
                     {
                       variant: "ghost",
                       className: "cky:m-0 cky:h-auto cky:w-auto cky:shrink-0 cky:cursor-help cky:rounded-full cky:border-0 cky:bg-transparent cky:p-0 cky:leading-none cky:text-[#a6a8b1] hover:cky:bg-transparent hover:cky:text-[#8c8f9a] focus-visible:cky:outline focus-visible:cky:outline-2 focus-visible:cky:outline-offset-2 focus-visible:cky:outline-[var(--cky-primary)]",
-                      "aria-label": __("More information"),
+                      "aria-label": __("More information", "cookie-law-info"),
                       children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "tooltip", width: "14px", height: "14px" })
                     }
                   )
@@ -84348,7 +84127,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               htmlFor: "cky-customize-branding",
               className: "cky:m-0 cky:inline-flex cky:min-h-10 cky:cursor-pointer cky:items-center cky:gap-1.5 cky:border-0 cky:bg-transparent cky:p-0 cky:text-sm cky:font-normal cky:leading-4 cky:text-[#23282d] hover:cky:opacity-90",
               children: [
-                __("Custom logo"),
+                __("Custom logo", "cookie-law-info"),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(CrownInline, {})
               ]
             }
@@ -84505,7 +84284,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "preference",
-        title: __$2("Preference Centre", "cookie-law-info"),
+        title: __("Preference Centre", "cookie-law-info"),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: FORM_SECTION_TOP, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -84514,7 +84293,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 control: form.control,
                 name: "title",
                 inputId: `${uid}-title`,
-                label: __$2("Title", "cookie-law-info"),
+                label: __("Title", "cookie-law-info"),
                 labelClassName: "cky:!font-medium cky:!leading-[18px] cky:text-[#23282d]",
                 onCommit: patchPcTextField("title")
               }
@@ -84532,7 +84311,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                       {
                         htmlFor: `cky-pc-desc-${bannerId}`,
                         className: "cky:!font-normal cky:text-[#23282d]",
-                        children: __$2("Privacy overview", "cookie-law-info")
+                        children: __("Privacy overview", "cookie-law-info")
                       }
                     ),
                     labelTypography: "plain",
@@ -84561,7 +84340,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 control: form.control,
                 name: "showMore",
                 inputId: `${uid}-show-more`,
-                label: __$2('"Show more" button', "cookie-law-info"),
+                label: __('"Show more" button', "cookie-law-info"),
                 onCommit: patchPcTextField("showMore")
               }
             ),
@@ -84571,20 +84350,20 @@ ${colorConfig.map(([key, itemConfig]) => {
                 control: form.control,
                 name: "showLess",
                 inputId: `${uid}-show-less`,
-                label: __$2('"Show less" button', "cookie-law-info"),
+                label: __('"Show less" button', "cookie-law-info"),
                 onCommit: patchPcTextField("showLess")
               }
             )
           ] }),
           readableSaveCfg ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SUBSECTION_TITLE, children: __$2('"Save My Preferences" button', "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SUBSECTION_TITLE, children: __('"Save My Preferences" button', "cookie-law-info") }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               CustomizeFormTextRow,
               {
                 control: form.control,
                 name: "saveLabel",
                 inputId: `${uid}-save`,
-                label: __$2("Label", "cookie-law-info"),
+                label: __("Label", "cookie-law-info"),
                 onCommit: patchSavePackLabel
               }
             ),
@@ -84738,7 +84517,7 @@ ${colorConfig.map(([key, itemConfig]) => {
             name: key,
             uid,
             inputSuffix: key,
-            label: __$2("Label", "cookie-law-info"),
+            label: __("Label", "cookie-law-info"),
             onCommit: /* @__PURE__ */ __name((v) => patchOptoutButtonText(key, v), "onCommit")
           }
         ),
@@ -84789,7 +84568,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "opt-out-center",
-        title: __$2("Opt-out center", "cookie-law-info"),
+        title: __("Opt-out center", "cookie-law-info"),
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: FORM_SECTION_TOP, children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -84799,7 +84578,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 name: "title",
                 uid,
                 inputSuffix: "title",
-                label: __$2("Title", "cookie-law-info"),
+                label: __("Title", "cookie-law-info"),
                 onCommit: patchOpTextField("title")
               }
             ),
@@ -84816,7 +84595,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                       {
                         htmlFor: `cky-optout-desc-${bannerId}`,
                         className: "cky:!font-normal cky:text-[#23282d]",
-                        children: __$2("Privacy overview", "cookie-law-info")
+                        children: __("Privacy overview", "cookie-law-info")
                       }
                     ),
                     labelTypography: "plain",
@@ -84847,7 +84626,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 name: "showMore",
                 uid,
                 inputSuffix: "show-more",
-                label: __$2('"Show more" button', "cookie-law-info"),
+                label: __('"Show more" button', "cookie-law-info"),
                 onCommit: patchOpTextField("showMore")
               }
             ),
@@ -84858,7 +84637,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 name: "showLess",
                 uid,
                 inputSuffix: "show-less",
-                label: __$2('"Show less" button', "cookie-law-info"),
+                label: __('"Show less" button', "cookie-law-info"),
                 onCommit: patchOpTextField("showLess")
               }
             )
@@ -84866,14 +84645,14 @@ ${colorConfig.map(([key, itemConfig]) => {
           optToggleCfg ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SECTION_RULE, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
             PremiumColourBlock,
             {
-              label: __$2("Checkbox", "cookie-law-info"),
+              label: __("Checkbox", "cookie-law-info"),
               labelVariant: "heading",
               onPremiumClick: onOpenPremium,
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ColourPickerField,
                   {
-                    fieldLabel: __$2("Enabled state", "cookie-law-info"),
+                    fieldLabel: __("Enabled state", "cookie-law-info"),
                     value: readString(optActiveSt == null ? void 0 : optActiveSt["background-color"]),
                     onChange: /* @__PURE__ */ __name((hex2) => patchOptToggleBg("active", hex2), "onChange")
                   }
@@ -84881,7 +84660,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ColourPickerField,
                   {
-                    fieldLabel: __$2("Disabled state", "cookie-law-info"),
+                    fieldLabel: __("Disabled state", "cookie-law-info"),
                     value: readString(optInactiveSt == null ? void 0 : optInactiveSt["background-color"]),
                     onChange: /* @__PURE__ */ __name((hex2) => patchOptToggleBg("inactive", hex2), "onChange")
                   }
@@ -84891,16 +84670,16 @@ ${colorConfig.map(([key, itemConfig]) => {
           ) }) : null,
           renderOptoutButtonSection(
             "cancel",
-            __$2('"Cancel" button', "cookie-law-info"),
+            __('"Cancel" button', "cookie-law-info"),
             cancelCfg
           ),
           renderOptoutButtonSection(
             "confirm",
-            __$2('"Save My Preferences" button', "cookie-law-info"),
+            __('"Save My Preferences" button', "cookie-law-info"),
             confirmCfg
           ),
           optSuccessContent ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SUBSECTION_TITLE, children: __$2("Opt-out confirmation message", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: SUBSECTION_TITLE, children: __("Opt-out confirmation message", "cookie-law-info") }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               CustomizeFormRowTextRow,
               {
@@ -84909,8 +84688,8 @@ ${colorConfig.map(([key, itemConfig]) => {
                 uid,
                 inputSuffix: "osuccess",
                 inputIdOverride: "cky-optout-success-message",
-                label: __$2("Label", "cookie-law-info"),
-                placeholder: __$2(
+                label: __("Label", "cookie-law-info"),
+                placeholder: __(
                   "Your opt-out preference has been honored.",
                   "cookie-law-info"
                 ),
@@ -84921,13 +84700,13 @@ ${colorConfig.map(([key, itemConfig]) => {
             /* @__PURE__ */ jsxRuntimeExports.jsxs(
               PremiumColourBlock,
               {
-                label: __$2("Colours", "cookie-law-info"),
+                label: __("Colours", "cookie-law-info"),
                 onPremiumClick: onOpenPremium,
                 children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     ColourPickerField,
                     {
-                      fieldLabel: __$2("Background", "cookie-law-info"),
+                      fieldLabel: __("Background", "cookie-law-info"),
                       value: readString(optSuccessSt == null ? void 0 : optSuccessSt["background-color"]),
                       onChange: /* @__PURE__ */ __name((hex2) => patchOptSuccessStyle("bg", hex2), "onChange")
                     }
@@ -84935,7 +84714,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     ColourPickerField,
                     {
-                      fieldLabel: __$2("Icon", "cookie-law-info"),
+                      fieldLabel: __("Icon", "cookie-law-info"),
                       value: readString(optSuccessIconSt == null ? void 0 : optSuccessIconSt.color),
                       onChange: /* @__PURE__ */ __name((hex2) => patchOptSuccessStyle("icon", hex2), "onChange")
                     }
@@ -84943,7 +84722,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     ColourPickerField,
                     {
-                      fieldLabel: __$2("Text", "cookie-law-info"),
+                      fieldLabel: __("Text", "cookie-law-info"),
                       value: readString(optSuccessTextSt == null ? void 0 : optSuccessTextSt.color),
                       onChange: /* @__PURE__ */ __name((hex2) => patchOptSuccessStyle("text", hex2), "onChange")
                     }
@@ -84951,7 +84730,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     ColourPickerField,
                     {
-                      fieldLabel: __$2("Subtext", "cookie-law-info"),
+                      fieldLabel: __("Subtext", "cookie-law-info"),
                       value: readString(optSuccessSubtextSt == null ? void 0 : optSuccessSubtextSt.color),
                       onChange: /* @__PURE__ */ __name((hex2) => patchOptSuccessStyle("subtext", hex2), "onChange")
                     }
@@ -84973,7 +84752,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   className: "cky-action-link cky:m-0 cky:inline-flex cky:items-center cky:gap-1.5 cky:border-0 cky:bg-transparent cky:p-0 cky:text-left cky:text-[13px] cky:font-normal cky:leading-snug cky:text-[#23282d] hover:cky:bg-transparent hover:cky:opacity-90",
                   onClick: /* @__PURE__ */ __name(() => onOpenGpc(), "onClick"),
                   children: [
-                    __$2('Respect "Global Privacy control"', "cookie-law-info"),
+                    __('Respect "Global Privacy control"', "cookie-law-info"),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(CrownInline, {})
                   ]
                 }
@@ -85068,10 +84847,10 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "cookie-list",
-        title: __$2("Cookie List", "cookie-law-info"),
+        title: __("Cookie List", "cookie-law-info"),
         contentClassName: "cky:!pb-[15px]",
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
-          consentLaw === "gdpr" ? /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __$2("Show cookie list", "cookie-law-info"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          consentLaw === "gdpr" ? /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __("Show cookie list", "cookie-law-info"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Switch,
             {
               id: "cky-audit-table",
@@ -85091,7 +84870,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               control: form.control,
               name: "headerId",
               inputId: `${uid}-hid`,
-              label: __$2('"Cookie" label', "cookie-law-info"),
+              label: __('"Cookie" label', "cookie-law-info"),
               onCommit: /* @__PURE__ */ __name((v) => patchAuditHeader("id", v), "onCommit")
             }
           ),
@@ -85101,7 +84880,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               control: form.control,
               name: "headerDuration",
               inputId: `${uid}-hdur`,
-              label: __$2('"Duration" label', "cookie-law-info"),
+              label: __('"Duration" label', "cookie-law-info"),
               onCommit: /* @__PURE__ */ __name((v) => patchAuditHeader("duration", v), "onCommit")
             }
           ),
@@ -85111,7 +84890,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               control: form.control,
               name: "headerDescription",
               inputId: `${uid}-hdesc`,
-              label: __$2('"Description" label', "cookie-law-info"),
+              label: __('"Description" label', "cookie-law-info"),
               onCommit: /* @__PURE__ */ __name((v) => patchAuditHeader("description", v), "onCommit")
             }
           ),
@@ -85122,7 +84901,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 control: form.control,
                 name: "alwaysEnabled",
                 inputId: `${uid}-always`,
-                label: __$2('"Always Active" label', "cookie-law-info"),
+                label: __('"Always Active" label', "cookie-law-info"),
                 onCommit: patchAlwaysEnabled
               }
             ),
@@ -85132,7 +84911,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 control: form.control,
                 name: "noCookiesMessage",
                 inputId: `${uid}-empty`,
-                label: __$2('"No cookies to display" label', "cookie-law-info"),
+                label: __('"No cookies to display" label', "cookie-law-info"),
                 onCommit: patchNoCookiesMessage
               }
             )
@@ -85186,9 +84965,9 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "revisit-consent",
-        title: __$2("Revisit Consent Button", "cookie-law-info"),
+        title: __("Revisit Consent Button", "cookie-law-info"),
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: FORM_SECTION_TOP, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __$2("Revisit consent button", "cookie-law-info"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(FormRow, { label: __("Revisit consent button", "cookie-law-info"), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Switch,
             {
               id: "cky-revisit-status",
@@ -85215,7 +84994,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                     {
                       htmlFor: `${uid}-hover`,
                       className: "cky:!font-normal cky:text-[#23282d]",
-                      children: __$2("Text on hover", "cookie-law-info")
+                      children: __("Text on hover", "cookie-law-info")
                     }
                   ),
                   labelTypography: "plain",
@@ -85249,7 +85028,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               render: /* @__PURE__ */ __name(({ field, fieldState }) => /* @__PURE__ */ jsxRuntimeExports.jsx(Field, { "data-invalid": fieldState.invalid, className: "cky:space-y-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 FormRow,
                 {
-                  label: /* @__PURE__ */ jsxRuntimeExports.jsx(FieldLabel, { className: "cky:!font-normal cky:text-[#23282d]", children: __$2("Position", "cookie-law-info") }),
+                  label: /* @__PURE__ */ jsxRuntimeExports.jsx(FieldLabel, { className: "cky:!font-normal cky:text-[#23282d]", children: __("Position", "cookie-law-info") }),
                   labelTypography: "plain",
                   children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:flex-col cky:gap-1", children: [
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -85283,7 +85062,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                                     id: `cky-revisit-pos-left-${consentLaw}`
                                   }
                                 ),
-                                __$2("Left", "cookie-law-info")
+                                __("Left", "cookie-law-info")
                               ]
                             }
                           ),
@@ -85300,7 +85079,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                                     id: `cky-revisit-pos-right-${consentLaw}`
                                   }
                                 ),
-                                __$2("Right", "cookie-law-info")
+                                __("Right", "cookie-law-info")
                               ]
                             }
                           )
@@ -85316,12 +85095,12 @@ ${colorConfig.map(([key, itemConfig]) => {
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             PremiumColourBlock,
             {
-              label: __$2("Colours", "cookie-law-info"),
+              label: __("Colours", "cookie-law-info"),
               onPremiumClick: onOpenPremium,
               children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 ColourPickerField,
                 {
-                  fieldLabel: __$2("Background", "cookie-law-info"),
+                  fieldLabel: __("Background", "cookie-law-info"),
                   value: readString(rvStyles == null ? void 0 : rvStyles["background-color"]),
                   onChange: /* @__PURE__ */ __name((hex2) => patchDraft((d) => {
                     var _a2, _b2;
@@ -85347,7 +85126,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   className: "cky:m-0 cky:inline-flex cky:items-center cky:gap-1.5 cky:border-0 cky:bg-transparent cky:p-0 cky:text-left cky:text-[13px] cky:font-normal cky:leading-snug cky:text-[#23282d] hover:cky:bg-transparent hover:cky:opacity-90",
                   onClick: /* @__PURE__ */ __name(() => onOpenRevisitIcon(), "onClick"),
                   children: [
-                    __$2("Custom icon", "cookie-law-info"),
+                    __("Custom icon", "cookie-law-info"),
                     /* @__PURE__ */ jsxRuntimeExports.jsx(CrownInline, {})
                   ]
                 }
@@ -85425,7 +85204,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       BannerSection,
       {
         value: "blocked-content",
-        title: __$2("Blocked Content", "cookie-law-info"),
+        title: __("Blocked Content", "cookie-law-info"),
         contentClassName: "cky:!pb-[15px]",
         children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: SECTION_RULE, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -85441,7 +85220,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                     {
                       htmlFor: `${uid}-blocked-label`,
                       className: "cky:!font-normal cky:text-[#23282d]",
-                      children: __$2("Label", "cookie-law-info")
+                      children: __("Label", "cookie-law-info")
                     }
                   ),
                   labelTypography: "plain",
@@ -85470,13 +85249,13 @@ ${colorConfig.map(([key, itemConfig]) => {
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             PremiumColourBlock,
             {
-              label: __$2("Colours", "cookie-law-info"),
+              label: __("Colours", "cookie-law-info"),
               onPremiumClick: onOpenPremium,
               children: [
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ColourPickerField,
                   {
-                    fieldLabel: __$2("Background", "cookie-law-info"),
+                    fieldLabel: __("Background", "cookie-law-info"),
                     value: readString(vpSt == null ? void 0 : vpSt["background-color"]),
                     onChange: /* @__PURE__ */ __name((hex2) => patchVideoPlaceholderStyle("background-color", hex2), "onChange")
                   }
@@ -85484,7 +85263,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ColourPickerField,
                   {
-                    fieldLabel: __$2("Border", "cookie-law-info"),
+                    fieldLabel: __("Border", "cookie-law-info"),
                     value: readString(vpSt == null ? void 0 : vpSt["border-color"]),
                     onChange: /* @__PURE__ */ __name((hex2) => patchVideoPlaceholderStyle("border-color", hex2), "onChange")
                   }
@@ -85492,7 +85271,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ColourPickerField,
                   {
-                    fieldLabel: __$2("Text", "cookie-law-info"),
+                    fieldLabel: __("Text", "cookie-law-info"),
                     value: readString(titleStyles == null ? void 0 : titleStyles.color),
                     onChange: /* @__PURE__ */ __name((hex2) => patchVideoPlaceholderTitleColor(hex2), "onChange")
                   }
@@ -85506,9 +85285,9 @@ ${colorConfig.map(([key, itemConfig]) => {
   }
   __name(BlockedContentAccordion, "BlockedContentAccordion");
   function themeOptionLabel(tid) {
-    if (tid === "light") return __$2("Light", "cookie-law-info");
-    if (tid === "dark") return __$2("Dark", "cookie-law-info");
-    return __$2("Custom", "cookie-law-info");
+    if (tid === "light") return __("Light", "cookie-law-info");
+    if (tid === "dark") return __("Dark", "cookie-law-info");
+    return __("Custom", "cookie-law-info");
   }
   __name(themeOptionLabel, "themeOptionLabel");
   const CkyCustomizeContentPanel = /* @__PURE__ */ __name(({
@@ -85672,12 +85451,12 @@ ${colorConfig.map(([key, itemConfig]) => {
     );
     const saveConfig = reactExports.useCallback(() => __async(null, null, function* () {
       if (!draft || !bannerId) {
-        toast.error(noBannerFoundMessage(__$2));
+        toast.error(noBannerFoundMessage(__));
         return;
       }
       if (consentLaw === "ccpa" && isCcpaOptoutSuccessTextInvalid(draft, adminLang)) {
         toast.error(
-          __$2("A message is required to show upon opt-out.", "cookie-law-info")
+          __("A message is required to show upon opt-out.", "cookie-law-info")
         );
         return;
       }
@@ -85702,12 +85481,12 @@ ${colorConfig.map(([key, itemConfig]) => {
         );
         yield onRefreshSettings();
         yield onAfterPublish();
-        toast.success(saveSuccessMessage(__$2));
+        toast.success(saveSuccessMessage(__));
         baselineRef.current = contentSettingsFingerprint(draft);
         setDirty(false);
       } catch (e) {
         console.error(e);
-        toast.error(saveErrorMessage(__$2));
+        toast.error(saveErrorMessage(__));
       } finally {
         setPublishing(false);
       }
@@ -85803,12 +85582,12 @@ ${colorConfig.map(([key, itemConfig]) => {
     const contentTabRtl = isRTLLanguage(getDefaultLanguage());
     const confirmBtnLabel = reactExports.useMemo(() => {
       if (pendingTheme === "light") {
-        return __$2("Select light theme", "cookie-law-info");
+        return __("Select light theme", "cookie-law-info");
       }
       if (pendingTheme === "dark") {
-        return __$2("Select dark theme", "cookie-law-info");
+        return __("Select dark theme", "cookie-law-info");
       }
-      return __$2("Select theme", "cookie-law-info");
+      return __("Select theme", "cookie-law-info");
     }, [pendingTheme]);
     const sectionRenderers = reactExports.useMemo(
       () => ({
@@ -85888,21 +85667,21 @@ ${colorConfig.map(([key, itemConfig]) => {
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:min-h-[min(700px,70vh)]", children: [
         customHtmlMode ? /* @__PURE__ */ jsxRuntimeExports.jsx(Alert, { variant: "warning", className: "cky:mb-4 cky:rounded-[3px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(AlertDescription, { className: "cky:text-sm cky:leading-snug cky:text-[#23282d]", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: __$2("You're in Custom HTML mode. ", "cookie-law-info") }),
-          __$2(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: __("You're in Custom HTML mode. ", "cookie-law-info") }),
+          __(
             "The edits that you have made in the HTML Editor will override any changes made to the settings below",
             "cookie-law-info"
           )
         ] }) }) : null,
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: COLOUR_SCHEME_ROW, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:m-0 cky:inline-flex cky:shrink-0 cky:items-center cky:px-[15px] cky:text-sm cky:font-medium cky:leading-5 cky:text-[#23282d]", children: __$2("Colour scheme", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:m-0 cky:inline-flex cky:shrink-0 cky:items-center cky:px-[15px] cky:text-sm cky:font-medium cky:leading-5 cky:text-[#23282d]", children: __("Colour scheme", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             RadioGroup,
             {
               value: theme,
               onValueChange: handleThemeSelectionChange,
               className: "cky:flex cky:min-w-0 cky:flex-1 cky:flex-row cky:flex-nowrap cky:items-center cky:gap-x-5 cky:gap-y-0",
-              "aria-label": __$2("Colour scheme", "cookie-law-info"),
+              "aria-label": __("Colour scheme", "cookie-law-info"),
               children: ["light", "dark", "custom"].map((tid) => {
                 const id = `cky-content-theme-${consentLaw}-${tid}`;
                 return /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -85974,11 +85753,11 @@ ${colorConfig.map(([key, itemConfig]) => {
             availablePlan: "ultimate",
             feature: "custom_branding",
             title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.customLogo, alt: "", className: "cky:mx-auto" }),
-            featureText: __$2(
+            featureText: __(
               "Add a custom logo on the banner to match your brand's unique identity",
               "cookie-law-info"
             ),
-            availabilityText: __$2(
+            availabilityText: __(
               "Available in: <b>Ultimate plan</b>",
               "cookie-law-info"
             )
@@ -85992,11 +85771,11 @@ ${colorConfig.map(([key, itemConfig]) => {
             availablePlan: "ultimate",
             feature: "revisit_custom_branding",
             title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.customIcon, alt: "", className: "cky:mx-auto" }),
-            featureText: __$2(
+            featureText: __(
               "Add a personal flair to your cookie revisit widget with a custom icon",
               "cookie-law-info"
             ),
-            availabilityText: __$2(
+            availabilityText: __(
               "Available in: <b>Ultimate plan</b>",
               "cookie-law-info"
             )
@@ -86010,11 +85789,11 @@ ${colorConfig.map(([key, itemConfig]) => {
             availablePlan: "premium",
             feature: "custom_theme",
             title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.customTheme, alt: "", className: "cky:mx-auto" }),
-            featureText: __$2(
+            featureText: __(
               "Design a banner that blends perfectly with your site",
               "cookie-law-info"
             ),
-            availabilityText: __$2(
+            availabilityText: __(
               "Available in: <b>All premium plans</b>",
               "cookie-law-info"
             )
@@ -86028,11 +85807,11 @@ ${colorConfig.map(([key, itemConfig]) => {
             availablePlan: "pro",
             feature: "respect_gpc",
             title: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: assets.globalPrivacy, alt: "", className: "cky:mx-auto" }),
-            featureText: __$2(
+            featureText: __(
               "Respect Global Privacy Control (GPC) signals and honour users’ privacy settings",
               "cookie-law-info"
             ),
-            availabilityText: __$2(
+            availabilityText: __(
               "Available in: <b>Pro and Ultimate plans</b>",
               "cookie-law-info"
             )
@@ -86042,7 +85821,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           CkyHeadsUpPopup,
           {
             ref: themeHeadsUpRef,
-            header: __$2(
+            header: __(
               "Colour customisation is now limited on Free plan",
               "cookie-law-info"
             ),
@@ -86075,7 +85854,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         {
                           className: "cky:list-item",
                           dangerouslySetInnerHTML: {
-                            __html: __$2(
+                            __html: __(
                               "If you switch to Light or Dark theme, your <b>existing colour customisations will be replaced with the default version.</b>",
                               "cookie-law-info"
                             )
@@ -86087,7 +85866,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         {
                           className: "cky:list-item",
                           dangerouslySetInnerHTML: {
-                            __html: __$2(
+                            __html: __(
                               "You can keep using your existing customised banner, but <b>further edits or new colour customisations are no longer available in your Free plan.</b>",
                               "cookie-law-info"
                             )
@@ -86099,7 +85878,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                 ) }) })
               }
             ),
-            cancelBtn: __$2("Keep current banner", "cookie-law-info"),
+            cancelBtn: __("Keep current banner", "cookie-law-info"),
             confirmBtn: confirmBtnLabel,
             onDeleteItem: confirmThemeSwitch,
             onClear: /* @__PURE__ */ __name(() => setPendingTheme(null), "onClear")
@@ -86154,7 +85933,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       if (!bannerForCurrentLaw || !bannerForCurrentLaw.id) {
         triggerNotification({
           type: "error",
-          message: noBannerFoundMessage(__$2)
+          message: noBannerFoundMessage(__)
         });
         return;
       }
@@ -86180,13 +85959,13 @@ ${colorConfig.map(([key, itemConfig]) => {
         yield onAfterPublish();
         triggerNotification({
           type: "success",
-          message: saveSuccessMessage(__$2)
+          message: saveSuccessMessage(__)
         });
       } catch (e) {
         console.error(e);
         triggerNotification({
           type: "error",
-          message: saveErrorMessage(__$2)
+          message: saveErrorMessage(__)
         });
       } finally {
         setPublishing(false);
@@ -86216,7 +85995,7 @@ ${colorConfig.map(([key, itemConfig]) => {
               {
                 className: "cky:m-0 cky:inline cky:text-sm cky:font-normal cky:leading-snug cky:text-[#23282d]",
                 htmlFor: "cky-textarea-custom-css",
-                children: __$2("Custom CSS for additional styling", "cookie-law-info")
+                children: __("Custom CSS for additional styling", "cookie-law-info")
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:inline-flex cky:shrink-0", "aria-hidden": true, children: /* @__PURE__ */ jsxRuntimeExports.jsx(CrownInline, {}) })
@@ -86224,7 +86003,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           hasCustomCss ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             TooltipWithContent,
             {
-              content: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:max-w-[280px] cky:text-left cky:text-xs cky:font-normal cky:leading-snug", children: __$2(
+              content: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:max-w-[280px] cky:text-left cky:text-xs cky:font-normal cky:leading-snug", children: __(
                 "Add custom CSS to fine-tune how your cookie banner looks on your site.",
                 "cookie-law-info"
               ) }),
@@ -86234,7 +86013,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   type: "button",
                   variant: "ghost",
                   className: "cky:!h-[22px] cky:!min-h-0 cky:!w-[22px] cky:m-0 cky:inline-flex cky:shrink-0 cky:cursor-help cky:items-center cky:justify-center cky:rounded-full cky:border-0 cky:bg-[#f0f0f1] cky:p-0 cky:leading-none cky:text-[#72777d] hover:cky:bg-[#e8e9eb] hover:cky:text-[#50575e] focus-visible:cky:outline focus-visible:cky:outline-2 focus-visible:cky:outline-offset-2 focus-visible:cky:outline-[var(--cky-primary)]",
-                  "aria-label": __$2("More information", "cookie-law-info"),
+                  "aria-label": __("More information", "cookie-law-info"),
                   children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "tooltip", width: "12px", height: "12px" })
                 }
               )
@@ -86275,19 +86054,19 @@ ${colorConfig.map(([key, itemConfig]) => {
             {
               className: "cky:box-border cky:mx-auto cky:w-[calc(100%-60px)] cky:max-w-[439px] cky:cursor-default cky:rounded-xl cky:bg-white cky:px-[30px] cky:pb-[30px] cky:pt-[50px] cky:text-center",
               role: "region",
-              "aria-label": __$2(
+              "aria-label": __(
                 "Put your cookie banner in the spotlight with custom CSS",
                 "cookie-law-info"
               ),
               children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:w-full cky:flex-col cky:items-center cky:gap-5", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:m-0 cky:w-full cky:text-center cky:text-base cky:font-semibold cky:leading-6 cky:text-[#14142A]", children: __$2(
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:m-0 cky:w-full cky:text-center cky:text-base cky:font-semibold cky:leading-6 cky:text-[#14142A]", children: __(
                   "Put your cookie banner in the spotlight with custom CSS",
                   "cookie-law-info"
                 ) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:w-full cky:justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "cky:text-center cky:text-sm cky:leading-[22px] cky:text-[#4E4B66] [&_b]:cky:font-semibold", children: [
-                  __$2("Available in:", "cookie-law-info"),
+                  __("Available in:", "cookie-law-info"),
                   " ",
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: __$2("All premium plans", "cookie-law-info") })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("b", { children: __("All premium plans", "cookie-law-info") })
                 ] }) }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:flex cky:w-full cky:flex-col cky:items-center cky:justify-center cky:gap-4", children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -86297,7 +86076,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                       variant: "default",
                       className: "cky:w-auto cky:text-[14px]!",
                       onClick: handlePlansNavigate,
-                      children: __$2("Connect to Web App to Access", "cookie-law-info")
+                      children: __("Connect to Web App to Access", "cookie-law-info")
                     }
                   ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:block cky:max-w-full cky:text-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -86311,7 +86090,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         e.preventDefault();
                         handleConnectExisting();
                       }, "onClick"),
-                      children: __$2(
+                      children: __(
                         "Have an account? Log in and connect",
                         "cookie-law-info"
                       )
@@ -86326,15 +86105,15 @@ ${colorConfig.map(([key, itemConfig]) => {
     ] });
   }, "CkyCustomizeCssPanel");
   const LAYOUT_PREVIEW_DEBOUNCE_MS = 450;
-  const CATEGORIES_FIRST_LAYER_TOOLTIP = __$2(
+  const CATEGORIES_FIRST_LAYER_TOOLTIP = __(
     "Enabling this option will display cookie categories on the first layer of your banner. The categories will be displayed on the second layer (preference centre) even if this option is disabled.",
     "cookie-law-info"
   );
-  const PUSHDOWN_DISABLED_TOOLTIP = __$2(
+  const PUSHDOWN_DISABLED_TOOLTIP = __(
     "The Push down style is supported for the Banner layout only.",
     "cookie-law-info"
   );
-  const CATEGORIES_FIRST_LAYER_DISABLED_TOOLTIP = __$2(
+  const CATEGORIES_FIRST_LAYER_DISABLED_TOOLTIP = __(
     "This feature is available with <b>Banner + Push down</b> layout only.",
     "cookie-law-info"
   );
@@ -86737,7 +86516,7 @@ ${colorConfig.map(([key, itemConfig]) => {
     const categoriesToggleDisabled = bannerType !== "classic";
     const saveConfig = reactExports.useCallback(() => __async(null, null, function* () {
       if (!bannerForCurrentLaw || !bannerForCurrentLaw.id) {
-        toast.error(noBannerFoundMessage(__$2));
+        toast.error(noBannerFoundMessage(__));
         return;
       }
       setPublishing(true);
@@ -86757,10 +86536,10 @@ ${colorConfig.map(([key, itemConfig]) => {
         );
         yield onRefreshSettings();
         yield onAfterPublish();
-        toast.success(saveSuccessMessage(__$2));
+        toast.success(saveSuccessMessage(__));
       } catch (e) {
         console.error(e);
-        toast.error(saveErrorMessage(__$2));
+        toast.error(saveErrorMessage(__));
       } finally {
         setPublishing(false);
       }
@@ -86802,7 +86581,7 @@ ${colorConfig.map(([key, itemConfig]) => {
       ),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:bg-white cky:p-5", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:flex-wrap cky:items-start cky:-mx-[15px] cky:border-b cky:border-[#d9d9d9] cky:pb-[20px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: layoutColFullClass, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(LayoutSectionTitle, { children: __$2("Cookie Notice", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(LayoutSectionTitle, { children: __("Cookie Notice", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             RadioGroup,
             {
@@ -86816,7 +86595,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                   selected: noticeRowSelectedCardKey === layout.type,
                   disabled: layout.isPremium,
                   isPremium: layout.isPremium,
-                  title: __$2(layout.title, "cookie-law-info"),
+                  title: getLayoutTitle(layout.title),
                   iconSrc: LAYOUT_ICON_SRC[layout.type],
                   iconAlt: layout.title
                 },
@@ -86849,7 +86628,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           ) : null
         ] }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:flex cky:flex-wrap cky:-mx-[15px] cky:pt-[15px]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: layoutColFullClass, children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(LayoutSectionTitle, { children: __$2("Preference Centre", "cookie-law-info") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(LayoutSectionTitle, { children: __("Preference Centre", "cookie-law-info") }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               RadioGroup,
@@ -86864,7 +86643,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                     selected: preferenceCenterType === layout.type,
                     disabled,
                     isPremium: false,
-                    title: __$2(layout.title, "cookie-law-info"),
+                    title: getLayoutTitle(layout.title),
                     iconSrc: PREFERENCE_ICON_SRC[layout.type],
                     iconAlt: layout.title
                   };
@@ -86931,7 +86710,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                             categoriesToggleDisabled && "cky:!text-[#adadad]"
                           ),
                           htmlFor: "cky-toggle-categories-on-firstlayer",
-                          children: __$2("Categories on first layer", "cookie-law-info")
+                          children: __("Categories on first layer", "cookie-law-info")
                         }
                       ),
                       /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -86951,7 +86730,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                                 "hover:cky:bg-transparent active:cky:bg-transparent",
                                 categoriesToggleDisabled ? "cky:!text-[#adadad] hover:cky:!text-[#adadad]" : "cky:text-[#a6a8b1] hover:cky:text-[#8c8f9a]"
                               ),
-                              "aria-label": __$2("More information", "cookie-law-info"),
+                              "aria-label": __("More information", "cookie-law-info"),
                               children: /* @__PURE__ */ jsxRuntimeExports.jsx(CkyIcon, { icon: "tooltip", width: "14px", height: "14px" })
                             }
                           )
@@ -87001,14 +86780,14 @@ ${colorConfig.map(([key, itemConfig]) => {
             "img",
             {
               src: assets.popupLayout,
-              alt: __$2("Popup layout", "cookie-law-info")
+              alt: __("Popup layout", "cookie-law-info")
             }
           ),
-          featureText: __$2(
+          featureText: __(
             "Use a popup layout to boost your consent opt-in rates",
             "cookie-law-info"
           ),
-          availabilityText: __$2(
+          availabilityText: __(
             "Available in: <b>Pro and Ultimate plans</b>",
             "cookie-law-info"
           )
@@ -87157,7 +86936,7 @@ ${colorConfig.map(([key, itemConfig]) => {
           className: "cky-section-consent-banner cky:flex cky:flex-1 cky:flex-col cky:px-0 cky:pb-0 cky:pt-8",
           "aria-labelledby": "cky-banner-customize-heading",
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { id: "cky-banner-customize-heading", className: "cky:sr-only", children: __$2("Cookie banner", "cookie-law-info") }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { id: "cky-banner-customize-heading", className: "cky:sr-only", children: __("Cookie banner", "cookie-law-info") }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "cky:relative cky:flex cky:min-h-0 cky:flex-1 cky:w-full cky:flex-col cky:overflow-hidden cky:border cky:border-[#d9d9d9] cky:bg-[#f0f0f1]", children: [
               /* @__PURE__ */ jsxRuntimeExports.jsxs(
                 Root2$1,
@@ -87173,7 +86952,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                     /* @__PURE__ */ jsxRuntimeExports.jsx(
                       List,
                       {
-                        "aria-label": __$2(
+                        "aria-label": __(
                           "Cookie banner settings sections",
                           "cookie-law-info"
                         ),
@@ -87205,7 +86984,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                                   )
                                 }
                               ),
-                              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:min-w-0 cky:flex-1", children: __$2(tab.titleKey, "cookie-law-info") })
+                              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "cky:min-w-0 cky:flex-1", children: tab.title() })
                             ]
                           },
                           tab.id
@@ -87218,7 +86997,7 @@ ${colorConfig.map(([key, itemConfig]) => {
                         value: tab.id,
                         forceMount: true,
                         className: "cky:flex-1 cky:min-h-0 cky:min-w-0 cky:overflow-auto cky:bg-[#e6e8e9] cky:px-5 cky:py-[15px] cky:outline-none cky:data-[state=inactive]:hidden",
-                        children: loadError ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:m-0 cky:text-sm cky:text-[#d63638]", children: __$2(
+                        children: loadError ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "cky:m-0 cky:text-sm cky:text-[#d63638]", children: __(
                           "Failed to load settings. Please refresh the page.",
                           "cookie-law-info"
                         ) }) : renderBannerCustomizePanel(tab.id, generalProps, {

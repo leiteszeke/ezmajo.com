@@ -164,6 +164,47 @@ if ( ! function_exists( 'cky_first_time_install' ) ) {
 	}
 }
 
+if ( ! function_exists( 'cky_get_install_source' ) ) {
+
+	/**
+	 * Get the install source declared by external tooling.
+	 *
+	 * The option is written by whoever performed the install - see AGENTS.md - so the
+	 * value is narrowed to a known set before it ever leaves the site. Null when
+	 * nothing was declared, so that a site with no declaration stays distinguishable
+	 * from one that declared a value we do not recognise.
+	 *
+	 * @since 3.5.6
+	 * @return string|null 'agent' or 'other', or null when nothing was declared.
+	 */
+	function cky_get_install_source() {
+		$source = trim( (string) get_option( 'cky_install_source', '' ) );
+		if ( '' === $source ) {
+			return null;
+		}
+		return in_array( $source, array( 'agent' ), true ) ? $source : 'other';
+	}
+}
+
+if ( ! function_exists( 'cky_get_activation_context' ) ) {
+
+	/**
+	 * Get how the plugin was activated, as recorded on first activation.
+	 *
+	 * Sites that upgraded from an earlier version were never measured, so they return
+	 * null rather than being folded into either bucket. Sending null rather than a
+	 * placeholder is what lets the platform leave those sites unrecorded entirely,
+	 * instead of counting them against the sites that were measured.
+	 *
+	 * @since 3.5.6
+	 * @return string|null 'wp-cli', 'wp-admin' or 'other', or null when never recorded.
+	 */
+	function cky_get_activation_context() {
+		$context = trim( (string) get_option( 'cky_activation_context', '' ) );
+		return in_array( $context, array( 'wp-cli', 'wp-admin', 'other' ), true ) ? $context : null;
+	}
+}
+
 if ( ! function_exists( 'cky_is_admin_page' ) ) {
 
 	/**

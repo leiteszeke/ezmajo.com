@@ -507,18 +507,20 @@ class Uninstall_Feedback extends Modules {
 			wp_send_json_error();
 		}
 		$data = array(
-			'reason_slug'    => sanitize_text_field( wp_unslash( $request['reason_id'] ) ),
-			'reason_detail'  => ! empty( $request['reason_text'] ) ? sanitize_text_field( wp_unslash( $request['reason_text'] ) ) : null,
-			'date'           => gmdate( 'M d, Y h:i:s A' ),
-			'comments'       => ! empty( $request['reason_info'] ) ? sanitize_text_field( wp_unslash( $request['reason_info'] ) ) : null,
-			'server'         => ! empty( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : null,
-			'php_version'    => phpversion(),
-			'mysql_version'  => $wpdb->db_version(),
-			'wp_version'     => get_bloginfo( 'version' ),
-			'wc_version'     => defined( 'WC_VERSION' ) ? WC_VERSION : null,
-			'locale'         => get_locale(),
-			'plugin_version' => $this->current_version,
-			'is_multisite'   => is_multisite(),
+			'reason_slug'        => sanitize_text_field( wp_unslash( $request['reason_id'] ) ),
+			'reason_detail'      => ! empty( $request['reason_text'] ) ? sanitize_text_field( wp_unslash( $request['reason_text'] ) ) : null,
+			'date'               => gmdate( 'M d, Y h:i:s A' ),
+			'comments'           => ! empty( $request['reason_info'] ) ? sanitize_text_field( wp_unslash( $request['reason_info'] ) ) : null,
+			'server'             => ! empty( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : null,
+			'php_version'        => phpversion(),
+			'mysql_version'      => $wpdb->db_version(),
+			'wp_version'         => get_bloginfo( 'version' ),
+			'wc_version'         => defined( 'WC_VERSION' ) ? WC_VERSION : null,
+			'locale'             => get_locale(),
+			'plugin_version'     => $this->current_version,
+			'is_multisite'       => is_multisite(),
+			'install_source'     => cky_get_install_source(),
+			'activation_context' => cky_get_activation_context(),
 		);
 
 		$response = wp_remote_post(

@@ -1858,18 +1858,17 @@ span.wt-cli-tootip-icon {
 .wt-cli-bullet-list li::before {
 	content: '';
 	flex-shrink: 0;
-	width: 10px;
-	height: 10px;
-	border-radius: 2px;
-	background: #FFC166;
-	margin-top: 5px;
-	transform: rotate(45deg);
+	width: 16px;
+	height: 16px;
+	background: url('../images/upgrade-flow/icon-bullet-orange.svg') no-repeat center;
+	background-size: contain;
+	margin-top: 2px;
 }
 
 .wt-cli-bullet-list-green li::before {
-	background: #10B981;
+	background-image: url('../images/upgrade-flow/icon-bullet-green.svg');
 }
 
 .wt-cli-bullet-list-blue li::before {
-	background: #136FE8;
+	background-image: url('../images/upgrade-flow/icon-bullet-blue.svg');
 }

@@ -61,6 +61,20 @@ class Admin {
 	private $suffix;
 
 	/**
+	 * Whether to load assets from the Vite dev server (local dev only).
+	 *
+	 * @var bool
+	 */
+	private $vite_dev;
+
+	/**
+	 * Base URL of the Vite dev server.
+	 *
+	 * @var string
+	 */
+	private $vite_dev_url;
+
+	/**
 	 * Admin modules of the plugin
 	 *
 	 * @var array
@@ -92,6 +106,16 @@ class Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
 		$this->suffix      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$this->vite_dev     = defined( 'VITE_DEV_SERVER' ) && true === VITE_DEV_SERVER;
+		$this->vite_dev_url = '';
+		if ( $this->vite_dev ) {
+			if ( defined( 'VITE_DEV_URL' ) ) {
+				$this->vite_dev_url = esc_url_raw( VITE_DEV_URL );
+			} else {
+				// VITE_DEV_URL not set — fall back to built assets silently.
+				$this->vite_dev = false;
+			}
+		}
 		self::$modules     = $this->get_default_modules();
 		$this->load();
 		$this->add_notices();
@@ -104,6 +128,10 @@ class Admin {
 		// Hide the unrelated admin notices.
 		add_action( 'admin_print_scripts', array( $this, 'hide_admin_notices' ) );
 		add_filter( 'plugin_action_links_' . CLI_PLUGIN_BASENAME, array( $this, 'plugin_action_links' ) );
+		if ( $this->vite_dev ) {
+			add_action( 'admin_head', array( $this, 'inject_vite_preamble' ) );
+			add_filter( 'script_loader_tag', array( $this, 'add_module_type' ), 10, 2 );
+		}
 	}
 
 	/**
@@ -208,6 +236,10 @@ class Admin {
 		if ( false === cky_is_admin_page() ) {
 			return;
 		}
+		if ( $this->vite_dev ) {
+			wp_enqueue_style( $this->plugin_name, $this->vite_dev_url . '/src/styles/index.css', array(), null );
+			return;
+		}
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'dist/css/style' . $this->suffix . '.css', array(), $this->version );
 	}
 
@@ -272,7 +304,11 @@ class Admin {
 			wp_enqueue_editor();
 		}
 
-		wp_enqueue_script( $this->plugin_name . '-app', plugin_dir_url( __FILE__ ) . 'dist/js/index' . $this->suffix . '.js', array(), $this->version, true );
+		if ( $this->vite_dev ) {
+			wp_enqueue_script( $this->plugin_name . '-app', $this->vite_dev_url . '/src/main.tsx', array(), null, true );
+		} else {
+			wp_enqueue_script( $this->plugin_name . '-app', plugin_dir_url( __FILE__ ) . 'dist/js/index' . $this->suffix . '.js', array(), $this->version, true );
+		}
 
 		wp_localize_script(
 			$global_script,
@@ -514,32 +550,80 @@ class Admin {
 			),
 		);
 
-		// Load translations from JSON files instead of PHP domain
-		$json_translations = $this->load_json_translations();
+		$translations = $this->load_json_translations();
 
-		// Convert flat translations to JED format
-		// JED format expects: key => [translation] for singular strings
-		foreach ( $json_translations as $key => $value ) {
-			$locale[ $key ] = array( $value );
+		/*
+		 * Pre-existing behaviour: if any JS string carries a <br>, they are all scrubbed. Applied
+		 * here, to the JSON strings only, so the text-domain backfill below cannot be mangled —
+		 * that catalogue contains PHP copy which renders its line breaks deliberately.
+		 */
+		$translations = $this->strip_html_line_breaks( $translations );
+
+		/*
+		 * Strings referenced from PHP as well as JS ship in the .mo only, never in the JS JSON.
+		 *
+		 * The text domain wins over the JSON here, because that is where a site's own override
+		 * lives: Loco Translate, WPML and Polylang all serve their translations through
+		 * `override_load_textdomain`, and a packaged w.org string must not silently beat one the
+		 * user has edited. Where neither is overridden the two agree, since both come from the
+		 * same w.org translation set.
+		 *
+		 * Plural entries are the exception — translate() can only return the singular form, so a
+		 * multi-form JSON entry is left alone rather than collapsed to one form.
+		 */
+		foreach ( $this->load_domain_translations() as $msgid => $forms ) {
+			if ( isset( $translations[ $msgid ] ) && count( (array) $translations[ $msgid ] ) > 1 ) {
+				continue;
+			}
+			$translations[ $msgid ] = $forms;
 		}
-		// Check for HTML line breaks in translations and clean them if found
-		$json = wp_json_encode( $locale );
-		if ( preg_match( '/<br[\s\/\\\\]*>/', $json ) ) {
-			// Clean HTML line breaks from translations instead of returning empty array
-			foreach ( $locale as $key => $value ) {
-				if ( is_string( $value ) ) {
-					$locale[ $key ] = str_replace( array( '<br>', '<br/>', '<br />' ), '', $value );
-				} elseif ( is_array( $value ) ) {
-					foreach ( $value as $sub_key => $sub_value ) {
-						if ( is_string( $sub_value ) ) {
-							$locale[ $key ][ $sub_key ] = str_replace( array( '<br>', '<br/>', '<br />' ), '', $sub_value );
-						}
+
+		// Tannin needs the plural rule here, or it assumes `n === 1 ? 0 : 1` (wrong for fr, pl, ru, ar).
+		$plural_forms = $this->get_plural_forms( $translations );
+		if ( '' !== $plural_forms ) {
+			$locale['']['plural-forms'] = $plural_forms;
+		}
+		unset( $translations[''] );
+
+		// Values are already JED-shaped: one entry per plural form.
+		foreach ( $translations as $key => $value ) {
+			$locale[ $key ] = $value;
+		}
+
+		return $locale;
+	}
+
+	/**
+	 * Strip HTML line breaks from a translation set when any entry contains one.
+	 *
+	 * Kept for backwards compatibility with the JS payload; deliberately scoped to the JSON
+	 * strings so unrelated catalogue entries are never rewritten.
+	 *
+	 * @since 3.5.4
+	 *
+	 * @param  array $translations Translations keyed by msgid, values are lists of plural forms.
+	 * @return array
+	 */
+	private function strip_html_line_breaks( $translations ) {
+		$json = wp_json_encode( $translations );
+		if ( ! is_string( $json ) || ! preg_match( '/<br[\s\/\\\\]*>/', $json ) ) {
+			return $translations;
+		}
+
+		$search = array( '<br>', '<br/>', '<br />' );
+		foreach ( $translations as $key => $value ) {
+			if ( is_string( $value ) ) {
+				$translations[ $key ] = str_replace( $search, '', $value );
+			} elseif ( is_array( $value ) ) {
+				foreach ( $value as $sub_key => $sub_value ) {
+					if ( is_string( $sub_value ) ) {
+						$translations[ $key ][ $sub_key ] = str_replace( $search, '', $sub_value );
 					}
 				}
 			}
 		}
 
-		return $locale;
+		return $translations;
 	}
 
 	/**
@@ -595,13 +679,22 @@ class Admin {
 					if ( isset( $json_data['locale_data']['messages'] ) ) {
 						$message_translations = $json_data['locale_data']['messages'];
 
-						// Convert the nested structure to flat key-value pairs
 						foreach ( $message_translations as $key => $value ) {
-							if ( is_array( $value ) && isset( $value[0] ) ) {
-								// Skip the metadata entry (empty key)
-								if ( $key !== '' ) {
-									$translations[ $key ] = $value[0];
-								}
+							if ( ! is_array( $value ) ) {
+								continue;
+							}
+
+							// Metadata entry: a map (domain, lang, plural-forms), not a form list.
+							if ( '' === $key ) {
+								$translations[''] = isset( $translations[''] )
+									? array_replace( $value, $translations[''] )
+									: $value;
+								continue;
+							}
+
+							// First file wins, so fallback locales backfill instead of overwriting.
+							if ( isset( $value[0] ) && ! isset( $translations[ $key ] ) ) {
+								$translations[ $key ] = array_values( $value );
 							}
 						}
 					}
@@ -610,6 +703,123 @@ class Admin {
 		}
 
 		return $translations;
+	}
+
+	/**
+	 * Load admin strings from the PHP text domain.
+	 *
+	 * translate.wordpress.org puts a string in the JS JSON only when every POT reference for it is
+	 * a JS file, so msgids shared with PHP ship in the .mo alone and never reach the dashboard.
+	 *
+	 * Every candidate is resolved through translate(), never by reading a catalogue directly:
+	 * that is the only path that honours `override_load_textdomain`, so Loco Translate, WPML and
+	 * Polylang overrides win here exactly as they do for PHP strings. Reading
+	 * WP_Translation_Controller::get_entries() instead returns the first-loaded value and would
+	 * quietly serve the packaged translation over the user's own.
+	 *
+	 * Plurals are excluded — a JED plural array needs every form for the locale, which a singular
+	 * lookup cannot supply. Those keep coming from the JS JSON.
+	 *
+	 * Callers merge the result over the JS JSON entries, so a site's own override wins; see
+	 * get_jed_locale_data() for the plural carve-out.
+	 *
+	 * @since 3.5.4
+	 *
+	 * @return array Translations keyed by msgid, each value a single-form list as JED expects.
+	 */
+	private function load_domain_translations() {
+		$translations = array();
+		$domain       = 'cookie-law-info';
+
+		/*
+		 * The whole catalogue, on purpose. Narrowing it to the msgids the bundle renders means
+		 * trusting a generated artifact (the POT, or a build-time dump), and once that lags the
+		 * source it drops exactly the shared PHP/JS strings this backfill exists to serve — quietly
+		 * and partially. Untranslated msgids are skipped below, so the wider list only costs the
+		 * entries a locale has actually translated.
+		 */
+		$candidates = $this->get_catalogue_msgids( $domain );
+
+		foreach ( $candidates as $msgid => $unused ) {
+			$msgid = (string) $msgid;
+
+			// The bundle looks strings up by bare msgid, so skip contextual ("context\4msgid")
+			// and packed-plural ("single\0plural") keys.
+			if ( '' === $msgid
+				|| false !== strpos( $msgid, "\4" )
+				|| false !== strpos( $msgid, "\0" )
+			) {
+				continue;
+			}
+
+			$translated = translate( $msgid, $domain ); // phpcs:ignore WordPress.WP.I18n.LowLevelTranslationFunction,WordPress.WP.I18n.NonSingularStringLiteralText,WordPress.WP.I18n.NonSingularStringLiteralDomain -- msgids come from the plugin's own POT.
+
+			if ( is_string( $translated ) && '' !== $translated && $translated !== $msgid ) {
+				$translations[ $msgid ] = array( $translated );
+			}
+		}
+
+		return $translations;
+	}
+
+	/**
+	 * Every msgid in the loaded catalogue for the domain.
+	 *
+	 * Only the keys are used — values are resolved through translate() by the caller.
+	 *
+	 * @since 3.5.4
+	 *
+	 * @param  string $domain Text domain.
+	 * @return array<string,true>
+	 */
+	private function get_catalogue_msgids( $domain ) {
+		$keys   = array();
+		$loaded = get_translations_for_domain( $domain );
+
+		if ( class_exists( 'WP_Translation_Controller' ) ) {
+			$entries = \WP_Translation_Controller::get_instance()->get_entries( $domain );
+			if ( is_array( $entries ) ) {
+				foreach ( $entries as $key => $unused ) {
+					$keys[ (string) $key ] = true;
+				}
+			}
+		}
+
+		// Legacy `override_load_textdomain` consumers keep the catalogue on the Translations object.
+		if ( empty( $keys ) && isset( $loaded->entries ) && is_array( $loaded->entries ) ) {
+			foreach ( $loaded->entries as $key => $unused ) {
+				$keys[ (string) $key ] = true;
+			}
+		}
+
+		return $keys;
+	}
+
+	/**
+	 * Resolve the plural rule to advertise in the JED metadata entry.
+	 *
+	 * @since 3.5.4
+	 *
+	 * @param  array $translations Merged translations, possibly holding a `''` metadata entry.
+	 * @return string The Plural-Forms expression, or an empty string when none is available.
+	 */
+	private function get_plural_forms( $translations ) {
+		/*
+		 * The loaded text domain is authoritative: it is always the active locale, whereas the
+		 * JSON `''` entry can come from a fallback file and would then advertise the wrong rule.
+		 */
+		if ( class_exists( 'WP_Translation_Controller' ) ) {
+			$headers = \WP_Translation_Controller::get_instance()->get_headers( 'cookie-law-info' );
+			if ( ! empty( $headers['Plural-Forms'] ) && is_string( $headers['Plural-Forms'] ) ) {
+				return $headers['Plural-Forms'];
+			}
+		}
+
+		if ( isset( $translations['']['plural-forms'] ) && is_string( $translations['']['plural-forms'] ) ) {
+			return $translations['']['plural-forms'];
+		}
+
+		return '';
 	}
 
 	/**
@@ -715,6 +925,47 @@ class Admin {
 		$links[] = '<a href="https://www.cookieyes.com/support/" target="_blank">' . esc_html__( 'Support', 'cookie-law-info' ) . '</a>';
 		$links[] = '<a href="' . get_admin_url( null, 'admin.php?page=cookie-law-info' ) . '">' . esc_html__( 'Settings', 'cookie-law-info' ) . '</a>';
 		return array_reverse( $links );
+	}
+
+	/**
+	 * Inject the React Refresh preamble required by @vitejs/plugin-react for HMR.
+	 *
+	 * Only runs when VITE_DEV_SERVER is true in wp-config.php. Never called in production.
+	 *
+	 * @return void
+	 */
+	public function inject_vite_preamble() {
+		if ( ! cky_is_admin_page() ) {
+			return;
+		}
+		?>
+		<script type="module">
+		import RefreshRuntime from '<?php echo esc_js( $this->vite_dev_url ); ?>/@react-refresh';
+		RefreshRuntime.injectIntoGlobalHook(window);
+		window.$RefreshReg$ = () => {};
+		window.$RefreshSig$ = () => (type) => type;
+		window.__vite_plugin_react_preamble_installed__ = true;
+		</script>
+		<?php
+	}
+
+	/**
+	 * Add type="module" to the Vite dev server script tag.
+	 *
+	 * Hooked to script_loader_tag only when VITE_DEV_SERVER is active.
+	 *
+	 * @param string $tag    Script tag HTML.
+	 * @param string $handle Script handle.
+	 * @return string
+	 */
+	public function add_module_type( $tag, $handle ) {
+		if ( $this->plugin_name . '-app' !== $handle ) {
+			return $tag;
+		}
+		if ( false !== strpos( $tag, 'type=' ) ) {
+			return str_replace( array( "type='text/javascript'", 'type="text/javascript"' ), 'type="module"', $tag );
+		}
+		return str_replace( '<script ', '<script type="module" ', $tag );
 	}
 
 }

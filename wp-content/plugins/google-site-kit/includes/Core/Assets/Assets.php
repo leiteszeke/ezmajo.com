@@ -6,6 +6,8 @@
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://sitekit.withgoogle.com
+ *
+ * phpcs:disable PHPCS.Commenting.RequireDocTagDescription -- Pre-existing violations; tracked for follow-up cleanup.
  */
 
 namespace Google\Site_Kit\Core\Assets;
@@ -16,6 +18,7 @@ use Google\Site_Kit\Core\Permissions\Permissions;
 use Google\Site_Kit\Core\Storage\Options;
 use Google\Site_Kit\Core\Util\Date;
 use Google\Site_Kit\Core\Util\Feature_Flags;
+use Google\Site_Kit\Core\Util\Plugin_Status;
 use WP_Dependencies;
 use WP_Post_Type;
 
@@ -117,6 +120,17 @@ final class Assets {
 						}
 					}
 				);
+			}
+		);
+
+		add_action(
+			'admin_enqueue_scripts',
+			function () {
+				foreach ( $this->get_assets() as $asset ) {
+					if ( $asset->has_context( Asset::CONTEXT_ADMIN_GLOBAL ) ) {
+						$this->enqueue_asset( $asset->get_handle() );
+					}
+				}
 			}
 		);
 
@@ -329,14 +343,11 @@ final class Assets {
 			'googlesitekit-datastore-ui',
 			'googlesitekit-widgets',
 			'googlesitekit-notifications',
+			'googlesitekit-intents',
 		);
 
-		if ( Feature_Flags::enabled( 'pdfGeneration' ) ) {
-			array_push( $dependencies, 'googlesitekit-datastore-pdf' );
-		}
-
 		if ( 'dashboard' === $context || 'dashboard-sharing' === $context ) {
-			array_push( $dependencies, 'googlesitekit-components' );
+			array_push( $dependencies, 'googlesitekit-components', 'googlesitekit-datastore-pdf' );
 		}
 
 		if ( 'dashboard-sharing' === $context ) {
@@ -601,6 +612,16 @@ final class Assets {
 				)
 			),
 			new Script(
+				'googlesitekit-intents',
+				array(
+					'src'          => $base_url . 'js/googlesitekit-intents.js',
+					'dependencies' => array(
+						'googlesitekit-api',
+						'googlesitekit-data',
+					),
+				)
+			),
+			new Script(
 				'googlesitekit-widgets',
 				array(
 					'src'          => $base_url . 'js/googlesitekit-widgets.js',
@@ -619,6 +640,16 @@ final class Assets {
 						'googlesitekit-data',
 						'googlesitekit-i18n',
 						'googlesitekit-components',
+					),
+				)
+			),
+			new Script(
+				'googlesitekit-feature-discovery',
+				array(
+					'src'          => $base_url . 'js/googlesitekit-feature-discovery.js',
+					'dependencies' => array(
+						'googlesitekit-data',
+						'googlesitekit-i18n',
 					),
 				)
 			),
@@ -663,6 +694,16 @@ final class Assets {
 				array(
 					'src'          => $base_url . 'js/googlesitekit-settings.js',
 					'dependencies' => $this->get_asset_dependencies( 'dashboard-sharing' ),
+				)
+			),
+			new Script(
+				'googlesitekit-features',
+				array(
+					'src'          => $base_url . 'js/googlesitekit-features.js',
+					'dependencies' => array_merge(
+						$this->get_asset_dependencies( 'dashboard-sharing' ),
+						array( 'googlesitekit-feature-discovery' )
+					),
 				)
 			),
 			new Script(
@@ -760,6 +801,27 @@ final class Assets {
 			),
 		);
 
+		if ( current_user_can( Permissions::MANAGE_OPTIONS ) && Feature_Flags::enabled( 'featureDiscoveryHub' ) ) {
+			$assets[] = new Script_Data(
+				'googlesitekit-features-badge-data',
+				array(
+					'global'        => '_googlesitekitFeaturesBadgeData',
+					'data_callback' => function () {
+						return $this->get_inline_features_badge_data();
+					},
+				)
+			);
+
+			$assets[] = new Script(
+				'googlesitekit-features-badge',
+				array(
+					'src'           => $base_url . 'js/googlesitekit-features-badge.js',
+					'dependencies'  => array( 'googlesitekit-i18n', 'googlesitekit-features-badge-data' ),
+					'load_contexts' => array( Asset::CONTEXT_ADMIN_GLOBAL ),
+				)
+			);
+		}
+
 		/**
 		 * Filters the list of assets that Site Kit should register.
 		 *
@@ -790,29 +852,31 @@ final class Assets {
 	 */
 	private function get_inline_base_data() {
 		global $wpdb;
-		$site_url = $this->context->get_reference_site_url();
+		$site_url           = $this->context->get_reference_site_url();
+		$woocommerce_active = class_exists( 'WooCommerce' );
 
 		$inline_data = array(
-			'homeURL'           => trailingslashit( $this->context->get_canonical_home_url() ),
-			'referenceSiteURL'  => esc_url_raw( trailingslashit( $site_url ) ),
-			'adminURL'          => esc_url_raw( trailingslashit( admin_url() ) ),
-			'assetsURL'         => esc_url_raw( $this->context->url( 'dist/assets/' ) ),
-			'widgetsAdminURL'   => esc_url_raw( $this->get_widgets_admin_url() ),
-			'blogPrefix'        => $wpdb->get_blog_prefix(),
-			'ampMode'           => $this->context->get_amp_mode(),
-			'isNetworkMode'     => $this->context->is_network_mode(),
-			'timezone'          => get_option( 'timezone_string' ),
-			'startOfWeek'       => (int) get_option( 'start_of_week' ),
-			'siteName'          => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
-			'siteLocale'        => $this->context->get_locale(),
-			'enabledFeatures'   => Feature_Flags::get_enabled_features(),
-			'webStoriesActive'  => defined( 'WEBSTORIES_VERSION' ),
-			'postTypes'         => $this->get_post_types(),
-			'storagePrefix'     => $this->get_storage_prefix(),
-			'referenceDate'     => Date::reference_date(),
-			'productPostType'   => $this->get_product_post_type(),
-			'anyoneCanRegister' => (bool) get_option( 'users_can_register' ),
-			'isMultisite'       => is_multisite(),
+			'homeURL'              => trailingslashit( $this->context->get_canonical_home_url() ),
+			'referenceSiteURL'     => esc_url_raw( trailingslashit( $site_url ) ),
+			'adminURL'             => esc_url_raw( trailingslashit( admin_url() ) ),
+			'assetsURL'            => esc_url_raw( $this->context->url( 'dist/assets/' ) ),
+			'widgetsAdminURL'      => esc_url_raw( $this->get_widgets_admin_url() ),
+			'blogPrefix'           => $wpdb->get_blog_prefix(),
+			'ampMode'              => $this->context->get_amp_mode(),
+			'isNetworkMode'        => $this->context->is_network_mode(),
+			'timezone'             => get_option( 'timezone_string' ),
+			'startOfWeek'          => (int) get_option( 'start_of_week' ),
+			'siteName'             => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
+			'siteLocale'           => $this->context->get_locale(),
+			'enabledFeatures'      => Feature_Flags::get_enabled_features(),
+			'webStoriesActive'     => defined( 'WEBSTORIES_VERSION' ),
+			'postTypes'            => $this->get_post_types(),
+			'storagePrefix'        => $this->get_storage_prefix(),
+			'wpPrivacyURL'         => get_privacy_policy_url(),
+			'referenceDate'        => Date::reference_date(),
+			'productPostType'      => $this->get_product_post_type(),
+			'wooCommerceActive'    => $woocommerce_active,
+			'wooCommerceInstalled' => $woocommerce_active || Plugin_Status::is_plugin_installed( 'woocommerce/woocommerce.php' ),
 		);
 
 		/**
@@ -890,7 +954,7 @@ final class Assets {
 	}
 
 	/**
-	 * Gets the inline data specific to the current user
+	 * Gets the inline data specific to the current user.
 	 *
 	 * @since 1.9.0
 	 *
@@ -922,7 +986,7 @@ final class Assets {
 	}
 
 	/**
-	 * Gets the inline dashboard sharing data
+	 * Gets the inline dashboard sharing data.
 	 *
 	 * @since 1.49.0
 	 *
@@ -1022,6 +1086,31 @@ final class Assets {
 			 * @param array $data Authentication Data.
 			 */
 			'setup'  => apply_filters( 'googlesitekit_setup_data', array() ),
+		);
+	}
+
+	/**
+	 * Gets the fingerprint used to validate the remembered features count.
+	 *
+	 * @since 1.189.0
+	 *
+	 * @return array Features badge data.
+	 */
+	private function get_inline_features_badge_data() {
+		/**
+		 * Filters the connected modules.
+		 *
+		 * @since 1.189.0
+		 *
+		 * @param array $modules Connected modules as slug => module pairs.
+		 */
+		$connected_modules = apply_filters( 'googlesitekit_connected_modules', array() );
+
+		return array(
+			'connectedModules' => array_keys( $connected_modules ),
+			'pluginVersion'    => GOOGLESITEKIT_VERSION,
+			'resetSession'     => (bool) $this->context->input()->filter( INPUT_GET, 'googlesitekit_reset_session', FILTER_VALIDATE_BOOLEAN ),
+			'userID'           => get_current_user_id(),
 		);
 	}
 

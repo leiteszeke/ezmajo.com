@@ -61,6 +61,9 @@ class Activator {
 		'3.5.0' => array(
 			'update_db_350',
 		),
+		'3.5.2' => array(
+			'update_db_352',
+		),
 	);
 	/**
 	 * Return the current instance of the class
@@ -82,6 +85,24 @@ class Activator {
 	 */
 	public static function init() {
 		add_action( 'init', array( __CLASS__, 'check_version' ), 5 );
+		add_action( 'update_option_siteurl', array( __CLASS__, 'maybe_clear_template_on_scheme_change' ), 10, 2 );
+	}
+
+	/**
+	 * Clear the cached banner template when the site URL scheme changes
+	 * (e.g. HTTP → HTTPS migration) so the next frontend request regenerates
+	 * it with the corrected asset URLs.
+	 *
+	 * @since 3.5.2
+	 * @param string $old_value Previous siteurl value.
+	 * @param string $new_value New siteurl value.
+	 * @return void
+	 */
+	public static function maybe_clear_template_on_scheme_change( $old_value, $new_value ) {
+		if ( wp_parse_url( $old_value, PHP_URL_SCHEME ) !== wp_parse_url( $new_value, PHP_URL_SCHEME ) ) {
+			delete_option( 'cky_banner_template' );
+			Cache::delete( 'banner_template' );
+		}
 	}
 	/**
 	 * Check the plugin version and run the updater is required.
@@ -102,6 +123,45 @@ class Activator {
 		self::check_for_upgrade();
 		if ( true === cky_first_time_install() ) {
 			add_option( 'cky_first_time_activated_plugin', 'true' );
+			/**
+			 * Record how this activation was performed, on a genuine first-time install
+			 * only.
+			 *
+			 * The outer guard is not sufficient. cky_first_time_install() also returns
+			 * true whenever cky_first_time_activated_plugin merely exists, and that
+			 * option is deleted only on the first wp-admin page load - so a site
+			 * provisioned over WP-CLI that never opens wp-admin keeps it indefinitely.
+			 * check_version() calls install() on `init`, which fires on front-end
+			 * requests too, so on such a site an upgrade to 3.5.6 would record
+			 * 'wp-admin' for a site that has only ever been driven from the command
+			 * line - the wrong value, and one the docs promise is absent.
+			 *
+			 * check_for_upgrade() above sets this transient only when cky_settings is
+			 * missing, which is true on a fresh install and false on every upgrade.
+			 * add_option() then keeps the first value if this ever runs twice.
+			 */
+			if ( (bool) get_site_transient( '_cky_first_time_install' ) ) {
+				/**
+				 * Three-way, not two. install() can first run on a front-end request:
+				 * tooling that activates by writing active_plugins directly never fires
+				 * register_activation_hook, and the same applies to REST, XML-RPC and
+				 * some hosting auto-installers. Calling those 'wp-admin' would report a
+				 * context that did not happen, so anything that is neither WP-CLI nor an
+				 * admin request is recorded as 'other' rather than guessed at.
+				 *
+				 * is_admin() is true for admin-ajax.php as well, so an activation whose
+				 * first run lands in an AJAX request still records 'wp-admin'. That is a
+				 * known imprecision and is left as is - it is an admin-side request.
+				 */
+				if ( defined( 'WP_CLI' ) && WP_CLI ) {
+					$context = 'wp-cli';
+				} elseif ( is_admin() ) {
+					$context = 'wp-admin';
+				} else {
+					$context = 'other';
+				}
+				add_option( 'cky_activation_context', $context, '', 'no' );
+			}
 		}
 		self::maybe_update_db();
 		update_option( 'wt_cli_version', CLI_VERSION );
@@ -318,6 +378,18 @@ class Activator {
 		delete_option( 'cky_banner_template' );
 		Cache::delete( 'banner_template' );
 		$controller->delete_cache();
+	}
+
+	/**
+	 * Clear cached banner template HTML so it is regenerated with the corrected
+	 * asset URL scheme (fixes mixed-content errors on HTTPS sites behind reverse proxies).
+	 *
+	 * @since 3.5.2
+	 * @return void
+	 */
+	public static function update_db_352() {
+		delete_option( 'cky_banner_template' );
+		Cache::delete( 'banner_template' );
 	}
 
 	/**

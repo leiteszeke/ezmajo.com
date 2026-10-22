@@ -97,6 +97,10 @@ if ( ! class_exists( 'Wbte_Accessibility_Banner' ) ) {
 		 * @since 2.2.8
 		 */
 		public function register_dashboard_banner_hooks() {
+			// Only surface the promotional banner (and its scripts) to users who can act on it.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
 			add_action( 'admin_notices', array( $this, 'show_banner_notice' ) );
 			add_action( 'admin_print_footer_scripts', array( $this, 'enqueue_admin_scripts' ) );
 		}
@@ -323,6 +327,10 @@ if ( ! class_exists( 'Wbte_Accessibility_Banner' ) ) {
 		 * @since 2.2.8
 		 */
 		public static function enqueue_admin_scripts() {
+			// Only output the banner's scripts/styles for users who can act on it.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
 			$ajax_url  = admin_url( 'admin-ajax.php' );
 			$nonce     = wp_create_nonce( self::$plugin_prefix );
 			$error_msg = esc_js( __( 'Something went wrong. Please try again.', 'cookie-law-info' ) );
@@ -336,11 +344,12 @@ if ( ! class_exists( 'Wbte_Accessibility_Banner' ) ) {
 			.wbte_accessibility_banner_actions { display: flex; gap: 16px; align-items: center; margin-left: 60px; margin-top: 16px; }
 			#wbte_accessibility_banner_install_btn { font-size: 14px; font-weight: 700; background-color: #2271b1; color: #fff; border-radius: 6px; padding: 6px 24px; line-height: 1.5; display: flex; align-items: center; justify-content: center; }
 			#wbte_accessibility_banner_install_btn:hover { background-color: #135e96; }
-			.wbte_accessibility_banner_install_btn_text{ display: flex; align-items: center; gap: 4px; }
-			.wbte_accessibility_banner_install_btn_loader { animation: wbte_ab_rotation 2s infinite linear; display: none; margin: 3px 5px 0 0; vertical-align: top; }
+			.wbte_accessibility_banner_install_btn_text { display: flex; align-items: center; }
+			.wbte_accessibility_banner_install_btn_loader { display: none; width: 16px; height: 16px; font-size: 16px; line-height: 1; margin: 0 5px 0 0; transform-origin: 50% 50%; animation: wbte_ab_rotation 0.8s infinite linear; }
+			.wbte_accessibility_banner_install_btn_loader:before { display: block; width: 16px; height: 16px; line-height: 16px; }
 			@keyframes wbte_ab_rotation {
 				from { transform: rotate(0deg); }
-				to { transform: rotate(359deg); }
+				to { transform: rotate(360deg); }
 			}
 			#wbte_accessibility_banner.wbte_accessibility_banner_loading .wbte_accessibility_banner_loader { position: absolute; inset: 0; background: rgba( 0, 0, 0, 0.6 ); border-radius: 4px; display: flex; align-items: center; justify-content: center; z-index: 1; }
 			#wbte_accessibility_banner.wbte_accessibility_banner_loading .wbte_accessibility_banner_loader .spinner { margin: 0; float: none; visibility: visible; }
@@ -461,7 +470,7 @@ if ( ! class_exists( 'Wbte_Accessibility_Banner' ) ) {
 
 					function setButtonLoading( isLoading ) {
 						if ( isLoading ) {
-							$( '.wbte_accessibility_banner_install_btn_loader' ).css( 'display', 'inline-block' );
+							$( '.wbte_accessibility_banner_install_btn_loader' ).css( 'display', 'inline-flex' );
 							btnTextSpan.text( '<?php echo esc_js( __( 'Installing...', 'cookie-law-info' ) ); ?>' );
 							installBtn.prop( 'disabled', true );
 						} else {
