@@ -6,7 +6,7 @@ Operational notes for ezmajo.com (WordPress). Nothing in this folder is deployed
 
 - `ssh ezequielito` (root, key auth; 5.189.143.47, migrated from DonWeb 2026-10-21). Everything lives in `/var/www/ezmajo.com/`: web root `sftp/web`, git dir `ezmajo.git`.
 - Agency access: SFTP `sftp.ezmajo.com:5920` (`kitdigital`, group `sftpusers`, chrooted to `/var/www/ezmajo.com/sftp`; ports in `/etc/ssh/sshd_config.d/10-ports.conf`). MySQL `db.ezmajo.com:3333` (`kitdigital`, only the `ezmajo` DB): nginx stream proxy `/etc/nginx/stream.d/ezmajo-db.conf` to the local MySQL, which stays bound to 127.0.0.1.
-- `wpe …` — WP-CLI as `www-data` on the web root. Use `--url=https://ezmajo.com` for plugin (de)activation.
+- `wpe …` — WP-CLI (`/usr/local/bin/wp`) as `ezmajo`, the PHP-FPM user, on the web root. `wpe core verify-checksums` only flags `readme.html`, removed on purpose. Use `--url=https://ezmajo.com` for plugin (de)activation.
 - `ezgit …` — git for the web root. The git dir lives outside the web root (`/var/www/ezmajo.com/ezmajo.git`); sparse-checkout keeps `ops/` and `.gitignore` off the live site.
 - `nginx/` — copies of `/etc/nginx/sites-available/{ezmajo.com,web.ezmajo.com}`. Originals from before our changes: `/root/nginx-backup-2026-09-30/`.
 
