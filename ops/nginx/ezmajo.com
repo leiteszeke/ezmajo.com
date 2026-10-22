@@ -1,5 +1,5 @@
 server {
-    root /var/www/sftp/web;
+    root /var/www/ezmajo.com/sftp/web;
     index index.php index.html;
     server_name ezmajo.com;
 

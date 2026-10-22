@@ -1,9 +1,9 @@
 #!/bin/sh
-# Deploy origin/main to /var/www/sftp/web. Installed at /usr/local/bin/ezdeploy on the server.
+# Deploy origin/main to /var/www/ezmajo.com/sftp/web. Installed at /usr/local/bin/ezdeploy on the server.
 # Refuses to run if the live files changed outside git (agency edits, WP auto-updates):
 # pull those changes into the repo first.
 set -e
-WEB=/var/www/sftp/web
+WEB=/var/www/ezmajo.com/sftp/web
 if [ -n "$(ezgit status --porcelain)" ]; then
 	echo "Live site has changes not in git — aborting:" >&2
 	ezgit status --short >&2
