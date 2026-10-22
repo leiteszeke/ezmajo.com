@@ -1,16 +1,11 @@
 const { pluginRecommendations = [] } = window?.extAgentData?.agentContext || {};
 const { adminUrl, homeUrl } = window?.extSharedData || {};
 
-export const getRedirectUrl = (redirectTo, options = {}) => {
-	if (redirectTo?.type === 'plugin-setup') {
-		const plugin = pluginRecommendations.find(
-			({ slug }) => slug === options.pluginSlug,
-		);
-		if (!plugin) return '';
-		return makeRedirectUrl(plugin.redirectTo);
-	}
-
-	return '';
+export const getPluginSetup = (pluginSlug) => {
+	const plugin = pluginRecommendations.find(({ slug }) => slug === pluginSlug);
+	if (!plugin?.redirectTo) return null;
+	const url = makeRedirectUrl(plugin.redirectTo);
+	return url ? { title: plugin.title, url } : null;
 };
 
 const makeRedirectUrl = (url) => {

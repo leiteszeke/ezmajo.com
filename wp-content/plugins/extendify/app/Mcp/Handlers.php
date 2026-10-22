@@ -8,7 +8,6 @@ namespace Extendify\Mcp;
 
 defined('ABSPATH') || die('No direct access.');
 
-use Extendify\Config;
 use Extendify\Constants;
 
 /**
@@ -1621,7 +1620,7 @@ class Handlers
                 'X-Extendify-Site-Id' => \get_option('extendify_site_id', ''),
             ],
             'body' => \wp_json_encode([
-                'partner' => (string) Config::$partnerId,
+                'partner' => (string) constant('EXTENDIFY_PARTNER_ID'),
                 'tool' => $arguments['tool'],
                 'justification' => $arguments['justification'],
                 'context' => (string) ($arguments['context'] ?? ''),

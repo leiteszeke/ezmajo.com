@@ -140,6 +140,10 @@ use Extendify\Shared\Services\PluginsActivation\Metricool as MetricoolActivation
         ApiRouter::post('/site-visibility/publish', [SiteVisibilityController::class, 'publish']);
         ApiRouter::post('/site-visibility/unpublish', [SiteVisibilityController::class, 'unpublish']);
 
+        // Search engine indexing.
+        ApiRouter::post('/search-indexing/enable', [SiteVisibilityController::class, 'allowIndexing']);
+        ApiRouter::post('/search-indexing/disable', [SiteVisibilityController::class, 'blockIndexing']);
+
         // Notifications.
         ApiRouter::post('/notifications/dismiss', [NotificationsController::class, 'dismiss']);
         ApiRouter::post('/notifications/dismiss-all', [NotificationsController::class, 'dismissAll']);

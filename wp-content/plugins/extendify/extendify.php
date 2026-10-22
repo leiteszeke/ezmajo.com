@@ -7,7 +7,7 @@
  * Plugin URI:        https://extendify.com/?utm_source=wp-plugins&utm_campaign=plugin-uri&utm_medium=wp-dash
  * Author:            Extendify
  * Author URI:        https://extendify.com/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
- * Version:           3.2.2
+ * Version:           3.2.3
  * Requires at least: 6.5
  * Requires PHP:      7.0
  * License:           GPL-2.0-or-later

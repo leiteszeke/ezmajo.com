@@ -17,6 +17,13 @@ export default {
 		// translators: Shown in the AI Agent chat as the user's own request, sent when they click the "Add to menu" button.
 		message: __('Add this to the menu', 'extendify-local'),
 	},
-	// The publish confirm writes the new status into the context.
+	// Picked after the confirm's reload, so the context holds the saved status.
 	score: ({ context }) => (context?.postStatus === 'publish' ? 1 : 0),
+	toolContext: () => {
+		const { postId, postTitle } = window.extAgentData?.context ?? {};
+		return {
+			refersTo: { postId, postTitle },
+			nextStep: 'Add this page to the menu',
+		};
+	},
 };

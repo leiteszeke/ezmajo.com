@@ -8,6 +8,9 @@ namespace Extendify;
 
 defined('ABSPATH') || die('No direct access.');
 
+use Extendify\Mcp\Availability;
+use Extendify\Mcp\Connections;
+use Extendify\Mcp\Log;
 use Extendify\Shared\Services\Sanitizer;
 use Extendify\PartnerData;
 
@@ -150,6 +153,11 @@ class Insights
                 'lastLoginAdmin' => $this->getLastAdminLogin(),
                 'hasImprint' => $this->hasImprint(),
             ]);
+
+            if (Availability::offered()) {
+                $insights['mcp'] = ['usage' => Log::usage(), 'connections' => Connections::count()];
+            }
+
             return $insights;
         });
     }

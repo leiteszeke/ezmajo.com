@@ -441,6 +441,20 @@ class Surface
     }
 
     /**
+     * @return array - The name a client calls each registered ability by.
+     */
+    public static function abilityNames()
+    {
+        if (!function_exists('wp_get_abilities')) {
+            return [];
+        }
+
+        return array_values(array_map(function ($ability) {
+            return self::name($ability->get_name());
+        }, \wp_get_abilities()));
+    }
+
+    /**
      * @param string $subject - The ability name.
      * @return string
      */

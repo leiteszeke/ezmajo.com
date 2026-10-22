@@ -23,6 +23,8 @@ class Log
     const ERROR_LENGTH = 500;
 
     const SHOWN = 10;
+
+    const USAGE_DAYS = 2;
     // phpcs:enable PSR12.Properties.ConstantVisibility.NotFound
 
     /**
@@ -79,6 +81,42 @@ class Log
             (string) $connection,
             (int) $limit
         ), ARRAY_A) ?: [];
+    }
+
+    /**
+     * Unknown names become `ability`: an unknown-tool call logs the client's free text.
+     *
+     * @return array
+     */
+    public static function usage()
+    {
+        if (!self::exists()) {
+            return [];
+        }
+
+        $wpdb = $GLOBALS['wpdb'];
+        $table = self::table();
+        $tools = array_merge(array_keys(Tools::all()), Surface::abilityNames());
+        $in = implode(',', array_fill(0, count($tools), '%s'));
+        $since = gmdate('Y-m-d', time() - ((self::USAGE_DAYS - 1) * DAY_IN_SECONDS));
+
+        // Binary, or the collation lets `LIST_POSTS` or a trailing space pass as ours.
+        $rows = $wpdb->get_results($wpdb->prepare(
+            "SELECT DATE(created_at), IF(CAST(tool AS BINARY) IN ({$in}), tool, 'ability'), COUNT(*),"
+                . " SUM(outcome = 'error'), SUM(outcome = 'refused') FROM {$table}"
+                . ' WHERE created_at >= %s GROUP BY 1, 2 ORDER BY 1, 2',
+            array_merge($tools, [$since])
+        ), ARRAY_N) ?: [];
+
+        return array_map(function ($row) {
+            return [
+                'day' => $row[0],
+                'tool' => $row[1],
+                'calls' => (int) $row[2],
+                'errors' => (int) $row[3],
+                'refused' => (int) $row[4],
+            ];
+        }, $rows);
     }
 
     /**

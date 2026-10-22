@@ -4,6 +4,7 @@ namespace Extendify\Notifications;
 
 defined('ABSPATH') || die('No direct access.');
 
+use Extendify\Config;
 use Extendify\PartnerData;
 use Extendify\SiteVisibility;
 use Extendify\SiteSettings;
@@ -19,6 +20,7 @@ class Triggers
         'trial-domain' => 'onTrialDomain',
         'unpublished' => 'siteUnpublished',
         'trial-block' => 'onExpiredTrialDomain',
+        'search-engine-block' => 'searchEnginesBlocked',
     ];
 
     // phpcs:ignore PSR12.Properties.ConstantVisibility.NotFound -- 7.0 floor: no const visibility
@@ -40,6 +42,13 @@ class Triggers
     private static function siteUnpublished()
     {
         return !SiteVisibility::isPublished();
+    }
+
+    private static function searchEnginesBlocked()
+    {
+        return PartnerData::setting('useSearchEngineBlock')
+            && SiteVisibility::searchEnginesBlocked()
+            && (PartnerData::setting('showAIAgents') || Config::preview('ai-agent'));
     }
 
     // Substring match, mirroring the domain-suggestion matcher in src/Assist/lib/domains.js.

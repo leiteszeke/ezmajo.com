@@ -1,4 +1,5 @@
 import { safeParseJson } from '@shared/lib/parsing';
+import { siteHost } from '@shared/lib/site-host';
 import apiFetch from '@wordpress/api-fetch';
 import { decodeEntities } from '@wordpress/html-entities';
 
@@ -77,14 +78,19 @@ export const showSecondaryDomainTask = (() => {
  * e.g., https://example.com?sld={SLD}&tld={TLD}
  * If not present, fallback to {DOMAIN} format
  */
-export const createDomainUrlLink = (domainSearchUrl, domain) => {
-	if (domainSearchUrl.includes('{SLD}') && domainSearchUrl.includes('{TLD}')) {
+export const createDomainUrlLink = (
+	domainSearchUrl,
+	domain,
+	host = siteHost(),
+) => {
+	const url = domainSearchUrl.replaceAll('{SITEURL}', host);
+	if (url.includes('{SLD}') && url.includes('{TLD}')) {
 		const parts = domain.toLowerCase().split('.');
 		const sld = parts[0];
 		const tld = parts.slice(1).join('.');
-		return domainSearchUrl.replace('{SLD}', sld).replace('{TLD}', `.${tld}`);
+		return url.replace('{SLD}', sld).replace('{TLD}', `.${tld}`);
 	}
-	return domainSearchUrl.replace('{DOMAIN}', domain.toLowerCase());
+	return url.replace('{DOMAIN}', domain.toLowerCase());
 };
 
 export const deleteDomainCache = () =>

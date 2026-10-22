@@ -8,10 +8,7 @@ const statusMap = {
 
 export const UpdatePostStatusConfirm = ({ inputs, onConfirm, onCancel }) => {
 	const handleConfirm = () => {
-		if (window?.extAgentData?.context) {
-			window.extAgentData.context.postStatus = inputs.updatedStatus;
-		}
-		onConfirm({ data: inputs });
+		onConfirm({ data: inputs, shouldRefreshPage: true });
 	};
 
 	const handleCancel = useCallback(() => {

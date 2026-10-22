@@ -190,67 +190,67 @@ msgctxt "label for responsive previews group"
 msgid "Responsive Views"
 msgstr "Vistas adaptables"
 
-#: wp-admin/about.php:179
+#: wp-admin/about.php:224
 msgid "WordPress 7.1 continues to polish accessibility across WordPress Core and Gutenberg, advancing the goals to meet accessibility standards. In this release, high impact changes include the new accessible tooltips API, improved predictability for screen readers, and improved labeling in many places in the admin. The editor adds extensive improvements to navigation and interaction."
 msgstr "WordPress 7.1 sigue puliendo la accesibilidad en el núcleo de WordPress y Gutenberg, avanzando en los objetivos para cumplir con los estándares de accesibilidad. En esta versión, los cambios de gran impacto incluyen la nueva API de información emergente accesible, una mejor previsibilidad para los lectores de pantalla y un etiquetado mejorado en muchos lugares de la administración. El editor añade mejoras extensas en la navegación y la interacción."
 
-#: wp-admin/about.php:170
+#: wp-admin/about.php:215
 msgid "Image compression, resizing, and thumbnail generation now happen in the browser, via a WebAssembly build of libvips, so large uploads won&#8217;t hit PHP memory limits or time out on shared hosts. This also frees up server CPU and memory, while producing smaller files for visitors. Media handling includes built-in support for AVIF, HEIC and HDR gain maps."
 msgstr "La compresión de imágenes, el redimensionado y la generación de miniaturas ahora se realizan en el navegador, mediante una compilación de libvips en WebAssembly, por lo que las subidas grandes no alcanzarán los límites de memoria de PHP ni agotarán el tiempo de espera en servidores compartidos. Esto también libera CPU y memoria del servidor, a la vez que genera archivos más pequeños para los visitantes. El manejo de medios incluye compatibilidad nativa con AVIF, HEIC y mapas de ganancia HDR."
 
-#: wp-admin/about.php:169
+#: wp-admin/about.php:214
 msgid "Improved media handling"
 msgstr "Gestión de medios mejorada"
 
-#: wp-admin/about.php:154
+#: wp-admin/about.php:199
 msgid "Notes now support rich text and @mentions. Add bold, italic, code, and links so feedback reads clearly. Type &#8220;@&#8221; to pull up a list of collaborators to tag the right person directly, with built-in email notifications. Leave a note on a specific text selection instead of an entire block. Start more than one conversation on the same block. Collapse long notes to keep the margin tidy."
 msgstr "Las notas ahora admiten texto enriquecido y menciones con @. Añade negritas, cursivas, código y enlaces para que los comentarios se lean con claridad. Escribe «@» para que aparezca una lista de colaboradores y así etiquetar directamente a la persona adecuada, con avisos por correo electrónico integrados. Deja una nota en una selección de texto específica en lugar de en todo un bloque. Inicia más de una conversación en el mismo bloque. Colapsa las notas largas para mantener ordenado el margen."
 
-#: wp-admin/about.php:153
+#: wp-admin/about.php:198
 msgid "More ways to leave feedback."
 msgstr "Más formas para enviar comentarios."
 
-#: wp-admin/about.php:151
+#: wp-admin/about.php:196
 msgid "Inline notes with mentions and rich text"
 msgstr "Notas integradas, con menciones y texto enriquecido"
 
-#: wp-admin/about.php:134
+#: wp-admin/about.php:179
 msgid "A new media editor modal replaces the old inline cropping tool, bringing freeform and aspect-ratio cropping, flip, precise rotation, and metadata editing together in a single streamlined workflow. The familiar Crop button still gets you there, now opening a dedicated space to crop, rotate, and adjust images before publishing."
 msgstr "Un nuevo emergente de editor de medios reemplaza la antigua herramienta de recorte en línea, y reúne el recorte de forma libre y por relación de aspecto, el volteo, la rotación precisa y la edición de metadatos en un único flujo de trabajo optimizado. El conocido botón de recortar sigue llevándote allí, y ahora abre un espacio dedicado para recortar, rotar y ajustar las imágenes antes de publicarlas."
 
-#: wp-admin/about.php:133
+#: wp-admin/about.php:178
 msgid "One dedicated workflow for editing your images."
 msgstr "Un flujo de trabajo dedicado a editar tus imágenes."
 
-#: wp-admin/about.php:131
+#: wp-admin/about.php:176
 msgid "A new way to crop"
 msgstr "Una nueva forma de recortar."
 
-#: wp-admin/about.php:124
+#: wp-admin/about.php:169
 msgid "The admin bar now stays with you across all editors, so you always know where you are. The admin bar also gets a small visual refresh."
 msgstr "La barra de administración ahora te acompaña en todos los editores, para que siempre sepas dónde estás. Además, la barra de administración recibe un pequeño lavado de cara visual."
 
-#: wp-admin/about.php:123
+#: wp-admin/about.php:168
 msgid "Consistent navigation, from dashboard to editor."
 msgstr "Navegación coherente, del Escritorio al editor."
 
-#: wp-admin/about.php:121
+#: wp-admin/about.php:166
 msgid "Admin bar, now in every editor"
 msgstr "Barra de administración, ahora en todos los editores."
 
-#: wp-admin/about.php:104
+#: wp-admin/about.php:149
 msgid "WordPress 7.1 takes a major step toward built-in responsive design. Set how a block looks at different screen sizes directly in the editor, for both Global Styles and individual blocks, all without writing custom CSS."
 msgstr "WordPress 7.1 da un paso importante hacia el diseño adaptable integrado. Puedes establecer cómo se ve un bloque en diferentes tamaños de pantalla directamente en el editor, tanto para los estilos globales como para los bloques individuales, todo sin necesidad de escribir CSS personalizado."
 
-#: wp-admin/about.php:103
+#: wp-admin/about.php:148
 msgid "Style content your way, on every screen."
 msgstr "Dale tu estilo al contenido, en todas las pantallas."
 
-#: wp-admin/about.php:101
+#: wp-admin/about.php:146
 msgid "Apply responsive styles"
 msgstr "Aplica estilos adaptables"
 
-#: wp-admin/about.php:95
+#: wp-admin/about.php:140
 msgid "WordPress 7.1 makes styling and collaborating easier. Style how all blocks look across screen sizes and how the Button block responds to hover, focus, and active states, all without writing custom CSS. A streamlined media editor brings cropping, rotation, and metadata editing together in one workflow. Notes now support rich text and @mentions, and the admin bar travels with you into every editor, so the tools you rely on stay with you wherever you&#8217;re working."
 msgstr "WordPress 7.1 facilita el diseño y la colaboración. Puedes definir cómo se ven todos los bloques en diferentes tamaños de pantalla y cómo responde el bloque de botón a los estados de pasar el cursor, enfoque y activación, todo sin escribir CSS personalizado. Un editor de medios optimizado unifica el recorte, la rotación y la edición de metadatos en un mismo flujo de trabajo. Las notas ahora admiten texto enriquecido y menciones con @, y la barra de administración te acompaña a todos los editores, para que las herramientas que usas estén siempre a mano, estés donde estés."
 
@@ -784,12 +784,12 @@ msgid "Skip to Editor"
 msgstr "Saltar al editor"
 
 #. translators: %s: WordPress version number.
-#: wp-admin/about.php:274
+#: wp-admin/about.php:319
 msgid "WordPress %s Field Guide"
 msgstr "Guía de campo de WordPress %s"
 
 #. translators: %s: WordPress version number.
-#: wp-admin/about.php:247
+#: wp-admin/about.php:292
 msgid "WordPress %s Release Notes"
 msgstr "Notas de la versión de WordPress %s"
 
@@ -948,7 +948,7 @@ msgstr "Si eres autor de un plugin, puedes obtener más información sobre <a hr
 msgid "If you are a plugin author, you can learn more about <a href=\"https://developer.wordpress.org/plugins/privacy/adding-the-personal-data-eraser-to-your-plugin/\">how to add the Personal Data Eraser to a plugin</a>."
 msgstr "Si eres autor de un plugin, puedes obtener más información sobre <a href=\"https://developer.wordpress.org/plugins/privacy/adding-the-personal-data-eraser-to-your-plugin/\">cómo añadir el borrado de datos personales a un plugin</a>."
 
-#: wp-admin/about.php:200
+#: wp-admin/about.php:245
 msgid "See everything new"
 msgstr "Ver todas las novedades"
 
@@ -958,11 +958,11 @@ msgid "https://wordpress.org/download/releases/%s/"
 msgstr "https://wordpress.org/download/releases/%s/"
 
 #. translators: %s: Version number.
-#: wp-admin/about.php:192
+#: wp-admin/about.php:237
 msgid "For a comprehensive overview of all the new features and enhancements in WordPress %s, please visit the feature-showcase website."
 msgstr "Para obtener una visión general de todas las nuevas características y mejoras de WordPress %s, visita el sitio web de presentación de características."
 
-#: wp-admin/about.php:186
+#: wp-admin/about.php:231
 msgid "And much more"
 msgstr "Y mucho más"
 
@@ -1168,12 +1168,12 @@ msgid "When using Bulk Edit, you can change the metadata (categories, author, et
 msgstr "Al utilizar la edición en lote, puedes cambiar los metadatos (categorías, autor, etc.) de todas las entradas seleccionadas a la vez. Para eliminar una entrada de la agrupación, sólo tienes que hacer clic en el botón %s<span class=\"screen-reader-text\">eliminar</span> situado a continuación de su nombre en el área de edición en lote que aparece."
 
 #. translators: %s: WordPress version number.
-#: wp-admin/about.php:257
+#: wp-admin/about.php:302
 msgid "Read the WordPress %s Release Notes for information on installation, enhancements, fixed issues, release contributors, learning resources, and the list of file changes."
 msgstr "Lee las notas de la versión de WordPress %s para obtener información sobre la instalación, las mejoras, los problemas corregidos, los colaboradores de la versión, los recursos de aprendizaje y la lista de cambios en los archivos."
 
 #. translators: %s: WordPress version number.
-#: wp-admin/about.php:284
+#: wp-admin/about.php:329
 msgid "Explore the WordPress %s Field Guide. Learn about the changes in this release with detailed developer notes to help you build with WordPress."
 msgstr "Explora la Guía de campo de WordPress %s. Infórmate sobre los cambios en esta versión con notas detalladas para desarrolladores que te ayudarán a construir con WordPress."
 
@@ -1656,7 +1656,7 @@ msgid "Be the future of WordPress"
 msgstr "Sé parte del futuro de WordPress"
 
 #. translators: 1: Learn WordPress link, 2: Workshops link.
-#: wp-admin/about.php:225
+#: wp-admin/about.php:270
 msgid "<a href=\"%1$s\">Learn WordPress</a> is a free resource for new and experienced WordPress users. Learn is stocked with how-to videos on using various features in WordPress, <a href=\"%2$s\">interactive workshops</a> for exploring topics in-depth, and lesson plans for diving deep into specific areas of WordPress."
 msgstr "<a href=\"%1$s\">Aprende WordPress</a> es un recurso gratuito para usuarios nuevos y experimentados de WordPress. Está repleto de vídeos sobre cómo utilizar las distintas características de WordPress, <a href=\"%2$s\">eventos interactivos</a> para explorar temáticas en profundidad, y planes de lecciones para sumergirse en áreas específicas de WordPress."
 
@@ -1802,12 +1802,12 @@ msgid "<a href=\"https://wordpress.org/documentation/article/customizer/\">Docum
 msgstr "<a href=\"https://wordpress.org/documentation/article/customizer/\">Documentación sobre el personalizador</a>"
 
 #. translators: The localized WordPress download URL.
-#: wp-admin/about.php:365
+#: wp-admin/about.php:410
 msgid "https://wordpress.org/download/"
 msgstr "https://es.wordpress.org/download/"
 
 #. translators: %s: The major version of WordPress for this branch.
-#: wp-admin/about.php:362
+#: wp-admin/about.php:407
 msgid "This is the final release of WordPress %s"
 msgstr "Esta es la versión final de WordPress %s"
 
@@ -2127,12 +2127,12 @@ msgid "Reach out to WordPress Core developers to ensure you'll never have this p
 msgstr "Contacta con nuestros desarrolladores del núcleo de WordPress para asegurar que nunca vuelvas a tener este problema."
 
 #. translators: 1: WordPress version number, 2: Link to update WordPress
-#: wp-admin/about.php:359
+#: wp-admin/about.php:404
 msgid "Important! Your version of WordPress (%1$s) will stop receiving security updates in the near future. To keep your site secure, please <a href=\"%2$s\">update to the latest version of WordPress</a>."
 msgstr "¡Importante! Tu versión de WordPress (%1$s) dejará de recibir actualizaciones en un futuro próximo. Para mantener seguro tu sitio, por favor, <a href=\"%2$s\">actualiza a la última versión de WordPress</a>."
 
 #. translators: 1: WordPress version number, 2: Link to update WordPress
-#: wp-admin/about.php:356
+#: wp-admin/about.php:401
 msgid "Important! Your version of WordPress (%1$s) is no longer supported, you will not receive any security updates for your website. To keep your site secure, please <a href=\"%2$s\">update to the latest version of WordPress</a>."
 msgstr "¡Importante! Tu versión de WordPress (%1$s) ya no recibe soporte, y no recibirá ninguna actualización de seguridad para tu web. Para mantener seguro tu sitio, por favor, <a href=\"%2$s\">actualiza a la última versión de WordPress</a>."
 
@@ -2142,7 +2142,7 @@ msgid "https://make.wordpress.org/core/wordpress-%s-field-guide/"
 msgstr "https://make.wordpress.org/core/wordpress-%s-field-guide/"
 
 #. translators: %s: Version number.
-#: wp-admin/about.php:216
+#: wp-admin/about.php:261
 msgid "Learn more about WordPress %s"
 msgstr "Aprende más sobre WordPress %s"
 
@@ -3038,7 +3038,7 @@ msgstr "Añadir nueva contraseña de aplicación"
 msgid "Required to create an Application Password, but not to update the user."
 msgstr "Necesario para crear una contraseña de aplicación, pero no para actualizar al usuario."
 
-#: wp-admin/about.php:300
+#: wp-admin/about.php:345
 msgid "Go to Updates"
 msgstr "Ir a las actualizaciones"
 
@@ -6146,7 +6146,8 @@ msgstr "Este plugin no funciona con tus versiones de WordPress y PHP."
 
 #. translators: %s: WordPress version number.
 #. translators: %s: WordPress version.
-#: wp-admin/about.php:21 wp-admin/about.php:83 wp-admin/includes/update.php:321
+#: wp-admin/about.php:21 wp-admin/about.php:83 wp-admin/about.php:103
+#: wp-admin/about.php:128 wp-admin/includes/update.php:321
 #: wp-admin/index.php:119 wp-admin/install.php:242 wp-admin/update-core.php:94
 #: wp-admin/upgrade.php:96
 msgid "https://wordpress.org/documentation/wordpress-version/version-%s/"
@@ -8400,8 +8401,9 @@ msgctxt "menu location"
 msgid "(Currently set to: %s)"
 msgstr "(Actualmente como: %s) "
 
+#. translators: %s: WordPress version.
 #. translators: %s: WordPress version number.
-#: wp-admin/about.php:330
+#: wp-admin/about.php:93 wp-admin/about.php:375
 msgid "<strong>Version %s</strong> addressed one security issue."
 msgstr "<strong>Versión %s</strong> mostr&oacute; un problema de seguridad."
 
@@ -8414,15 +8416,15 @@ msgstr "https://es.gravatar.com/"
 msgid "Profile Picture"
 msgstr "Imagen de perfil"
 
-#: wp-admin/about.php:63 wp-admin/about.php:327
+#: wp-admin/about.php:63 wp-admin/about.php:372
 msgid "Maintenance and Security Releases"
 msgstr "Versiones de mantenimiento y seguridad"
 
-#: wp-admin/about.php:324
+#: wp-admin/about.php:369
 msgid "Security Releases"
 msgstr "Versiones de seguridad"
 
-#: wp-admin/about.php:321
+#: wp-admin/about.php:366
 msgid "Maintenance Releases"
 msgstr "Versiones de mantenimiento"
 
@@ -11643,13 +11645,15 @@ msgstr "Mostrar la barra de herramientas al ver el sitio"
 
 #. translators: %s: HelpHub URL.
 #. translators: %s: Documentation URL.
-#: wp-admin/about.php:80 wp-admin/about.php:353
+#: wp-admin/about.php:80 wp-admin/about.php:100 wp-admin/about.php:125
+#: wp-admin/about.php:398
 msgid "For more information, see <a href=\"%s\">the release notes</a>."
 msgstr "Para más información, lee <a href=\"%s\">las notas de la versión</a>."
 
+#. translators: 1: WordPress version number, 2: Plural number of bugs.
 #. translators: 1: WordPress version number, 2: Plural number of bugs. More
 #. than one security issue.
-#: wp-admin/about.php:68 wp-admin/about.php:347
+#: wp-admin/about.php:68 wp-admin/about.php:113 wp-admin/about.php:392
 msgid "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bugs."
 msgstr[0] "La <strong>versión %1$s</strong> soluciona algunos problemas de seguridad y soluciona %2$s fallo."
@@ -11657,33 +11661,33 @@ msgstr[1] "La <strong>versión %1$s</strong> soluciona algunos problemas de segu
 
 #. translators: 1: WordPress version number, 2: Plural number of bugs. Singular
 #. security issue.
-#: wp-admin/about.php:341
+#: wp-admin/about.php:386
 msgid "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bugs."
 msgstr[0] "La <strong>versión %1$s</strong> soluciona un problema de seguridad y soluciona %2$s fallo."
 msgstr[1] "La <strong>versión %1$s</strong> soluciona un problema de seguridad y soluciona %2$s fallos."
 
 #. translators: 1: WordPress version number, 2: Plural number of bugs.
-#: wp-admin/about.php:335
+#: wp-admin/about.php:380
 msgid "<strong>Version %1$s</strong> addressed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed %2$s bugs."
 msgstr[0] "La <strong>versión %1$s</strong> soluciona %2$s fallo."
 msgstr[1] "La <strong>versión %1$s</strong> soluciona %2$s fallos."
 
 #. translators: %s: WordPress version number.
-#: wp-admin/about.php:332
+#: wp-admin/about.php:377
 msgid "<strong>Version %s</strong> addressed some security issues."
 msgstr "<strong>La versión %s</strong> soluciona algunos problemas de seguridad."
 
-#: wp-admin/about.php:326
+#: wp-admin/about.php:371
 msgid "Maintenance and Security Release"
 msgstr "Versión de mantenimiento y seguridad"
 
-#: wp-admin/about.php:323
+#: wp-admin/about.php:368
 msgid "Security Release"
 msgstr "Versión de seguridad"
 
-#: wp-admin/about.php:320
+#: wp-admin/about.php:365
 msgid "Maintenance Release"
 msgstr "Versión de mantenimiento"
 
@@ -11958,15 +11962,15 @@ msgstr "<strong>Editar</strong> te lleva a la pantalla de edición de esa entrad
 msgid "Because this is a multisite installation, you may add accounts that already exist on the Network by specifying a username or email, and defining a role. For more options, such as specifying a password, you have to be a Network Administrator and use the hover link under an existing user&#8217;s name to Edit the user profile under Network Admin > All Users."
 msgstr "En una instalación multisitio puedes añadir cuentas que ya existen en la Red especificando el nombre de usuario o la contraseña con la que están registrados en la misma, y definiendo un rol. Para más opciones, como especificar una contraseña, debes ser Administrador de la Red y utilizar el enlace que aparece al pasar sobre los nombres de usuario. Puedes encontrar esta opción bajo Administración de Red > Todos los Usuarios."
 
-#: wp-admin/about.php:94
+#: wp-admin/about.php:139
 msgid "Welcome to WordPress 7.1"
 msgstr "Te damos la bienvenida a WordPress 7.1"
 
-#: wp-admin/about.php:307
+#: wp-admin/about.php:352
 msgid "Go to Dashboard &rarr; Home"
 msgstr "Ir a Escritorio &rarr; Inicio"
 
-#: wp-admin/about.php:300
+#: wp-admin/about.php:345
 msgid "Go to Dashboard &rarr; Updates"
 msgstr "Ir a Escritorio &rarr; Actualizaciones"
 
@@ -13648,7 +13652,7 @@ msgstr "Actualizaciones de WordPress"
 msgid "Edit menu item"
 msgstr "Editar elemento del menú"
 
-#: wp-admin/about.php:307
+#: wp-admin/about.php:352
 msgid "Go to Dashboard"
 msgstr "Ir al escritorio"
 

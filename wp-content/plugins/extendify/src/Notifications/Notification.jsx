@@ -1,6 +1,7 @@
+import { siteHost } from '@shared/lib/site-host';
 import { track } from '@shared/lib/track';
 import { useEffect, useState } from '@wordpress/element';
-import { resolveNotificationLink, siteHost } from './notification-link';
+import { resolveNotificationLink } from './notification-link';
 import { notificationFor } from './selection';
 import { fillsSlot, ignoresDismissal, templateFor } from './slots';
 import { useNotificationsStore } from './state';

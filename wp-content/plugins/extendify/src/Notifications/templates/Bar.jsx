@@ -6,13 +6,14 @@ import classNames from 'classnames';
 import { Cta } from '../Cta';
 import {
 	bannerButtonVariables,
+	barIconVariables,
 	barVariables,
 	buttonHoverClasses,
 	colorsOf,
 } from '../colors';
+import { ctaActionFor, runCtaAction } from '../cta-action';
 import { DismissButton } from '../DismissButton';
 import { iconFor } from '../icons';
-import { publishAndReload, publishesSite } from '../publish-site';
 
 export const Bar = ({
 	notification,
@@ -27,18 +28,18 @@ export const Bar = ({
 	const icon = iconFor(notification.icon);
 	const colors = colorsOf(notification);
 	const ref = useRef(null);
-	const [publishing, setPublishing] = useState(false);
-	const publishes = publishesSite(notification);
+	const [running, setRunning] = useState(false);
+	const action = ctaActionFor(notification);
 	const ctaClassName = classNames(
 		'inline-flex h-10 shrink-0 items-center gap-2 rounded-md bg-banner-main px-5 text-sm font-medium text-banner-text no-underline',
 		// Both cursor utilities in one layer would leave the winner to CSS source order.
-		publishing ? 'cursor-not-allowed' : 'cursor-pointer',
-		!publishing && buttonHoverClasses(colors),
+		running ? 'cursor-not-allowed' : 'cursor-pointer',
+		!running && buttonHoverClasses(colors),
 	);
 
-	const publishNow = () => {
-		setPublishing(true);
-		publishAndReload(onClick);
+	const runAction = () => {
+		setRunning(true);
+		runCtaAction(action, onClick);
 	};
 
 	// The agent reads this to keep its panel and the scaled page off the bar.
@@ -75,6 +76,7 @@ export const Bar = ({
 			{icon && (
 				<span
 					className="flex size-10 shrink-0 items-center justify-center rounded-full bg-banner-main text-banner-text"
+					style={barIconVariables(colors)}
 					data-test="notification-bar-icon"
 				>
 					<Icon icon={icon} size={24} className="fill-current" />
@@ -84,21 +86,21 @@ export const Bar = ({
 				<div className="text-[15px] font-bold">{title}</div>
 				<div className="mt-0.5 text-[13px]">{content}</div>
 			</div>
-			{ctaLabel && publishes && (
+			{ctaLabel && action && (
 				<button
 					type="button"
-					onClick={publishNow}
-					disabled={publishing}
-					aria-busy={publishing}
+					onClick={runAction}
+					disabled={running}
+					aria-busy={running}
 					className={ctaClassName}
 					style={bannerButtonVariables(colors)}
-					data-test="notification-bar-publish"
+					data-test="notification-bar-action"
 				>
 					{ctaLabel}
-					{publishing && <Spinner className="m-0 h-4 text-banner-text" />}
+					{running && <Spinner className="m-0 h-4 text-banner-text" />}
 				</button>
 			)}
-			{!publishes && (
+			{!action && (
 				<Cta
 					notification={notification}
 					href={href}

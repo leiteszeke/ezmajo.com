@@ -103,6 +103,7 @@ class PartnerData
         'activeTests' => [],
         'showExtendifyCode' => false,
         'useComingSoon' => false,
+        'useSearchEngineBlock' => false,
         'extendifyCodeData' => [
             'link' => '',
             'title' => '',
@@ -206,6 +207,8 @@ class PartnerData
         self::$config['activeTests'] = ($data['activeTests'] ?? self::$config['activeTests']);
         self::$config['showExtendifyCode'] = ($data['showExtendifyCode'] ?? self::$config['showExtendifyCode']);
         self::$config['useComingSoon'] = ($data['useComingSoon'] ?? self::$config['useComingSoon']);
+        self::$config['useSearchEngineBlock'] = ($data['useSearchEngineBlock']
+            ?? self::$config['useSearchEngineBlock']);
         self::$config['extendifyCodeData'] = ($data['extendifyCodeData'] ?? self::$config['extendifyCodeData']);
         self::$config['customDesign'] = ($data['customDesign'] ?? self::$config['customDesign']);
         self::$config['strings'] = ($data['strings'] ?? self::$config['strings']);

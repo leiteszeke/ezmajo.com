@@ -266,13 +266,15 @@ class Profile
         }
 
         $isSelf = (int) $userId === \get_current_user_id();
+        $connections = Connections::all($userId);
+        $intro = $withIntro ? self::intro($isSelf, count($connections)) : '';
 
-        if ($withIntro) {
-            echo '<p class="description">' . \esc_html(self::intro($isSelf)) . '</p>';
+        if ($intro !== '') {
+            echo '<p class="description">' . \esc_html($intro) . '</p>';
         }
 
         if (!$isSelf) {
-            self::renderList($userId);
+            self::renderList($userId, $connections);
             return;
         }
 
@@ -286,9 +288,14 @@ class Profile
         self::renderPicker();
         echo '</div></details>';
 
-        /* translators: heading over the assistants this person has authorized. */
-        self::openSection(\__('Your authorized assistants', 'extendify-local'));
-        self::renderList($userId);
+        self::openSection(\_n(
+            /* translators: heading over the assistants this person has authorized. */
+            'Your authorized assistant',
+            'Your authorized assistants',
+            count($connections),
+            'extendify-local'
+        ));
+        self::renderList($userId, $connections);
         echo '</div></details>';
     }
 
@@ -319,14 +326,22 @@ class Profile
 
     /**
      * @param boolean $isSelf - Whether this is the screen the viewer connects from.
+     * @param integer $count  - How many assistants the user has authorized.
      * @return string
      */
-    private static function intro($isSelf)
+    private static function intro($isSelf, $count = 0)
     {
         if (!$isSelf) {
-            /* translators: shown to an administrator looking at someone else's profile. */
-            return \__(
+            // Would contradict the "No assistants have been authorized yet." message.
+            if (!$count) {
+                return '';
+            }
+
+            return \_n(
+                /* translators: shown to an administrator looking at someone else's profile. */
+                'The AI assistant this user has authorized. Only they can add new ones, but you can revoke it.',
                 'AI assistants this user has authorized. Only they can add new ones, but you can revoke any of them.',
+                $count,
                 'extendify-local'
             );
         }
@@ -642,12 +657,12 @@ class Profile
     }
 
     /**
-     * @param integer $userId - The user whose connections to list.
+     * @param integer $userId      - The user whose connections to list.
+     * @param array   $connections - Their connections.
      * @return void
      */
-    private static function renderList($userId)
+    private static function renderList($userId, array $connections)
     {
-        $connections = Connections::all($userId);
         if (!$connections) {
             echo '<p class="extendify-mcp-empty">'
                 /* translators: empty state under that heading. */

@@ -61,6 +61,21 @@ class Connections
     }
 
     /**
+     * Expired rows count until their user's screen prunes them.
+     *
+     * @return integer
+     */
+    public static function count()
+    {
+        $wpdb = $GLOBALS['wpdb'];
+
+        return (int) $wpdb->get_var($wpdb->prepare(
+            "SELECT COUNT(*) FROM {$wpdb->usermeta} WHERE meta_key LIKE %s",
+            $wpdb->esc_like(self::prefix()) . '%'
+        ));
+    }
+
+    /**
      * @param integer $userId - The user whose connections to describe.
      * @return array - What a screen would have to redraw for: how many, and the newest.
      */

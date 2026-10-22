@@ -1,5 +1,6 @@
 import { useFollowUpHistory } from '@agent/follow-ups/history';
 import { cards } from '@agent/follow-ups/registry';
+import { doReload } from '@agent/lib/reload';
 import { useChatStore } from '@agent/state/chat';
 import { workflows } from '@agent/workflows/workflows';
 import { track } from '@shared/lib/track';
@@ -13,6 +14,17 @@ const submitFor = ({ message, workflowId }) => {
 	return { message: target?.example?.text };
 };
 
+const newTab = { target: '_blank', rel: 'noopener noreferrer' };
+
+const toolContext = (card, previous) => {
+	try {
+		return card.toolContext?.(previous);
+	} catch (error) {
+		// A throw here would swallow the message the user clicked to send.
+		window.extSharedData?.devbuild && console.error(error);
+	}
+};
+
 export const FollowUpCard = ({ message }) => {
 	const updateMessage = useChatStore((state) => state.updateMessage);
 	const {
@@ -21,7 +33,7 @@ export const FollowUpCard = ({ message }) => {
 		markClicked,
 		markDismissed,
 	} = useFollowUpHistory();
-	const { workflowId, followUp, followUpData: data } = message.details;
+	const { workflowId, label, followUp, followUpData: data } = message.details;
 	const card = cards.find(({ id }) => id === followUp);
 	const shownFor = history[card?.id]?.shownFor;
 
@@ -47,6 +59,12 @@ export const FollowUpCard = ({ message }) => {
 		card.onClick?.(data);
 		close();
 	};
+	const handleLink = (event) => {
+		handleClick();
+		if (!action.sameTab) return;
+		event.preventDefault();
+		doReload(action.url);
+	};
 	const handleDismiss = () => {
 		markDismissed(card.id);
 		track('agent_follow_up_dismiss', { id: card.id, workflowId });
@@ -54,9 +72,19 @@ export const FollowUpCard = ({ message }) => {
 	};
 	const handleAction = () => {
 		handleClick();
+		const detail = submitFor(action);
+		const step = {
+			id: 'get-clicked-suggestion-context',
+			// Without suggestionSent and a card nextStep the fill asks what "this" means.
+			result: {
+				suggestionSent: detail.message,
+				shownAfter: label ?? workflowId,
+				...toolContext(card, { workflowId, data }),
+			},
+		};
 		window.dispatchEvent(
 			new CustomEvent('extendify-agent:chat-submit', {
-				detail: submitFor(action),
+				detail: action.workflowId ? detail : { ...detail, step },
 			}),
 		);
 	};
@@ -88,10 +116,9 @@ export const FollowUpCard = ({ message }) => {
 				{action.url ? (
 					<a
 						href={action.url}
-						target="_blank"
-						rel="noopener noreferrer"
+						{...(!action.sameTab && newTab)}
 						className={`${primary} no-underline`}
-						onClick={handleClick}
+						onClick={handleLink}
 					>
 						{action.label}
 					</a>

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Controls whether the site is publicly visible
+ * Controls whether the site is publicly visible and indexable
  */
 
 namespace Extendify;
@@ -9,7 +9,7 @@ namespace Extendify;
 defined('ABSPATH') || die('No direct access.');
 
 /**
- * This class reads and writes the site's public visibility.
+ * This class reads and writes the site's public visibility and search engine indexing.
  */
 
 class SiteVisibility
@@ -51,5 +51,35 @@ class SiteVisibility
     public static function markPublished()
     {
         \update_option(self::OPTION, 'published');
+    }
+
+    /**
+     * Whether WordPress's "Discourage search engines" setting is on.
+     *
+     * @return boolean
+     */
+    public static function searchEnginesBlocked()
+    {
+        return (string) \get_option('blog_public') === '0';
+    }
+
+    /**
+     * Ask search engines not to index the site.
+     *
+     * @return void
+     */
+    public static function blockIndexing()
+    {
+        \update_option('blog_public', '0');
+    }
+
+    /**
+     * Let search engines index the site.
+     *
+     * @return void
+     */
+    public static function allowIndexing()
+    {
+        \update_option('blog_public', '1');
     }
 }

@@ -1,0 +1,54 @@
+import { __ } from '@wordpress/i18n';
+
+export const UpdateSearchIndexingConfirm = ({
+	inputs,
+	onConfirm,
+	onCancel,
+}) => {
+	const willEnable = inputs?.indexing
+		? inputs.indexing === 'enabled'
+		: Boolean(window.extAgentData?.agentContext?.searchEnginesBlocked);
+
+	const handleConfirm = () => {
+		onConfirm({
+			data: { indexing: willEnable ? 'enabled' : 'disabled' },
+			shouldRefreshPage: true,
+		});
+	};
+
+	return (
+		<div className="mb-4 ms-2 me-2 flex flex-col rounded-lg border border-gray-300 bg-gray-50">
+			<div className="rounded-lg border-b border-gray-300 bg-white">
+				<div className="p-3">
+					<p className="m-0 p-0 text-sm text-gray-900">
+						{willEnable
+							? __(
+									'Search engines will be allowed to index your site. Confirm to let them find it.',
+									'extendify-local',
+								)
+							: __(
+									'Search engines will be asked not to index your site. Visitors can still see it. Confirm to discourage indexing.',
+									'extendify-local',
+								)}
+					</p>
+				</div>
+			</div>
+			<div className="flex justify-start gap-2 p-3">
+				<button
+					type="button"
+					className="w-full rounded-sm border border-gray-500 bg-white p-2 text-sm text-gray-900"
+					onClick={onCancel}
+				>
+					{__('Cancel', 'extendify-local')}
+				</button>
+				<button
+					type="button"
+					className="w-full rounded-sm border border-design-main bg-design-main p-2 text-sm text-white"
+					onClick={handleConfirm}
+				>
+					{__('Confirm', 'extendify-local')}
+				</button>
+			</div>
+		</div>
+	);
+};

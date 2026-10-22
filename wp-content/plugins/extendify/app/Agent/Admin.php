@@ -142,6 +142,8 @@ class Admin
             'pluginRecommendations' => $mappedPluginRecommendations,
             'sitePublished' => SiteVisibility::isPublished(),
             'comingSoonEnabled' => (bool) PartnerData::setting('useComingSoon'),
+            'searchEngineBlockEnabled' => (bool) PartnerData::setting('useSearchEngineBlock'),
+            'searchEnginesBlocked' => SiteVisibility::searchEnginesBlocked(),
         ];
         $abilities = [
             'canEditPost' => (bool) \current_user_can('edit_post', \get_queried_object_id()),

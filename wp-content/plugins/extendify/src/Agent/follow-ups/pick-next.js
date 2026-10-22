@@ -12,7 +12,10 @@ export const toolCallsThisRun = (messages) => {
 		.slice(start + 1)
 		.filter(
 			({ type, details }) =>
-				type === 'tool' && 'result' in details && !details.result?.error,
+				type === 'tool' &&
+				'result' in details &&
+				!details.result?.error &&
+				!details.fromCard,
 		)
 		.map(({ details }) => details);
 };

@@ -5,7 +5,8 @@ import classNames from 'classnames';
 
 // Makes room for the highlighted box's negative top margin.
 const GRID = [
-	'relative z-10 grid w-full sm:mx-auto sm:grid-cols-2 sm:pt-7',
+	'relative z-10 grid w-full sm:mx-auto sm:grid-cols-2',
+	'sm:pt-[var(--ext-tpl-choice-badge-height,28px)]',
 	'[gap:var(--ext-tpl-choice-gap,24px)]',
 ].join(' ');
 
@@ -14,16 +15,19 @@ const WIDE = [
 	'sm:[align-items:var(--ext-tpl-choice-align,stretch)]',
 ].join(' ');
 
+// border-ui-line outranks border-ui-action in the built CSS.
 const BOX = [
-	CARD,
+	CARD.replace('border-ui-line', ''),
 	'flex flex-col overflow-hidden text-left text-ui-ink',
-	'[gap:var(--ext-tpl-choice-box-gap,0px)]',
+	'[border-width:var(--ext-tpl-choice-highlight-border,3px)]',
 ].join(' ');
 
 const HIGHLIGHT = [
-	'[border-width:var(--ext-tpl-choice-highlight-border,3px)]',
-	'border-ui-action sm:-mt-7',
+	'border-ui-action',
+	'sm:-mt-[var(--ext-tpl-choice-badge-height,28px)]',
 ].join(' ');
+
+const ROWS = 'flex flex-1 flex-col [gap:var(--ext-tpl-choice-box-gap,0px)]';
 
 const BADGE = [
 	'flex items-center justify-center bg-ui-action',
@@ -57,33 +61,35 @@ const Box = ({
 	highlight,
 	onClick,
 }) => (
-	<div className={classNames(BOX, highlight ? HIGHLIGHT : 'border-ui')}>
+	<div className={classNames(BOX, highlight ? HIGHLIGHT : 'border-ui-line')}>
 		{highlight && badgeLabel && <span className={BADGE}>{badgeLabel}</span>}
-		<span className={ICON_STRIP}>
-			<Icon fill="currentColor" icon={icon} size={40} />
-		</span>
-		<span className={BODY}>
-			<span className={COPY}>
-				{heading && (
-					<span className="text-ui-body font-ui-heading font-ui-strong">
-						{heading}
-					</span>
-				)}
-				<span className="text-ui-body opacity-70">{description}</span>
+		<span className={ROWS}>
+			<span className={ICON_STRIP}>
+				<Icon fill="currentColor" icon={icon} size={40} />
 			</span>
-			<button
-				type="button"
-				onClick={onClick}
-				className={classNames(
-					BUTTON,
-					highlight
-						? 'border-ui border-ui-action bg-ui-action text-ui-action-text hover:opacity-90'
-						: 'border-ui border-ui-line bg-ui-secondary-fill text-ui-secondary-text',
-				)}
-			>
-				{buttonLabel}
-				<Icon fill="currentColor" icon={buttonIcon} size={20} />
-			</button>
+			<span className={BODY}>
+				<span className={COPY}>
+					{heading && (
+						<span className="text-ui-body font-ui-heading font-ui-strong">
+							{heading}
+						</span>
+					)}
+					<span className="text-ui-body opacity-70">{description}</span>
+				</span>
+				<button
+					type="button"
+					onClick={onClick}
+					className={classNames(
+						BUTTON,
+						highlight
+							? 'border-ui border-ui-action bg-ui-action text-ui-action-text hover:opacity-90'
+							: 'border-ui border-ui-line bg-ui-secondary-fill text-ui-secondary-text',
+					)}
+				>
+					{buttonLabel}
+					<Icon fill="currentColor" icon={buttonIcon} size={20} />
+				</button>
+			</span>
 		</span>
 	</div>
 );

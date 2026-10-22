@@ -59,7 +59,12 @@ export const InstallPlugin = ({ inputs, onConfirm, onCancel }) => {
 					});
 					await adminLoader();
 
-					if (!cancelled) onConfirm({ shouldRefreshPage: true });
+					if (!cancelled) {
+						onConfirm({
+							data: { pluginSlug: inputs.pluginSlug },
+							shouldRefreshPage: true,
+						});
+					}
 				} catch {
 					if (!cancelled) setStatus('error');
 				}

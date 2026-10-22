@@ -1,4 +1,4 @@
-import { publishesSite } from './publish-site';
+import { ctaActionFor } from './cta-action';
 import { Bar } from './templates/Bar';
 import { Card } from './templates/Card';
 import { Pill } from './templates/Pill';
@@ -36,8 +36,8 @@ const hasOfferWhenBlocking = (notification) =>
 // Deciding this inside Pill would count a view for a pill that never rendered.
 const REQUIREMENTS = {
 	[SLOTS.FRONTEND_TOPBAR]: (notification, href) =>
-		// A publishing pill has no href; it acts in place on click.
-		Boolean(notification['cta-label'] && (href || publishesSite(notification))),
+		// A pill that acts in place needs no href.
+		Boolean(notification['cta-label'] && (href || ctaActionFor(notification))),
 	[SLOTS.ADMIN_MODAL]: hasOfferWhenBlocking,
 	[SLOTS.FRONTEND_MODAL]: hasOfferWhenBlocking,
 };

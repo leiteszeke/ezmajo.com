@@ -63,7 +63,11 @@ const install = async (slug) => {
 		} catch (error) {
 			digest({
 				error,
-				details: { source: 'auto-launch', caller: 'installPlugin' },
+				details: {
+					source: 'auto-launch',
+					caller: 'installPlugin',
+					plugin: slug,
+				},
 			});
 			return null;
 		}
@@ -102,7 +106,11 @@ export const activatePlugin = async (slug) => {
 		const report = (e) => {
 			digest({
 				error: e,
-				details: { source: 'auto-launch', caller: 'activatePlugin' },
+				details: {
+					source: 'auto-launch',
+					caller: 'activatePlugin',
+					plugin: slug,
+				},
 			});
 			return false;
 		};

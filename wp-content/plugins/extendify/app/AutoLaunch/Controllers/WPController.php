@@ -168,6 +168,10 @@ class WPController
             SiteVisibility::markUnpublished();
         }
 
+        if (PartnerData::setting('useSearchEngineBlock')) {
+            SiteVisibility::blockIndexing();
+        }
+
         \do_action('extendify_after_launch');
 
         return new \WP_REST_Response('ok');

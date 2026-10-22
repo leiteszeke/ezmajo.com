@@ -134,6 +134,7 @@ const useOptimizedSize = (url, originalSize, enabled, mediaKey) => {
 		let live = true;
 		let timer;
 		let seenOriginal = false;
+		let seenOtherStatus = false;
 		const startedAt = Date.now();
 		const check = async () => {
 			const response = await fetch(`${url}?extendify=${Date.now()}`, {
@@ -157,11 +158,14 @@ const useOptimizedSize = (url, originalSize, enabled, mediaKey) => {
 			// The run answered at queue time, so only this reports a later failure.
 			const status = await ask(STATUS_ABILITY, JSON.parse(mediaKey));
 			if (!live) return;
-			if (status?.status === 'error') {
+			const expired = Date.now() - startedAt > GIVE_UP_MS;
+			// Imagify keeps an earlier failure until the queued job overwrites it.
+			if (status?.status === 'error' && (seenOtherStatus || expired)) {
 				const reason = status.error_message || (await failureReason());
 				if (!live) return;
 				return setState({ ...IDLE, checked: true, failure: reason || '' });
 			}
+			if (status?.status && status.status !== 'error') seenOtherStatus = true;
 			if (status?.status === 'success' && status.optimized_size)
 				return setState({
 					...IDLE,
@@ -176,7 +180,7 @@ const useOptimizedSize = (url, originalSize, enabled, mediaKey) => {
 			// A hidden length leaves only the status, and it did not answer either.
 			if (!length && status?.status !== 'unoptimized')
 				return setUnwatchable(true);
-			if (Date.now() - startedAt > GIVE_UP_MS) return setUnwatchable(true);
+			if (expired) return setUnwatchable(true);
 			timer = setTimeout(check, POLL_MS);
 		};
 		// A reload of a finished run would otherwise claim to be working first.

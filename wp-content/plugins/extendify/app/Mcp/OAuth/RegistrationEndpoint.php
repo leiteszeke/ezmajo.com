@@ -9,6 +9,7 @@ namespace Extendify\Mcp\OAuth;
 defined('ABSPATH') || die('No direct access.');
 
 use Extendify\Config;
+use Extendify\Mcp\Availability;
 
 /**
  * A client that publishes no metadata document registers here first (RFC 7591)
@@ -44,6 +45,14 @@ class RegistrationEndpoint
      */
     public static function handle(\WP_REST_Request $request)
     {
+        // Anonymous registrations would fill the stored client list on sites that never connect.
+        if (!Availability::live()) {
+            return self::answer(403, [
+                'error' => 'access_denied',
+                'error_description' => 'Connections are turned off on this site.',
+            ]);
+        }
+
         $sent = $request->get_json_params();
         if (!is_array($sent)) {
             return self::answer(400, [

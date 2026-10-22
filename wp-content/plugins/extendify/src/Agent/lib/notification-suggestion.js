@@ -1,8 +1,6 @@
-import {
-	resolveNotificationLink,
-	siteHost,
-} from '@notifications/notification-link';
+import { resolveNotificationLink } from '@notifications/notification-link';
 import { notificationFor } from '@notifications/selection';
+import { siteHost } from '@shared/lib/site-host';
 
 export const AGENT_CHAT_SLOT = 'agent-chat';
 

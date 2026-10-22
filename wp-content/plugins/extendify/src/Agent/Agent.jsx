@@ -28,7 +28,6 @@ import {
 	getClientTools,
 } from '@agent/lib/client-tools';
 import { localPickWorkflow } from '@agent/lib/local-pick';
-import { getRedirectUrl } from '@agent/lib/redirects';
 import { doReload } from '@agent/lib/reload';
 import { useCanvasStore } from '@agent/state/canvas';
 import { useChatStore } from '@agent/state/chat';
@@ -303,12 +302,13 @@ export const Agent = () => {
 	}, [addMessage, pushStatus, whenFinishedToolProps, workflow]);
 
 	const handleSubmit = useCallback(
-		async (message, { hidden = false } = {}) => {
+		async (message, { hidden = false, step } = {}) => {
 			// chat-submit events skip the textarea; disabling it isn't enough.
 			if (useQuickEditStore.getState().selected) return;
 			if (whenFinishedToolProps?.processing) return;
 			setWaitingOnToolOrUser(false);
 			agentWorking.current = false;
+			if (step) addMessage('tool', { ...step, inputs: {}, fromCard: true });
 			addMessage('message', { role: 'user', content: message, hidden });
 
 			// Without this a typed message would drop the workflow and close the canvas.
@@ -434,7 +434,8 @@ export const Agent = () => {
 		// Allow external messages to trigger the agent
 		const handleMessage = ({ detail }) => {
 			if (!detail?.message) return;
-			handleSubmit(detail.message, { hidden: detail.hidden });
+			const { message, hidden, step } = detail;
+			handleSubmit(message, { hidden, step });
 		};
 		// Allow external code to clear the block and workflow
 		const handleCleanup = () => {
@@ -509,7 +510,7 @@ export const Agent = () => {
 					? { ...whenFinishedToolProps, processing: true }
 					: null,
 			);
-			const { whenFinishedTool, answerId, redirectTo } =
+			const { whenFinishedTool, answerId } =
 				whenFinishedToolProps?.agentResponse || {};
 			const { id, labels } = whenFinishedTool || {};
 			// Staged unanswered so its own component can show the run in progress.
@@ -570,12 +571,10 @@ export const Agent = () => {
 				return;
 			}
 
-			const url = getRedirectUrl(redirectTo, whenFinishedToolProps?.inputs);
 			// Reloading here unmounts a run component still watching its ability finish.
 			const refreshForAbility =
 				isAbilityTool(id) && shouldRefreshPage !== false;
-			const willReload =
-				url || redirectUrl || shouldRefreshPage || refreshForAbility;
+			const willReload = redirectUrl || shouldRefreshPage || refreshForAbility;
 			// A card shown now would flash just before the reload.
 			addMessage('workflow', {
 				status: 'completed',
@@ -605,7 +604,7 @@ export const Agent = () => {
 			setWorkflow(null);
 			useCanvasStore.getState().endSession();
 
-			if (willReload) return doReload(url || redirectUrl);
+			if (willReload) return doReload(redirectUrl);
 			cleanup();
 		};
 		const handleCancel = ({ detail }) => {

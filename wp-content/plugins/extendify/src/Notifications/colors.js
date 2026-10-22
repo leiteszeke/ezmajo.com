@@ -10,6 +10,11 @@ const CARD_SURFACE = {
 	text: '--ext-notification-card-text',
 };
 
+const BAR_ICON = {
+	'icon-main': '--color-banner-main',
+	'icon-text': '--color-banner-text',
+};
+
 const buttonMap = (main, text) => ({
 	'button-main': main,
 	'button-text': text,
@@ -30,6 +35,8 @@ const variablesFrom = (map, colors) =>
 export const colorsOf = (notification) => notification?.colors ?? {};
 
 export const barVariables = (colors) => variablesFrom(BAR_SURFACE, colors);
+
+export const barIconVariables = (colors) => variablesFrom(BAR_ICON, colors);
 
 export const cardVariables = (colors) => variablesFrom(CARD_SURFACE, colors);
 
